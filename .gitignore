@@ -1,0 +1,16 @@
+*.la
+*.lo
+*.o
+.deps
+.libs
+nbhproject
+Makefile.in
+aclocal.m4
+autom4te.cache
+libltdl
+libtool
+Makefile
+config.log
+config.status
+stamp-h1
+sporemodule_config.h.in
