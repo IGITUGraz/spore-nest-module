@@ -340,7 +340,7 @@ nest::port PoissonDblExpNeuron::handles_test_event(nest::SpikeEvent&, nest::rpor
 {
     if ((receptor_type != 0) && (receptor_type != 1))
         throw nest::UnknownReceptorType(receptor_type, get_name());
-    return 0;
+    return receptor_type;
 }
 
 /**

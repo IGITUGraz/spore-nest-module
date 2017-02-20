@@ -321,13 +321,13 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const nest::long_t f
         S_.u_rise_inh_ *= V_.decay_rise_inh_;
         S_.u_fall_inh_ *= V_.decay_fall_inh_;
 
-        if (psp_amplitude_exc > 0.0)
+        if (psp_amplitude_exc != 0.0)
         {
             S_.u_rise_exc_ += psp_amplitude_exc;
             S_.u_fall_exc_ += psp_amplitude_exc;
         }
         
-        if (psp_amplitude_inh > 0.0)
+        if (psp_amplitude_inh != 0.0)
         {
             S_.u_rise_inh_ += psp_amplitude_inh;
             S_.u_fall_inh_ += psp_amplitude_inh;

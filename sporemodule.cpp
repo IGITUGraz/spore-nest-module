@@ -68,7 +68,7 @@ spore::SambaModule::~SambaModule()
  */
 const std::string spore::SambaModule::name(void) const
 {
-    return std::string("SamBa (0.2 beta)"); // Return name of the module
+    return std::string("SPORE (version 0.4)"); // Return name of the module
 }
 
 

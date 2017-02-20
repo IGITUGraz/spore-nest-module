@@ -92,6 +92,8 @@ protected:
 
     void register_connector( nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, size_t target_thread, nest::synindex syn_id );
 
+    nest::ConnectorBase* get_hom_connector( nest::ConnectorBase* conn, nest::synindex syn_id );
+
 }; // DiligentConnectorModel
 
 
@@ -121,8 +123,10 @@ DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
                                                        double delay,
                                                        double weight )
 {
+    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, delay, weight);
-    register_connector(new_conn, conn, tgt.get_thread(), syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
     return new_conn;
 }
 
@@ -155,8 +159,10 @@ DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
                                                        double delay,
                                                        double weight )
 {
+    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, p, delay, weight);
-    register_connector(new_conn, conn, tgt.get_thread(), syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
     return new_conn;
 }
 
@@ -178,8 +184,10 @@ DiligentConnectorModel< ConnectionT >::delete_connection( nest::Node& tgt,
                                                           nest::ConnectorBase* conn,
                                                           nest::synindex syn_id )
 {
+    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::delete_connection(tgt, target_thread, conn, syn_id);
-    register_connector(new_conn, conn, target_thread, syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
     return new_conn;
 }
 
@@ -202,9 +210,51 @@ void DiligentConnectorModel< ConnectionT >::register_connector( nest::ConnectorB
                                                                 size_t target_thread,
                                                                 nest::synindex syn_id )
 {
-    ConnectionUpdateManager::instance()->register_connector( nest::validate_pointer( new_conn ),
-                                                             nest::validate_pointer( old_conn ),
+    ConnectionUpdateManager::instance()->register_connector( new_conn, old_conn,
                                                              target_thread, this, syn_id );
+}
+
+
+/**
+ * Helper function to extract the homogeneous connector with given type
+ * from a given connector. If the given connector is homogeneous the
+ * type is checked and it is returned. If the type does not match the
+ * function fails. If the connector is heterogeneous a connector of given
+ * is searched within it and returned if found. Returns 0 if a 0-pointer
+ * is passed.
+ *
+ * @param conn the connector to be checked, can be 0.
+ * @param syn_id the type id of the connector to be found.
+ * @return the homogeneous connector, 0 if none found.
+ */
+template < typename ConnectionT >
+nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector( nest::ConnectorBase* conn,
+                                                                                    nest::synindex syn_id )
+{
+    if (!conn)
+    {
+        return 0;
+    }
+    else if (conn->homogeneous_model())
+    {
+        if (conn->get_syn_id() == syn_id)
+            return conn;
+    }
+    else
+    {
+        // connector is heterogeneous - go through all entries and search for correct syn_id
+        nest::HetConnector* hc = static_cast< nest::HetConnector* >( conn );
+        for ( size_t i = 0; i < hc->size(); i++ )
+        {
+            // need to cast to vector_like to access syn_id
+            if ( ( *hc )[ i ]->get_syn_id() == syn_id ) // find entry for this type
+            {
+                return ( *hc )[ i ];
+            }
+        }
+    }
+    
+    return 0;
 }
 
 

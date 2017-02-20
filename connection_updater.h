@@ -103,8 +103,6 @@ private:
     ConnectionUpdateManager(const ConnectionUpdateManager&)
     {}
 
-    static nest::ConnectorBase* get_hom_connector(nest::ConnectorBase*, nest::synindex syn_id);
-
     std::vector< std::set<nest::ConnectorBase*> > connectors_;
 
     std::vector< std::vector<nest::ConnectorModel*> > models_;

@@ -103,6 +103,8 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
           it != connectors_[th].end();
           it++ )
     {
+        assert(*it);
+        
         if ( t_trig > (*it)->get_t_lastspike() )
         {
             (*it)->send( ev, th, models_[th] );
@@ -142,11 +144,9 @@ void ConnectionUpdateManager::register_connector( nest::ConnectorBase* new_conn,
 
     std::set<nest::ConnectorBase*> &conns = connectors_[th];
 
-    nest::ConnectorBase* new_hc = get_hom_connector(new_conn, syn_id);
-
-    if (new_hc == old_conn)
+    if (new_conn == old_conn)
     {
-        assert(conns.find(new_hc)!=conns.end());
+        assert(conns.find(new_conn)!=conns.end());
     }
     else
     {
@@ -156,12 +156,13 @@ void ConnectionUpdateManager::register_connector( nest::ConnectorBase* new_conn,
             // just check if it is still in the update set and
             // remove if found.
             std::set<nest::ConnectorBase*>::iterator it = conns.find(old_conn);
-            if (it!=conns.end())
-                conns.erase(it);
+            assert(it!=conns.end());
+            conns.erase(it);
         }
-        if (new_hc)
+        
+        if (new_conn)
         {
-            conns.insert(new_hc);
+            conns.insert(new_conn);
         }
     }
     
@@ -201,46 +202,6 @@ void ConnectionUpdateManager::reset()
     connectors_.clear();
     models_.clear();
     cu_id_ = nest::invalid_index;
-}
-
-
-/**
- * Helper function to extract the homogeneous connector with given type
- * from a given connector. If the given connector is homogeneous the
- * type is checked and it is returned. If the type does not match the
- * function fails. If the connector is heterogeneous a connector of given
- * is searched within it and returned if found. Returns 0 if a 0-pointer
- * is passed.
- * 
- * @param conn the connector to be checked, can be 0.
- * @param syn_id the type id of the connector to be found. 
- * @return the homogeneous connector, 0 if none found.
- */
-nest::ConnectorBase* ConnectionUpdateManager::get_hom_connector( nest::ConnectorBase* conn, nest::synindex syn_id )
-{
-    if (!conn)
-    {
-        return 0;
-    }
-    else if (conn->homogeneous_model())
-    {
-        assert(conn->get_syn_id() == syn_id);
-        return conn;
-    }
-    else
-    {
-        // connector is heterogeneous - go through all entries and search for correct syn_id
-        nest::HetConnector* hc = static_cast< nest::HetConnector* >( conn );
-        for ( size_t i = 0; i < hc->size(); i++ )
-        {
-            // need to cast to vector_like to access syn_id
-            if ( ( *hc )[ i ]->get_syn_id() == syn_id ) // there is already an entry for this type
-            {
-                return ( *hc )[ i ];
-            }
-        }
-        return 0;
-    }
 }
 
 
