@@ -5,8 +5,8 @@
  * Created on November 9, 2016, 3:13 PM
  */
 
-#ifndef SAMBA_TEST_BASE_H
-#define	SAMBA_TEST_BASE_H
+#ifndef SPORE_TEST_BASE_H
+#define	SPORE_TEST_BASE_H
 
 #include <string>
 
@@ -20,14 +20,14 @@ namespace spore
 /**
  * Base class to all tests.
  */
-class SambaTestBase
+class SporeTestBase
 {
 public:
-    SambaTestBase(const std::string &name, nest::delay t_max=1)
+    SporeTestBase(const std::string &name, nest::delay t_max=1)
     :name_(name), t_max_(t_max)
     {};
     
-    ~SambaTestBase()
+    ~SporeTestBase()
     {};
     
     const std::string &get_name() const
@@ -59,5 +59,5 @@ private:
 
 }
 
-#endif	/* SAMBA_TEST_BASE_H */
+#endif	/* SPORE_TEST_BASE_H */
 

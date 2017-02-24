@@ -1,5 +1,5 @@
-#ifndef SAMBA_TEST_CONNECTION
-#define SAMBA_TEST_CONNECTION
+#ifndef SPORE_TEST_CONNECTION
+#define SPORE_TEST_CONNECTION
 
 #include <random>
 #include <cmath>
@@ -19,15 +19,15 @@ namespace spore
 {
 
 /**
- * Class containing the common properties for all synapses of type SambaTestConnection.
+ * Class containing the common properties for all synapses of type SporeTestConnection.
  */
-class SambaTestConnectionCommonProperties : public nest::CommonSynapseProperties
+class SporeTestConnectionCommonProperties : public nest::CommonSynapseProperties
 {
 public:
     /**
      * Constructor.
      */
-    SambaTestConnectionCommonProperties()
+    SporeTestConnectionCommonProperties()
     :nest::CommonSynapseProperties(),
      weight_update_time_(100.0),
      bap_trace_id_(0),
@@ -37,7 +37,7 @@ public:
     /**
      * Destructor.
      */
-    ~SambaTestConnectionCommonProperties()
+    ~SporeTestConnectionCommonProperties()
     {}
 
     /**
@@ -93,19 +93,19 @@ public:
 };
 
 /**
- * SambaTestConnection class
+ * SporeTestConnection class
  */
 template<typename targetidentifierT>
-class SambaTestConnection : public nest::Connection<targetidentifierT>
+class SporeTestConnection : public nest::Connection<targetidentifierT>
 {
 public:
 
-    SambaTestConnection();
-    SambaTestConnection(const SambaTestConnection<targetidentifierT>& rhs);
-    ~SambaTestConnection();
+    SporeTestConnection();
+    SporeTestConnection(const SporeTestConnection<targetidentifierT>& rhs);
+    ~SporeTestConnection();
 
     //! Type to use for representing common synapse properties
-    typedef SambaTestConnectionCommonProperties CommonPropertiesType;
+    typedef SporeTestConnectionCommonProperties CommonPropertiesType;
 
     //! Shortcut for base class
     typedef nest::Connection<targetidentifierT> ConnectionBase;
@@ -181,21 +181,21 @@ private:
  * ---------------------------------------------------------------- */
 
 template <typename targetidentifierT>
-SambaTestConnection<targetidentifierT>::SambaTestConnection()
+SporeTestConnection<targetidentifierT>::SporeTestConnection()
 :ConnectionBase(),
  weight_(0.0),
  t_weight_(0.0)
 {}
 
 template <typename targetidentifierT>
-SambaTestConnection<targetidentifierT>::SambaTestConnection(const SambaTestConnection& rhs)
+SporeTestConnection<targetidentifierT>::SporeTestConnection(const SporeTestConnection& rhs)
 :ConnectionBase(rhs),
  weight_(rhs.weight_),
  t_weight_(rhs.t_weight_)
 {}
 
 template <typename targetidentifierT>
-SambaTestConnection<targetidentifierT>::~SambaTestConnection()
+SporeTestConnection<targetidentifierT>::~SporeTestConnection()
 {}
 
 /* ----------------------------------------------------------------
@@ -203,7 +203,7 @@ SambaTestConnection<targetidentifierT>::~SambaTestConnection()
  * ---------------------------------------------------------------- */
 
 template <typename targetidentifierT>
-void SambaTestConnection<targetidentifierT>::get_status(DictionaryDatum & d) const
+void SporeTestConnection<targetidentifierT>::get_status(DictionaryDatum & d) const
 {
     ConnectionBase::get_status(d);
     (*d)["recorder_times"] = recorder_times_;
@@ -211,7 +211,7 @@ void SambaTestConnection<targetidentifierT>::get_status(DictionaryDatum & d) con
 }
 
 template <typename targetidentifierT>
-void SambaTestConnection<targetidentifierT>::set_status(const DictionaryDatum & d, nest::ConnectorModel &cm)
+void SporeTestConnection<targetidentifierT>::set_status(const DictionaryDatum & d, nest::ConnectorModel &cm)
 {
     ConnectionBase::set_status(d, cm);
 }
@@ -233,7 +233,7 @@ void SambaTestConnection<targetidentifierT>::set_status(const DictionaryDatum & 
  * @param cp the synapse type common properties.
  */
 template <typename targetidentifierT>
-void SambaTestConnection<targetidentifierT>::send( nest::Event& e,
+void SporeTestConnection<targetidentifierT>::send( nest::Event& e,
                                                    nest::thread thread,
                                                    double t_last_spike,
                                                    const CommonPropertiesType &cp )
@@ -294,7 +294,7 @@ void SambaTestConnection<targetidentifierT>::send( nest::Event& e,
  * @param cp synapse type common properties.
  */
 template <typename targetidentifierT>
-void SambaTestConnection<targetidentifierT>::update_synapse_state( double t_to,
+void SporeTestConnection<targetidentifierT>::update_synapse_state( double t_to,
                                                                    double t_last_update,
                                                                    TracingNode::const_iterator &bap_trace,
                                                                    const CommonPropertiesType& cp )
@@ -322,7 +322,7 @@ void SambaTestConnection<targetidentifierT>::update_synapse_state( double t_to,
  * @param cp the synapse type common properties.
  */
 template <typename targetidentifierT>
-void SambaTestConnection<targetidentifierT>::update_synapic_weight( double time,
+void SporeTestConnection<targetidentifierT>::update_synapic_weight( double time,
                                                                     nest::thread thread,
                                                                     TracingNode *target,
                                                                     const CommonPropertiesType& cp )

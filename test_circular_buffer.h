@@ -15,7 +15,7 @@ namespace spore
 /**
  * Test class for circular buffer container.
  */
-class TestCircularBuffer : public SambaTestBase
+class TestCircularBuffer : public SporeTestBase
 {
 public:
     TestCircularBuffer();

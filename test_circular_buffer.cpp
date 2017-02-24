@@ -14,7 +14,7 @@ namespace spore
  * Constructor.
  */
 TestCircularBuffer::TestCircularBuffer()
-:SambaTestBase("test_circular_buffer")
+:SporeTestBase("test_circular_buffer")
 {}
 
 /**

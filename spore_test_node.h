@@ -5,8 +5,8 @@
  * Created on November 9, 2016, 2:30 PM
  */
 
-#ifndef SAMBA_TEST_MODULE_H
-#define	SAMBA_TEST_MODULE_H
+#ifndef SPORE_TEST_MODULE_H
+#define	SPORE_TEST_MODULE_H
 
 #include "dictutils.h"
 
@@ -18,11 +18,11 @@ namespace spore
 /**
  * Node to test spore module.
  */
-class SambaTestNode : public TracingNode
+class SporeTestNode : public TracingNode
 {
 public:
-    SambaTestNode();
-    ~SambaTestNode();
+    SporeTestNode();
+    ~SporeTestNode();
     
     void get_status(DictionaryDatum &) const;
     void set_status(const DictionaryDatum &);
@@ -40,7 +40,7 @@ public:
 
         
 protected:
-    void register_test(SambaTestBase *test);
+    void register_test(SporeTestBase *test);
     
 private:
     void init_state_(const nest::Node& proto);
@@ -52,7 +52,7 @@ private:
     std::string test_name_;
     double test_time_;
     
-    std::map<std::string, SambaTestBase*> tests_;
+    std::map<std::string, SporeTestBase*> tests_;
 };
 
 
@@ -60,7 +60,7 @@ private:
  * PoissonDblExpNeuron test event.
  */
 inline
-nest::port SambaTestNode::send_test_event(nest::Node& target, nest::rport receptor_type, nest::synindex, bool)
+nest::port SporeTestNode::send_test_event(nest::Node& target, nest::rport receptor_type, nest::synindex, bool)
 {
     nest::SpikeEvent e;
     e.set_sender(*this);
@@ -73,7 +73,7 @@ nest::port SambaTestNode::send_test_event(nest::Node& target, nest::rport recept
  * PoissonDblExpNeuron test event.
  */
 inline
-nest::port SambaTestNode::handles_test_event(nest::SpikeEvent&, nest::rport receptor_type)
+nest::port SporeTestNode::handles_test_event(nest::SpikeEvent&, nest::rport receptor_type)
 {
     return 0;
 }
@@ -83,7 +83,7 @@ nest::port SambaTestNode::handles_test_event(nest::SpikeEvent&, nest::rport rece
  * Status getter function.
  */
 inline
-void SambaTestNode::get_status(DictionaryDatum &d) const
+void SporeTestNode::get_status(DictionaryDatum &d) const
 {
     def<std::string>(d, "test_name", test_name_);
     def<double>(d, "test_time", test_time_);
@@ -93,7 +93,7 @@ void SambaTestNode::get_status(DictionaryDatum &d) const
  * Status setter function.
  */
 inline
-void SambaTestNode::set_status(const DictionaryDatum &d)
+void SporeTestNode::set_status(const DictionaryDatum &d)
 {
     std::string test_name;
     if (updateValue<std::string>(d, "test_name", test_name))
@@ -109,5 +109,5 @@ void SambaTestNode::set_status(const DictionaryDatum &d)
 
 }
 
-#endif	/* SAMBA_TEST_MODULE_H */
+#endif	/* SPORE_TEST_MODULE_H */
 

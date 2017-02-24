@@ -4,8 +4,8 @@
  */
 
 
-#ifndef SAMBAMODULE_H
-#define SAMBAMODULE_H
+#ifndef SPOREMODULE_H
+#define SPOREMODULE_H
 
 #include "slimodule.h"
 #include "slifunction.h"
@@ -15,14 +15,14 @@ namespace spore
 {
 
 /**
- * Class defining the SamBa module.
+ * Class defining the SPORE module.
  */
-class SambaModule : public SLIModule
+class SporteModule : public SLIModule
 {
 public:
 
-    SambaModule();
-    ~SambaModule();
+    SporeModule();
+    ~SporeModule();
 
     void init(SLIInterpreter*);
 

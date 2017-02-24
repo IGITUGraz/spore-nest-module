@@ -15,7 +15,7 @@ namespace spore
 /**
  * Test class for circular buffer container.
  */
-class TestTracingNode : public SambaTestBase
+class TestTracingNode : public SporeTestBase
 {
 public:
     TestTracingNode();

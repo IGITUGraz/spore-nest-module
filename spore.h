@@ -5,14 +5,15 @@
  * Created on November 9, 2016, 2:26 PM
  */
 
-#ifndef SAMBA_H
-#define	SAMBA_H
+#ifndef SPORE_H
+#define	SPORE_H
 
 /**
- * NEST::SamBa (Sampling Based) is a NEST module that features a collection
- * on neurons and synapses that implement models based on ideas from
- * probabilistic inference (PI) via sampling. It also provides an API to
- * develop such models efficiently in NEST.
+ * NEST::SPORE (Synaptic Plasticity Online REinforcement learning)
+ * is a NEST module that features a collection on neurons and synapses
+ * that implement models based on ideas from probabilistic inference (PI)
+ * via sampling. It also provides an API to develop such models
+ * efficiently in NEST.
  * 
  * The main features of the module are:
  * 
@@ -31,8 +32,8 @@
 
 
 // specify to enable spore debug tests.
-#define __SAMBA_DEBUG__
+#define __SPORE_DEBUG__
 
 
-#endif	/* SAMBA_H */
+#endif	/* SPORE_H */
 

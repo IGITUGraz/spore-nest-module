@@ -24,7 +24,7 @@
 #include "synaptic_sampling_rewardgradient_connection.h"
 #include "reward_in_proxy.h"
 
-#ifdef __SAMBA_DEBUG__
+#ifdef __SPORE_DEBUG__
 #include "spore_test_node.h"
 #include "spore_test_connection.h"
 #endif
@@ -38,13 +38,13 @@
  *
  * The dynamicloader can then load modulename and search for symbol "mod" in it.
  */
-spore::SambaModule sporemodule_LTX_mod;
+spore::SporeModule sporemodule_LTX_mod;
 
 
 /**
  * Constructor.
  */
-spore::SambaModule::SambaModule()
+spore::SporeModule::SporeModule()
 {
 #ifdef LINKED_MODULE
     // register this module at the dynamic loader
@@ -58,7 +58,7 @@ spore::SambaModule::SambaModule()
 /**
  * Destructor.
  */
-spore::SambaModule::~SambaModule()
+spore::SporeModule::~SporeModule()
 {
 }
 
@@ -66,7 +66,7 @@ spore::SambaModule::~SambaModule()
 /**
  * Return the name of the model.
  */
-const std::string spore::SambaModule::name(void) const
+const std::string spore::SporeModule::name(void) const
 {
     return std::string("SPORE (version 0.4)"); // Return name of the module
 }
@@ -77,7 +77,7 @@ const std::string spore::SambaModule::name(void) const
  * This mechanism can be used to define SLI commands associated with your
  * module, in particular, set up type tries for functions you have defined.
  */
-const std::string spore::SambaModule::commandstring(void) const
+const std::string spore::SporeModule::commandstring(void) const
 {
     // Instruct the interpreter to load sporemodule-init.sli
     return std::string("(sporemodule-init) run");
@@ -87,7 +87,7 @@ const std::string spore::SambaModule::commandstring(void) const
 /**
  * Constructor.
  */
-spore::SambaModule::
+spore::SporeModule::
 InitSynapseUpdater_i_i_Function::InitSynapseUpdater_i_i_Function()
 {
 }
@@ -98,7 +98,7 @@ InitSynapseUpdater_i_i_Function::InitSynapseUpdater_i_i_Function()
  *
  * @param i   pointer to the SLI interpreter.
  */
-void spore::SambaModule::
+void spore::SporeModule::
 InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
 {
     // Check if we have (at least) five arguments on the stack.
@@ -120,7 +120,7 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
  * @note  Parameter Network is needed for historical compatibility
  *        only.
  */
-void spore::SambaModule::init(SLIInterpreter *i)
+void spore::SporeModule::init(SLIInterpreter *i)
 {
     nest::Network& network = nest::NestModule::get_network();
 
@@ -134,9 +134,9 @@ void spore::SambaModule::init(SLIInterpreter *i)
 
     i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
 
-#ifdef __SAMBA_DEBUG__
-    nest::register_model<SambaTestNode>(network, "spore_test_node");
-    spore::register_diligent_connection_model<SambaTestConnection<nest::TargetIdentifierPtrRport> >(network, "spore_test_synapse");
+#ifdef __SPORE_DEBUG__
+    nest::register_model<SporeTestNode>(network, "spore_test_node");
+    spore::register_diligent_connection_model<SporeTestConnection<nest::TargetIdentifierPtrRport> >(network, "spore_test_synapse");
 #endif
 
 }
