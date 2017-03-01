@@ -14,7 +14,7 @@ namespace spore
  * Constructor.
  */
 TestTracingNode::TestTracingNode()
-:SambaTestBase("test_tracing_node")
+:SporeTestBase("test_tracing_node")
 {}
 
 /**

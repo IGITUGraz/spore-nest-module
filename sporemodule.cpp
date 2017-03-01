@@ -24,7 +24,7 @@
 #include "synaptic_sampling_rewardgradient_connection.h"
 #include "reward_in_proxy.h"
 
-#ifdef __SAMBA_DEBUG__
+#ifdef __SPORE_DEBUG__
 #include "spore_test_node.h"
 #include "spore_test_connection.h"
 #endif
@@ -134,9 +134,9 @@ void spore::SambaModule::init(SLIInterpreter *i)
 
     i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
 
-#ifdef __SAMBA_DEBUG__
-    nest::register_model<SambaTestNode>(network, "spore_test_node");
-    spore::register_diligent_connection_model<SambaTestConnection<nest::TargetIdentifierPtrRport> >(network, "spore_test_synapse");
+#ifdef __SPORE_DEBUG__
+    nest::register_model<SporeTestNode>(network, "spore_test_node");
+    spore::register_diligent_connection_model<SporeTestConnection<nest::TargetIdentifierPtrRport> >(network, "spore_test_synapse");
 #endif
 
 }

@@ -20,14 +20,14 @@ namespace spore
 /**
  * Base class to all tests.
  */
-class SambaTestBase
+class SporeTestBase
 {
 public:
-    SambaTestBase(const std::string &name, nest::delay t_max=1)
+    SporeTestBase(const std::string &name, nest::delay t_max=1)
     :name_(name), t_max_(t_max)
     {};
     
-    ~SambaTestBase()
+    ~SporeTestBase()
     {};
     
     const std::string &get_name() const

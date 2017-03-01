@@ -14,7 +14,7 @@ namespace spore
  * Constructor.
  */
 TestCircularBuffer::TestCircularBuffer()
-:SambaTestBase("test_circular_buffer")
+:SporeTestBase("test_circular_buffer")
 {}
 
 /**
@@ -92,12 +92,17 @@ void TestCircularBuffer::init()
     for (int i=0; i<(5*cb.size()); i++)
         test_assert( cb[i] == target_data[4][i], "CircularBuffer test content 4" );
 
+    char msg[100];
+    
     for (int j=0;j<15;j++)
     {
         CircularBuffer<double>::const_iterator it = cb.get(j);
 
         for (int i=0; i<(5*cb.size()); i++)
-            test_assert( *(++it) == target_data[5+j][i], "CircularBuffer test content 5" );
+        {
+            sprintf( msg, "CircularBuffer test content %i", 5+j );
+            test_assert( *(++it) == target_data[5+j][i], msg );
+        }
     }
     
     for (int j=0;j<15;j++)
@@ -105,7 +110,10 @@ void TestCircularBuffer::init()
         CircularBuffer<double>::const_iterator it = cb.get(j);
         
         for (int i=0; i<(5*cb.size()); i++)
-            test_assert( *(--it) == target_data[20+j][i], "CircularBuffer test content 20" );
+        {
+            sprintf( msg, "CircularBuffer test content %i", 20+j );
+            test_assert( *(--it) == target_data[20+j][i], msg );
+        }
     }
     
     std::vector< CircularBuffer<double> > traces;

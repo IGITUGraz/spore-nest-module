@@ -62,3 +62,15 @@ install-slidoc:
 install-data-hook: install-exec install-slidoc
 
 EXTRA_DIST= sli
+
+
+# unit tests
+
+TESTS = unittests/test_circular_buffer.py \
+        unittests/test_connection.py \
+        unittests/test_dbl_exp_neuron.py \
+        unittests/test_tracing_node.py
+
+TEST_EXTENSIONS = .py
+PY_LOG_COMPILER = $(PYTHON)
+

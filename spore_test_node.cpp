@@ -8,7 +8,7 @@ namespace spore
 /**
  * Constructor.
  */
-SambaTestNode::SambaTestNode()
+SporeTestNode::SporeTestNode()
 :test_time_(-1.0)
 {
     register_test(new TestCircularBuffer());
@@ -18,14 +18,14 @@ SambaTestNode::SambaTestNode()
 /**
  * Destructor.
  */
-SambaTestNode::~SambaTestNode()
+SporeTestNode::~SporeTestNode()
 {}
 
 
 /**
  * Register a new test.
  */
-void SambaTestNode::register_test(SambaTestBase *test)
+void SporeTestNode::register_test(SporeTestBase *test)
 {
     assert(tests_[test->get_name()] == 0);
     tests_[test->get_name()] = test;
@@ -35,14 +35,14 @@ void SambaTestNode::register_test(SambaTestBase *test)
 /**
  * State initialization function
  */
-void SambaTestNode::init_state_(const nest::Node& proto)
+void SporeTestNode::init_state_(const nest::Node& proto)
 {}
 
 
 /**
  * State initialization function
  */
-void SambaTestNode::init_buffers_()
+void SporeTestNode::init_buffers_()
 {
     init_traces(tests_[test_name_]->get_num_traces());
     tests_[test_name_]->init();
@@ -52,7 +52,7 @@ void SambaTestNode::init_buffers_()
 /**
  * Calibration function.
  */
-void SambaTestNode::calibrate()
+void SporeTestNode::calibrate()
 {}
 
 
@@ -60,16 +60,16 @@ void SambaTestNode::calibrate()
  * SpikeEvent handling.
  * @param e the event.
  */
-void SambaTestNode::handle(nest::SpikeEvent & e)
+void SporeTestNode::handle(nest::SpikeEvent & e)
 {}
 
 
 /**
  * Update function.
  */
-void SambaTestNode::update(nest::Time const & origin, const nest::long_t from, const nest::long_t to)
+void SporeTestNode::update(nest::Time const & origin, const nest::long_t from, const nest::long_t to)
 {
-    SambaTestBase* test = tests_[test_name_];
+    SporeTestBase* test = tests_[test_name_];
     
     for (long lag = from; lag < to; ++lag)
     {

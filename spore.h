@@ -5,34 +5,37 @@
  * Created on November 9, 2016, 2:26 PM
  */
 
-#ifndef SAMBA_H
-#define	SAMBA_H
+#ifndef SPORE_H
+#define	SPORE_H
 
 /**
- * NEST::SamBa (Sampling Based) is a NEST module that features a collection
- * on neurons and synapses that implement models based on ideas from
- * probabilistic inference (PI) via sampling. It also provides an API to
- * develop such models efficiently in NEST.
+ * SPORE (Synaptic Plasticity Online REinforcement) is a NEST module that
+ * features a collection of neuron and synapse models and infrastructure
+ * targeting reward-based learning algorithms. 
  * 
  * The main features of the module are:
  * 
- * - It introduces a synapse model that is guaranteed to be updated on a
- *   regular time grid (diligent connections).
+ * - It introduces a new class of synapse models that is guaranteed to be
+ *   updated on a regular time grid (DiligentConnectorModel).
  * 
- * - It introduces TracingNode, new class of nodes that can store a trace
- *   of a real-valued variable (e.g. the membrane potential) for a fixed time
- *   window. Connections may use these traces to update their state. This is
- *   more flexible and more suitable to implement synapse models based on
- *   PI via sampling, than NEST's plasticity models based on ArchivingNode
- *   which only allows to store spike events. 
+ * - It introduces TracingNode, a new class of NEST nodes that can store a
+ *   history of a pice-wise constant real-valued time series (e.g. the membrane
+ *   potential) for a fixed time window. We call these histories traces.
+ *   Connections may use these traces to update their state, e.g. to implement
+ *   a reward mechanism or for learning rules that depend on the somatic
+ *   potential. This is in many cases more suitable to implementations of
+ *   synapse models that were developed for reward-based learning.
+ * 
+ * - It introduces a MUSIC proxy that allows to receive traces from a MUSIC
+ *   port.
+ * 
  * 
  * @see DiligentConnectorModel, TracingNode.
  */
 
 
 // specify to enable spore debug tests.
-#define __SAMBA_DEBUG__
+#define __SPORE_DEBUG__
 
 
-#endif	/* SAMBA_H */
-
+#endif	/* SPORE_H */
