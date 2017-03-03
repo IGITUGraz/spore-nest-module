@@ -17,7 +17,7 @@ namespace spore
 /**
  * Class defining the SPORE module.
  */
-class SporteModule : public SLIModule
+class SporeModule : public SLIModule
 {
 public:
 
