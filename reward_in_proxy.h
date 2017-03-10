@@ -75,6 +75,7 @@ protected:
     State_ S_;
     Parameters_ P_;
 };
+
 }
 
 #endif

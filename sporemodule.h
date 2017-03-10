@@ -1,4 +1,4 @@
-/**
+/*
  * File:   spore_module.h
  * Author: Kappel, Hsieh
  */

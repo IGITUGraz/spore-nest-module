@@ -1,10 +1,8 @@
 #include "connection_updater.h"
 
-#include "network.h"
 #include "common_synapse_properties.h"
 #include "connector_base.h"
 #include "genericmodel.h"
-
 
 namespace spore
 {
@@ -44,9 +42,15 @@ ConnectionUpdateManager::~ConnectionUpdateManager()
  */
 void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
 {
+    
+#if defined(__SPORE_WITH_NEST_2_10__)
     nest::Network& net = nest::NestModule::get_network();
-
     const long num_threads = net.get_num_threads();
+#elif defined(__SPORE_WITH_NEST_2_12__)
+    const size_t num_threads = nest::kernel().vp_manager.get_num_threads();
+#else
+#error NEST version is not supported!
+#endif
 
     assert(num_threads>0);
     
@@ -62,7 +66,13 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
     
     if (cu_id_ == nest::invalid_index)
     {
+#if defined(__SPORE_WITH_NEST_2_10__)
         cu_id_ = net.add_node(cu_model_id_,1);
+#elif defined(__SPORE_WITH_NEST_2_12__)
+        cu_id_ = nest::kernel().node_manager.add_node(cu_model_id_,1);
+#else
+#error NEST version is not supported!
+#endif
     }
 
     interval_ = interval;
@@ -78,8 +88,15 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
 void ConnectionUpdateManager::init()
 {
     assert(cu_model_id_==nest::invalid_index);
+    
+#if defined(__SPORE_WITH_NEST_2_10__)
     nest::Network& net = nest::NestModule::get_network();
     cu_model_id_ = nest::register_private_model<ConnectionUpdater>(net, "connection_updater");
+#elif defined(__SPORE_WITH_NEST_2_12__)
+        cu_id_ = nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",/*private_model=*/true);
+#else
+#error NEST version is not supported!
+#endif
 }
 
 
@@ -129,7 +146,7 @@ void ConnectionUpdateManager::register_connector( nest::ConnectorBase* new_conn,
 {
     assert(cm);
     
-    if (connectors_.size()<th)
+    if (connectors_.size() < static_cast<size_t>(th))
     {
         throw nest::BadProperty("Connection update manager was not set up correctly before the first call to 'Connect'!"
                                 "Maybe you forgot to call 'InitSynapseUpdater'?");

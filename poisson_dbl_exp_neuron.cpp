@@ -4,7 +4,6 @@
 
 #include "exceptions.h"
 #include "poisson_dbl_exp_neuron.h"
-#include "network.h"
 #include "dict.h"
 #include "integerdatum.h"
 #include "doubledatum.h"
@@ -13,6 +12,7 @@
 #include "universal_data_logger_impl.h"
 #include "compose.hpp"
 
+#include <string>
 #include <limits>
 
 namespace nest
@@ -257,7 +257,7 @@ void PoissonDblExpNeuron::calibrate()
     B_.logger_.init();
 
     V_.h_ = nest::Time::get_resolution().get_ms();
-    V_.rng_ = net_->get_rng(get_thread());
+    V_.rng_ = get_rng();
 
     V_.decay_rise_exc_ = std::exp(-V_.h_ / P_.tau_rise_exc_);
     V_.decay_fall_exc_ = std::exp(-V_.h_ / P_.tau_fall_exc_);
@@ -307,8 +307,6 @@ void PoissonDblExpNeuron::calibrate()
  */
 void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, const long to)
 {
-
-    assert(to >= 0 && from < nest::Scheduler::get_min_delay());
     assert(from < to);
 
     for (long lag = from; lag < to; ++lag)
@@ -382,7 +380,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
                     // And send the spike event
                     nest::SpikeEvent se;
                     se.set_multiplicity(n_spikes);
-                    network()->send(*this, se, lag);
+                    send_event(se, lag);
 
                     // Reset the potential if applicable
                     if (P_.with_reset_)
@@ -429,12 +427,12 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
     //     is clumsy and should be improved.
     if (e.get_rport()==0)
     {
-        B_.exc_spikes_.add_value(e.get_rel_delivery_steps(network()->get_slice_origin()),
+        B_.exc_spikes_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
                              e.get_weight() * e.get_multiplicity());
     }
     else if (e.get_rport()==1)
     {
-        B_.inh_spikes_.add_value(e.get_rel_delivery_steps(network()->get_slice_origin()),
+        B_.inh_spikes_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
                              e.get_weight() * e.get_multiplicity());
     }
     else
@@ -453,7 +451,7 @@ void PoissonDblExpNeuron::handle(nest::CurrentEvent& e)
     const double c = e.get_current();
     const double w = e.get_weight();
 
-    B_.currents_.add_value(e.get_rel_delivery_steps(network()->get_slice_origin()),
+    B_.currents_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
                            w * c);
 }
 

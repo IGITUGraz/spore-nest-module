@@ -11,12 +11,28 @@
 #include <vector>
 #include <set>
 
+#include "spore.h"
+
 #include "nest.h"
 #include "event.h"
 #include "node.h"
 #include "nestmodule.h"
 #include "connector_model.h"
 #include "dictdatum.h"
+
+#if defined(__SPORE_WITH_NEST_2_10__)
+
+#include "network.h"
+
+#elif defined(__SPORE_WITH_NEST_2_12__)
+
+#include "connection_manager_impl.h"
+#include "connector_model_impl.h"
+#include "kernel_manager.h"
+
+#else
+#error NEST version is not supported!
+#endif
 
 
 namespace nest
@@ -72,7 +88,13 @@ public:
      */
     inline nest::delay get_max_latency() const
     {
+#if defined(__SPORE_WITH_NEST_2_10__)
         return interval_ + acceptable_latency_ + nest::NestModule::get_network().get_min_delay();
+#elif defined(__SPORE_WITH_NEST_2_12__)
+        return interval_ + acceptable_latency_ + nest::kernel().connection_manager.get_min_delay();
+#else 
+#error NEST version is not supported!
+#endif
     }
     
     /**
@@ -80,7 +102,13 @@ public:
      */
     inline nest::Time get_origin() const
     {
+#if defined(__SPORE_WITH_NEST_2_10__)
         return nest::NestModule::get_network().get_slice_origin();
+#elif defined(__SPORE_WITH_NEST_2_12__)
+        return nest::kernel().simulation_manager.get_slice_origin();
+#else 
+#error NEST version is not supported!
+#endif
     }
 
     /**
@@ -88,7 +116,7 @@ public:
      */
     inline nest::Time get_horizon() const
     {
-        return nest::NestModule::get_network().get_slice_origin() - nest::Time( nest::Time::step(interval_ + acceptable_latency_) ); 
+        return get_origin() - nest::Time( nest::Time::step(interval_ + acceptable_latency_) ); 
     }
     
     /**

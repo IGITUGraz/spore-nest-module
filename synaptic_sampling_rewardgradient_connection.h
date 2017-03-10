@@ -58,7 +58,7 @@ public:
       weight_update_steps_(0),
       bap_trace_id_(0),
       dopa_trace_id_(0),
-      verbose_(false),      
+      verbose_(false),
       std_wiener_(0.0),
       std_gradient_(0.0)
     {}
@@ -126,8 +126,13 @@ public:
         long rtgid;
         if (updateValue<long>(d, "reward_transmitter", rtgid))
         {
+#if defined(__SPORE_WITH_NEST_2_10__)
             reward_transmitter_ = dynamic_cast<TracingNode*> (nest::NestModule::get_network().get_node(rtgid));
-
+#elif defined(__SPORE_WITH_NEST_2_12__)
+            reward_transmitter_ = dynamic_cast<TracingNode*> (nest::kernel().node_manager.get_node(rtgid));
+#else
+#error NEST version is not supported!
+#endif
             if (reward_transmitter_ == 0)
                 throw nest::BadProperty("Reward transmitter must be of model RewardTransmitter");
         }
@@ -218,8 +223,14 @@ public:
         double result = 0.0;
         if (std_wiener_ > 0)
         {
+#if defined(__SPORE_WITH_NEST_2_10__)
             nest::Network *net = nest::Node::network();
             result = std_wiener_ * normal_dev_(net->get_rng(thread));
+#elif defined(__SPORE_WITH_NEST_2_12__)
+            result = std_wiener_ * normal_dev_(nest::kernel().rng_manager.get_rng(thread));
+#else
+#error NEST version is not supported!
+#endif
         }
         return result;
     }
@@ -232,10 +243,31 @@ public:
         double result = 0.0;
         if (std_gradient_ > 0)
         {
+#if defined(__SPORE_WITH_NEST_2_10__)
             nest::Network *net = nest::Node::network();
             result = std_gradient_ * normal_dev_(net->get_rng(thread));
+#elif defined(__SPORE_WITH_NEST_2_12__)
+            result = std_gradient_ * normal_dev_(nest::kernel().rng_manager.get_rng(thread));
+#else
+#error NEST version is not supported!
+#endif
         }
         return result;
+    }
+    
+   /**
+     * Convenience function to random number.
+     */
+    double drand(nest::thread thread) const
+    {
+#if defined(__SPORE_WITH_NEST_2_10__)
+        nest::Network *net = nest::Node::network();
+        return net->get_rng(thread)->drand();
+#elif defined(__SPORE_WITH_NEST_2_12__)
+        return nest::kernel().rng_manager.get_rng(thread)->drand();
+#else
+#error NEST version is not supported!
+#endif
     }
 
     TracingNode* reward_transmitter_;
@@ -289,6 +321,7 @@ private:
     double std_gradient_;
     librandom::NormalRandomDev normal_dev_;
 };
+
 
 /**
  * @brief Reward-based synaptic sampling connection class
@@ -425,7 +458,6 @@ public:
     void set_weight(double w)
     {
         synaptic_parameter_ = w;
-        std::cout << "set_weight SHOULD NOT BE USED with this synapse type!!!" << std::endl;
     }
     
     /**
@@ -438,12 +470,12 @@ public:
 
     /**
      * Access function to the current value of the postsynaptic potential.
-     */    
+     */
     double get_psp() const
     {
         return psp_facilitation_ - psp_depression_;
     }
-      
+
     /**
      * Access function to the current value of the synaptic weight.
      */
@@ -451,7 +483,7 @@ public:
     {
         return weight_;
     }
-    
+
     /**
      * Access function to the current value of the synaptic parameter.
      */
@@ -459,8 +491,8 @@ public:
     {
         return synaptic_parameter_;
     }
-    
-   /**
+
+    /**
      * Access function to the current value of the reward gradient.
      */
     double get_reward_gradient() const
@@ -824,9 +856,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapic
 
     if ((time >= cp.consolidation_time_) && (t_weight_ < cp.consolidation_time_))
     {
-        nest::Network *net = nest::Node::network();
-
-        if (net->get_rng(thread)->drand() <= cp.consolidation_probability_)
+        if (cp.drand(thread) <= cp.consolidation_probability_)
         {
             prior_mean_ = synaptic_parameter_;
             prior_std_ = cp.consolidation_prior_std_;

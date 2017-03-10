@@ -82,6 +82,9 @@ public:
 
 protected:
     void init_traces(size_t num_traces);
+    void send_event(nest::Event &ev, long lag);
+    librandom::RngPtr get_rng();
+    nest::Time get_slice_origin() const;
 
     /**
      * Set value of a trace at the given time point. Values are supposed to

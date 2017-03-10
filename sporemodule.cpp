@@ -1,22 +1,39 @@
 #include "sporemodule.h"
+#include "spore.h"
+
+#if defined(__SPORE_WITH_NEST_2_10__)
 
 // include necessary NEST headers
 #include "config.h"
 #include "network.h"
 #include "model.h"
 #include "dynamicloader.h"
-#include "genericmodel.h"
-#include "booldatum.h"
-#include "integerdatum.h"
-#include "tokenarray.h"
 #include "exceptions.h"
 #include "sliexceptions.h"
 #include "nestmodule.h"
 #include "target_identifier.h"
+
+#elif defined(__SPORE_WITH_NEST_2_12__)
+
+// Includes from nestkernel:
+#include "connection_manager_impl.h"
 #include "connector_model_impl.h"
+#include "dynamicloader.h"
+#include "exceptions.h"
+#include "genericmodel.h"
+#include "genericmodel_impl.h"
+#include "kernel_manager.h"
+#include "model.h"
+#include "model_manager_impl.h"
+#include "nestmodule.h"
+#include "target_identifier.h"
+
+#else
+#error NEST version is not supported!
+#endif
+
 
 // Include the module's headers
-#include "spore.h"
 #include "connection_updater.h"
 #include "diligent_connector_model.h"
 
@@ -68,7 +85,7 @@ spore::SporeModule::~SporeModule()
  */
 const std::string spore::SporeModule::name(void) const
 {
-    return std::string("SPORE (version 0.4)"); // Return name of the module
+    return std::string("SPORE (version 0.5)"); // Return name of the module
 }
 
 
@@ -122,6 +139,9 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
  */
 void spore::SporeModule::init(SLIInterpreter *i)
 {
+    
+#if defined(__SPORE_WITH_NEST_2_10__)
+
     nest::Network& network = nest::NestModule::get_network();
 
     ConnectionUpdateManager::instance()->init();
@@ -130,13 +150,34 @@ void spore::SporeModule::init(SLIInterpreter *i)
     nest::register_model<PoissonDblExpNeuron>(network, "poisson_dbl_exp_neuron");
     nest::register_model<RewardInProxy>(network, "reward_in_proxy");
 
-    spore::register_diligent_connection_model<SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >(network, "synaptic_sampling_rewardgradient_synapse");
+    spore::register_diligent_connection_model< SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >("synaptic_sampling_rewardgradient_synapse");
 
     i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
 
 #ifdef __SPORE_DEBUG__
     nest::register_model<SporeTestNode>(network, "spore_test_node");
-    spore::register_diligent_connection_model<SporeTestConnection<nest::TargetIdentifierPtrRport> >(network, "spore_test_synapse");
+    spore::register_diligent_connection_model<SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
+#endif
+
+#elif defined(__SPORE_WITH_NEST_2_12__)
+
+    ConnectionUpdateManager::instance()->init();
+
+    // Register nodes
+    nest::kernel().model_manager.register_node_model<PoissonDblExpNeuron>("poisson_dbl_exp_neuron");
+    nest::kernel().model_manager.register_node_model<RewardInProxy>("reward_in_proxy");
+
+    spore::register_diligent_connection_model< SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >("synaptic_sampling_rewardgradient_synapse");
+
+    i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
+
+#ifdef __SPORE_DEBUG__
+    nest::kernel().model_manager.register_node_model<SporeTestNode>("spore_test_node");
+    spore::register_diligent_connection_model<SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
+#endif
+
+#else
+#error NEST version is not supported!
 #endif
 
 }

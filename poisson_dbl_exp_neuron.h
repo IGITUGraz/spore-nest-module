@@ -38,6 +38,7 @@ namespace spore
  *
  * The transfer function can be chosen to be linear, exponential or a sum of 
  * both by adjusting three parameters:
+ *
  *     \f[
  *        rate = Rect[ c1 * V' + c2 * exp(c3 * V') ],
  *     \f]
@@ -56,11 +57,6 @@ namespace spore
  * dead_time=0, which draws Poisson numbers. Only for very large spike rates
  * (> 1 spike/h) this will cause errors.
  *
- * Note that, even if non-refractory neurons are to be modeled, a small value 
- * of dead_time, like dead_time=1e-8, might be the value of choice since it 
- * uses faster uniform random numbers than dead_time=0, which draws Poisson 
- * numbers. Only for very large spike rates (> 1 spike/h) this will cause errors.
- *
  * The model implements an adaptive threshold. If the neuron spikes, the 
  * threshold increases and the membrane potential will take longer to reach it.
  * If the neuron does not spike, the threshold linearly decays over time,
@@ -70,7 +66,7 @@ namespace spore
  * This model has been adapted from iaf_psc_delta. The default parameters are
  * set to the mean values in [2], which have were matched to spike-train 
  * recordings.
- *
+ *   
  * <b>Parameters</b>
  *
  * The following parameters can be set in the status dictionary.
@@ -120,15 +116,10 @@ namespace spore
  *   
  * [5] Deger M, Schwalger T, Naud R, Gerstner W (2014) Fluctuations and 
  * information filtering in coupled populations of spiking neurons with
- * adaptation. Physical Review E 90:6, 062704. 
- *
- * @author  Kappel, Hsieh, 2016; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh
+ * adaptation. Physical Review E 90:6, 062704.
  * 
+ * @author  Kappel, Hsieh; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh
  * @see TracingNode
- */
-
-/**
- * Point process neuron with leaky integration of delta-shaped PSCs.
  */
 class PoissonDblExpNeuron : public TracingNode
 {
