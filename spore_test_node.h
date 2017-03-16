@@ -5,8 +5,8 @@
  * Created on November 9, 2016, 2:30 PM
  */
 
-#ifndef SAMBA_TEST_MODULE_H
-#define	SAMBA_TEST_MODULE_H
+#ifndef SPORE_TEST_MODULE_H
+#define	SPORE_TEST_MODULE_H
 
 #include "dictutils.h"
 
@@ -109,5 +109,5 @@ void SporeTestNode::set_status(const DictionaryDatum &d)
 
 }
 
-#endif	/* SAMBA_TEST_MODULE_H */
+#endif	/* SPORE_TEST_MODULE_H */
 

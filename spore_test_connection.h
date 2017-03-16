@@ -1,5 +1,5 @@
-#ifndef SAMBA_TEST_CONNECTION
-#define SAMBA_TEST_CONNECTION
+#ifndef SPORE_TEST_CONNECTION
+#define SPORE_TEST_CONNECTION
 
 #include <cmath>
 #include "nest.h"
@@ -88,10 +88,14 @@ public:
 };
 
 /**
+<<<<<<< HEAD
  * @brief Connection for testing the spore module.
  * 
  * SporeTestConnection class provides an interface for writing unit tests
  * for the SPORE module.
+=======
+ * SporeTestConnection class
+>>>>>>> edf125e8feb0e5706b5798b44ad92b18db371448
  */
 template<typename targetidentifierT>
 class SporeTestConnection : public nest::Connection<targetidentifierT>

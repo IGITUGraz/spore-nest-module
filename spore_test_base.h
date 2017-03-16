@@ -5,8 +5,8 @@
  * Created on November 9, 2016, 3:13 PM
  */
 
-#ifndef SAMBA_TEST_BASE_H
-#define	SAMBA_TEST_BASE_H
+#ifndef SPORE_TEST_BASE_H
+#define	SPORE_TEST_BASE_H
 
 #include <string>
 
@@ -59,5 +59,5 @@ private:
 
 }
 
-#endif	/* SAMBA_TEST_BASE_H */
+#endif	/* SPORE_TEST_BASE_H */
 
