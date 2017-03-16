@@ -18,6 +18,8 @@ namespace spore
  * is a NEST module that features a collection of neuron and synapse models and
  * infrastructure targeting reward-based learning algorithms.
  * 
+ * The source code of the project is available form here: https://github.com/IGITUGraz/spore-nest-module
+ * 
  * The main features of the module are:
  * 
  * - It introduces a new class of synapse models that is guaranteed to be
