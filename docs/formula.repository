@@ -1,0 +1,4 @@
+\form#0:\[ rate = Rect[ c1 * V' + c2 * exp(c3 * V') ], \]
+\form#1:$ V' = V_m - E_{sfa}$
+\form#2:$ E_{sfa} $
+\form#3:$ 1 - exp(-rate*h) $

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>SPORE: Main Page</title>
+<title>SPORE: Class Members - Variables</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,9 +37,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,6 +59,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li class="current"><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow3" class="tabs2">
+    <ul class="tablist">
+      <li><a href="functions.html"><span>All</span></a></li>
+      <li><a href="functions_func.html"><span>Functions</span></a></li>
+      <li class="current"><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -74,20 +90,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle">
-<div class="title">SPORE Documentation</div>  </div>
-</div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>SPORE</b> (<b>S</b>ynaptic <b>P</b>lasticity with <b>O</b>nline <b>Re</b>inforcement learning) is a NEST module that features a collection of neuron and synapse models and infrastructure targeting reward-based learning algorithms.</p>
-<p>The main features of the module are:</p>
-<ul>
-<li>It introduces a new class of synapse models that is guaranteed to be updated on a regular time grid (<a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>).</li>
-<li>It introduces <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>, a new class of NEST nodes that can store a history of a pice-wise constant real-valued time series (e.g. the membrane potential) for a fixed time window. We call these histories traces. Connections may use these traces to update their state, e.g. to implement a reward mechanism or for learning rules that depend on the somatic potential. This is in many cases more suitable to implementations of synapse models that were developed for reward-based learning.</li>
-<li>It introduces a MUSIC proxy that allows to receive traces from a MUSIC port.</li>
+&#160;<ul>
+<li>data_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1Buffers__.html#a1156014f36691e01ff7c024532667498">spore::RewardInProxy::Buffers_</a>
+</li>
+<li>logger_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1Buffers__.html#a4bb27a33873b85bccaf2e08e72e6072d">spore::RewardInProxy::Buffers_</a>
+</li>
+<li>MP_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1Variables__.html#a92074510f3b3de4164ad79f400757acd">spore::RewardInProxy::Variables_</a>
+</li>
+<li>port_name_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">spore::RewardInProxy::Parameters_</a>
+</li>
+<li>port_width_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">spore::RewardInProxy::State_</a>
+</li>
+<li>published_
+: <a class="el" href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">spore::RewardInProxy::State_</a>
+</li>
+<li>recordablesMap_
+: <a class="el" href="classspore_1_1RewardInProxy.html#a9a7b07a7d9f52280b12d73bf8372d028">spore::RewardInProxy</a>
+</li>
 </ul>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>, <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. </dd></dl>
-</div></div><!-- contents -->
+</div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

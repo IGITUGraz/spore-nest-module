@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>SPORE: Main Page</title>
+<title>SPORE: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -37,9 +37,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </script>
   <div id="navrow1" class="tabs">
     <ul class="tablist">
-      <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -59,7 +59,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-</div><!-- top -->
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
+      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="inherits.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+    </ul>
+  </div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -74,24 +81,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1SporeModule.html">SporeModule</a></li>  </ul>
+</div>
+</div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">SPORE Documentation</div>  </div>
+<div class="title">spore::SporeModule Member List</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>SPORE</b> (<b>S</b>ynaptic <b>P</b>lasticity with <b>O</b>nline <b>Re</b>inforcement learning) is a NEST module that features a collection of neuron and synapse models and infrastructure targeting reward-based learning algorithms.</p>
-<p>The main features of the module are:</p>
-<ul>
-<li>It introduces a new class of synapse models that is guaranteed to be updated on a regular time grid (<a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>).</li>
-<li>It introduces <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>, a new class of NEST nodes that can store a history of a pice-wise constant real-valued time series (e.g. the membrane potential) for a fixed time window. We call these histories traces. Connections may use these traces to update their state, e.g. to implement a reward mechanism or for learning rules that depend on the somatic potential. This is in many cases more suitable to implementations of synapse models that were developed for reward-based learning.</li>
-<li>It introduces a MUSIC proxy that allows to receive traces from a MUSIC port.</li>
-</ul>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>, <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. </dd></dl>
-</div></div><!-- contents -->
+
+<p>This is the complete list of members for <a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeModule.html#ad55630e16b7acb9572567a59d297ab62">commandstring</a>(void) const </td><td class="entry"><a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1SporeModule.html#ad9f61522640efe29d3243950ba60a3d0">init</a>(SLIInterpreter *)</td><td class="entry"><a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeModule.html#aad19f730643cec50cc5a10b878dac746">name</a>(void) const </td><td class="entry"><a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1SporeModule.html#a963446af6b9c387c53df86d1c3e162cf">SporeModule</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeModule.html#aaab46ea0497697a54eb784678b27bc82">~SporeModule</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeModule.html">spore::SporeModule</a></td><td class="entry"></td></tr>
+</table></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Mar 16 2017 18:42:38 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Mar 16 2017 18:42:37 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
