@@ -8,8 +8,13 @@
 #ifndef CIRCULAR_BUFFER_H
 #define	CIRCULAR_BUFFER_H
 
+namespace spore
+{
+
 /**
- * Minimal implementation of an iterable circular buffer.
+ * @brief An iterable circular buffer.
+ * 
+ * This class provides the buffer that is used by TracingNode to hold traces.
  * 
  * @note resize erases all values and sets the whole vector to defaults.
  */
@@ -170,5 +175,6 @@ private:
     size_t size_;
 };
 
+}
 
 #endif	/* CIRCULAR_BUFFER_H */

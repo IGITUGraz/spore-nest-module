@@ -1,7 +1,6 @@
 #ifndef SAMBA_TEST_CONNECTION
 #define SAMBA_TEST_CONNECTION
 
-#include <random>
 #include <cmath>
 #include "nest.h"
 #include "connection.h"
@@ -10,10 +9,6 @@
 
 #include "tracing_node.h"
 
-
-/**
- * Connection for testing spore module.
- */
 
 namespace spore
 {
@@ -93,7 +88,10 @@ public:
 };
 
 /**
- * SporeTestConnection class
+ * @brief Connection for testing the spore module.
+ * 
+ * SporeTestConnection class provides an interface for writing unit tests
+ * for the SPORE module.
  */
 template<typename targetidentifierT>
 class SporeTestConnection : public nest::Connection<targetidentifierT>

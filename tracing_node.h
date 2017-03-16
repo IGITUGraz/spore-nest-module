@@ -16,6 +16,8 @@ namespace spore
 {
 
 /**
+ * @brief Base class to all nodes that record traces.
+ *
  * Node that allows to record traces. A trace is a fixed-length buffer that
  * stores the most recent values of a real-valued time-dependent variable,
  * e.g., the neuron's membrane potential. Traces can be read by other nodes
@@ -34,6 +36,8 @@ public:
     virtual void set_status(const DictionaryDatum& d);
     
     /**
+     * @brief Base class to all nodes that record traces.
+     * 
      * Get the trace at the given time step. Returns an iterator to a
      * circular buffer that allows to read the trace. Note that neither
      * this function nor the iterator checks for the limits of the trace.

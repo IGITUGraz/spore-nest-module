@@ -26,7 +26,7 @@ void TestTracingNode::check(nest::delay time_step, TracingNode *node)
     
     for (int tid=0; tid<node->get_num_traces(); tid++)
     {
-        for (int t=0; t<time_step; t++)
+        for (size_t t=0; t<time_step; t++)
         {
             //std::cout << (*node->get_trace(t, tid)) << " <-> " << t+tid << std::endl;
             test_assert( (*node->get_trace(t, tid))==t+tid, "trace content");

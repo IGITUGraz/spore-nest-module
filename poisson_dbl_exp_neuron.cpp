@@ -67,11 +67,11 @@ PoissonDblExpNeuron::Parameters_::Parameters_()
  * Default constructor.
  */
 PoissonDblExpNeuron::State_::State_()
-: u_membrane_(0.0),
-  u_rise_exc_(0.0),
+: u_rise_exc_(0.0),
   u_fall_exc_(0.0),
   u_rise_inh_(0.0),
   u_fall_inh_(0.0),
+  u_membrane_(0.0),
   input_current_(0.0),
   adaptative_threshold_(0.0),
   lost_p_values_(0),
@@ -305,7 +305,7 @@ void PoissonDblExpNeuron::calibrate()
 /**
  * Update the node to the given time point.
  */
-void PoissonDblExpNeuron::update(nest::Time const & origin, const nest::long_t from, const nest::long_t to)
+void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, const long to)
 {
 
     assert(to >= 0 && from < nest::Scheduler::get_min_delay());

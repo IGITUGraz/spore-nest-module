@@ -43,7 +43,7 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum &d, recorder_port port
 
     (*d)["recorder_times"] = recorder.recorder_times_;
     
-    for ( int i=0; i<recorder_info_.size(); i++ )
+    for ( size_t i=0; i<recorder_info_.size(); i++ )
     {
         (*d)[recorder_info_[i].name_+"_values"] =  recorder.recorder_values_[i];
     }

@@ -22,12 +22,11 @@
 namespace spore
 {
 
-/* BeginDocumentation
- * Name: PoissonDblExpNeuron - Point process neuron with double-exponential
- * PSPs.
- *
- * Description:
- *
+/**
+ * @brief Point process neuron with double-exponential shaped PSCs.
+ * 
+ * PoissonDblExpNeuron - Point process neuron with double-exponential PSPs.
+ * 
  * PoissonDblExpNeuron is a variant of the spike response model model with
  * double exponential PSP shapes an absolute refractory mechanism.
  *
@@ -39,21 +38,23 @@ namespace spore
  *
  * The transfer function can be chosen to be linear, exponential or a sum of 
  * both by adjusting three parameters:
- *
- *     rate = Rect[ c1 * V' + c2 * exp(c3 * V') ],
- *
- * where the effective potential V' = V_m - E_sfa and E_sfa is called 
- * the adaptive threshold.
- *
- * By setting c3 = 0, c2 can be used as an offset spike rate for an otherwise
- * linear rate model.
+ *     \f[
+ *        rate = Rect[ c1 * V' + c2 * exp(c3 * V') ],
+ *     \f]
+ * where the effective potential \f$ V' = V_m - E_{sfa}\f$ and \f$ E_{sfa} \f$
+ * is called the adaptive threshold. By setting c3 = 0, c2 can be used as an
+ * offset spike rate for an otherwise linear rate model.
  *
  * The dead time enables to include refractoriness. If dead time is 0, the
  * number of spikes in one time step might exceed one and is drawn from the
  * Poisson distribution accordingly. Otherwise, the probability for a spike
- * is given by 1 - exp(-rate*h), where h is the simulation time step. If dead_time
- * is smaller than the simulation resolution (time step), it is internally 
- * set to the time step.
+ * is given by \f$ 1 - exp(-rate*h) \f$, where h is the simulation time step.
+ * If dead_time is smaller than the simulation resolution (time step), it is
+ * internally set to the time step. Note that, even if non-refractory neurons
+ * are to be modeled, a small value of dead_time, like dead_time=1e-8, might
+ * be the value of choice since it uses faster uniform random numbers than
+ * dead_time=0, which draws Poisson numbers. Only for very large spike rates
+ * (> 1 spike/h) this will cause errors.
  *
  * Note that, even if non-refractory neurons are to be modeled, a small value 
  * of dead_time, like dead_time=1e-8, might be the value of choice since it 
@@ -69,8 +70,38 @@ namespace spore
  * This model has been adapted from iaf_psc_delta. The default parameters are
  * set to the mean values in [2], which have were matched to spike-train 
  * recordings.
- *   
- * References:
+ *
+ * <b>Parameters</b>
+ *
+ * The following parameters can be set in the status dictionary.
+ *
+ * <table>
+ * <tr><th>name</th>                     <th>type</th>   <th>comment</th></tr> 
+ * <tr><td>V_m</td>                      <td>double</td> <td>Membrane potential in mV</td></tr>
+ * <tr><td>tau_rise_exc</td>             <td>double</td> <td>Fall time constant of excitatory PSP</td></tr>
+ * <tr><td>tau_fall_exc</td>             <td>double</td> <td>Rise time constant of excitatory PSP</td></tr>
+ * <tr><td>tau_rise_inh</td>             <td>double</td> <td>Fall time constant of inhibitory PSP</td></tr>
+ * <tr><td>tau_fall_inh</td>             <td>double</td> <td>Rise time constant of inhibitory PSP</td></tr>
+ * <tr><td>q_sfa</td>                    <td>double</td> <td>Adaptive threshold jump in mV</td></tr>
+ * <tr><td>dead_time</td>                <td>double</td> <td>Duration of the dead time in ms</td></tr>
+ * <tr><td>dead_time_random</td>         <td>bool</td>   <td>Should a random dead time be drawn after each spike?</td></tr>
+ * <tr><td>dead_time_shape</td>          <td>int</td>    <td>Shape parameter of dead time gamma distribution</td></tr>
+ * <tr><td>t_ref_remaining</td>          <td>double</td> <td>Remaining dead time at simulation start</td></tr>
+ * <tr><td>with_reset</td>               <td>bool</td>   <td>Should the membrane potential be reset after a spike?</td></tr>
+ * <tr><td>I_e</td>                      <td>double</td> <td>Constant input current [pA]</td></tr>
+ * <tr><td>input_conductance</td>        <td>double</td> <td>Conductance of input currents [S]</td></tr> 
+ * <tr><td>c_1</td>                      <td>double</td> <td>Slope of linear part of transfer function in Hz/mV</td></tr>
+ * <tr><td>c_2</td>                      <td>double</td> <td>Prefactor of exponential part of transfer function in Hz</td></tr>
+ * <tr><td>c_3</td>                      <td>double</td> <td>Coefficient of exponential non-linearity of transfer function in 1/mV</td></tr>
+ * <tr><td>target_rate</td>              <td>double</td> <td>Target rate of neuron for adaptation mechanism [Hz]</td></tr>
+ * <tr><td>target_adaptation_speed</td>  <td>double</td> <td>Speed of rate adaptation</td></tr>
+ * </table>
+ * 
+ * <i>Sends:</i> SpikeEvent
+ *
+ * <i>Receives:</i> SpikeEvent, CurrentEvent, DataLoggingRequest
+ * 
+ * <b>References</b>
  *
  * [1] Multiplicatively interacting point processes and applications to neural 
  * modeling (2010) Stefano Cardanobile and Stefan Rotter, Journal of 
@@ -91,36 +122,9 @@ namespace spore
  * information filtering in coupled populations of spiking neurons with
  * adaptation. Physical Review E 90:6, 062704. 
  *
- *
- * Parameters:
- *
- * The following parameters can be set in the status dictionary.
- *
- * V_m                      double - Membrane potential in mV.
- * tau_rise_exc             double - Fall time constant of excitatory PSP.
- * tau_fall_exc             double - Rise time constant of excitatory PSP.
- * tau_rise_inh             double - Fall time constant of inhibitory PSP.
- * tau_fall_inh             double - Rise time constant of inhibitory PSP.
- * q_sfa                    double - Adaptive threshold jump in mV.
- * dead_time                double - Duration of the dead time in ms.
- * dead_time_random         bool   - Should a random dead time be drawn after each spike?
- * dead_time_shape          int    - Shape parameter of dead time gamma distribution.
- * t_ref_remaining          double   Remaining dead time at simulation start.
- * with_reset               bool     Should the membrane potential be reset after a spike?
- * I_e                      double - Constant input current [pA].
- * input_conductance        double - Conductance of input currents [S]. 
- * c_1                      double - Slope of linear part of transfer function in Hz/mV.
- * c_2                      double - Prefactor of exponential part of transfer function in Hz.
- * c_3                      double - Coefficient of exponential non-linearity of transfer function in 1/mV.
- * target_rate              double - Target rate of neuron for adaptation mechanism [Hz].
- * target_adaptation_speed  double - Speed of rate adaptation.
+ * @author  Kappel, Hsieh, 2016; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh
  * 
- * Sends: SpikeEvent
- *
- * Receives: SpikeEvent, CurrentEvent, DataLoggingRequest
- *
- * Author:  Kappel, Hsieh; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh
- * SeeAlso: TracingNode, pp_psc_delta
+ * @see TracingNode
  */
 
 /**
@@ -159,7 +163,7 @@ private:
     void init_buffers_();
     void calibrate();
 
-    void update(nest::Time const &, const nest::long_t, const nest::long_t);
+    void update(nest::Time const &, const long, const long);
 
     // The next two classes need to be friends to access the State_ class/member
     friend class nest::RecordablesMap<PoissonDblExpNeuron>;
@@ -303,7 +307,6 @@ private:
     }
 
     /**
-     * @defgroup iaf_psc_alpha_data
      * Instances of private data structures for the different types
      * of data pertaining to the model.
      * @note The order of definitions is important for speed.

@@ -67,7 +67,7 @@ void SporeTestNode::handle(nest::SpikeEvent & e)
 /**
  * Update function.
  */
-void SporeTestNode::update(nest::Time const & origin, const nest::long_t from, const nest::long_t to)
+void SporeTestNode::update(nest::Time const & origin, const long from, const long to)
 {
     SporeTestBase* test = tests_[test_name_];
     

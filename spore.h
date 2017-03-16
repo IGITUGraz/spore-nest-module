@@ -8,10 +8,15 @@
 #ifndef SPORE_H
 #define	SPORE_H
 
+namespace spore
+{
+
 /**
- * SPORE (Synaptic Plasticity Online REinforcement) is a NEST module that
- * features a collection of neuron and synapse models and infrastructure
- * targeting reward-based learning algorithms. 
+ * @mainpage
+ * 
+ * <b>SPORE</b> (<b>S</b>ynaptic <b>P</b>lasticity with <b>O</b>nline <b>Re</b>inforcement learning)
+ * is a NEST module that features a collection of neuron and synapse models and
+ * infrastructure targeting reward-based learning algorithms.
  * 
  * The main features of the module are:
  * 
@@ -37,5 +42,6 @@
 // specify to enable spore debug tests.
 #define __SPORE_DEBUG__
 
+} // namespace spore
 
 #endif	/* SPORE_H */

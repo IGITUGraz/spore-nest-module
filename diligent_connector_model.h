@@ -1,16 +1,14 @@
 /**
- * diligent_connector_model.h
+ * @file diligent_connector_model.h
  * 
- * This source code is based mainly on connector_model_impl.h that is
+ * This source code is based mainly on <i>connector_model_impl.h</i> that is
  * part of NEST 2.10 (Copyright (C) 2004 The NEST Initiative).
  *
- * David Kappel, 2016
+ * @author David Kappel, 2016
  */
 
-#ifndef SAMPLING_BASED_CONNECTOR_MODEL_H
-#define SAMPLING_BASED_CONNECTOR_MODEL_H
-
-#include <set>
+#ifndef DILIGENT_CONNECTOR_MODEL_H
+#define DILIGENT_CONNECTOR_MODEL_H
 
 #include "nest_time.h"
 #include "nest_timeconverter.h"
@@ -21,19 +19,22 @@
 
 #include "connection_updater.h"
 
-namespace nest
-{
-  class ConnectorBase;
-  class TimeConverter;
-  class Node;
-}
 
 namespace spore
 {
 
 /**
+ * @brief Connector model for diligent connections.
+ * 
  * Generic connector model for connections that require being updated on a
- * regular time grid.
+ * regular time grid. Use the function
+ * <i>
+ *   register_diligent_connection_model
+ * <\i>
+ * provided in diligent_connector_model.h, to register your synapse model at
+ * the network, to use the diligent synapse model instead of NEST's build-in
+ * synapse model.
+ * 
  * 
  * Diligent connections are connection models that are updated on a regular
  * time grid (as opposed to NEST's standard lazy update). More precisely, the
@@ -193,6 +194,7 @@ DiligentConnectorModel< ConnectionT >::delete_connection( nest::Node& tgt,
 
 
 /**
+ * Creates a clone of the connector model.
  */
 template < typename ConnectionT >
 nest::ConnectorModel*
@@ -203,6 +205,7 @@ DiligentConnectorModel< ConnectionT >::clone( std::string name ) const
 
 
 /**
+ * Registers the connector at the ConnectionUpdateManager.
  */
 template < typename ConnectionT >
 void DiligentConnectorModel< ConnectionT >::register_connector( nest::ConnectorBase* new_conn,
@@ -258,13 +261,8 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector( n
 }
 
 
-/////////////////////////////////////////////////////////////////////////////////
-// Convenient versions of template functions for registering new synapse types //
-// by modules                                                                  //
-/////////////////////////////////////////////////////////////////////////////////
-
 /**
- * Register a synape with default Connector and without any common properties.
+ * @brief Convenience function to register diligent synapses.
  */
 template <class ConnectionT>
 nest::synindex register_diligent_connection_model(nest::Network& net, const std::string &name)
@@ -274,7 +272,7 @@ nest::synindex register_diligent_connection_model(nest::Network& net, const std:
 
 
 
-} // namespace nest
+} // namespace spore
 
 
 #endif

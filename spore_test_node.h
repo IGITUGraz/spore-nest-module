@@ -47,7 +47,7 @@ private:
     void init_buffers_();
     void calibrate();
 
-    void update(nest::Time const &, const nest::long_t, const nest::long_t);
+    void update(nest::Time const &, const long, const long);
 
     std::string test_name_;
     double test_time_;

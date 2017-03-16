@@ -129,7 +129,7 @@ void ConnectionDataLogger<ConnectionType>::record( double time_step,
     {
         recorder.recorder_times_.push_back(time_step);
         
-        for (int i=0; i<recorder.recorder_values_.size(); i++)
+        for (size_t i=0; i<recorder.recorder_values_.size(); i++)
         {
             recorder.recorder_values_[i].push_back( ( (host).*( data_access_fct_[i] ) )() );
         }

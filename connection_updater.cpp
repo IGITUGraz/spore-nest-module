@@ -206,7 +206,7 @@ void ConnectionUpdateManager::reset()
 
 
 /**
- * returns the only instance of ConnectionUpdateManager.
+ * @return the only instance of ConnectionUpdateManager.
  */
 ConnectionUpdateManager* ConnectionUpdateManager::instance()
 {

@@ -14,6 +14,9 @@
 
 namespace spore {
 
+    /**
+     * @brief A device which receives reward traces from MUSIC.
+     */
     class RewardInProxy : public TracingNode {
     public:
 
@@ -49,7 +52,7 @@ namespace spore {
         virtual void init_state_(const Node&);
         virtual void calibrate();
 
-        virtual void update(nest::Time const&, const nest::long_t, const nest::long_t);
+        virtual void update(nest::Time const&, const long, const long);
 
         // The next two classes need to be friends to access the State_ class/member
         friend class nest::RecordablesMap<RewardInProxy>;

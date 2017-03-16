@@ -28,6 +28,8 @@ namespace spore
 {
 
 /**
+ * @brief Class that manages updating diligent synapses.
+ * 
  * Singleton class that manages updating connections that require regular
  * updates (diligent connections). The object is supposed to be updated in a
  * regular interval (defined by get_interval()). Synapses that were not updated
@@ -49,43 +51,57 @@ public:
     void register_connector( nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,
                              nest::thread th, nest::ConnectorModel* cm, nest::synindex syn_id );
 
-    // Returns the update interval.
+    /**
+     * @return the update interval.
+     */
     inline nest::delay get_interval() const
     {
         return interval_;
     }
 
-    // Returns the maximum allowed delay.
+    /**
+     * @return the maximum allowed delay.
+     */
     inline nest::delay get_acceptable_latency() const
     {
         return acceptable_latency_;
     }
 
-    // Returns the maximum latency of any registered connection.
+    /**
+     * @return the maximum latency of any registered connection.
+     */
     inline nest::delay get_max_latency() const
     {
         return interval_ + acceptable_latency_ + nest::NestModule::get_network().get_min_delay();
     }
     
-    // Returns the time limit up to which connections should be updated.
+    /**
+     * @return the time limit up to which connections should be updated.
+     */
     inline nest::Time get_origin() const
     {
         return nest::NestModule::get_network().get_slice_origin();
     }
 
-    // Returns the time limit up to which connections should be updated.
+    /**
+     * @return the time limit up to which connections should be updated.
+     */
     inline nest::Time get_horizon() const
     {
         return nest::NestModule::get_network().get_slice_origin() - nest::Time( nest::Time::step(interval_ + acceptable_latency_) ); 
     }
     
-    // Returns true if the ConnectionUpdateManager is set up correctly.
+    /**
+     * @return true if the ConnectionUpdateManager is set up correctly.
+     */
     inline bool is_valid() const
     {
         return (interval_>0) && (acceptable_latency_>=0);
     }
 
-    // Returns true if at least one connection has been registered.
+    /**
+     * @return true if at least one connection has been registered.
+     */
     inline bool has_connections() const
     {
         return has_connections_;
@@ -118,7 +134,7 @@ private:
 
 
 /**
- * Nest node to handle synapse updates on regular time grid.
+ * @brief Nest node to handle synapse updates on regular time grid.
  */
 class ConnectionUpdater : public nest::Node
 {
@@ -153,6 +169,8 @@ private:
 
 
 /**
+ * @brief The dummy event class used to trigger synapse updates.
+ * 
  * The event sent to the synapse for updates. This is a dummy event, that must
  * not be communicated to the postsynaptic neuron. Trying to send or clone an
  * instance of SynapseUpdateEvent will raise an exception. SynapseUpdateEvent

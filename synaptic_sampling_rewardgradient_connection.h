@@ -1,7 +1,6 @@
 #ifndef SYNAPTIC_SAMPLING_REWARDGRADIENT_CONNECTIO
 #define SYNAPTIC_SAMPLING_REWARDGRADIENT_CONNECTIO
 
-#include <random>
 #include <cmath>
 #include "nest.h"
 #include "connection.h"
@@ -13,78 +12,12 @@
 #include "connection_data_logger.h"
 
 
-/**
- * BeginDocumentation
- * 
- * Name: SynapticSamplingRewardgradientConnection - Synapse implementing
- * reward-based learning through synaptic sampling.
- *
- *
- * Description:
- * This synapse implements the model in [1].
- * This connection is a diligent synapse model, therefore updates are triggered
- * on a regular interval which is ensured by the ConnectionUpdateManager.
- * The target node and the reward transmitter must be derived from the
- * TracingNode model.
- *
- * Parameters:
- * 
- * The following parameters can be set in the common properties dictionary.
- * 
- * learning_rate               double - Learning rate.
- * temperature                 double - Temperature (amplitude) of parameter noise.
- * gradient_noise              double - Amplitude of gradient noise.
- * psp_facilitation_rate       double - Double exponential PSP kernel rise [1/s].
- * psp_depression_rate         double - Double exponential PSP kernel decay [1/s].
- * integration_time            double - Time of gradient integration [ms].
- * episode_length              double - Length of eligibility trace [ms].
- * weight_update_time          double - Interval of synaptic weight updates [ms].
- * parameter_mapping_offset    double - Offset parameter for computing synaptic weight.
- * max_param                   double - Maximum synaptic parameter.
- * min_param                   double - Minimum synaptic parameter.
- * max_param_change            double - Maximum synaptic parameter change.
- * direct_gradient_rate        double - Rate of directly applying changes to the synaptic parameter.
- * consolidation_time          double - Time point when consolidation is triggered.
- * consolidation_interval      double - Interval after which synapses become consolidated.
- * consolidation_threshold     double - Threshold of consolidation.
- * consolidation_probability   double - Probability of consolidation.
- * consolidation_prior_std     double - Prior STD of consolidated synapses.
- * gradient_scale              double - Scaling parameter for the gradient.
- * reward_transmitter          int    - GID of the synapse's reward transmitter.
- * bap_trace_id                int    - ID of the BAP trace (default 0).
- * dopa_trace_id               int    - ID of the dopamine trace (default 0).
- * verbose                     bool   - Write status to std::out (for debugging).
- * 
- * The following parameters can be set in the status dictionary.
- * 
- * synaptic_parameter          double - Initial synaptic parameter.
- * weight                      double - Current synaptic weight.
- * prior_mean                  double - Mean of the prior.
- * prior_std                   double - STD of the prior.
- * is_consolidated             bool   - Returns true if the synapse is consolidated.
- * recorder_times              double - Time points of parameter recordings.
- * weight_values               double - Array of recorded synaptic weight values.
- * synaptic_parameter_values   double - Array of recorded synaptic parameter values.
- * reward_gradient_values      double - Array of recorded reward gradient values.
- * eligibility_trace_values    double - Array of recorded eligibility trace values.
- * psp_values                  double - Array of recorded psp values.
- * recorder_interval           double - Interval of synaptic recordings [ms].
- * reset_recorder              bool   - Clear all recorded values now (write only).
- *
- * Author: David Kappel, Michael Hsieh
- *
- * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
- * Wolfgang Maass. Reward-based self-configuration of neural circuits. 2016.
- * 
- * SeeAlso: TracingNode, stdp_dopamine_synapse
- */
-
 namespace spore
 {
 
 /**
  * Class containing the common properties for all synapses of type
- * SynapticSamplingRewardGradientCommonProperties.
+ * SynapticSamplingRewardGradientConnection.
  */
 class SynapticSamplingRewardGradientCommonProperties : public nest::CommonSynapseProperties
 {
@@ -123,9 +56,9 @@ public:
       psp_scale_factor_(0.0),
       epsilon_(0.0001),
       weight_update_steps_(0),
-      verbose_(false),
       bap_trace_id_(0),
       dopa_trace_id_(0),
+      verbose_(false),      
       std_wiener_(0.0),
       std_gradient_(0.0)
     {}
@@ -358,7 +291,71 @@ private:
 };
 
 /**
- * Synaptic sampling class
+ * @brief Reward-based synaptic sampling connection class
+ * 
+ * SynapticSamplingRewardgradientConnection - Synapse implementing reward-based
+ * learning through synaptic sampling. This class implements the model in [1].
+ * This connection is a diligent synapse model, therefore updates are triggered
+ * on a regular interval which is ensured by the ConnectionUpdateManager.
+ * The target node and the reward transmitter must be derived from the
+ * TracingNode model.
+ *
+ * <b>Parameters</b>
+ * 
+ * The following parameters can be set in the common properties dictionary:
+ * <table>
+ * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr> 
+ * <tr><td>learning_rate</td>               <td>double</td> <td>learning rate</td></tr>
+ * <tr><td>temperature</td>                 <td>double</td> <td>(amplitude) of parameter noise</td></tr>
+ * <tr><td>gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise</td></tr> 
+ * <tr><td>psp_facilitation_rate</td>       <td>double</td> <td>double exponential PSP kernel rise [1/s]</td></tr> 
+ * <tr><td>psp_depression_rate</td>         <td>double</td> <td>double exponential PSP kernel decay [1/s]</td></tr> 
+ * <tr><td>integration_time</td>            <td>double</td> <td>time of gradient integration [ms]</td></tr> 
+ * <tr><td>episode_lengtd</td>              <td>double</td> <td>lengtd of eligibility trace [ms]</td></tr> 
+ * <tr><td>weight_update_time</td>          <td>double</td> <td>interval of synaptic weight updates [ms]</td></tr> 
+ * <tr><td>parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic weight</td></tr> 
+ * <tr><td>max_param</td>                   <td>double</td> <td>maximum synaptic parameter</td></tr> 
+ * <tr><td>min_param</td>                   <td>double</td> <td>minimum synaptic parameter</td></tr> 
+ * <tr><td>max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change</td></tr> 
+ * <tr><td>direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to tde synaptic parameter</td></tr> 
+ * <tr><td>consolidation_time</td>          <td>double</td> <td>time point when consolidation is triggered</td></tr> 
+ * <tr><td>consolidation_interval</td>      <td>double</td> <td>interval after which synapses become consolidated</td></tr> 
+ * <tr><td>consolidation_tdreshold</td>     <td>double</td> <td>tdreshold of consolidation</td></tr> 
+ * <tr><td>consolidation_probability</td>   <td>double</td> <td>probability of consolidation</td></tr> 
+ * <tr><td>consolidation_prior_std</td>     <td>double</td> <td>prior STD of consolidated synapses</td></tr> 
+ * <tr><td>gradient_scale</td>              <td>double</td> <td>scaling parameter for tde gradient</td></tr> 
+ * <tr><td>reward_transmitter</td>          <td>int</td>    <td>GID of tde synapse's reward transmitter</td></tr> 
+ * <tr><td>bap_trace_id</td>                <td>int</td>    <td>ID of tde BAP trace (default 0)</td></tr> 
+ * <tr><td>dopa_trace_id</td>               <td>int</td>    <td>ID of tde dopamine trace (default 0)</td></tr> 
+ * <tr><td>verbose</td>                     <td>bool</td>   <td>write status to std::out (for debugging)</td></tr> 
+ * </table>
+ * 
+ * The following parameters can be set in the status dictionary:
+ * <table>
+ * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr> 
+ * <tr><td>synaptic_parameter</td>          <td>double</td> <td>initial synaptic parameter</td></tr>
+ * <tr><td>weight</td>                      <td>double</td> <td>current synaptic weight</td></tr>
+ * <tr><td>prior_mean</td>                  <td>double</td> <td>mean of tde prior</td></tr>
+ * <tr><td>prior_std</td>                   <td>double</td> <td>STD of tde prior</td></tr>
+ * <tr><td>is_consolidated</td>             <td>bool</td>   <td>returns true if tde synapse is consolidated</td></tr>
+ * <tr><td>recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
+ * <tr><td>weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
+ * <tr><td>synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values</td></tr>
+ * <tr><td>reward_gradient_values</td>      <td>double</td> <td>array of recorded reward gradient values</td></tr>
+ * <tr><td>eligibility_trace_values</td>    <td>double</td> <td>array of recorded eligibility trace values</td></tr>
+ * <tr><td>psp_values</td>                  <td>double</td> <td>array of recorded psp values</td></tr>
+ * <tr><td>recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
+ * <tr><td>reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now (write only)</td></tr>
+ * </table>
+ * 
+ * <b>References</b>
+ * 
+ * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
+ * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i> 2016.
+ * 
+ * @author David Kappel, Michael Hsieh
+ *
+ * @see TracingNode, DiligentConnectorModel
  */
 template<typename targetidentifierT>
 class SynapticSamplingRewardGradientConnection : public nest::Connection<targetidentifierT>
@@ -391,6 +388,11 @@ public:
         }
     };
 
+    /**
+     * Checks if the type of the postsynaptic node is supported. Throws an
+     * IllegalConnection exception if the postsynaptic node is not derived
+     * from TracingNode.
+     */
     void check_connection(nest::Node & s, nest::Node & t,
                           nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
     {
@@ -413,32 +415,54 @@ public:
     using ConnectionBase::get_rport;
     using ConnectionBase::get_target;
 
+    /**
+     * Sets the synaptic weight to the given value.
+     * 
+     * @note This value will be overwritten at the next time when the synapse
+     * is updated. Set the synaptic_parameter instead for permanent weight
+     * changes.
+     */
     void set_weight(double w)
     {
         synaptic_parameter_ = w;
         std::cout << "set_weight SHOULD NOT BE USED with this synapse type!!!" << std::endl;
     }
     
+    /**
+     * Access function to the current value of the eligibility trace.
+     */
     double get_eligibility_trace() const
     {
         return stdp_eligibility_trace_;
     }
-    
+
+    /**
+     * Access function to the current value of the postsynaptic potential.
+     */    
     double get_psp() const
     {
         return psp_facilitation_ - psp_depression_;
     }
-        
+      
+    /**
+     * Access function to the current value of the synaptic weight.
+     */
     double get_weight() const
     {
         return weight_;
     }
     
+    /**
+     * Access function to the current value of the synaptic parameter.
+     */
     double get_synaptic_parameter() const
     {
         return synaptic_parameter_;
     }
     
+   /**
+     * Access function to the current value of the reward gradient.
+     */
     double get_reward_gradient() const
     {
         return reward_gradient_;
@@ -613,7 +637,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
     const bool is_consolidated = (t_consolidate_ < 0.0);
     def<bool>(d, "is_consolidated", is_consolidated);
 
-    def<nest::long_t>(d, nest::names::size_of, sizeof (*this));
+    def<long>(d, nest::names::size_of, sizeof (*this));
 
     logger()->get_status(d, recorder_port_);
 }

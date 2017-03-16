@@ -176,7 +176,8 @@ namespace spore {
     }
 
     void
-    RewardInProxy::get_status(DictionaryDatum& d) const {
+    RewardInProxy::get_status(DictionaryDatum& d) const
+    {
         P_.get(d);
         S_.get(d);
         B_.get(d);
@@ -186,7 +187,8 @@ namespace spore {
     }
 
     void
-    RewardInProxy::set_status(const DictionaryDatum& d) {
+    RewardInProxy::set_status(const DictionaryDatum& d)
+    {
         Parameters_ ptmp = P_; // temporary copy in case of errors
         ptmp.set(d, S_); // throws if BadProperty
 
@@ -200,25 +202,31 @@ namespace spore {
         B_.set(d);
     }
 
-    void RewardInProxy::handle(nest::SpikeEvent& e) {
+    void RewardInProxy::handle(nest::SpikeEvent& e)
+    {
     }
 
-    void RewardInProxy::handle(nest::DataLoggingRequest& e) {
+    void RewardInProxy::handle(nest::DataLoggingRequest& e)
+    {
         B_.logger_.handle(e);
     }
 
     void
-    RewardInProxy::update(const nest::Time& origin, const nest::long_t from, const nest::long_t to) {
+    RewardInProxy::update(const nest::Time& origin, const long from, const long to)
+    {
         int n_channels = S_.port_width_;
         std::vector<double> data = B_.data_;
 		
-		if (n_channels == -1) {
-			return;
-		}
+        if (n_channels == -1)
+        {
+            return;
+        }
 
-        for (nest::long_t lag = from; lag < to; ++lag) {
-            if (n_channels != 1) {
-                    std::cerr << "RewardInProxy::update ~ Port width 1 required!" << std::endl;
+        for (long lag = from; lag < to; ++lag)
+        {
+            if (n_channels != 1)
+            {
+                std::cerr << "RewardInProxy::update ~ Port width 1 required!" << std::endl;
             }
             nest::Time time = nest::Time::step(origin.get_steps() + lag);
             set_trace(time.get_steps(), data[0]);
@@ -238,5 +246,4 @@ namespace spore {
         }
         */
     }
-
 }
