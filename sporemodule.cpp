@@ -120,11 +120,14 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
  */
 void spore::SporeModule::init(SLIInterpreter *i)
 {
-    ConnectionUpdateManager::instance()->init();
-
     // Register nodes
+    const nest::index cu_model_id =
+        nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",/*private_model=*/true);
+    
     nest::kernel().model_manager.register_node_model<PoissonDblExpNeuron>("poisson_dbl_exp_neuron");
     nest::kernel().model_manager.register_node_model<RewardInProxy>("reward_in_proxy");
+
+    ConnectionUpdateManager::instance()->init( cu_model_id );
 
     spore::register_diligent_connection_model< SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >("synaptic_sampling_rewardgradient_synapse");
 

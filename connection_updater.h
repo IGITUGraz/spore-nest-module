@@ -51,7 +51,7 @@ public:
     ConnectionUpdateManager();
     ~ConnectionUpdateManager();
 
-    void init();
+    void init(nest::index cu_model_id);
     void setup(long interval, long exceptable_latency);
 
     void register_connector( nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,

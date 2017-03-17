@@ -58,6 +58,7 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
     
     if (cu_id_ == nest::invalid_index)
     {
+        assert(cu_model_id_ != nest::invalid_index);
         cu_id_ = nest::kernel().node_manager.add_node(cu_model_id_,1);
     }
 
@@ -71,10 +72,10 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
  * at start up and should be done within the initialization of the module
  * that uses the ConnectionUpdateManager.
  */
-void ConnectionUpdateManager::init()
+void ConnectionUpdateManager::init(nest::index cu_model_id)
 {
     assert(cu_model_id_==nest::invalid_index);
-    cu_id_ = nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",/*private_model=*/true);
+    cu_model_id_ = cu_model_id;
 }
 
 
