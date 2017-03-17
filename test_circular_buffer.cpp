@@ -67,51 +67,51 @@ void TestCircularBuffer::init()
     
     test_assert(cb.size()==5, "CircularBuffer test size 0");
 
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         test_assert( cb[i] == target_data[0][i], "CircularBuffer test content 0" );
 
     cb.resize(10, 1);
     
     test_assert(cb.size()==10, "CircularBuffer test size 1");
 
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         test_assert( cb[i] == target_data[1][i], "CircularBuffer test content 1" );
 
-    for (int i=0; i<4; i++)
+    for (size_t i=0; i<4; i++)
         cb[i] = 2;
     
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         test_assert( cb[i] == target_data[2][i], "CircularBuffer test content 2" );
 
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         cb[i] = i;
     
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         test_assert( cb[i] == target_data[3][i], "CircularBuffer test content 3" );
 
-    for (int i=0; i<(5*cb.size()); i++)
+    for (size_t i=0; i<(5*cb.size()); i++)
         test_assert( cb[i] == target_data[4][i], "CircularBuffer test content 4" );
 
     char msg[100];
     
-    for (int j=0;j<15;j++)
+    for (size_t j=0;j<15;j++)
     {
         CircularBuffer<double>::const_iterator it = cb.get(j);
 
-        for (int i=0; i<(5*cb.size()); i++)
+        for (size_t i=0; i<(5*cb.size()); i++)
         {
-            sprintf( msg, "CircularBuffer test content %i", 5+j );
+            sprintf( msg, "CircularBuffer test content %lu", 5+j );
             test_assert( *(++it) == target_data[5+j][i], msg );
         }
     }
     
-    for (int j=0;j<15;j++)
+    for (size_t j=0;j<15;j++)
     {
         CircularBuffer<double>::const_iterator it = cb.get(j);
         
-        for (int i=0; i<(5*cb.size()); i++)
+        for (size_t i=0; i<(5*cb.size()); i++)
         {
-            sprintf( msg, "CircularBuffer test content %i", 20+j );
+            sprintf( msg, "CircularBuffer test content %lu", 20+j );
             test_assert( *(--it) == target_data[20+j][i], msg );
         }
     }
@@ -122,12 +122,12 @@ void TestCircularBuffer::init()
     
     traces[0].resize(10,1);
     
-    for (int i=0; i<cb.size(); i++)
+    for (size_t i=0; i<cb.size(); i++)
         traces[0][i] = i;
     
     CircularBuffer<double>::const_iterator it2 = traces[0].get(10);
     
-    for (int i=0; i<(5*traces[0].size()); i++)
+    for (size_t i=0; i<(5*traces[0].size()); i++)
         test_assert( *(++it2) == target_data[35][i], "CircularBuffer test content 35" );
 }
 

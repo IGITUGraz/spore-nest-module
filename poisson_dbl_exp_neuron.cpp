@@ -436,7 +436,11 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
                              e.get_weight() * e.get_multiplicity());
     }
     else
-        throw nest::BadProperty( "Unexpected rport id: "+std::to_string(e.get_rport()) );
+    {
+        std::ostringstream msg;
+        msg << "Unexpected rport id: " << e.get_rport();
+        throw nest::BadProperty( msg.str() );
+    }
 }
 
 

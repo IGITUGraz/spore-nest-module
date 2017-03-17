@@ -79,7 +79,7 @@ void SporeTestNode::update(nest::Time const & origin, const long from, const lon
         {
             assert( time.get_ms() >= ConnectionUpdateManager::instance()->get_origin().get_ms() &&
                     time.get_ms() < ConnectionUpdateManager::instance()->get_origin().get_ms() +
-                                    nest::NestModule::get_network().get_min_delay() );
+                                    nest::kernel().connection_manager.get_min_delay() );
             
             set_trace(time.get_steps(), test->get_trace(time.get_steps(), tid), tid);
         }

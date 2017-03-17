@@ -16,6 +16,9 @@
 #include "dictutils.h"
 #include "connector_model.h"
 #include "connector_base.h"
+#include "connection_manager_impl.h"
+#include "connector_model_impl.h"
+#include "kernel_manager.h"
 
 #include "connection_updater.h"
 
@@ -67,17 +70,9 @@ class DiligentConnectorModel : public nest::GenericConnectorModel<ConnectionT>
 {
 public:
     
-#if defined(__SPORE_WITH_NEST_2_10__)
-    DiligentConnectorModel(nest::Network & net, const std::string name, bool is_primary, bool has_delay)
-    : nest::GenericConnectorModel<ConnectionT>(net, name, is_primary, has_delay)
-    {}
-#elif defined(__SPORE_WITH_NEST_2_12__)
     DiligentConnectorModel(const std::string name, bool is_primary=true, bool has_delay=true, bool requires_symmetric=false)
     : nest::GenericConnectorModel<ConnectionT>(name, is_primary, has_delay, requires_symmetric)
-    {}
-#else
-#error NEST version is not supported!
-#endif    
+    {}   
 
     DiligentConnectorModel(const DiligentConnectorModel &other, const std::string name)
     : nest::GenericConnectorModel<ConnectionT>(other, name)
@@ -272,18 +267,9 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector( n
  * @brief Convenience function to register diligent synapses.
  */
 template <class ConnectionT>
-nest::synindex register_diligent_connection_model(const std::string &name)
+void register_diligent_connection_model(const std::string &name, bool requires_symmetric = false)
 {
-
-#if defined(__SPORE_WITH_NEST_2_10__)
-    nest::Network& net = nest::NestModule::get_network();
-    return net.register_synapse_prototype(new DiligentConnectorModel < ConnectionT > (net, name, /*is_primary=*/true, /*has_delay=*/true ));
-#elif defined(__SPORE_WITH_NEST_2_12__)
-    return nest::kernel().model_manager.register_connection_model(new DiligentConnectorModel < ConnectionT > (name, /*is_primary=*/true, /*has_delay=*/true));
-#else
-#error NEST version is not supported!
-#endif
-
+    nest::kernel().model_manager.register_connection_model< ConnectionT, DiligentConnectorModel > (name, requires_symmetric);
 }
 
 

@@ -10,6 +10,8 @@
 #include "namedatum.h"
 #include "universal_data_logger.h"
 
+#include <music.hh>
+
 #include "tracing_node.h"
 
 namespace spore

@@ -24,7 +24,7 @@ void TestTracingNode::check(nest::delay time_step, TracingNode *node)
 {
     test_assert(node->get_num_traces()==5, "number of traces");
     
-    for (int tid=0; tid<node->get_num_traces(); tid++)
+    for (size_t tid=0; tid<node->get_num_traces(); tid++)
     {
         for (size_t t=0; t<time_step; t++)
         {

@@ -126,13 +126,8 @@ public:
         long rtgid;
         if (updateValue<long>(d, "reward_transmitter", rtgid))
         {
-#if defined(__SPORE_WITH_NEST_2_10__)
-            reward_transmitter_ = dynamic_cast<TracingNode*> (nest::NestModule::get_network().get_node(rtgid));
-#elif defined(__SPORE_WITH_NEST_2_12__)
             reward_transmitter_ = dynamic_cast<TracingNode*> (nest::kernel().node_manager.get_node(rtgid));
-#else
-#error NEST version is not supported!
-#endif
+
             if (reward_transmitter_ == 0)
                 throw nest::BadProperty("Reward transmitter must be of model RewardTransmitter");
         }
@@ -223,14 +218,7 @@ public:
         double result = 0.0;
         if (std_wiener_ > 0)
         {
-#if defined(__SPORE_WITH_NEST_2_10__)
-            nest::Network *net = nest::Node::network();
-            result = std_wiener_ * normal_dev_(net->get_rng(thread));
-#elif defined(__SPORE_WITH_NEST_2_12__)
             result = std_wiener_ * normal_dev_(nest::kernel().rng_manager.get_rng(thread));
-#else
-#error NEST version is not supported!
-#endif
         }
         return result;
     }
@@ -243,14 +231,7 @@ public:
         double result = 0.0;
         if (std_gradient_ > 0)
         {
-#if defined(__SPORE_WITH_NEST_2_10__)
-            nest::Network *net = nest::Node::network();
-            result = std_gradient_ * normal_dev_(net->get_rng(thread));
-#elif defined(__SPORE_WITH_NEST_2_12__)
             result = std_gradient_ * normal_dev_(nest::kernel().rng_manager.get_rng(thread));
-#else
-#error NEST version is not supported!
-#endif
         }
         return result;
     }
@@ -260,14 +241,7 @@ public:
      */
     double drand(nest::thread thread) const
     {
-#if defined(__SPORE_WITH_NEST_2_10__)
-        nest::Network *net = nest::Node::network();
-        return net->get_rng(thread)->drand();
-#elif defined(__SPORE_WITH_NEST_2_12__)
         return nest::kernel().rng_manager.get_rng(thread)->drand();
-#else
-#error NEST version is not supported!
-#endif
     }
 
     TracingNode* reward_transmitter_;

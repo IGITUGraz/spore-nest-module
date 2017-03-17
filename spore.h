@@ -43,10 +43,6 @@ namespace spore
 // version number of the module
 #define __SPORE_VERSION__ 0.5
 
-// specify the version of NEST.
-//#define __SPORE_WITH_NEST_2_10__
-#define __SPORE_WITH_NEST_2_12__
-
 // specify to enable spore debug tests.
 #define __SPORE_DEBUG__ 0
 

@@ -11,10 +11,10 @@
 #include "spikecounter.h"
 #include "universal_data_logger_impl.h"
 #include "connection_updater.h"
-#include "music.hh"
 #include "dictutils.h"
 #include "music.hh"
 #include "tracing_node.h"
+#include "logging.h"
 
 #include <numeric>
 #include <iterator>
@@ -23,6 +23,9 @@
 
 namespace spore
 {
+#ifndef HAVE_MUSIC
+#error MUSIC bindings for NEST are required.
+#endif
 
 /* ----------------------------------------------------------------
  * Default constructors defining default parameters, state and buffer
@@ -102,7 +105,7 @@ void RewardInProxy::calibrate()
     // only publish the port once
     if (!S_.published_)
     {
-        MUSIC::Setup* s = nest::Communicator::get_music_setup();
+        MUSIC::Setup* s = nest::kernel().music_manager.get_music_setup();
         if (s == 0)
         {
             throw nest::MUSICSimulationHasRun(get_name());
@@ -129,13 +132,13 @@ void RewardInProxy::calibrate()
 
             std::string msg = String::compose("Mapping MUSIC input port '%1' with width=%2.",
                                               P_.port_name_, S_.port_width_);
-            net_->message(SLIInterpreter::M_INFO, "reward_in_proxy::calibrate()", msg.c_str());
+            LOG(nest::M_INFO, "reward_in_proxy::calibrate()", msg.c_str());
         }
         else
         {
             // throw nest::MUSICPortUnconnected(get_name(), P_.port_name_);
             std::string msg = String::compose("MUSIC port '%1' is unconnected.", P_.port_name_);
-            net_->message(SLIInterpreter::M_WARNING, "reward_in_proxy::calibrate()", msg.c_str());
+            LOG(nest::M_WARNING, "reward_in_proxy::calibrate()", msg.c_str());
         }
     }
 }

@@ -1,9 +1,8 @@
 #include "tracing_node.h"
 #include "connection_updater.h"
 
-#if defined(__SPORE_WITH_NEST_2_12__)
 #include "kernel_manager.h"
-#endif
+
 
 namespace spore
 {
@@ -60,13 +59,7 @@ void TracingNode::get_status(DictionaryDatum& d) const
  */
 void TracingNode::send_event(nest::Event &ev, long lag)
 {
-#if defined(__SPORE_WITH_NEST_2_10__)
-    network()->send(*this, ev, lag);
-#elif defined(__SPORE_WITH_NEST_2_12__)
     nest::kernel().event_delivery_manager.send( *this, ev, lag );
-#else
-#error NEST version is not supported!
-#endif
 }
 
 
@@ -75,13 +68,7 @@ void TracingNode::send_event(nest::Event &ev, long lag)
  */
 librandom::RngPtr TracingNode::get_rng()
 {
-#if defined(__SPORE_WITH_NEST_2_10__)
-    return network()->get_rng(get_thread());
-#elif defined(__SPORE_WITH_NEST_2_12__)
     return nest::kernel().rng_manager.get_rng( get_thread() );
-#else
-#error NEST version is not supported!
-#endif
 }
 
 
@@ -90,13 +77,7 @@ librandom::RngPtr TracingNode::get_rng()
  */
 nest::Time TracingNode::get_slice_origin() const
 {
-#if defined(__SPORE_WITH_NEST_2_10__)
-    return network()->get_slice_origin();
-#elif defined(__SPORE_WITH_NEST_2_12__)
     return nest::kernel().simulation_manager.get_slice_origin();
-#else 
-#error NEST version is not supported!
-#endif
 }
 
 } // namespace
