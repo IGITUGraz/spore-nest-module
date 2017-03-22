@@ -9,10 +9,10 @@ import time
 
 
 class TestStringMethods(unittest.TestCase):
-        
+
     def test_spore_exp_poisson_neuron(self):
         nest.ResetKernel()
-        
+
         # create neuron and multimeter
         w_exc = 3.0
         w_inh = -2.0
@@ -41,7 +41,7 @@ class TestStringMethods(unittest.TestCase):
         nest.Connect(gin, n, 'one_to_one', {'weight': w_inh, "receptor_type": 1}) # inhibitory
         nest.Connect(m, n)
 
-        u_gd = np.zeros((T-1.0)*(1.0/delta_t))
+        u_gd = np.zeros(int((T-1.0)*(1.0/delta_t)))
         u_rise_exc = 0
         u_fall_exc = 0
         u_rise_inh = 0
@@ -53,18 +53,18 @@ class TestStringMethods(unittest.TestCase):
             u_fall_exc *= np.exp(-delta_t/tau_fall_exc)
             u_rise_inh *= np.exp(-delta_t/tau_rise_inh)
             u_fall_inh *= np.exp(-delta_t/tau_fall_inh)
-            
+
             if spike_in((t-syn_delay, spike_times_ex)):
                 print "ex pike at time "+str(t)
                 u_rise_exc += w_exc
                 u_fall_exc += w_exc
-                
+
             if spike_in((t-syn_delay, spike_times_in)):
-                print "in pike at time "+str(t)    
+                print "in pike at time "+str(t)
                 u_rise_inh += w_inh
                 u_fall_inh += w_inh
-                
-            u_gd[t*(1.0/delta_t)] = (tau_fall_exc/(tau_fall_exc - tau_rise_exc))*(u_fall_exc - u_rise_exc) + (tau_fall_inh/(tau_fall_inh - tau_rise_inh))*(u_fall_inh - u_rise_inh) + I_e
+
+            u_gd[int(t*(1.0/delta_t))] = (tau_fall_exc/(tau_fall_exc - tau_rise_exc))*(u_fall_exc - u_rise_exc) + (tau_fall_inh/(tau_fall_inh - tau_rise_inh))*(u_fall_inh - u_rise_inh) + I_e
 
         # simulate
         nest.Simulate(100)
@@ -72,7 +72,7 @@ class TestStringMethods(unittest.TestCase):
         # obtain and display data
         events = nest.GetStatus(m)[0]['events']
         t = events['times'];
-        
+
         #pl.plot(t, events['V_m'], 'b-', t, u_gd, 'r-')
         #pl.ylabel('Membrane potential [mV]')
         #pl.show()
@@ -83,5 +83,5 @@ class TestStringMethods(unittest.TestCase):
 if __name__ == '__main__':
     nest.Install("sporemodule")
     unittest.main()
-    
+
 
