@@ -58,11 +58,13 @@ namespace spore {
         friend class nest::RecordablesMap<RewardInProxy>;
         friend class nest::UniversalDataLogger<RewardInProxy>;
 
-        // Access functions for UniversalDataLoggel
+        // Access functions for UniversalDataLogger
 
-        double get_reward() const {
-            return B_.data_[0]; // TODO read from trace?
+        /*
+        std::vector< double > get_reward() const {
+            return B_.data_;
         }
+         */
 
         // ------------------------------------------------------------
 
@@ -75,7 +77,7 @@ namespace spore {
             void get(DictionaryDatum&) const; //!< Store current values in dictionary
             void set(const DictionaryDatum&, State_&); //!< Set values from dicitonary
 
-            std::string port_name_; //!< the name of MUSIC port to connect to
+            std::string port_name_; //!< the name of MUSIC port to read from
         };
 
         // ------------------------------------------------------------
@@ -126,9 +128,6 @@ namespace spore {
     inline
     nest::port RewardInProxy::send_test_event(nest::Node& target, nest::port receptor_type,
             nest::synindex, bool) {
-        // You should usually not change the code in this function.
-        // It confirms that the target of connection @c c accepts @c SpikeEvent on
-        // the given @c receptor_type.
         nest::SpikeEvent e;
         e.set_sender(*this);
         return target.handles_test_event(e, receptor_type);
@@ -136,10 +135,6 @@ namespace spore {
 
     inline
     nest::port RewardInProxy::handles_test_event(nest::SpikeEvent&, nest::port receptor_type) {
-        // You should usually not change the code in this function.
-        // It confirms to the connection management system that we are able
-        // to handle @c SpikeEvent on port 0. You need to extend the function
-        // if you want to differentiate between input ports.
         if (receptor_type != 0)
             throw nest::UnknownReceptorType(receptor_type, get_name());
         return 0;
@@ -148,11 +143,6 @@ namespace spore {
     inline
     nest::port RewardInProxy::handles_test_event(nest::DataLoggingRequest& dlr,
             nest::port receptor_type) {
-        // You should usually not change the code in this function.
-        // It confirms to the connection management system that we are able
-        // to handle @c DataLoggingRequest on port 0.
-        // The function also tells the built-in UniversalDataLogger that this node
-        // is recorded from and that it thus needs to collect data during simulation.
         if (receptor_type != 0)
             throw nest::UnknownReceptorType(receptor_type, get_name());
 

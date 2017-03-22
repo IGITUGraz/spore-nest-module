@@ -31,8 +31,10 @@ namespace nest {
 
     template<>
     void RecordablesMap<spore::RewardInProxy>::create() {
+        /*
         Name reward("reward");
         insert_(reward, &spore::RewardInProxy::get_reward);
+         */
     }
 }
 
@@ -136,7 +138,6 @@ namespace spore {
     void
     RewardInProxy::init_buffers_() {
         B_.logger_.reset(); // includes resize
-        init_traces(1);
     }
 
     void
@@ -152,32 +153,33 @@ namespace spore {
             V_.MP_ = s->publishContInput(P_.port_name_);
 
             if (V_.MP_->isConnected()) {
-				if (!V_.MP_->hasWidth())
-					throw nest::MUSICPortHasNoWidth(get_name(), P_.port_name_);
+                if (!V_.MP_->hasWidth())
+                    throw nest::MUSICPortHasNoWidth(get_name(), P_.port_name_);
 
-				S_.port_width_ = V_.MP_->width();
+                S_.port_width_ = V_.MP_->width();
 
-				B_.data_ = std::vector< double >(S_.port_width_);
-				MUSIC::ArrayData data_map(
-						static_cast<void*> (&(B_.data_[ 0 ])), MPI::DOUBLE, 0, S_.port_width_);
+                B_.data_ = std::vector< double >(S_.port_width_);
+                MUSIC::ArrayData data_map(
+                        static_cast<void*> (&(B_.data_[ 0 ])), MPI::DOUBLE, 0, S_.port_width_);
 
-				V_.MP_->map(&data_map, 0.0, true);
-				S_.published_ = true;
+                V_.MP_->map(&data_map, 0.0, true);
+                S_.published_ = true;
 
-				std::string msg = String::compose(
-						"Mapping MUSIC input port '%1' with width=%2.", P_.port_name_, S_.port_width_);
-				net_->message(SLIInterpreter::M_INFO, "reward_in_proxy::calibrate()", msg.c_str());
-			} else {
-				// throw nest::MUSICPortUnconnected(get_name(), P_.port_name_);
-				std::string msg = String::compose("MUSIC port '%1' is unconnected.", P_.port_name_);
-				net_->message(SLIInterpreter::M_WARNING, "reward_in_proxy::calibrate()", msg.c_str());
-			}
+                init_traces(S_.port_width_);
+
+                std::string msg = String::compose(
+                        "Mapping MUSIC input port '%1' with width=%2.", P_.port_name_, S_.port_width_);
+                net_->message(SLIInterpreter::M_INFO, "reward_in_proxy::calibrate()", msg.c_str());
+            } else {
+                // throw nest::MUSICPortUnconnected(get_name(), P_.port_name_);
+                std::string msg = String::compose("MUSIC port '%1' is unconnected.", P_.port_name_);
+                net_->message(SLIInterpreter::M_WARNING, "reward_in_proxy::calibrate()", msg.c_str());
+            }
         }
     }
 
     void
-    RewardInProxy::get_status(DictionaryDatum& d) const
-    {
+    RewardInProxy::get_status(DictionaryDatum& d) const {
         P_.get(d);
         S_.get(d);
         B_.get(d);
@@ -187,8 +189,7 @@ namespace spore {
     }
 
     void
-    RewardInProxy::set_status(const DictionaryDatum& d)
-    {
+    RewardInProxy::set_status(const DictionaryDatum& d) {
         Parameters_ ptmp = P_; // temporary copy in case of errors
         ptmp.set(d, S_); // throws if BadProperty
 
@@ -202,38 +203,29 @@ namespace spore {
         B_.set(d);
     }
 
-    void RewardInProxy::handle(nest::SpikeEvent& e)
-    {
+    void RewardInProxy::handle(nest::SpikeEvent& e) {
     }
 
-    void RewardInProxy::handle(nest::DataLoggingRequest& e)
-    {
+    void RewardInProxy::handle(nest::DataLoggingRequest& e) {
         B_.logger_.handle(e);
     }
 
     void
-    RewardInProxy::update(const nest::Time& origin, const long from, const long to)
-    {
+    RewardInProxy::update(const nest::Time& origin, const long from, const long to) {
         int n_channels = S_.port_width_;
-        std::vector<double> data = B_.data_;
-		
-        if (n_channels == -1)
-        {
+
+        if (n_channels == -1) {
             return;
         }
 
-        for (long lag = from; lag < to; ++lag)
-        {
-            if (n_channels != 1)
-            {
-                std::cerr << "RewardInProxy::update ~ Port width 1 required!" << std::endl;
-            }
+        for (long lag = from; lag < to; ++lag) {
             nest::Time time = nest::Time::step(origin.get_steps() + lag);
-            set_trace(time.get_steps(), data[0]);
+            for (int channel = 0; channel < n_channels; channel++) {
+                set_trace(time.get_steps(), B_.data_[channel]);
+            }
         }
 
-        // debug
-        /*
+#ifdef __SPORE_DEBUG__
         for (int i = 0; i < n_channels; i++) {
             std::cout << "trace #" << i << ":";
             TracingNode::const_iterator trace = get_trace(0, i);
@@ -244,6 +236,6 @@ namespace spore {
             }
             std::cout << std::endl;
         }
-        */
+#endif
     }
 }
