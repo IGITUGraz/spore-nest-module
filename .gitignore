@@ -14,4 +14,7 @@ config.log
 config.status
 stamp-h1
 sporemodule_config.h.in
-
+unittests/*.log
+unittests/*.trs
+test-driver
+test-suite.log
