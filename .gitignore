@@ -18,3 +18,4 @@ unittests/*.log
 unittests/*.trs
 test-driver
 test-suite.log
+.docs
