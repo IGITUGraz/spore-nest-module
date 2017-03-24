@@ -1,7 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classspore_1_1ConnectionUpdater.html" title="Nest node to handle synapse updates on regular time grid. " alt="" coords="107,5,282,32"/>
-<area shape="rect" id="node3" href="$classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. " alt="" coords="127,56,263,83"/>
-<area shape="rect" id="node4" href="$classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double&#45;exponential shaped PSCs. " alt="" coords="331,5,525,32"/>
-<area shape="rect" id="node5" href="$classspore_1_1RewardInProxy.html" title="A device which receives reward traces from MUSIC. " alt="" coords="352,56,504,83"/>
-<area shape="rect" id="node6" href="$classspore_1_1SporeTestNode.html" title="spore::SporeTestNode" alt="" coords="351,107,505,133"/>
-</map>
