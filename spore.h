@@ -42,7 +42,7 @@ namespace spore
 
 
 // specify to enable spore debug tests.
-#define __SPORE_DEBUG__
+#define __SPORE_DEBUG__ 0
 
 } // namespace spore
 
