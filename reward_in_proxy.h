@@ -21,7 +21,6 @@ namespace spore {
     public:
 
         RewardInProxy();
-        RewardInProxy(const RewardInProxy&);
 
         bool has_proxies() const {
             return false;
@@ -31,18 +30,6 @@ namespace spore {
             return true;
         }
 
-        using nest::Node::handle;
-        using nest::Node::handles_test_event;
-        nest::port send_test_event(nest::Node&, nest::port, nest::synindex, bool);
-
-        // TODO can we eliminate the spike handlers?
-
-        void handle(nest::SpikeEvent &); //! accept spikes
-        void handle(nest::DataLoggingRequest &); //! allow recording with multimeter
-
-        nest::port handles_test_event(nest::SpikeEvent&, nest::port);
-        nest::port handles_test_event(nest::DataLoggingRequest&, nest::port);
-
         virtual void get_status(DictionaryDatum& d) const;
         virtual void set_status(const DictionaryDatum& d);
 
@@ -50,35 +37,13 @@ namespace spore {
 
         virtual void init_buffers_();
         virtual void init_state_(const Node&);
+
         virtual void calibrate();
 
         virtual void update(nest::Time const&, const long, const long);
 
-        // The next two classes need to be friends to access the State_ class/member
-        friend class nest::RecordablesMap<RewardInProxy>;
-        friend class nest::UniversalDataLogger<RewardInProxy>;
-
-        // Access functions for UniversalDataLogger
-
-        /*
-        std::vector< double > get_reward() const {
-            return B_.data_;
-        }
-         */
-
-        // ------------------------------------------------------------
-
-        struct State_;
-
-        struct Parameters_ {
-            Parameters_(); //!< Sets default parameter values
-            Parameters_(const Parameters_&); //!< Recalibrate all times
-
-            void get(DictionaryDatum&) const; //!< Store current values in dictionary
-            void set(const DictionaryDatum&, State_&); //!< Set values from dicitonary
-
-            std::string port_name_; //!< the name of MUSIC port to read from
-        };
+        MUSIC::ContInputPort* reward_in_; //!< The MUSIC cont port for reward input
+        std::vector< double > reward_in_buffer_; //!< The mapped buffer for receiving the reward values via MPI
 
         // ------------------------------------------------------------
 
@@ -86,68 +51,24 @@ namespace spore {
             State_(); //!< Sets default state value
 
             void get(DictionaryDatum&) const; //!< Store current values in dictionary
-            void set(const DictionaryDatum&, const Parameters_&); //!< Set values from dicitonary
 
             bool published_; //!< indicates whether this node has been published already with MUSIC
             int port_width_; //!< the width of the MUSIC port
-
         };
 
-        // ------------------------------------------------------------
+        struct Parameters_ {
+            Parameters_(); //!< Sets default parameter values
 
-        struct Buffers_ {
-            Buffers_(RewardInProxy &);
-            Buffers_(const Buffers_ &, RewardInProxy &);
+            void get(DictionaryDatum&) const; //!< Store current values in dictionary
+            void set(const DictionaryDatum&, State_&); //!< Set values from dicitonary
 
-            void get(DictionaryDatum&) const;
-            void set(const DictionaryDatum&);
-
-            std::vector< double > data_; //!< The buffer for incoming data
-
-            //! Logger for all analog data
-            nest::UniversalDataLogger<RewardInProxy> logger_;
+            std::string port_name_; //!< the name of MUSIC port to read from
+            float delay_; //!< the accepted delay for the MUSIC connection
         };
 
-        // ------------------------------------------------------------
-
-        struct Variables_ {
-            MUSIC::ContInputPort* MP_; //!< The MUSIC cont port for input of data
-        };
-
-        // ------------------------------------------------------------
-
-        Parameters_ P_;
         State_ S_;
-        Buffers_ B_;
-        Variables_ V_;
-
-        //! Mapping of recordables names to access functions
-        static nest::RecordablesMap<RewardInProxy> recordablesMap_;
+        Parameters_ P_;
     };
-
-    inline
-    nest::port RewardInProxy::send_test_event(nest::Node& target, nest::port receptor_type,
-            nest::synindex, bool) {
-        nest::SpikeEvent e;
-        e.set_sender(*this);
-        return target.handles_test_event(e, receptor_type);
-    }
-
-    inline
-    nest::port RewardInProxy::handles_test_event(nest::SpikeEvent&, nest::port receptor_type) {
-        if (receptor_type != 0)
-            throw nest::UnknownReceptorType(receptor_type, get_name());
-        return 0;
-    }
-
-    inline
-    nest::port RewardInProxy::handles_test_event(nest::DataLoggingRequest& dlr,
-            nest::port receptor_type) {
-        if (receptor_type != 0)
-            throw nest::UnknownReceptorType(receptor_type, get_name());
-
-        return B_.logger_.connect_logging_device(dlr, recordablesMap_);
-    }
 }
 
 #endif
