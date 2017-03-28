@@ -1,3 +1,27 @@
+/*
+ * This file is part of SPORE.
+ *
+ * SPORE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * SPORE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information see: https://github.com/IGITUGraz/spore-nest-module
+ *
+ * File:   spore_module.cpp
+ * Author: Kappel, Hsieh
+ *
+ * Created on March 30, 2015, 3:19 AM
+ */
+
 #include "sporemodule.h"
 #include "spore.h"
 
@@ -122,19 +146,23 @@ void spore::SporeModule::init(SLIInterpreter *i)
 {
     // Register nodes
     const nest::index cu_model_id =
-        nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",/*private_model=*/true);
+        nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",
+                                                                            /*private_model=*/true);
     
     nest::kernel().model_manager.register_node_model<PoissonDblExpNeuron>("poisson_dbl_exp_neuron");
     nest::kernel().model_manager.register_node_model<RewardInProxy>("reward_in_proxy");
 
     ConnectionUpdateManager::instance()->init( cu_model_id );
 
-    spore::register_diligent_connection_model< SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >("synaptic_sampling_rewardgradient_synapse");
+    spore::register_diligent_connection_model
+        < SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >
+            ("synaptic_sampling_rewardgradient_synapse");
 
     i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
 
 #ifdef __SPORE_DEBUG__
     nest::kernel().model_manager.register_node_model<SporeTestNode>("spore_test_node");
-    spore::register_diligent_connection_model< SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
+    spore::register_diligent_connection_model
+        < SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
 #endif
 }

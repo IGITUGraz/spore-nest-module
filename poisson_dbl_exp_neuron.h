@@ -1,25 +1,26 @@
 /*
  * This file is part of SPORE.
- * 
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * SPORE is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * For more information see: https://github.com/IGITUGraz/spore-nest-module
  *
- * File: poisson_dbl_exp_neuron.h
+ * File:   poisson_dbl_exp_neuron.h
  * Author: Hsieh, Kappel
- * 
- * This file is mainly based on pp_psc_delta.h which is part of NEST.
+ *
+ * This file is based on pp_psc_delta.h which is part of NEST
+ * (Copyright (C) 2004 The NEST Initiative).
  * See: http://nest-initiative.org/
  */
 
@@ -98,16 +99,22 @@ namespace spore
  * <tr><td>tau_fall_inh</td>             <td>double</td> <td>Rise time constant of inhibitory PSP</td></tr>
  * <tr><td>q_sfa</td>                    <td>double</td> <td>Adaptive threshold jump in mV</td></tr>
  * <tr><td>dead_time</td>                <td>double</td> <td>Duration of the dead time in ms</td></tr>
- * <tr><td>dead_time_random</td>         <td>bool</td>   <td>Should a random dead time be drawn after each spike?</td></tr>
+ * <tr><td>dead_time_random</td>         <td>bool</td>   <td>Should a random dead time be drawn after each
+ *                                                           spike?</td></tr>
  * <tr><td>dead_time_shape</td>          <td>int</td>    <td>Shape parameter of dead time gamma distribution</td></tr>
  * <tr><td>t_ref_remaining</td>          <td>double</td> <td>Remaining dead time at simulation start</td></tr>
- * <tr><td>with_reset</td>               <td>bool</td>   <td>Should the membrane potential be reset after a spike?</td></tr>
+ * <tr><td>with_reset</td>               <td>bool</td>   <td>Should the membrane potential be reset after a
+ *                                                           spike?</td></tr>
  * <tr><td>I_e</td>                      <td>double</td> <td>Constant input current [pA]</td></tr>
  * <tr><td>input_conductance</td>        <td>double</td> <td>Conductance of input currents [S]</td></tr> 
- * <tr><td>c_1</td>                      <td>double</td> <td>Slope of linear part of transfer function in Hz/mV</td></tr>
- * <tr><td>c_2</td>                      <td>double</td> <td>Prefactor of exponential part of transfer function in Hz</td></tr>
- * <tr><td>c_3</td>                      <td>double</td> <td>Coefficient of exponential non-linearity of transfer function in 1/mV</td></tr>
- * <tr><td>target_rate</td>              <td>double</td> <td>Target rate of neuron for adaptation mechanism [Hz]</td></tr>
+ * <tr><td>c_1</td>                      <td>double</td> <td>Slope of linear part of transfer function
+ *                                                           in Hz/mV</td></tr>
+ * <tr><td>c_2</td>                      <td>double</td> <td>Prefactor of exponential part of transfer function
+ *                                                           in Hz</td></tr>
+ * <tr><td>c_3</td>                      <td>double</td> <td>Coefficient of exponential non-linearity of transfer
+ *                                                           function in 1/mV</td></tr>
+ * <tr><td>target_rate</td>              <td>double</td> <td>Target rate of neuron for adaptation mechanism
+ *                                                           in Hz</td></tr>
  * <tr><td>target_adaptation_speed</td>  <td>double</td> <td>Speed of rate adaptation</td></tr>
  * </table>
  * 
@@ -251,7 +258,6 @@ private:
         double u_membrane_; //!< The membrane potential
         double input_current_; //!< The piecewise linear input currents
         double adaptative_threshold_; //!< adaptive threshold to maintain average output rate
-        long lost_p_values_; //!< Counter of lost spike prob values
         int r_; //!< Number of refractory steps remaining
 
         State_(); //!< Default initialization
@@ -299,7 +305,7 @@ private:
 
     };
 
-    // Access functions for UniversalDataLogger -----------------------
+    // Access functions for UniversalDataLogger
 
     //! Read out the real membrane potential
 
@@ -421,6 +427,6 @@ void PoissonDblExpNeuron::set_status(const DictionaryDatum &d)
     S_ = stmp;
 }
 
-} // namespace
+}
 
-#endif /* #ifndef POISSON_DBL_EXP_NEURON_H */
+#endif

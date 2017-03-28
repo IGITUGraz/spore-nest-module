@@ -1,10 +1,27 @@
 /**
- * @file diligent_connector_model.h
- * 
- * This source code is based mainly on <i>connector_model_impl.h</i> that is
- * part of NEST 2.10 (Copyright (C) 2004 The NEST Initiative).
+ * This file is part of SPORE.
  *
- * @author David Kappel, 2016
+ * SPORE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * SPORE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information see: https://github.com/IGITUGraz/spore-nest-module
+ *
+ * File:   diligent_connector_model.h
+ * Author: Kappel
+ *
+ * This file is based on connector_model_impl.h which is part of NEST
+ * (Copyright (C) 2004 The NEST Initiative).
+ * See: http://nest-initiative.org/
  */
 
 #ifndef DILIGENT_CONNECTOR_MODEL_H
@@ -272,9 +289,6 @@ void register_diligent_connection_model(const std::string &name, bool requires_s
     nest::kernel().model_manager.register_connection_model< ConnectionT, DiligentConnectorModel > (name, requires_symmetric);
 }
 
-
-
-} // namespace spore
-
+}
 
 #endif

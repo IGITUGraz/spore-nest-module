@@ -1,25 +1,26 @@
 /*
  * This file is part of SPORE.
- * 
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * SPORE is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
  *
  * For more information see: https://github.com/IGITUGraz/spore-nest-module
  *
+ * File:   poisson_dbl_exp_neuron.cpp
  * Author: Hsieh, Kappel
- * File: poisson_dbl_exp_neuron.cpp
- * 
- * This file is mainly based on pp_psc_delta.h which is part of NEST.
+ *
+ * This file is based on pp_psc_delta.cpp which is part of NEST
+ * (Copyright (C) 2004 The NEST Initiative).
  * See: http://nest-initiative.org/
  */
 
@@ -41,7 +42,7 @@ namespace nest
 /* 
  * Recordables map of PoissonDblExpNeuron.
  */
-template <>
+template < >
 void nest::RecordablesMap<spore::PoissonDblExpNeuron>::create()
 {
     // use standard names whereever you can for consistency!
@@ -95,7 +96,6 @@ PoissonDblExpNeuron::State_::State_()
   u_membrane_(0.0),
   input_current_(0.0),
   adaptative_threshold_(0.0),
-  lost_p_values_(0),
   r_(0)
 {}
 
@@ -175,7 +175,6 @@ void PoissonDblExpNeuron::State_::get(DictionaryDatum &d, const Parameters_&) co
 {
     def<double>(d, nest::names::V_m, u_membrane_); // Membrane potential
     def<double>(d, "adaptive_threshold", adaptative_threshold_);
-    def<long>(d, "lost_p_values", lost_p_values_);
 }
 
 
@@ -186,15 +185,6 @@ void PoissonDblExpNeuron::State_::set(const DictionaryDatum& d, const Parameters
 {
     updateValue<double>(d, nest::names::V_m, u_membrane_);
     updateValue<double>(d, "adaptive_threshold", adaptative_threshold_);
-
-    long ne;
-    if (updateValue<long>(d, "lost_p_values", ne))
-    {
-        if (ne == 0)
-            lost_p_values_ = 0;
-        else
-            throw nest::BadProperty("lost_p_values can only be set to 0.");
-    }
 }
 
 //
@@ -312,7 +302,8 @@ void PoissonDblExpNeuron::calibrate()
     // time may exhibit a different effective refractory time.
     if (P_.dead_time_random_)
     {
-        V_.dt_rate_ = P_.dead_time_shape_ / P_.dead_time_; // Choose dead time rate parameter such that mean equals dead_time
+        // Choose dead time rate parameter such that mean equals dead_time
+        V_.dt_rate_ = P_.dead_time_shape_ / P_.dead_time_;
         V_.gamma_dev_.set_order(P_.dead_time_shape_);
     }
     else
@@ -442,19 +433,19 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
 {
     assert(e.get_delay() > 0);
 
-    // EX: We must compute the arrival time of the incoming spike
-    //     explicitly, since it depends on delay and offset within
-    //     the update cycle.  The way it is done here works, but
-    //     is clumsy and should be improved.
+    // @todo: We must compute the arrival time of the incoming spike
+    //        explicitly, since it depends on delay and offset within
+    //        the update cycle.  The way it is done here works, but
+    //        is clumsy and should be improved.
     if (e.get_rport()==0)
     {
         B_.exc_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
-                             e.get_weight() * e.get_multiplicity());
+                                 e.get_weight() * e.get_multiplicity());
     }
     else if (e.get_rport()==1)
     {
         B_.inh_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
-                             e.get_weight() * e.get_multiplicity());
+                                 e.get_weight() * e.get_multiplicity());
     }
     else
     {
@@ -489,4 +480,4 @@ void PoissonDblExpNeuron::handle(nest::DataLoggingRequest &e)
     B_.logger_.handle(e);
 }
 
-} // namespace
+}
