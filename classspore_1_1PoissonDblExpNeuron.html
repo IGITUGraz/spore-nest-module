@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -72,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1PoissonDblExpNeuron.html">PoissonDblExpNeuron</a></li>  </ul>
+<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1PoissonDblExpNeuron.html">PoissonDblExpNeuron</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -175,6 +174,12 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <tr class="inherit_header pro_methods_classspore_1_1TracingNode"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspore_1_1TracingNode')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td></tr>
 <tr class="memitem:aef722022e0133881f935c3f31505d7d2 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#aef722022e0133881f935c3f31505d7d2">init_traces</a> (size_t num_traces)</td></tr>
 <tr class="separator:aef722022e0133881f935c3f31505d7d2 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada597707cfc4d9497d9f4f513e3240fa inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#ada597707cfc4d9497d9f4f513e3240fa">send_event</a> (nest::Event &amp;ev, long lag)</td></tr>
+<tr class="separator:ada597707cfc4d9497d9f4f513e3240fa inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a4e0488e14e103412a966f2c9d49ab3 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">librandom::RngPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#a4a4e0488e14e103412a966f2c9d49ab3">get_rng</a> ()</td></tr>
+<tr class="separator:a4a4e0488e14e103412a966f2c9d49ab3 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66311c7d72795a7ab2789f731d3715a8 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">nest::Time&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#a66311c7d72795a7ab2789f731d3715a8">get_slice_origin</a> () const </td></tr>
+<tr class="separator:a66311c7d72795a7ab2789f731d3715a8 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a> (nest::delay steps, double v, trace_id id=0)</td></tr>
 <tr class="separator:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -183,12 +188,12 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> - Point process neuron with double-exponential PSPs.</p>
 <p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes an absolute refractory mechanism.</p>
 <p>Spikes are generated randomly according to the current value of the transfer function which operates on the membrane potential. Spike generation is followed by an optional dead time (refractory state). Setting with_reset to true will reset the membrane potential after each spike.</p>
-<p>The transfer function can be chosen to be linear, exponential or a sum of both by adjusting three parameters: </p><p class="formulaDsp">
+<p>The transfer function can be chosen to be linear, exponential or a sum of both by adjusting three parameters:</p>
+<p class="formulaDsp">
 <img class="formulaDsp" alt="\[ rate = Rect[ c1 * V' + c2 * exp(c3 * V') ], \]" src="form_0.png"/>
 </p>
 <p> where the effective potential <img class="formulaInl" alt="$ V' = V_m - E_{sfa}$" src="form_1.png"/> and <img class="formulaInl" alt="$ E_{sfa} $" src="form_2.png"/> is called the adaptive threshold. By setting c3 = 0, c2 can be used as an offset spike rate for an otherwise linear rate model.</p>
 <p>The dead time enables to include refractoriness. If dead time is 0, the number of spikes in one time step might exceed one and is drawn from the Poisson distribution accordingly. Otherwise, the probability for a spike is given by <img class="formulaInl" alt="$ 1 - exp(-rate*h) $" src="form_3.png"/>, where h is the simulation time step. If dead_time is smaller than the simulation resolution (time step), it is internally set to the time step. Note that, even if non-refractory neurons are to be modeled, a small value of dead_time, like dead_time=1e-8, might be the value of choice since it uses faster uniform random numbers than dead_time=0, which draws Poisson numbers. Only for very large spike rates (&gt; 1 spike/h) this will cause errors.</p>
-<p>Note that, even if non-refractory neurons are to be modeled, a small value of dead_time, like dead_time=1e-8, might be the value of choice since it uses faster uniform random numbers than dead_time=0, which draws Poisson numbers. Only for very large spike rates (&gt; 1 spike/h) this will cause errors.</p>
 <p>The model implements an adaptive threshold. If the neuron spikes, the threshold increases and the membrane potential will take longer to reach it. If the neuron does not spike, the threshold linearly decays over time, increasing the firing probability of the neuron (parameters: target_rate, target_adaptation_speed).</p>
 <p>This model has been adapted from iaf_psc_delta. The default parameters are set to the mean values in [2], which have were matched to spike-train recordings.</p>
 <p><b>Parameters</b></p>
@@ -241,8 +246,8 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <p>[3] Pozzorini C, Naud R, Mensi S, Gerstner W (2013) Temporal whitening by power-law adaptation in neocortical neurons. Nat Neurosci 16: 942-948. (uses a similar model of multi-timescale adaptation).</p>
 <p>[4] Grytskyy D, Tetzlaff T, Diesmann M and Helias M (2013) A unified view on weakly correlated recurrent networks. Front. Comput. Neurosci. 7:131.</p>
 <p>[5] Deger M, Schwalger T, Naud R, Gerstner W (2014) Fluctuations and information filtering in coupled populations of spiking neurons with adaptation. Physical Review E 90:6, 062704.</p>
-<dl class="section author"><dt>Author</dt><dd>Kappel, Hsieh, 2016; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> Point process neuron with leaky integration of delta-shaped PSCs. </dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Kappel, Hsieh; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aea748fdcfa17d6b4cbc9684f1aea7323"></a>
 <div class="memitem">
@@ -558,7 +563,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

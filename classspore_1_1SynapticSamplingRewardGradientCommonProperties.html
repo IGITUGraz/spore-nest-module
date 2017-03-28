@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -72,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html">SynapticSamplingRewardGradientCommonProperties</a></li>  </ul>
+<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html">SynapticSamplingRewardGradientCommonProperties</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -132,6 +131,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae3cc0a7600e9486e90ea962df8da1e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ce684b00af666fe67451b3684e8bfb5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#a7ce684b00af666fe67451b3684e8bfb5">get_gradient_noise</a> (nest::thread thread) const </td></tr>
 <tr class="separator:a7ce684b00af666fe67451b3684e8bfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff5b40b7f9175d3c375362cd1ecabc92"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#aff5b40b7f9175d3c375362cd1ecabc92">drand</a> (nest::thread thread) const </td></tr>
+<tr class="separator:aff5b40b7f9175d3c375362cd1ecabc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -337,6 +338,31 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 
 </div>
 </div>
+<a class="anchor" id="aff5b40b7f9175d3c375362cd1ecabc92"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double spore::SynapticSamplingRewardGradientCommonProperties::drand </td>
+          <td>(</td>
+          <td class="paramtype">nest::thread&#160;</td>
+          <td class="paramname"><em>thread</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convenience function to random number. </p>
+
+</div>
+</div>
 <a class="anchor" id="ae3cc0a7600e9486e90ea962df8da1e14"></a>
 <div class="memitem">
 <div class="memproto">
@@ -502,7 +528,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:25 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

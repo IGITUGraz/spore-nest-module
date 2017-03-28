@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -84,7 +83,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">sporemodule.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * File:   spore_module.h</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Author: Kappel, Hsieh</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#ifndef SPOREMODULE_H</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#define SPOREMODULE_H</span></div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
@@ -122,17 +126,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;} <span class="comment">// namespace spore</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif // SPOREMODULE_H</span></div>
-<div class="ttc" id="classspore_1_1SporeModule_html_ad9f61522640efe29d3243950ba60a3d0"><div class="ttname"><a href="classspore_1_1SporeModule.html#ad9f61522640efe29d3243950ba60a3d0">spore::SporeModule::init</a></div><div class="ttdeci">void init(SLIInterpreter *)</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:123</div></div>
-<div class="ttc" id="classspore_1_1SporeModule_html_aad19f730643cec50cc5a10b878dac746"><div class="ttname"><a href="classspore_1_1SporeModule.html#aad19f730643cec50cc5a10b878dac746">spore::SporeModule::name</a></div><div class="ttdeci">const std::string name(void) const </div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:69</div></div>
-<div class="ttc" id="classspore_1_1SporeModule_html_aaab46ea0497697a54eb784678b27bc82"><div class="ttname"><a href="classspore_1_1SporeModule.html#aaab46ea0497697a54eb784678b27bc82">spore::SporeModule::~SporeModule</a></div><div class="ttdeci">~SporeModule()</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:61</div></div>
+<div class="ttc" id="classspore_1_1SporeModule_html_ad9f61522640efe29d3243950ba60a3d0"><div class="ttname"><a href="classspore_1_1SporeModule.html#ad9f61522640efe29d3243950ba60a3d0">spore::SporeModule::init</a></div><div class="ttdeci">void init(SLIInterpreter *)</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:121</div></div>
+<div class="ttc" id="classspore_1_1SporeModule_html_aad19f730643cec50cc5a10b878dac746"><div class="ttname"><a href="classspore_1_1SporeModule.html#aad19f730643cec50cc5a10b878dac746">spore::SporeModule::name</a></div><div class="ttdeci">const std::string name(void) const </div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:67</div></div>
+<div class="ttc" id="classspore_1_1SporeModule_html_aaab46ea0497697a54eb784678b27bc82"><div class="ttname"><a href="classspore_1_1SporeModule.html#aaab46ea0497697a54eb784678b27bc82">spore::SporeModule::~SporeModule</a></div><div class="ttdeci">~SporeModule()</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:59</div></div>
 <div class="ttc" id="classspore_1_1SporeModule_html"><div class="ttname"><a href="classspore_1_1SporeModule.html">spore::SporeModule</a></div><div class="ttdoc">The class defining the SPORE module. </div><div class="ttdef"><b>Definition:</b> sporemodule.h:20</div></div>
-<div class="ttc" id="classspore_1_1SporeModule_html_a963446af6b9c387c53df86d1c3e162cf"><div class="ttname"><a href="classspore_1_1SporeModule.html#a963446af6b9c387c53df86d1c3e162cf">spore::SporeModule::SporeModule</a></div><div class="ttdeci">SporeModule()</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:47</div></div>
-<div class="ttc" id="classspore_1_1SporeModule_html_ad55630e16b7acb9572567a59d297ab62"><div class="ttname"><a href="classspore_1_1SporeModule.html#ad55630e16b7acb9572567a59d297ab62">spore::SporeModule::commandstring</a></div><div class="ttdeci">const std::string commandstring(void) const </div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:80</div></div>
+<div class="ttc" id="classspore_1_1SporeModule_html_a963446af6b9c387c53df86d1c3e162cf"><div class="ttname"><a href="classspore_1_1SporeModule.html#a963446af6b9c387c53df86d1c3e162cf">spore::SporeModule::SporeModule</a></div><div class="ttdeci">SporeModule()</div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:45</div></div>
+<div class="ttc" id="classspore_1_1SporeModule_html_ad55630e16b7acb9572567a59d297ab62"><div class="ttname"><a href="classspore_1_1SporeModule.html#ad55630e16b7acb9572567a59d297ab62">spore::SporeModule::commandstring</a></div><div class="ttdeci">const std::string commandstring(void) const </div><div class="ttdef"><b>Definition:</b> sporemodule.cpp:78</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

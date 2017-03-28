@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -69,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,25 +81,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">diligent_connector_model.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;nest_time.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;spore.h&quot;</code><br />
+<code>#include &quot;nest_time.h&quot;</code><br />
 <code>#include &quot;nest_timeconverter.h&quot;</code><br />
 <code>#include &quot;dictutils.h&quot;</code><br />
-<code>#include &quot;network.h&quot;</code><br />
 <code>#include &quot;connector_model.h&quot;</code><br />
 <code>#include &quot;connector_base.h&quot;</code><br />
+<code>#include &quot;connection_manager_impl.h&quot;</code><br />
+<code>#include &quot;connector_model_impl.h&quot;</code><br />
+<code>#include &quot;kernel_manager.h&quot;</code><br />
 <code>#include &quot;connection_updater.h&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for diligent_connector_model.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="diligent__connector__model_8h__incl.png" border="0" usemap="#diligent__connector__model_8h" alt=""/></div>
 <map name="diligent__connector__model_8h" id="diligent__connector__model_8h">
-<area shape="rect" id="node8" href="connection__updater_8h_source.html" title="connection_updater.h" alt="" coords="697,96,844,123"/></map>
+<area shape="rect" id="node2" href="spore_8h_source.html" title="spore.h" alt="" coords="5,179,69,205"/><area shape="rect" id="node11" href="connection__updater_8h_source.html" title="connection_updater.h" alt="" coords="593,96,740,123"/></map>
 </div>
 </div>
 <p><a href="diligent__connector__model_8h_source.html">Go to the source code of this file.</a></p>
@@ -111,18 +112,13 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connector model for diligent connections.  <a href="classspore_1_1DiligentConnectorModel.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacespore"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacespore.html">spore</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3ced2a39cfa939a4e31a372c39257ac6"></a>
+<tr class="memitem:a4417a3a2a5669ff63832b034fc08d56f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a4417a3a2a5669ff63832b034fc08d56f"></a>
 template&lt;class ConnectionT &gt; </td></tr>
-<tr class="memitem:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memTemplItemLeft" align="right" valign="top">nest::synindex&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacespore.html#a3ced2a39cfa939a4e31a372c39257ac6">spore::register_diligent_connection_model</a> (nest::Network &amp;net, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3ced2a39cfa939a4e31a372c39257ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to register diligent synapses. <br /></td></tr>
-<tr class="separator:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4417a3a2a5669ff63832b034fc08d56f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>spore::register_diligent_connection_model</b> (const std::string &amp;name, bool requires_symmetric=false)</td></tr>
+<tr class="memdesc:a4417a3a2a5669ff63832b034fc08d56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to register diligent synapses. <br /></td></tr>
+<tr class="separator:a4417a3a2a5669ff63832b034fc08d56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This source code is based mainly on <em>connector_model_impl.h</em> that is part of NEST 2.10 (Copyright (C) 2004 The NEST Initiative).</p>
@@ -131,7 +127,7 @@ template&lt;class ConnectionT &gt; </td></tr>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

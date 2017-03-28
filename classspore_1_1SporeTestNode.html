@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -72,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1SporeTestNode.html">SporeTestNode</a></li>  </ul>
+<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1SporeTestNode.html">SporeTestNode</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -148,6 +147,12 @@ Protected Member Functions</h2></td></tr>
 <tr class="inherit_header pro_methods_classspore_1_1TracingNode"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classspore_1_1TracingNode')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td></tr>
 <tr class="memitem:aef722022e0133881f935c3f31505d7d2 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#aef722022e0133881f935c3f31505d7d2">init_traces</a> (size_t num_traces)</td></tr>
 <tr class="separator:aef722022e0133881f935c3f31505d7d2 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada597707cfc4d9497d9f4f513e3240fa inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#ada597707cfc4d9497d9f4f513e3240fa">send_event</a> (nest::Event &amp;ev, long lag)</td></tr>
+<tr class="separator:ada597707cfc4d9497d9f4f513e3240fa inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a4e0488e14e103412a966f2c9d49ab3 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">librandom::RngPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#a4a4e0488e14e103412a966f2c9d49ab3">get_rng</a> ()</td></tr>
+<tr class="separator:a4a4e0488e14e103412a966f2c9d49ab3 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66311c7d72795a7ab2789f731d3715a8 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">nest::Time&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#a66311c7d72795a7ab2789f731d3715a8">get_slice_origin</a> () const </td></tr>
+<tr class="separator:a66311c7d72795a7ab2789f731d3715a8 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a> (nest::delay steps, double v, trace_id id=0)</td></tr>
 <tr class="separator:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -389,7 +394,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -70,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -96,91 +95,94 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;namedatum.h&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;universal_data_logger.h&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;tracing_node.h&quot;</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;music.hh&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>spore</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1RewardInProxy.html">RewardInProxy</a> : <span class="keyword">public</span> <a class="code" href="classspore_1_1TracingNode.html">TracingNode</a></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classspore_1_1RewardInProxy.html">RewardInProxy</a>();</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;tracing_node.h&quot;</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>spore</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;{</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html">   23</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1RewardInProxy.html">RewardInProxy</a> : <span class="keyword">public</span> <a class="code" href="classspore_1_1TracingNode.html">TracingNode</a></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">bool</span> has_proxies()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    }</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">bool</span> one_node_per_process()<span class="keyword"> const</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classspore_1_1RewardInProxy.html#a38209f374569d1eba863d19e04beeb0e">get_status</a>(DictionaryDatum&amp; d) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classspore_1_1RewardInProxy.html#a784ed8e00da7d24e5db1bc5dc798bdb5">set_status</a>(<span class="keyword">const</span> DictionaryDatum&amp; d);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classspore_1_1RewardInProxy.html">RewardInProxy</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">bool</span> has_proxies()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">bool</span> one_node_per_process()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classspore_1_1RewardInProxy.html#a38209f374569d1eba863d19e04beeb0e">get_status</a>(DictionaryDatum&amp; d) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classspore_1_1RewardInProxy.html#a784ed8e00da7d24e5db1bc5dc798bdb5">set_status</a>(<span class="keyword">const</span> DictionaryDatum&amp; d);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_buffers_();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_state_(<span class="keyword">const</span> Node&amp;);</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> calibrate();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_buffers_();</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> init_state_(<span class="keyword">const</span> Node&amp;);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(nest::Time <span class="keyword">const</span>&amp;, <span class="keyword">const</span> <span class="keywordtype">long</span>, <span class="keyword">const</span> <span class="keywordtype">long</span>);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> calibrate();</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">   49</a></span>&#160;    MUSIC::ContInputPort* <a class="code" href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">reward_in_</a>; </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">   50</a></span>&#160;    std::vector&lt; double &gt; <a class="code" href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">reward_in_buffer_</a>; </div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">// ------------------------------------------------------------</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> update(nest::Time <span class="keyword">const</span>&amp;, <span class="keyword">const</span> <span class="keywordtype">long</span>, <span class="keyword">const</span> <span class="keywordtype">long</span>);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">   51</a></span>&#160;    MUSIC::ContInputPort* <a class="code" href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">reward_in_</a>; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">   52</a></span>&#160;    std::vector&lt; double &gt; <a class="code" href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">reward_in_buffer_</a>; </div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html">   54</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    {</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#a336b4bbac5d5d0f67fe3673a83c7a7ee">State_</a>(); </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">get</span>(DictionaryDatum&amp;) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">// ------------------------------------------------------------</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html">   56</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#a336b4bbac5d5d0f67fe3673a83c7a7ee">State_</a>(); </div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">   60</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">published_</a>; </div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">   61</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">port_width_</a>; </div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html">   64</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html">Parameters_</a></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a299b4ea1f7ac1cfee6023aa612c473c8">Parameters_</a>(); </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">get</span>(DictionaryDatum&amp;) <span class="keyword">const</span>; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a55c653bdb7a14913c67f4b9bf754385b">set</a>(<span class="keyword">const</span> DictionaryDatum&amp;, <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a>&amp;); </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">   71</a></span>&#160;        std::string <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">port_name_</a>; </div>
-<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">   72</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">delay_</a>; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    };</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a> S_;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html">Parameters_</a> P_;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;};</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;}</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="classspore_1_1RewardInProxy_html_aa24103d1691099441be2d4e2786ffa25"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">spore::RewardInProxy::reward_in_</a></div><div class="ttdeci">MUSIC::ContInputPort * reward_in_</div><div class="ttdoc">The MUSIC cont port for reward input. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:49</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a60f90d46dacb556fc528acfc43597c0e"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">spore::RewardInProxy::Parameters_::port_name_</a></div><div class="ttdeci">std::string port_name_</div><div class="ttdoc">the name of MUSIC port to read from </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:71</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_aade74b2a153a9fa3e4d3303642423aef"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">spore::RewardInProxy::State_::port_width_</a></div><div class="ttdeci">int port_width_</div><div class="ttdoc">the width of the MUSIC port </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:61</div></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">get</span>(DictionaryDatum&amp;) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">   62</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">published_</a>; </div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">   63</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">port_width_</a>; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    };</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html">   66</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html">Parameters_</a></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a299b4ea1f7ac1cfee6023aa612c473c8">Parameters_</a>(); </div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        <span class="keywordtype">void</span> <span class="keyword">get</span>(DictionaryDatum&amp;) <span class="keyword">const</span>; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a55c653bdb7a14913c67f4b9bf754385b">set</a>(<span class="keyword">const</span> DictionaryDatum&amp;, <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a>&amp;); </div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">   73</a></span>&#160;        std::string <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">port_name_</a>; </div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">   74</a></span>&#160;        <span class="keywordtype">float</span> <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">delay_</a>; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    };</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <a class="code" href="structspore_1_1RewardInProxy_1_1State__.html">State_</a> S_;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="structspore_1_1RewardInProxy_1_1Parameters__.html">Parameters_</a> P_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;}</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classspore_1_1RewardInProxy_html_aa24103d1691099441be2d4e2786ffa25"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#aa24103d1691099441be2d4e2786ffa25">spore::RewardInProxy::reward_in_</a></div><div class="ttdeci">MUSIC::ContInputPort * reward_in_</div><div class="ttdoc">The MUSIC cont port for reward input. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:51</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a60f90d46dacb556fc528acfc43597c0e"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a60f90d46dacb556fc528acfc43597c0e">spore::RewardInProxy::Parameters_::port_name_</a></div><div class="ttdeci">std::string port_name_</div><div class="ttdoc">the name of MUSIC port to read from </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:73</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_aade74b2a153a9fa3e4d3303642423aef"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#aade74b2a153a9fa3e4d3303642423aef">spore::RewardInProxy::State_::port_width_</a></div><div class="ttdeci">int port_width_</div><div class="ttdoc">the width of the MUSIC port </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:63</div></div>
 <div class="ttc" id="classspore_1_1TracingNode_html"><div class="ttname"><a href="classspore_1_1TracingNode.html">spore::TracingNode</a></div><div class="ttdoc">Base class to all nodes that record traces. </div><div class="ttdef"><b>Definition:</b> tracing_node.h:26</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_aec9e9609193adeb05082318a01fc67a1"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">spore::RewardInProxy::Parameters_::delay_</a></div><div class="ttdeci">float delay_</div><div class="ttdoc">the accepted delay for the MUSIC connection </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:72</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_aa2c64e82a3122a1a8aa628acd2e949b9"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">spore::RewardInProxy::State_::published_</a></div><div class="ttdeci">bool published_</div><div class="ttdoc">indicates whether this node has been published already with MUSIC </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:60</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html">spore::RewardInProxy::State_</a></div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:54</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_a336b4bbac5d5d0f67fe3673a83c7a7ee"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#a336b4bbac5d5d0f67fe3673a83c7a7ee">spore::RewardInProxy::State_::State_</a></div><div class="ttdeci">State_()</div><div class="ttdoc">Sets default state value. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:38</div></div>
-<div class="ttc" id="classspore_1_1RewardInProxy_html_a784ed8e00da7d24e5db1bc5dc798bdb5"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a784ed8e00da7d24e5db1bc5dc798bdb5">spore::RewardInProxy::set_status</a></div><div class="ttdeci">virtual void set_status(const DictionaryDatum &amp;d)</div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:152</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a299b4ea1f7ac1cfee6023aa612c473c8"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a299b4ea1f7ac1cfee6023aa612c473c8">spore::RewardInProxy::Parameters_::Parameters_</a></div><div class="ttdeci">Parameters_()</div><div class="ttdoc">Sets default parameter values. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:32</div></div>
-<div class="ttc" id="classspore_1_1RewardInProxy_html"><div class="ttname"><a href="classspore_1_1RewardInProxy.html">spore::RewardInProxy</a></div><div class="ttdoc">A device which receives reward traces from MUSIC. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:21</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html">spore::RewardInProxy::Parameters_</a></div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:64</div></div>
-<div class="ttc" id="classspore_1_1RewardInProxy_html_a88c3698312b1744741652fb271846e39"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">spore::RewardInProxy::reward_in_buffer_</a></div><div class="ttdeci">std::vector&lt; double &gt; reward_in_buffer_</div><div class="ttdoc">The mapped buffer for receiving the reward values via MPI. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:50</div></div>
-<div class="ttc" id="classspore_1_1RewardInProxy_html_a38209f374569d1eba863d19e04beeb0e"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a38209f374569d1eba863d19e04beeb0e">spore::RewardInProxy::get_status</a></div><div class="ttdeci">virtual void get_status(DictionaryDatum &amp;d) const </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:144</div></div>
-<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a55c653bdb7a14913c67f4b9bf754385b"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a55c653bdb7a14913c67f4b9bf754385b">spore::RewardInProxy::Parameters_::set</a></div><div class="ttdeci">void set(const DictionaryDatum &amp;, State_ &amp;)</div><div class="ttdoc">Set values from dicitonary. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:54</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_aec9e9609193adeb05082318a01fc67a1"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1">spore::RewardInProxy::Parameters_::delay_</a></div><div class="ttdeci">float delay_</div><div class="ttdoc">the accepted delay for the MUSIC connection </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:74</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_aa2c64e82a3122a1a8aa628acd2e949b9"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#aa2c64e82a3122a1a8aa628acd2e949b9">spore::RewardInProxy::State_::published_</a></div><div class="ttdeci">bool published_</div><div class="ttdoc">indicates whether this node has been published already with MUSIC </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:62</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html">spore::RewardInProxy::State_</a></div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:56</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1State___html_a336b4bbac5d5d0f67fe3673a83c7a7ee"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1State__.html#a336b4bbac5d5d0f67fe3673a83c7a7ee">spore::RewardInProxy::State_::State_</a></div><div class="ttdeci">State_()</div><div class="ttdoc">Sets default state value. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:40</div></div>
+<div class="ttc" id="classspore_1_1RewardInProxy_html_a784ed8e00da7d24e5db1bc5dc798bdb5"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a784ed8e00da7d24e5db1bc5dc798bdb5">spore::RewardInProxy::set_status</a></div><div class="ttdeci">virtual void set_status(const DictionaryDatum &amp;d)</div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:154</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a299b4ea1f7ac1cfee6023aa612c473c8"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a299b4ea1f7ac1cfee6023aa612c473c8">spore::RewardInProxy::Parameters_::Parameters_</a></div><div class="ttdeci">Parameters_()</div><div class="ttdoc">Sets default parameter values. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:34</div></div>
+<div class="ttc" id="classspore_1_1RewardInProxy_html"><div class="ttname"><a href="classspore_1_1RewardInProxy.html">spore::RewardInProxy</a></div><div class="ttdoc">A device which receives reward traces from MUSIC. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:23</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html">spore::RewardInProxy::Parameters_</a></div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:66</div></div>
+<div class="ttc" id="classspore_1_1RewardInProxy_html_a88c3698312b1744741652fb271846e39"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a88c3698312b1744741652fb271846e39">spore::RewardInProxy::reward_in_buffer_</a></div><div class="ttdeci">std::vector&lt; double &gt; reward_in_buffer_</div><div class="ttdoc">The mapped buffer for receiving the reward values via MPI. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.h:52</div></div>
+<div class="ttc" id="classspore_1_1RewardInProxy_html_a38209f374569d1eba863d19e04beeb0e"><div class="ttname"><a href="classspore_1_1RewardInProxy.html#a38209f374569d1eba863d19e04beeb0e">spore::RewardInProxy::get_status</a></div><div class="ttdeci">virtual void get_status(DictionaryDatum &amp;d) const </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:146</div></div>
+<div class="ttc" id="structspore_1_1RewardInProxy_1_1Parameters___html_a55c653bdb7a14913c67f4b9bf754385b"><div class="ttname"><a href="structspore_1_1RewardInProxy_1_1Parameters__.html#a55c653bdb7a14913c67f4b9bf754385b">spore::RewardInProxy::Parameters_::set</a></div><div class="ttdeci">void set(const DictionaryDatum &amp;, State_ &amp;)</div><div class="ttdoc">Set values from dicitonary. </div><div class="ttdef"><b>Definition:</b> reward_in_proxy.cpp:56</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

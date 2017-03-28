@@ -9,22 +9,20 @@ var indexSectionsWithContent =
 {
   0: "acdghilnoprstu~",
   1: "cdprst",
-  2: "s",
-  3: "d",
-  4: "acdghilnoprstu~",
-  5: "dpr",
-  6: "c"
+  2: "d",
+  3: "acdghilnoprstu~",
+  4: "dpr",
+  5: "c"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "namespaces",
-  3: "files",
-  4: "functions",
-  5: "variables",
-  6: "typedefs"
+  2: "files",
+  3: "functions",
+  4: "variables",
+  5: "typedefs"
 };
 
 function convertToId(search)

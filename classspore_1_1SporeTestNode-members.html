@@ -38,7 +38,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -72,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1SporeTestNode.html">SporeTestNode</a></li>  </ul>
+<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1SporeTestNode.html">SporeTestNode</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,6 +95,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="directory">
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>const_iterator</b> typedef (defined in <a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a>)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#af5522aaaa9f79bd08aa19ee8d97d122b">get_num_traces</a>() const </td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a4a4e0488e14e103412a966f2c9d49ab3">get_rng</a>()</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a66311c7d72795a7ab2789f731d3715a8">get_slice_origin</a>() const </td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a9c9fd5bd97094e1c55229d775fb47705">get_status</a>(DictionaryDatum &amp;) const </td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#ad4b6747dfeb40cd23b6cbd08b951048e">get_trace</a>(nest::delay steps, trace_id id) const </td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#ab481ff1ce74b32636c35d485be0253ac">get_trace</a>(nest::Time const &amp;time, trace_id id) const </td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
@@ -103,19 +104,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a903d776adbea5031d4bb6a08562b8aab">handles_test_event</a>(nest::SpikeEvent &amp;, nest::rport)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#aef722022e0133881f935c3f31505d7d2">init_traces</a>(size_t num_traces)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#ac9a809ca053ab0ec4ff12f0b9fc1c5a5">register_test</a>(SporeTestBase *test)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#ac2699871948ad0462552d8dc299fb706">send_test_event</a>(nest::Node &amp;, nest::rport, nest::synindex, bool)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#ae81bc088be906e0e829e26ef7ae988fa">set_status</a>(const DictionaryDatum &amp;)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a>(nest::delay steps, double v, trace_id id=0)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a6cb8f50495917973b212145162da11ed">SporeTestNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>trace_id</b> typedef (defined in <a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a>)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a033022cfbc5ad24e2304107dabcaded6">TracingNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a1a2856827579eacfcefbd8aaa6b1aa7d">~SporeTestNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a2719ebc20c21c85040c84846e7497d67">~TracingNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#ada597707cfc4d9497d9f4f513e3240fa">send_event</a>(nest::Event &amp;ev, long lag)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#ac2699871948ad0462552d8dc299fb706">send_test_event</a>(nest::Node &amp;, nest::rport, nest::synindex, bool)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#ae81bc088be906e0e829e26ef7ae988fa">set_status</a>(const DictionaryDatum &amp;)</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a>(nest::delay steps, double v, trace_id id=0)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">protected</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a6cb8f50495917973b212145162da11ed">SporeTestNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>trace_id</b> typedef (defined in <a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a>)</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a033022cfbc5ad24e2304107dabcaded6">TracingNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html#a1a2856827579eacfcefbd8aaa6b1aa7d">~SporeTestNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1SporeTestNode.html">spore::SporeTestNode</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classspore_1_1TracingNode.html#a2719ebc20c21c85040c84846e7497d67">~TracingNode</a>()</td><td class="entry"><a class="el" href="classspore_1_1TracingNode.html">spore::TracingNode</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
