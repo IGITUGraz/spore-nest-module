@@ -22,7 +22,8 @@ public:
     virtual double get_trace(nest::delay time_step, TracingNode::trace_id id)
     {
         return double(time_step + id);
-    };    
+    };
+
     virtual size_t get_num_traces() const
     {
         return 5;

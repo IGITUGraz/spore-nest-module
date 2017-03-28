@@ -1,5 +1,26 @@
 /*
- *  PoissonDblExpNeuron.cpp
+ * This file is part of SPORE.
+ * 
+ * SPORE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information see: https://github.com/IGITUGraz/spore-nest-module
+ *
+ * Author: Hsieh, Kappel
+ * File: poisson_dbl_exp_neuron.cpp
+ * 
+ * This file is mainly based on pp_psc_delta.h which is part of NEST.
+ * See: http://nest-initiative.org/
  */
 
 #include "exceptions.h"
@@ -257,7 +278,7 @@ void PoissonDblExpNeuron::calibrate()
     B_.logger_.init();
 
     V_.h_ = nest::Time::get_resolution().get_ms();
-    V_.rng_ = get_rng();
+    V_.rng_ = nest::kernel().rng_manager.get_rng( get_thread() );
 
     V_.decay_rise_exc_ = std::exp(-V_.h_ / P_.tau_rise_exc_);
     V_.decay_fall_exc_ = std::exp(-V_.h_ / P_.tau_fall_exc_);
@@ -380,7 +401,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
                     // And send the spike event
                     nest::SpikeEvent se;
                     se.set_multiplicity(n_spikes);
-                    send_event(se, lag);
+                    nest::kernel().event_delivery_manager.send( *this, se, lag );
 
                     // Reset the potential if applicable
                     if (P_.with_reset_)
@@ -427,12 +448,12 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
     //     is clumsy and should be improved.
     if (e.get_rport()==0)
     {
-        B_.exc_spikes_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
+        B_.exc_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
                              e.get_weight() * e.get_multiplicity());
     }
     else if (e.get_rport()==1)
     {
-        B_.inh_spikes_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
+        B_.inh_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
                              e.get_weight() * e.get_multiplicity());
     }
     else
@@ -455,8 +476,7 @@ void PoissonDblExpNeuron::handle(nest::CurrentEvent& e)
     const double c = e.get_current();
     const double w = e.get_weight();
 
-    B_.currents_.add_value(e.get_rel_delivery_steps(get_slice_origin()),
-                           w * c);
+    B_.currents_.add_value( e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ), w * c);
 }
 
 
