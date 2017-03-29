@@ -23,7 +23,7 @@
  */
 
 #ifndef SPORE_TEST_MODULE_H
-#define	SPORE_TEST_MODULE_H
+#define SPORE_TEST_MODULE_H
 
 #include "dictutils.h"
 
@@ -32,6 +32,7 @@
 
 namespace spore
 {
+
 /**
  * Node to test spore module.
  */
@@ -40,25 +41,25 @@ class SporeTestNode : public TracingNode
 public:
     SporeTestNode();
     ~SporeTestNode();
-    
+
     void get_status(DictionaryDatum &) const;
     void set_status(const DictionaryDatum &);
-    
+
     /**
      * Import sets of overloaded virtual functions.
      * @see Technical Issues / Virtual Functions: Overriding, Overloading, and Hiding
      */
     using nest::Node::handle;
-    using nest::Node::handles_test_event;    
-    
+    using nest::Node::handles_test_event;
+
     void handle(nest::SpikeEvent &);
     nest::port handles_test_event(nest::SpikeEvent&, nest::rport);
     nest::port send_test_event(nest::Node&, nest::rport, nest::synindex, bool);
 
-        
+
 protected:
     void register_test(SporeTestBase *test);
-    
+
 private:
     void init_state_(const nest::Node& proto);
     void init_buffers_();
@@ -68,10 +69,9 @@ private:
 
     std::string test_name_;
     double test_time_;
-    
+
     std::map<std::string, SporeTestBase*> tests_;
 };
-
 
 /**
  * PoissonDblExpNeuron test event.
@@ -85,7 +85,6 @@ nest::port SporeTestNode::send_test_event(nest::Node& target, nest::rport recept
     return target.handles_test_event(e, receptor_type);
 }
 
-
 /**
  * PoissonDblExpNeuron test event.
  */
@@ -94,7 +93,6 @@ nest::port SporeTestNode::handles_test_event(nest::SpikeEvent&, nest::rport rece
 {
     return 0;
 }
-
 
 /**
  * Status getter function.
@@ -115,12 +113,12 @@ void SporeTestNode::set_status(const DictionaryDatum &d)
     std::string test_name;
     if (updateValue<std::string>(d, "test_name", test_name))
     {
-        if (tests_.find(test_name)==tests_.end())
-            throw nest::BadParameter("test '"+test_name+"' does not exist!");
-                    
+        if (tests_.find(test_name) == tests_.end())
+            throw nest::BadParameter("test '" + test_name + "' does not exist!");
+
         test_name_ = test_name;
     }
-    
+
     updateValue<double>(d, "test_time", test_time_);
 }
 

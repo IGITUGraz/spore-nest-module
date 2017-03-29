@@ -23,12 +23,13 @@
  */
 
 #ifndef TEST_CIRCULAR_BUFFER_H
-#define	TEST_CIRCULAR_BUFFER_H
+#define TEST_CIRCULAR_BUFFER_H
 
 #include "spore_test_base.h"
 
 namespace spore
 {
+
 /**
  * Test class for circular buffer container.
  */

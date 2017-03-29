@@ -23,7 +23,7 @@
  */
 
 #ifndef SPORE_H
-#define	SPORE_H
+#define SPORE_H
 
 namespace spore
 {

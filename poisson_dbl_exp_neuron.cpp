@@ -39,6 +39,7 @@
 
 namespace nest
 {
+
 /* 
  * Recordables map of PoissonDblExpNeuron.
  */
@@ -67,38 +68,38 @@ nest::RecordablesMap<PoissonDblExpNeuron> PoissonDblExpNeuron::recordablesMap_;
  */
 PoissonDblExpNeuron::Parameters_::Parameters_()
 : tau_rise_exc_(2.0), // ms
-  tau_fall_exc_(20.0), // ms
-  tau_rise_inh_(1.0), // ms
-  tau_fall_inh_(10.0), // ms
-  input_conductance_(1.0), // S
-  dead_time_(1.0), // ms
-  dead_time_random_(0), // bool
-  dead_time_shape_(1), // int
-  with_reset_(1), // bool
-  c_1_(0.0), // Hz / mV
-  c_2_(1.238), // Hz / mV
-  c_3_(0.25), // 1.0 / mV
-  I_e_(0.0), // pA
-  t_ref_remaining_(0.0), // ms
-  target_rate_(10.0), // Hz
-  target_adaptation_speed_(0.0) //
-{}
-
+tau_fall_exc_(20.0), // ms
+tau_rise_inh_(1.0), // ms
+tau_fall_inh_(10.0), // ms
+input_conductance_(1.0), // S
+dead_time_(1.0), // ms
+dead_time_random_(0), // bool
+dead_time_shape_(1), // int
+with_reset_(1), // bool
+c_1_(0.0), // Hz / mV
+c_2_(1.238), // Hz / mV
+c_3_(0.25), // 1.0 / mV
+I_e_(0.0), // pA
+t_ref_remaining_(0.0), // ms
+target_rate_(10.0), // Hz
+target_adaptation_speed_(0.0) //
+{
+}
 
 /**
  * Default constructor.
  */
 PoissonDblExpNeuron::State_::State_()
 : u_rise_exc_(0.0),
-  u_fall_exc_(0.0),
-  u_rise_inh_(0.0),
-  u_fall_inh_(0.0),
-  u_membrane_(0.0),
-  input_current_(0.0),
-  adaptative_threshold_(0.0),
-  r_(0)
-{}
-
+u_fall_exc_(0.0),
+u_rise_inh_(0.0),
+u_fall_inh_(0.0),
+u_membrane_(0.0),
+input_current_(0.0),
+adaptative_threshold_(0.0),
+r_(0)
+{
+}
 
 /**
  * Parameter getter function.
@@ -177,7 +178,6 @@ void PoissonDblExpNeuron::State_::get(DictionaryDatum &d, const Parameters_&) co
     def<double>(d, "adaptive_threshold", adaptative_threshold_);
 }
 
-
 /**
  * Sate setter function.
  */
@@ -196,15 +196,16 @@ void PoissonDblExpNeuron::State_::set(const DictionaryDatum& d, const Parameters
  */
 PoissonDblExpNeuron::Buffers_::Buffers_(PoissonDblExpNeuron &n)
 : logger_(n)
-{}
-
+{
+}
 
 /**
  * Constructor.
  */
 PoissonDblExpNeuron::Buffers_::Buffers_(const Buffers_ &, PoissonDblExpNeuron &n)
 : logger_(n)
-{}
+{
+}
 
 //
 // PoissonDblExpNeuron implementation.
@@ -215,9 +216,9 @@ PoissonDblExpNeuron::Buffers_::Buffers_(const Buffers_ &, PoissonDblExpNeuron &n
  */
 PoissonDblExpNeuron::PoissonDblExpNeuron()
 : TracingNode(),
-  P_(),
-  S_(),
-  B_(*this)
+P_(),
+S_(),
+B_(*this)
 {
     recordablesMap_.create();
 }
@@ -227,23 +228,21 @@ PoissonDblExpNeuron::PoissonDblExpNeuron()
  */
 PoissonDblExpNeuron::PoissonDblExpNeuron(const PoissonDblExpNeuron& n)
 : TracingNode(n),
-  P_(n.P_),
-  S_(n.S_),
-  B_(n.B_, *this)
+P_(n.P_),
+S_(n.S_),
+B_(n.B_, *this)
 {
 }
 
-
 /**
  * Node state initialization.
- */ 
+ */
 void PoissonDblExpNeuron::init_state_(const nest::Node& proto)
 {
     const PoissonDblExpNeuron& pr = downcast<PoissonDblExpNeuron>(proto);
     S_ = pr.S_;
     S_.r_ = nest::Time(nest::Time::ms(P_.t_ref_remaining_)).get_steps();
 }
-
 
 /**
  * Initialize the node's spike and current buffers.
@@ -258,7 +257,6 @@ void PoissonDblExpNeuron::init_buffers_()
     init_traces(1);
 }
 
-
 /**
  * Calibrate the node.
  */
@@ -268,7 +266,7 @@ void PoissonDblExpNeuron::calibrate()
     B_.logger_.init();
 
     V_.h_ = nest::Time::get_resolution().get_ms();
-    V_.rng_ = nest::kernel().rng_manager.get_rng( get_thread() );
+    V_.rng_ = nest::kernel().rng_manager.get_rng(get_thread());
 
     V_.decay_rise_exc_ = std::exp(-V_.h_ / P_.tau_rise_exc_);
     V_.decay_fall_exc_ = std::exp(-V_.h_ / P_.tau_fall_exc_);
@@ -313,7 +311,6 @@ void PoissonDblExpNeuron::calibrate()
     }
 }
 
-
 /**
  * Update the node to the given time point.
  */
@@ -336,7 +333,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
             S_.u_rise_exc_ += psp_amplitude_exc;
             S_.u_fall_exc_ += psp_amplitude_exc;
         }
-        
+
         if (psp_amplitude_inh != 0.0)
         {
             S_.u_rise_inh_ += psp_amplitude_inh;
@@ -357,7 +354,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
 
             // Calculate instantaneous rate from transfer function:
             //     rate = c1 * u' + c2 * exp(c3 * u')
-            
+
             double V_eff = S_.u_membrane_ - S_.adaptative_threshold_;
 
             double rate = (P_.c_1_ * V_eff + P_.c_2_ * std::exp(P_.c_3_ * V_eff));
@@ -392,7 +389,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
                     // And send the spike event
                     nest::SpikeEvent se;
                     se.set_multiplicity(n_spikes);
-                    nest::kernel().event_delivery_manager.send( *this, se, lag );
+                    nest::kernel().event_delivery_manager.send(*this, se, lag);
 
                     // Reset the potential if applicable
                     if (P_.with_reset_)
@@ -424,7 +421,6 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
     }
 }
 
-
 /**
  * SpikeEvent handling.
  * @param e the event.
@@ -437,24 +433,23 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
     //        explicitly, since it depends on delay and offset within
     //        the update cycle.  The way it is done here works, but
     //        is clumsy and should be improved.
-    if (e.get_rport()==0)
+    if (e.get_rport() == 0)
     {
-        B_.exc_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
+        B_.exc_spikes_.add_value(e.get_rel_delivery_steps(nest::kernel().simulation_manager.get_slice_origin()),
                                  e.get_weight() * e.get_multiplicity());
     }
-    else if (e.get_rport()==1)
+    else if (e.get_rport() == 1)
     {
-        B_.inh_spikes_.add_value(e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ),
+        B_.inh_spikes_.add_value(e.get_rel_delivery_steps(nest::kernel().simulation_manager.get_slice_origin()),
                                  e.get_weight() * e.get_multiplicity());
     }
     else
     {
         std::ostringstream msg;
         msg << "Unexpected rport id: " << e.get_rport();
-        throw nest::BadProperty( msg.str() );
+        throw nest::BadProperty(msg.str());
     }
 }
-
 
 /**
  * CurrentEvent handling.
@@ -467,9 +462,8 @@ void PoissonDblExpNeuron::handle(nest::CurrentEvent& e)
     const double c = e.get_current();
     const double w = e.get_weight();
 
-    B_.currents_.add_value( e.get_rel_delivery_steps( nest::kernel().simulation_manager.get_slice_origin() ), w * c);
+    B_.currents_.add_value(e.get_rel_delivery_steps(nest::kernel().simulation_manager.get_slice_origin()), w * c);
 }
-
 
 /**
  * DataLoggingRequest handling.

@@ -130,12 +130,12 @@ void RewardInProxy::calibrate()
 {
     // @todo: Remove this as soon as bug gets fixed!
     const size_t num_threads = nest::kernel().vp_manager.get_num_threads();
-    if (num_threads>1)
+    if (num_threads > 1)
     {
         throw nest::BadProperty("Due to issue #696 in NEST RewardInProxy can currently only be used with"
                                 " local_num_threads is set to 1!");
     }
-    
+
     // only publish the port once
     if (!S_.published_)
     {

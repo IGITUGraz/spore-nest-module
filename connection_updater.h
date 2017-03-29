@@ -23,7 +23,7 @@
  */
 
 #ifndef CONNECTION_UPDATER_H
-#define	CONNECTION_UPDATER_H
+#define CONNECTION_UPDATER_H
 
 #include <vector>
 #include <set>
@@ -71,8 +71,8 @@ public:
     void init(nest::index cu_model_id);
     void setup(long interval, long exceptable_latency);
 
-    void register_connector( nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,
-                             nest::thread th, nest::ConnectorModel* cm, nest::synindex syn_id );
+    void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,
+                            nest::thread th, nest::ConnectorModel* cm, nest::synindex syn_id);
 
     /**
      * @return the update interval.
@@ -97,7 +97,7 @@ public:
     {
         return interval_ + acceptable_latency_ + nest::kernel().connection_manager.get_min_delay();
     }
-    
+
     /**
      * @return the time limit up to which connections should be updated.
      */
@@ -111,15 +111,15 @@ public:
      */
     inline nest::Time get_horizon() const
     {
-        return get_origin() - nest::Time( nest::Time::step(interval_ + acceptable_latency_) ); 
+        return get_origin() - nest::Time(nest::Time::step(interval_ + acceptable_latency_));
     }
-    
+
     /**
      * @return true if the ConnectionUpdateManager is set up correctly.
      */
     inline bool is_valid() const
     {
-        return (interval_>0) && (acceptable_latency_>=0);
+        return (interval_ > 0) && (acceptable_latency_ >= 0);
     }
 
     /**
@@ -134,13 +134,14 @@ public:
 
 private:
     friend class ConnectionUpdater;
-    
+
     void update(const nest::Time &time, nest::thread th);
     void calibrate(nest::thread th);
     void reset();
-    
+
     ConnectionUpdateManager(const ConnectionUpdateManager&)
-    {}
+    {
+    }
 
     std::vector< std::set<nest::ConnectorBase*> > connectors_;
 
@@ -155,7 +156,6 @@ private:
     static ConnectionUpdateManager *instance_;
 };
 
-
 /**
  * @brief Nest node to handle synapse updates on regular time grid.
  */
@@ -163,33 +163,32 @@ class ConnectionUpdater : public nest::Node
 {
 public:
     ConnectionUpdater();
-    ConnectionUpdater(const ConnectionUpdater& n);    
+    ConnectionUpdater(const ConnectionUpdater& n);
     virtual ~ConnectionUpdater();
-    
+
     virtual void update(nest::Time const &origin, const long from, const long to);
-    
+
     void get_status(DictionaryDatum &) const;
     void set_status(const DictionaryDatum &);
 
     inline
     bool has_proxies() const
     {
-      return false;
+        return false;
     }
-    
+
     inline
     bool one_node_per_process() const
     {
-      return false;
-    }    
-    
+        return false;
+    }
+
 private:
 
     virtual void calibrate();
     virtual void init_state_(const nest::Node& proto);
     virtual void init_buffers_();
 };
-
 
 /**
  * @brief The dummy event class used to trigger synapse updates.
@@ -203,6 +202,7 @@ class SynapseUpdateEvent : public nest::Event
 {
 public:
     // Constructor.
+
     SynapseUpdateEvent()
     {
         set_rport(-1);
@@ -210,14 +210,16 @@ public:
 
     // SynapseUpdateEvent are dummy events. Trying to clone them will raise
     // an exception!
+
     virtual Event* clone() const
     {
         throw nest::KernelException("Trying to call clone() of a SynapseUpdateEvent is illegal!");
         return 0;
     }
-    
+
     // SynapseUpdateEvent are dummy events. Trying to send them will raise
     // an exception!
+
     virtual void operator()()
     {
         throw nest::KernelException("Trying to send a SynapseUpdateEvent is illegal!");

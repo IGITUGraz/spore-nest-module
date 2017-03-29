@@ -52,13 +52,13 @@ class TracingNode : public nest::Node
 public:
     typedef CircularBuffer<double>::const_iterator const_iterator;
     typedef size_t trace_id;
-    
+
     TracingNode();
     ~TracingNode();
-    
+
     virtual void get_status(DictionaryDatum& d) const;
     virtual void set_status(const DictionaryDatum& d);
-    
+
     /**
      * @brief Base class to all nodes that record traces.
      * 
@@ -80,7 +80,7 @@ public:
         assert(id < traces_.size());
         return traces_[id].get(steps);
     };
-    
+
     /**
      * Convenience function. Time point of trace is passed here as a set::Time
      * object.
@@ -88,13 +88,13 @@ public:
      * @param time the time point to be read.
      * @param id the index of the trace.
      * @return an iterator to the trace at the given time point.
-     */    
+     */
     inline
     const_iterator get_trace(nest::Time const &time, trace_id id) const
     {
         return get_trace(time.get_steps(), id);
     };
-    
+
     /**
      * @return the number of traces that are recorded by this node.
      */
@@ -115,7 +115,7 @@ protected:
      * @param v value to be written.
      * @param id id of the trace (default is 0).
      */
-    void set_trace(nest::delay steps, double v, trace_id id=0)
+    void set_trace(nest::delay steps, double v, trace_id id = 0)
     {
         assert(id < traces_.size());
         traces_[id][steps] = v;

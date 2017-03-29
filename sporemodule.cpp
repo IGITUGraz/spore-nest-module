@@ -62,7 +62,6 @@
  */
 spore::SporeModule sporemodule_LTX_mod;
 
-
 /**
  * Constructor.
  */
@@ -76,14 +75,12 @@ spore::SporeModule::SporeModule()
 #endif
 }
 
-
 /**
  * Destructor.
  */
 spore::SporeModule::~SporeModule()
 {
 }
-
 
 /**
  * Return the name of the model.
@@ -94,7 +91,6 @@ const std::string spore::SporeModule::name(void) const
     sstr << "SPORE (version " << __SPORE_VERSION__ << ")";
     return sstr.str(); // Return name of the module
 }
-
 
 /**
  * Return the name of a sli file to execute when sporemodule is loaded.
@@ -107,7 +103,6 @@ const std::string spore::SporeModule::commandstring(void) const
     return std::string("(sporemodule-init) run");
 }
 
-
 /**
  * Constructor.
  */
@@ -115,7 +110,6 @@ spore::SporeModule::
 InitSynapseUpdater_i_i_Function::InitSynapseUpdater_i_i_Function()
 {
 }
-
 
 /**
  * Initializes the synapse updater nodes.
@@ -137,7 +131,6 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
     i->EStack.pop();
 }
 
-
 /**
  * Initialize module by registering models with the interpreter.
  * @param SLIInterpreter* SLI interpreter
@@ -148,16 +141,16 @@ void spore::SporeModule::init(SLIInterpreter *i)
 {
     // Register nodes
     const nest::index cu_model_id =
-        nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",
-                                                                            /*private_model=*/true);
-    
+            nest::kernel().model_manager.register_node_model<ConnectionUpdater>("connection_updater",
+            /*private_model=*/true);
+
     nest::kernel().model_manager.register_node_model<PoissonDblExpNeuron>("poisson_dbl_exp_neuron");
     nest::kernel().model_manager.register_node_model<RewardInProxy>("reward_in_proxy");
 
-    ConnectionUpdateManager::instance()->init( cu_model_id );
+    ConnectionUpdateManager::instance()->init(cu_model_id);
 
     spore::register_diligent_connection_model
-        < SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >
+            < SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >
             ("synaptic_sampling_rewardgradient_synapse");
 
     i->createcommand("InitSynapseUpdater", &init_synapse_updater_i_i_function_);
@@ -165,6 +158,6 @@ void spore::SporeModule::init(SLIInterpreter *i)
 #ifdef __SPORE_DEBUG__
     nest::kernel().model_manager.register_node_model<SporeTestNode>("spore_test_node");
     spore::register_diligent_connection_model
-        < SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
+            < SporeTestConnection<nest::TargetIdentifierPtrRport> >("spore_test_synapse");
 #endif
 }

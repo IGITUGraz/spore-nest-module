@@ -86,36 +86,37 @@ template < typename ConnectionT >
 class DiligentConnectorModel : public nest::GenericConnectorModel<ConnectionT>
 {
 public:
-    
-    DiligentConnectorModel(const std::string name, bool is_primary=true, bool has_delay=true, bool requires_symmetric=false)
+
+    DiligentConnectorModel(const std::string name, bool is_primary = true, bool has_delay = true, bool requires_symmetric = false)
     : nest::GenericConnectorModel<ConnectionT>(name, is_primary, has_delay, requires_symmetric)
-    {}   
+    {
+    }
 
     DiligentConnectorModel(const DiligentConnectorModel &other, const std::string name)
     : nest::GenericConnectorModel<ConnectionT>(other, name)
-    {}
+    {
+    }
 
-    virtual nest::ConnectorBase* add_connection( nest::Node& src, nest::Node& tgt, nest::ConnectorBase* conn,
-                                                 nest::synindex syn_id, double weight,
-                                                 double delay );
+    virtual nest::ConnectorBase* add_connection(nest::Node& src, nest::Node& tgt, nest::ConnectorBase* conn,
+                                                nest::synindex syn_id, double weight,
+                                                double delay);
 
-    virtual nest::ConnectorBase* add_connection( nest::Node& src, nest::Node& tgt, nest::ConnectorBase* conn,
-                                                 nest::synindex syn_id, DictionaryDatum& d,
-                                                 double weight, double delay );
+    virtual nest::ConnectorBase* add_connection(nest::Node& src, nest::Node& tgt, nest::ConnectorBase* conn,
+                                                nest::synindex syn_id, DictionaryDatum& d,
+                                                double weight, double delay);
 
-    virtual nest::ConnectorBase* delete_connection( nest::Node& tgt, size_t target_thread,
-                                                    nest::ConnectorBase* conn, nest::synindex syn_id );
+    virtual nest::ConnectorBase* delete_connection(nest::Node& tgt, size_t target_thread,
+                                                   nest::ConnectorBase* conn, nest::synindex syn_id);
 
     virtual nest::ConnectorModel* clone(std::string name) const;
 
 protected:
 
-    void register_connector( nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, size_t target_thread, nest::synindex syn_id );
+    void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, size_t target_thread, nest::synindex syn_id);
 
-    nest::ConnectorBase* get_hom_connector( nest::ConnectorBase* conn, nest::synindex syn_id );
+    nest::ConnectorBase* get_hom_connector(nest::ConnectorBase* conn, nest::synindex syn_id);
 
 }; // DiligentConnectorModel
-
 
 /**
  * Adds a new connection between two nodes.
@@ -136,20 +137,19 @@ protected:
  */
 template < typename ConnectionT >
 nest::ConnectorBase*
-DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
-                                                       nest::Node& tgt,
-                                                       nest::ConnectorBase* conn,
-                                                       nest::synindex syn_id,
-                                                       double delay,
-                                                       double weight )
+DiligentConnectorModel< ConnectionT >::add_connection(nest::Node& src,
+                                                      nest::Node& tgt,
+                                                      nest::ConnectorBase* conn,
+                                                      nest::synindex syn_id,
+                                                      double delay,
+                                                      double weight)
 {
-    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
+    nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, delay, weight);
-    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
     return new_conn;
 }
-
 
 /**
  * Adds a new connection between two nodes.
@@ -171,21 +171,20 @@ DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
  */
 template < typename ConnectionT >
 nest::ConnectorBase*
-DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
-                                                       nest::Node& tgt,
-                                                       nest::ConnectorBase* conn,
-                                                       nest::synindex syn_id,
-                                                       DictionaryDatum& p,
-                                                       double delay,
-                                                       double weight )
+DiligentConnectorModel< ConnectionT >::add_connection(nest::Node& src,
+                                                      nest::Node& tgt,
+                                                      nest::ConnectorBase* conn,
+                                                      nest::synindex syn_id,
+                                                      DictionaryDatum& p,
+                                                      double delay,
+                                                      double weight)
 {
-    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
+    nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, p, delay, weight);
-    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
     return new_conn;
 }
-
 
 /**
  * Delete a connection of a given type directed to a defined target Node
@@ -199,43 +198,40 @@ DiligentConnectorModel< ConnectionT >::add_connection( nest::Node& src,
  */
 template < typename ConnectionT >
 nest::ConnectorBase*
-DiligentConnectorModel< ConnectionT >::delete_connection( nest::Node& tgt,
-                                                          size_t target_thread,
-                                                          nest::ConnectorBase* conn,
-                                                          nest::synindex syn_id )
+DiligentConnectorModel< ConnectionT >::delete_connection(nest::Node& tgt,
+                                                         size_t target_thread,
+                                                         nest::ConnectorBase* conn,
+                                                         nest::synindex syn_id)
 {
-    nest::ConnectorBase* old_hom_conn = get_hom_connector( nest::validate_pointer( conn ), syn_id );
+    nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
     nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::delete_connection(tgt, target_thread, conn, syn_id);
-    nest::ConnectorBase* new_hom_conn = get_hom_connector( nest::validate_pointer( new_conn ), syn_id );
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id );
+    nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
     return new_conn;
 }
-
 
 /**
  * Creates a clone of the connector model.
  */
 template < typename ConnectionT >
 nest::ConnectorModel*
-DiligentConnectorModel< ConnectionT >::clone( std::string name ) const
+DiligentConnectorModel< ConnectionT >::clone(std::string name) const
 {
-    return new DiligentConnectorModel< ConnectionT >( *this, name ); // calls copy construtor
+    return new DiligentConnectorModel< ConnectionT >(*this, name); // calls copy construtor
 }
-
 
 /**
  * Registers the connector at the ConnectionUpdateManager.
  */
 template < typename ConnectionT >
-void DiligentConnectorModel< ConnectionT >::register_connector( nest::ConnectorBase* new_conn,
-                                                                nest::ConnectorBase* old_conn,
-                                                                size_t target_thread,
-                                                                nest::synindex syn_id )
+void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBase* new_conn,
+                                                               nest::ConnectorBase* old_conn,
+                                                               size_t target_thread,
+                                                               nest::synindex syn_id)
 {
-    ConnectionUpdateManager::instance()->register_connector( new_conn, old_conn,
-                                                             target_thread, this, syn_id );
+    ConnectionUpdateManager::instance()->register_connector(new_conn, old_conn,
+                                                            target_thread, this, syn_id);
 }
-
 
 /**
  * Helper function to extract the homogeneous connector with given type
@@ -250,8 +246,8 @@ void DiligentConnectorModel< ConnectionT >::register_connector( nest::ConnectorB
  * @return the homogeneous connector, 0 if none found.
  */
 template < typename ConnectionT >
-nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector( nest::ConnectorBase* conn,
-                                                                                    nest::synindex syn_id )
+nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(nest::ConnectorBase* conn,
+                                                                              nest::synindex syn_id)
 {
     if (!conn)
     {
@@ -265,20 +261,19 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector( n
     else
     {
         // connector is heterogeneous - go through all entries and search for correct syn_id
-        nest::HetConnector* hc = static_cast< nest::HetConnector* >( conn );
-        for ( size_t i = 0; i < hc->size(); i++ )
+        nest::HetConnector* hc = static_cast<nest::HetConnector*> (conn);
+        for (size_t i = 0; i < hc->size(); i++)
         {
             // need to cast to vector_like to access syn_id
-            if ( ( *hc )[ i ]->get_syn_id() == syn_id ) // find entry for this type
+            if ((*hc)[ i ]->get_syn_id() == syn_id) // find entry for this type
             {
-                return ( *hc )[ i ];
+                return ( *hc)[ i ];
             }
         }
     }
-    
+
     return 0;
 }
-
 
 /**
  * @brief Convenience function to register diligent synapses.

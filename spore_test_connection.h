@@ -43,27 +43,31 @@ namespace spore
 class SporeTestConnectionCommonProperties : public nest::CommonSynapseProperties
 {
 public:
+
     /**
      * Constructor.
      */
     SporeTestConnectionCommonProperties()
-    :nest::CommonSynapseProperties(),
-     weight_update_time_(100.0),
-     bap_trace_id_(0),
-     resolution_unit_(-1)
-    {}
+    : nest::CommonSynapseProperties(),
+    weight_update_time_(100.0),
+    bap_trace_id_(0),
+    resolution_unit_(-1)
+    {
+    }
 
     /**
      * Destructor.
      */
     ~SporeTestConnectionCommonProperties()
-    {}
+    {
+    }
 
     /**
      * Object status getter.
      */
     void get_status(DictionaryDatum & d) const
-    {}
+    {
+    }
 
     /**
      * Object status setter.
@@ -73,23 +77,24 @@ public:
         updateValue<double>(d, "weight_update_time", weight_update_time_);
         updateValue<long>(d, "bap_trace_id", bap_trace_id_);
     }
-    
+
     /**
      * Calibrate all time objects, which are contained in this object.
      * This function is called when the time resolution changes and on
      * simulation startup.
      */
-    void calibrate( const nest::TimeConverter &tc )
+    void calibrate(const nest::TimeConverter &tc)
     {
         resolution_unit_ = nest::Time::get_resolution().get_ms();
     }
 
     /**
      * Check spike event.
-     */    
+     */
     void check_event(nest::SpikeEvent&)
-    {}
-    
+    {
+    }
+
     /**
      * @return GID of the reward transmitter associated to the synapse type.
      */
@@ -100,12 +105,12 @@ public:
 
     /**
      * @return The reward transmitter associated to the synapse type.
-     */    
+     */
     nest::Node* get_node()
     {
         return nest::CommonSynapseProperties::get_node();
-    }    
-    
+    }
+
     double weight_update_time_;
     TracingNode::trace_id bap_trace_id_;
     double resolution_unit_;
@@ -155,7 +160,7 @@ public:
         {
             throw nest::IllegalConnection("This synapse only works with nodes exposing their firing probability trace (e.g. TracingNode-Subclass)!");
         }
-        
+
         ConnTestDummyNode dummy_target;
         ConnectionBase::check_connection_(dummy_target, s, t, receptor_type);
     }
@@ -182,15 +187,15 @@ private:
     std::vector<double> recorder_times_;
     std::vector<double> recorder_values_;
 
-    void update_synapse_state( double t_to,
-                               double t_last_update,
-                               TracingNode::const_iterator &bap_trace,
-                               const CommonPropertiesType& cp );
-    
-    void update_synapic_weight( double time,
-                                nest::thread thread,
-                                TracingNode *target,
-                                const CommonPropertiesType& cp);
+    void update_synapse_state(double t_to,
+                              double t_last_update,
+                              TracingNode::const_iterator &bap_trace,
+                              const CommonPropertiesType& cp);
+
+    void update_synapic_weight(double time,
+                               nest::thread thread,
+                               TracingNode *target,
+                               const CommonPropertiesType& cp);
 };
 
 
@@ -204,21 +209,24 @@ private:
 
 template <typename targetidentifierT>
 SporeTestConnection<targetidentifierT>::SporeTestConnection()
-:ConnectionBase(),
- weight_(0.0),
- t_weight_(0.0)
-{}
+: ConnectionBase(),
+weight_(0.0),
+t_weight_(0.0)
+{
+}
 
 template <typename targetidentifierT>
 SporeTestConnection<targetidentifierT>::SporeTestConnection(const SporeTestConnection& rhs)
-:ConnectionBase(rhs),
- weight_(rhs.weight_),
- t_weight_(rhs.t_weight_)
-{}
+: ConnectionBase(rhs),
+weight_(rhs.weight_),
+t_weight_(rhs.t_weight_)
+{
+}
 
 template <typename targetidentifierT>
 SporeTestConnection<targetidentifierT>::~SporeTestConnection()
-{}
+{
+}
 
 /* ----------------------------------------------------------------
  * Parameter and state extractions and manipulation functions
@@ -255,27 +263,27 @@ void SporeTestConnection<targetidentifierT>::set_status(const DictionaryDatum & 
  * @param cp the synapse type common properties.
  */
 template <typename targetidentifierT>
-void SporeTestConnection<targetidentifierT>::send( nest::Event& e,
-                                                   nest::thread thread,
-                                                   double t_last_spike,
-                                                   const CommonPropertiesType &cp )
+void SporeTestConnection<targetidentifierT>::send(nest::Event& e,
+                                                  nest::thread thread,
+                                                  double t_last_spike,
+                                                  const CommonPropertiesType &cp)
 {
     const double t_to = e.get_stamp().get_ms(); // ConnectionUpdateManager::instance()->get_origin().get_ms();
     double t_from = t_last_spike;
-    
-    assert(cp.resolution_unit_>0.0);
 
-    if (t_to>t_last_spike)
+    assert(cp.resolution_unit_ > 0.0);
+
+    if (t_to > t_last_spike)
     {
         // prepare the pointer to the target neuron. We can safely static_cast
         // since the connection is checked when established.
         TracingNode* target = static_cast<TracingNode*> (get_target(thread));
 
-        TracingNode::const_iterator bap_trace = target->get_trace( nest::delay(t_from/cp.resolution_unit_), cp.bap_trace_id_ + get_rport() );
-    
-        for ( double next_weight_time = t_weight_ + cp.weight_update_time_;
-              next_weight_time <= t_to;
-              next_weight_time += cp.weight_update_time_ )
+        TracingNode::const_iterator bap_trace = target->get_trace(nest::delay(t_from / cp.resolution_unit_), cp.bap_trace_id_ + get_rport());
+
+        for (double next_weight_time = t_weight_ + cp.weight_update_time_;
+                next_weight_time <= t_to;
+                next_weight_time += cp.weight_update_time_)
         {
             update_synapse_state(next_weight_time, t_from, bap_trace, cp);
             update_synapic_weight(next_weight_time, thread, target, cp);
@@ -285,7 +293,7 @@ void SporeTestConnection<targetidentifierT>::send( nest::Event& e,
         if (t_to > t_from)
         {
             update_synapse_state(t_to, t_from, bap_trace, cp);
-        }        
+        }
     }
 
     if (e.get_rport() >= 0)
@@ -302,7 +310,6 @@ void SporeTestConnection<targetidentifierT>::send( nest::Event& e,
     }
 }
 
-
 /**
  * Updates the state of the synapse to the given time point. This method
  * expects the back propagating action potential BAP trace of the postsynaptic
@@ -316,24 +323,23 @@ void SporeTestConnection<targetidentifierT>::send( nest::Event& e,
  * @param cp synapse type common properties.
  */
 template <typename targetidentifierT>
-void SporeTestConnection<targetidentifierT>::update_synapse_state( double t_to,
-                                                                   double t_last_update,
-                                                                   TracingNode::const_iterator &bap_trace,
-                                                                   const CommonPropertiesType& cp )
+void SporeTestConnection<targetidentifierT>::update_synapse_state(double t_to,
+                                                                  double t_last_update,
+                                                                  TracingNode::const_iterator &bap_trace,
+                                                                  const CommonPropertiesType& cp)
 {
-    t_to -= cp.resolution_unit_/2.0; // exclude the last time step.
-    
+    t_to -= cp.resolution_unit_ / 2.0; // exclude the last time step.
+
     for (double time = t_last_update; time < t_to; time += cp.resolution_unit_)
     {
-        assert( time >= ConnectionUpdateManager::instance()->get_horizon().get_ms() &&
-                time < ConnectionUpdateManager::instance()->get_origin().get_ms() );
-        
+        assert(time >= ConnectionUpdateManager::instance()->get_horizon().get_ms() &&
+               time < ConnectionUpdateManager::instance()->get_origin().get_ms());
+
         recorder_times_.push_back(time);
         recorder_values_.push_back(*bap_trace);
         ++bap_trace;
     }
 }
-
 
 /**
  * Updates the synaptic parameter and weight of the synapse.
@@ -344,10 +350,10 @@ void SporeTestConnection<targetidentifierT>::update_synapse_state( double t_to,
  * @param cp the synapse type common properties.
  */
 template <typename targetidentifierT>
-void SporeTestConnection<targetidentifierT>::update_synapic_weight( double time,
-                                                                    nest::thread thread,
-                                                                    TracingNode *target,
-                                                                    const CommonPropertiesType& cp )
+void SporeTestConnection<targetidentifierT>::update_synapic_weight(double time,
+                                                                   nest::thread thread,
+                                                                   TracingNode *target,
+                                                                   const CommonPropertiesType& cp)
 {
     t_weight_ = time;
 }

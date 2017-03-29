@@ -54,43 +54,45 @@ public:
      */
     SynapticSamplingRewardGradientCommonProperties()
     : nest::CommonSynapseProperties(),
-      reward_transmitter_(0),
-      learning_rate_(0.0001),
-      episode_length_(100.0),
-      psp_facilitation_rate_(20.0),
-      psp_depression_rate_(2.0),
-      temperature_(0.01),
-      gradient_noise_(0.00),
-      max_param_(100.0),
-      min_param_(-100.0),
-      max_param_change_(100.0),
-      integration_time_(10000.0),
-      direct_gradient_rate_(0.0),
-      parameter_mapping_offset_(3.0),
-      weight_update_time_(100.0),
-      gradient_scale_(1.0),
-      resolution_unit_(-1.0),
-      gamma_(0.0),
-      lambda_(0.0),
-      psp_faciliation_update_(0.0),
-      psp_depression_update_(0.0),
-      psp_scale_factor_(0.0),
-      epsilon_(0.0001),
-      weight_update_steps_(0),
-      bap_trace_id_(0),
-      dopa_trace_id_(0),
-      simulate_retracted_synapses_(false),
-      verbose_(false),
-      std_wiener_(0.0),
-      std_gradient_(0.0)
-    {}
+    reward_transmitter_(0),
+    learning_rate_(0.0001),
+    episode_length_(100.0),
+    psp_facilitation_rate_(20.0),
+    psp_depression_rate_(2.0),
+    temperature_(0.01),
+    gradient_noise_(0.00),
+    max_param_(100.0),
+    min_param_(-100.0),
+    max_param_change_(100.0),
+    integration_time_(10000.0),
+    direct_gradient_rate_(0.0),
+    parameter_mapping_offset_(3.0),
+    weight_update_time_(100.0),
+    gradient_scale_(1.0),
+    resolution_unit_(-1.0),
+    gamma_(0.0),
+    lambda_(0.0),
+    psp_faciliation_update_(0.0),
+    psp_depression_update_(0.0),
+    psp_scale_factor_(0.0),
+    epsilon_(0.0001),
+    weight_update_steps_(0),
+    bap_trace_id_(0),
+    dopa_trace_id_(0),
+    simulate_retracted_synapses_(false),
+    verbose_(false),
+    std_wiener_(0.0),
+    std_gradient_(0.0)
+    {
+    }
 
     /**
      * Destructor.
      */
     ~SynapticSamplingRewardGradientCommonProperties()
-    {}
-    
+    {
+    }
+
     using CommonSynapseProperties::get_status;
     using CommonSynapseProperties::set_status;
     using CommonSynapseProperties::calibrate;
@@ -123,7 +125,7 @@ public:
         updateValue<double>(d, "gradient_scale", gradient_scale_);
         updateValue<long>(d, "bap_trace_id", bap_trace_id_);
         updateValue<long>(d, "dopa_trace_id", dopa_trace_id_);
-      
+
         updateValue<double>(d, "learning_rate", learning_rate_);
         updateValue<double>(d, "temperature", temperature_);
         updateValue<double>(d, "gradient_noise", gradient_noise_);
@@ -133,9 +135,9 @@ public:
         updateValue<double>(d, "episode_length", episode_length_);
         updateValue<long>(d, "weight_update_time", weight_update_time_);
         updateValue<bool>(d, "simulate_retracted_synapses", simulate_retracted_synapses_);
-        
+
         updateValue<bool>(d, "verbose", verbose_);
-        
+
         if (weight_update_time_ <= 0.0)
         {
             throw nest::BadProperty("weight_update_time must strictly bigger than 0");
@@ -150,7 +152,7 @@ public:
                 throw nest::BadProperty("Reward transmitter must be of model RewardTransmitter");
         }
     }
-    
+
     /**
      * Calibrate all time objects, which are contained in this object.
      * This function is called when the time resolution changes and on
@@ -158,7 +160,7 @@ public:
      * 
      * @param tc time converter object.
      */
-    void calibrate( const nest::TimeConverter &tc )
+    void calibrate(const nest::TimeConverter &tc)
     {
         resolution_unit_ = nest::Time::get_resolution().get_ms();
 
@@ -174,7 +176,6 @@ public:
         gamma_ = (integration_time_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / integration_time_);
         lambda_ = (episode_length_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / episode_length_);
     }
-    
 
     /**
      * Check spike event.
@@ -196,7 +197,7 @@ public:
 
     /**
      * @return The reward transmitter associated to the synapse type.
-     */    
+     */
     nest::Node* get_node()
     {
         if (reward_transmitter_ == 0)
@@ -230,7 +231,7 @@ public:
         }
         return result;
     }
-    
+
     /**
      * Convenience function to random number.
      */
@@ -270,7 +271,7 @@ public:
     long weight_update_steps_;
     int bap_trace_id_;
     int dopa_trace_id_;
-    
+
     bool simulate_retracted_synapses_;
     bool verbose_;
 
@@ -279,7 +280,6 @@ private:
     double std_gradient_;
     librandom::NormalRandomDev normal_dev_;
 };
-
 
 /**
  * @brief Reward-based synaptic sampling connection class
@@ -387,12 +387,12 @@ public:
     void check_connection(nest::Node & s, nest::Node & t,
                           nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
     {
-        if (!dynamic_cast< TracingNode* > (&t))
+        if (!dynamic_cast<TracingNode*> (&t))
         {
             throw nest::IllegalConnection("This synapse only works with nodes exposing their firing"
                                           " probability trace (i.e. TracingNode-Subclass)!");
         }
-        
+
         ConnTestDummyNode dummy_target;
         ConnectionBase::check_connection_(dummy_target, s, t, receptor_type);
     }
@@ -418,7 +418,7 @@ public:
     {
         synaptic_parameter_ = w;
     }
-    
+
     /**
      * Access function to the current value of the eligibility trace.
      */
@@ -458,11 +458,11 @@ public:
     {
         return reward_gradient_;
     }
-    
-    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger();    
+
+    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger();
 
 private:
-    
+
     double weight_;
     double synaptic_parameter_;
 
@@ -474,22 +474,22 @@ private:
 
     double prior_mean_;
     double prior_std_;
-    
-    nest::index recorder_port_;
-    
-    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger_;    
 
-    void update_synapse_state( double t_to,
-                               double t_last_update,
-                               TracingNode::const_iterator &bap_trace,
-                               TracingNode::const_iterator &dopa_trace,
-                               const CommonPropertiesType& cp );
-    
-    void update_synapic_weight( double time,
-                                nest::thread thread,
-                                TracingNode *target,
-                                const CommonPropertiesType& cp);
-    
+    nest::index recorder_port_;
+
+    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger_;
+
+    void update_synapse_state(double t_to,
+                              double t_last_update,
+                              TracingNode::const_iterator &bap_trace,
+                              TracingNode::const_iterator &dopa_trace,
+                              const CommonPropertiesType& cp);
+
+    void update_synapic_weight(double time,
+                               nest::thread thread,
+                               TracingNode *target,
+                               const CommonPropertiesType& cp);
+
     /**
      * Recompute synaptic weight for current synapse state.
      * 
@@ -497,8 +497,8 @@ private:
      * @param cp common properties.
      */
     inline
-    void recompute_synapic_weight( TracingNode *target,
-                                   const CommonPropertiesType& cp)
+    void recompute_synapic_weight(TracingNode *target,
+                                  const CommonPropertiesType& cp)
     {
         if (synaptic_parameter_ > 0.0)
         {
@@ -526,24 +526,24 @@ private:
 template <typename targetidentifierT>
 SynapticSamplingRewardGradientConnection<targetidentifierT>::SynapticSamplingRewardGradientConnection()
 : ConnectionBase(),
-  weight_(0.0),
-  synaptic_parameter_(0.0),
-  psp_facilitation_(0.0),
-  psp_depression_(0.0),
-  stdp_eligibility_trace_(0.0),
-  reward_gradient_(0.0),
-  prior_mean_(0.0),
-  prior_std_(1.0),
-  recorder_port_(nest::invalid_index)
-{}
-
+weight_(0.0),
+synaptic_parameter_(0.0),
+psp_facilitation_(0.0),
+psp_depression_(0.0),
+stdp_eligibility_trace_(0.0),
+reward_gradient_(0.0),
+prior_mean_(0.0),
+prior_std_(1.0),
+recorder_port_(nest::invalid_index)
+{
+}
 
 /**
  * Copy Constructor.
  */
 template <typename targetidentifierT>
 SynapticSamplingRewardGradientConnection<targetidentifierT>::
-    SynapticSamplingRewardGradientConnection(const SynapticSamplingRewardGradientConnection& rhs)
+SynapticSamplingRewardGradientConnection(const SynapticSamplingRewardGradientConnection& rhs)
 : ConnectionBase(rhs)
 {
     weight_ = rhs.weight_;
@@ -554,18 +554,18 @@ SynapticSamplingRewardGradientConnection<targetidentifierT>::
     reward_gradient_ = rhs.reward_gradient_;
     prior_mean_ = rhs.prior_mean_;
     prior_std_ = rhs.prior_std_;
-    
+
     // recorder must be set up directly using the set_status method.
     recorder_port_ = nest::invalid_index;
 }
-
 
 /**
  * Destructor.
  */
 template <typename targetidentifierT>
 SynapticSamplingRewardGradientConnection<targetidentifierT>::~SynapticSamplingRewardGradientConnection()
-{}
+{
+}
 
 //
 // Instance of global data logger singleton.
@@ -576,8 +576,7 @@ SynapticSamplingRewardGradientConnection<targetidentifierT>::~SynapticSamplingRe
  */
 template <typename targetidentifierT>
 ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT> >
-    *SynapticSamplingRewardGradientConnection<targetidentifierT>::logger_=0;
-
+*SynapticSamplingRewardGradientConnection<targetidentifierT>::logger_ = 0;
 
 /**
  * Get the data logger singleton.
@@ -586,7 +585,7 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
  */
 template <typename targetidentifierT>
 ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT> >
-    *SynapticSamplingRewardGradientConnection<targetidentifierT>::logger()
+*SynapticSamplingRewardGradientConnection<targetidentifierT>::logger()
 {
     if (!logger_)
     {
@@ -603,7 +602,7 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
         logger_->register_recordable_variable("reward_gradient",
                                               &SynapticSamplingRewardGradientConnection::get_reward_gradient);
     }
-    
+
     return logger_;
 }
 
@@ -660,33 +659,33 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
  * @param cp the synapse type common properties.
  */
 template <typename targetidentifierT>
-void SynapticSamplingRewardGradientConnection<targetidentifierT>::send( nest::Event& e,
-                                                                        nest::thread thread,
-                                                                        double t_last_spike,
-                                                                        const CommonPropertiesType &cp )
+void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Event& e,
+                                                                       nest::thread thread,
+                                                                       double t_last_spike,
+                                                                       const CommonPropertiesType &cp)
 {
-    assert(cp.resolution_unit_>0.0);
+    assert(cp.resolution_unit_ > 0.0);
 
     const double t_to = e.get_stamp().get_ms();
     double t_from = t_last_spike;
 
-    if (t_to>t_last_spike)
+    if (t_to > t_last_spike)
     {
         // prepare the pointer to the target neuron. We can safely static_cast
         // since the connection is checked when established.
         TracingNode* target = static_cast<TracingNode*> (get_target(thread));
 
         TracingNode::const_iterator bap_trace =
-            target->get_trace( nest::delay(t_from/cp.resolution_unit_), cp.bap_trace_id_ + get_rport() );
+                target->get_trace(nest::delay(t_from / cp.resolution_unit_), cp.bap_trace_id_ + get_rport());
 
         TracingNode::const_iterator dopa_trace =
-            cp.reward_transmitter_->get_trace(nest::delay(t_from/cp.resolution_unit_), cp.dopa_trace_id_ );
-    
-        const double t_last_weight_update = std::floor(t_last_spike/cp.weight_update_time_)*cp.weight_update_time_;
-        
-        for ( double next_weight_time = t_last_weight_update + cp.weight_update_time_;
-              next_weight_time <= t_to;
-              next_weight_time += cp.weight_update_time_ )
+                cp.reward_transmitter_->get_trace(nest::delay(t_from / cp.resolution_unit_), cp.dopa_trace_id_);
+
+        const double t_last_weight_update = std::floor(t_last_spike / cp.weight_update_time_) * cp.weight_update_time_;
+
+        for (double next_weight_time = t_last_weight_update + cp.weight_update_time_;
+                next_weight_time <= t_to;
+                next_weight_time += cp.weight_update_time_)
         {
             update_synapse_state(next_weight_time, t_from, bap_trace, dopa_trace, cp);
             update_synapic_weight(next_weight_time, thread, target, cp);
@@ -696,7 +695,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send( nest::Ev
         if (t_to > t_from)
         {
             update_synapse_state(t_to, t_from, bap_trace, dopa_trace, cp);
-        }        
+        }
     }
 
     // Make sure that the event is not a SynapseUpdateEvent.
@@ -735,18 +734,18 @@ template <typename targetidentifierT>
 void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse_state(double t_to,
                                                                                        double t_last_update,
                                                                                        TracingNode::const_iterator
-                                                                                           &bap_trace,
+                                                                                       &bap_trace,
                                                                                        TracingNode::const_iterator
-                                                                                           &dopa_trace,
+                                                                                       &dopa_trace,
                                                                                        const CommonPropertiesType& cp)
 {
-    if ( (weight_==0.0) && not cp.simulate_retracted_synapses_ )
+    if ((weight_ == 0.0) && not cp.simulate_retracted_synapses_)
     {
         // synapse is retracted. psps and eligibility traces are not going to be simulated.
         return;
     }
 
-    t_to -= cp.resolution_unit_/2.0; // exclude the last time step.
+    t_to -= cp.resolution_unit_ / 2.0; // exclude the last time step.
 
     for (double time = t_last_update; time < t_to; time += cp.resolution_unit_)
     {
@@ -779,7 +778,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
         if (cp.direct_gradient_rate_ > 0.0)
         {
             synaptic_parameter_ += (*dopa_trace) * cp.learning_rate_ *
-                                   cp.direct_gradient_rate_ * stdp_eligibility_trace_;
+                    cp.direct_gradient_rate_ * stdp_eligibility_trace_;
         }
 
         ++bap_trace;
@@ -797,20 +796,20 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
  */
 template < typename targetidentifierT >
 void SynapticSamplingRewardGradientConnection< targetidentifierT >::
-    update_synapic_weight(double time, nest::thread thread, TracingNode *target, const CommonPropertiesType& cp)
+update_synapic_weight(double time, nest::thread thread, TracingNode *target, const CommonPropertiesType& cp)
 {
     // update synaptic parameters
     const double l_rate = cp.weight_update_time_ * cp.learning_rate_;
-    
+
     // compute prior
     const double prior = (1.0 / pow(prior_std_, 2)) * (prior_mean_ - synaptic_parameter_);
 
     const bool synapse_is_active = (weight_ != 0.0);
-    
+
     reward_gradient_ += cp.get_gradient_noise(thread);
 
-    const double d_lik = std::max( -cp.max_param_change_,
-                                   std::min(cp.max_param_change_, cp.gradient_scale_ * reward_gradient_) );
+    const double d_lik = std::max(-cp.max_param_change_,
+                                  std::min(cp.max_param_change_, cp.gradient_scale_ * reward_gradient_));
 
     const double d_param = l_rate * (prior + d_lik) + cp.get_d_wiener(thread);
 
@@ -819,7 +818,7 @@ void SynapticSamplingRewardGradientConnection< targetidentifierT >::
     // update synaptic weight
     recompute_synapic_weight(target, cp);
 
-    if (synapse_is_active && not cp.simulate_retracted_synapses_ && (weight_==0.0))
+    if (synapse_is_active && not cp.simulate_retracted_synapses_ && (weight_ == 0.0))
     {
         // synapse is entering the retracted state, eligibility trace is reset.
         psp_facilitation_ = 0.0;
