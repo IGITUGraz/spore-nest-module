@@ -35,17 +35,17 @@ namespace spore
  * Constructor.
  */
 ConnectionDataLoggerBase::ConnectionDataLoggerBase()
-{}
-
+{
+}
 
 /**
  * Destructor.
  */
 ConnectionDataLoggerBase::~ConnectionDataLoggerBase()
 {
-    for (std::vector<RecorderData*>::iterator it=recorder_data_.begin();
-         it!=recorder_data_.end();
-         ++it )
+    for (std::vector<RecorderData*>::iterator it = recorder_data_.begin();
+            it != recorder_data_.end();
+            ++it)
     {
         delete *it;
     }
@@ -61,18 +61,17 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum &d, recorder_port port
 {
     if (port == nest::invalid_index)
         return;
-    
-    assert( port <  recorder_data_.size() );
+
+    assert(port < recorder_data_.size());
     ConnectionDataLoggerBase::RecorderData &recorder = *recorder_data_[port];
 
     (*d)["recorder_times"] = recorder.recorder_times_;
-    
-    for ( size_t i=0; i<recorder_info_.size(); i++ )
+
+    for (size_t i = 0; i < recorder_info_.size(); i++)
     {
-        (*d)[recorder_info_[i].name_+"_values"] =  recorder.recorder_values_[i];
+        (*d)[recorder_info_[i].name_ + "_values"] = recorder.recorder_values_[i];
     }
 }
-    
 
 /**
  * Set the status of the recorder at given port. The recorder port may
@@ -85,24 +84,24 @@ void ConnectionDataLoggerBase::set_status(const DictionaryDatum &d, recorder_por
 {
     double interval = 0.0;
     updateValue<double>(d, "recorder_interval", interval);
-    
-    if (interval>0.0 && (port == nest::invalid_index))
+
+    if (interval > 0.0 && (port == nest::invalid_index))
         port = add_recordable_connection();
-    
+
     if (port == nest::invalid_index)
         return;
-    
-    assert( port <  recorder_data_.size() );
-    
+
+    assert(port < recorder_data_.size());
+
     recorder_data_[port]->interval_ = interval;
-    
+
     bool reset_recorder = false;
     updateValue<bool>(d, "reset_recorder", reset_recorder);
-    
+
     if (reset_recorder)
     {
         recorder_data_[port]->clear();
-    }    
+    }
 }
 
 /**
@@ -114,19 +113,19 @@ ConnectionDataLoggerBase::recorder_port ConnectionDataLoggerBase::add_recordable
 {
     if (recorder_data_.size() == nest::invalid_index)
         throw nest::BadProperty("Maximum number of recorders reached.");
-    
-    recorder_data_.push_back(new RecorderData( recorder_info_.size() ) );
-    return recorder_data_.size()-1;
+
+    recorder_data_.push_back(new RecorderData(recorder_info_.size()));
+    return recorder_data_.size() - 1;
 }
-    
+
 /**
  * Clears all recorded data.
  */
 void ConnectionDataLoggerBase::clear()
-{ 
-    for (std::vector<RecorderData*>::iterator it=recorder_data_.begin();
-         it!=recorder_data_.end();
-         ++it )
+{
+    for (std::vector<RecorderData*>::iterator it = recorder_data_.begin();
+            it != recorder_data_.end();
+            ++it)
     {
         (*it)->clear();
     }
@@ -142,7 +141,7 @@ void ConnectionDataLoggerBase::clear()
  * @param size number of variables in the recorder buffer.
  */
 ConnectionDataLoggerBase::RecorderData::RecorderData(size_t size)
- :interval_(0.0)
+: interval_(0.0)
 {
     recorder_values_.resize(size);
 }
@@ -155,10 +154,10 @@ ConnectionDataLoggerBase::RecorderData::RecorderData(size_t size)
 void ConnectionDataLoggerBase::RecorderData::clear()
 {
     recorder_times_.clear();
-    
-    for ( std::vector< std::vector<double> >::iterator it=recorder_values_.begin();
-          it!=recorder_values_.end();
-          ++it )
+
+    for (std::vector< std::vector<double> >::iterator it = recorder_values_.begin();
+            it != recorder_values_.end();
+            ++it)
     {
         it->clear();
     }

@@ -23,7 +23,7 @@
  */
 
 #ifndef SPORE_TEST_BASE_H
-#define	SPORE_TEST_BASE_H
+#define SPORE_TEST_BASE_H
 
 #include <string>
 
@@ -34,19 +34,23 @@
 
 namespace spore
 {
+
 /**
  * Base class to all tests.
  */
 class SporeTestBase
 {
 public:
-    SporeTestBase(const std::string &name, nest::delay t_max=1)
-    :name_(name), t_max_(t_max)
-    {};
-    
+
+    SporeTestBase(const std::string &name, nest::delay t_max = 1)
+    : name_(name), t_max_(t_max)
+    {
+    };
+
     ~SporeTestBase()
-    {};
-    
+    {
+    };
+
     const std::string &get_name() const
     {
         return name_;
@@ -56,19 +60,33 @@ public:
     {
         return t_max_;
     };
-    
-    virtual void init() {};
-    virtual void check(nest::delay time_step, TracingNode *node) {};
-    virtual size_t get_num_traces() const {return 0;};
-    virtual double get_trace(nest::delay time_step, TracingNode::trace_id id) { assert(false); };
-    
+
+    virtual void init()
+    {
+    };
+
+    virtual void check(nest::delay time_step, TracingNode *node)
+    {
+    };
+
+    virtual size_t get_num_traces() const
+    {
+        return 0;
+    };
+
+    virtual double get_trace(nest::delay time_step, TracingNode::trace_id id)
+    {
+        assert(false);
+    };
+
 protected:
+
     void test_assert(bool condition, const std::string &msg)
     {
         if (!condition)
-            throw std::runtime_error(name_+" failed: "+msg);
+            throw std::runtime_error(name_ + " failed: " + msg);
     };
-    
+
 private:
     std::string name_;
     nest::delay t_max_;

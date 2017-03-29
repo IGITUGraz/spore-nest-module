@@ -337,7 +337,6 @@ private:
     static nest::RecordablesMap<PoissonDblExpNeuron> recordablesMap_;
 };
 
-
 /**
  * PoissonDblExpNeuron test event.
  */

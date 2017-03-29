@@ -23,12 +23,13 @@
  */
 
 #ifndef TEST_TRACING_NODE_H
-#define	TEST_TRACING_NODE_H
+#define TEST_TRACING_NODE_H
 
 #include "spore_test_base.h"
 
 namespace spore
 {
+
 /**
  * Test class for circular buffer container.
  */
@@ -36,6 +37,7 @@ class TestTracingNode : public SporeTestBase
 {
 public:
     TestTracingNode();
+
     virtual double get_trace(nest::delay time_step, TracingNode::trace_id id)
     {
         return double(time_step + id);
