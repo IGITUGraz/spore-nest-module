@@ -1,23 +1,50 @@
 # NEST module SPORE:<br> Synaptic Plasticity with Online Reinforcement learning
 
-SPORE is a custom module for [NEST](http://www.nest-simulator.org/)
+SPORE is a custom-module for [NEST](http://www.nest-simulator.org/)
 utilizing [MUSIC](https://github.com/INCF/MUSIC) for communication with other software components.
 
 The documentation of the module can be found [here](https://igitugraz.github.io/spore-nest-module/).
 
 ## Installation
 
-Requires NEST with MUSIC bindings.
+### SPORE for NEST v2.12.0+
+
+SPORE does not support the release version v2.12.0 of NEST.
+Instead, SPORE currently requires a fix on the development branch.
+Please make sure your development version of NEST corresponds to
+or is newer than revision
+[58fd190f5e4](https://github.com/nest/nest-simulator/commit/58fd190f5e404f1e3e822c0d3915e2321d102ed5).
+
+Further, we assume NEST go compiled and installed with MUSIC
+bindings (`-Dwith-music=ON`).
 
 ```bash
-./bootstrap.sh
-./configure
+git clone https://github.com/IGITUGraz/spore-nest-module
+cd spore-nest-module
+mkdir build && cd build
+cmake ..
+make
 make install
+make test
+```
+
+### SPORE for NEST v2.10.0
+
+We assume NEST got compiled and installed with MUSIC bindings
+(`--with-music=$MUSIC_INSTALL_PATH`).
+
+```bash
+git clone -b v2.10.0 https://github.com/IGITUGraz/spore-nest-module
+cd spore-nest-module
+./bootstrap.sh
+./configure.sh
+make
+make install
+make test
 ```
 
 ## License
 
 SPORE is open source software and is licensed under the [GNU General Public
-License v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or
-later.
+License v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or later.
 
