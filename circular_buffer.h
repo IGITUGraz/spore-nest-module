@@ -143,13 +143,14 @@ public:
     void resize(size_t new_size, T v)
     {
         delete mem_;
+        mem_ = 0;
         if (new_size>0)
         {
             mem_ = new T[new_size];
             for (size_t i=0;i<new_size;i++)
                 mem_[i] = v;
-            size_ = new_size;
         }
+        size_ = new_size;
     }
     
     /**
@@ -158,6 +159,7 @@ public:
      */    
     T &operator[](size_t at)
     {
+        assert(mem_);
         return mem_[get_index(at)];
     }
     
@@ -167,6 +169,7 @@ public:
      */    
     const_iterator get(size_t at) const
     {
+        assert(mem_);
         return const_iterator(get_index(at),mem_,size_);
     }
 

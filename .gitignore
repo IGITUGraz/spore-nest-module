@@ -19,3 +19,5 @@ unittests/*.trs
 test-driver
 test-suite.log
 .docs
+/build/
+/nbproject/

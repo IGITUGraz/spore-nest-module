@@ -59,14 +59,18 @@ set( MODULE_HEADER ${MODULE_NAME}.h )
 # containing the class description of the class extending the SLIModule
 
 # 4) Specify your module version
-set( MODULE_VERSION_MAJOR 1 )
-set( MODULE_VERSION_MINOR 0 )
+set( MODULE_VERSION_MAJOR 2 )
+set( MODULE_VERSION_MINOR 12 )
 set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}" )
 
 # 5) Leave the rest as is. All files in `sli` will be installed to
 #    `share/nest/sli/`, so that NEST will find the during initialization.
 
 # Leave the call to "project(...)" for after the compiler is determined.
+
+# Include unit tests folder
+enable_testing()
+add_subdirectory( unittests )
 
 # Set the `nest-config` executable to use during configuration.
 set( with-nest OFF CACHE STRING "Specify the `nest-config` executable." )
