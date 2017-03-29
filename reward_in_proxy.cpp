@@ -206,7 +206,7 @@ void RewardInProxy::update(const nest::Time& origin, const long from, const long
         nest::Time time = nest::Time::step(origin.get_steps() + lag);
         for (int channel = 0; channel < n_channels; channel++)
         {
-            set_trace(time.get_steps(), reward_in_buffer_[channel]);
+            set_trace(time.get_steps(), reward_in_buffer_[channel], channel);
         }
     }
 
