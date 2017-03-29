@@ -90,7 +90,9 @@ spore::SporeModule::~SporeModule()
  */
 const std::string spore::SporeModule::name(void) const
 {
-    return std::string("SPORE (version 0.5)"); // Return name of the module
+    std::stringstream sstr;
+    sstr << "SPORE (version " << __SPORE_VERSION__ << ")";
+    return sstr.str(); // Return name of the module
 }
 
 
