@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -143,19 +143,25 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3ced2a39cfa939a4e31a372c39257ac6"></a>
+<tr class="memitem:a4417a3a2a5669ff63832b034fc08d56f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a4417a3a2a5669ff63832b034fc08d56f"></a>
 template&lt;class ConnectionT &gt; </td></tr>
-<tr class="memitem:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memTemplItemLeft" align="right" valign="top">nest::synindex&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacespore.html#a3ced2a39cfa939a4e31a372c39257ac6">register_diligent_connection_model</a> (nest::Network &amp;net, const std::string &amp;name)</td></tr>
-<tr class="memdesc:a3ced2a39cfa939a4e31a372c39257ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to register diligent synapses. <br /></td></tr>
-<tr class="separator:a3ced2a39cfa939a4e31a372c39257ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4417a3a2a5669ff63832b034fc08d56f"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacespore.html#a4417a3a2a5669ff63832b034fc08d56f">register_diligent_connection_model</a> (const std::string &amp;name, bool requires_symmetric=false)</td></tr>
+<tr class="memdesc:a4417a3a2a5669ff63832b034fc08d56f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to register diligent synapses. <br /></td></tr>
+<tr class="separator:a4417a3a2a5669ff63832b034fc08d56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>File: spore_module.h Author: Kappel, Hsieh </p>
+<div class="textblock"><p>This file is part of SPORE.</p>
+<p>SPORE is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 2 of the License, or (at your option) any later version.</p>
+<p>SPORE is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License along with SPORE. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+<p>For more information see: <a href="https://github.com/IGITUGraz/spore-nest-module">https://github.com/IGITUGraz/spore-nest-module</a></p>
+<p>File: <a class="el" href="diligent__connector__model_8h_source.html">diligent_connector_model.h</a> Author: Kappel</p>
+<p>This file is based on connector_model_impl.h which is part of NEST (Copyright (C) 2004 The NEST Initiative). See: <a href="http://nest-initiative.org/">http://nest-initiative.org/</a> </p>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 24 2017 16:50:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 29 2017 18:10:01 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

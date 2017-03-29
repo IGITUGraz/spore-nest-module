@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -69,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -83,141 +84,158 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">connection_data_logger.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* </span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * File:   connection_data_logger.h</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> * Author: Kappel</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Created on November 8, 2016, 11:57 AM</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef CONNECTION_DATA_LOGGER_H</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define CONNECTION_DATA_LOGGER_H</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;nest.h&quot;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;dictdatum.h&quot;</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span>spore</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLoggerBase.html">   24</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1ConnectionDataLoggerBase.html">ConnectionDataLoggerBase</a></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keyword">typedef</span> nest::index recorder_port;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a">ConnectionDataLoggerBase</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a15350c253f5a97fe92d29c0c01c436e8">~ConnectionDataLoggerBase</a>();</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a7ba6b1bbf879dda75b5e4b635c5f8832">get_status</a>(DictionaryDatum &amp;d, recorder_port port) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a420a698aa4028fb7c11b1922b98144de">set_status</a>(<span class="keyword">const</span> DictionaryDatum &amp;d, recorder_port &amp;port);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#aae63a57ab2e4a1301fdccd28c5e0da7d">clear</a>();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">   40</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">RecorderData</a></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#a1915e78635100309d76a7ce83c2b4848">RecorderData</a>(<span class="keywordtype">size_t</span> size);</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#aaded611aba816f7b0b62cbe01a5f8633">clear</a>();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        std::vector&lt;double&gt; recorder_times_;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        std::vector&lt; std::vector&lt;double&gt; &gt; recorder_values_;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keywordtype">double</span> interval_;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    </div>
-<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">   53</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a>(std::string name)</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                :name_(name)             </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                {};                </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        std::string name_;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    };</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    recorder_port <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a9b7c0e822a04ef3e8bdb410f9b4da4f3">add_recordable_connection</a>();</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    std::vector&lt;RecorderData*&gt; recorder_data_;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    std::vector&lt;RecorderInfo&gt; recorder_info_;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;};</div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * This file is part of SPORE.</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * SPORE is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> * the Free Software Foundation, either version 2 of the License, or</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * (at your option) any later version.</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * SPORE is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * along with SPORE.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * For more information see: https://github.com/IGITUGraz/spore-nest-module</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * File:   connection_data_logger.h</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * Author: Kappel</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> * Created on November 8, 2016, 11:57 AM</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#ifndef CONNECTION_DATA_LOGGER_H</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define CONNECTION_DATA_LOGGER_H</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#include &quot;nest.h&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#include &quot;dictdatum.h&quot;</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">namespace </span>spore</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;{</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLoggerBase.html">   41</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1ConnectionDataLoggerBase.html">ConnectionDataLoggerBase</a></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keyword">typedef</span> nest::index recorder_port;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a">ConnectionDataLoggerBase</a>();</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a15350c253f5a97fe92d29c0c01c436e8">~ConnectionDataLoggerBase</a>();</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a7ba6b1bbf879dda75b5e4b635c5f8832">get_status</a>(DictionaryDatum &amp;d, recorder_port port) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a420a698aa4028fb7c11b1922b98144de">set_status</a>(<span class="keyword">const</span> DictionaryDatum &amp;d, recorder_port &amp;port);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#aae63a57ab2e4a1301fdccd28c5e0da7d">clear</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">   58</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">RecorderData</a></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#a1915e78635100309d76a7ce83c2b4848">RecorderData</a>(<span class="keywordtype">size_t</span> size);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#aaded611aba816f7b0b62cbe01a5f8633">clear</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        std::vector&lt;double&gt; recorder_times_;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        std::vector&lt; std::vector&lt;double&gt; &gt; recorder_values_;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keywordtype">double</span> interval_;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    };</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
-<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html">   73</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1ConnectionDataLogger.html">ConnectionDataLogger</a> : <span class="keyword">public</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html">ConnectionDataLoggerBase</a></div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keyword">typedef</span> double ( ConnectionType::*DataAccessFct )() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">register_recordable_variable</a>( <span class="keyword">const</span> std::string &amp;name, DataAccessFct data_access_fct );</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">record</a>( <span class="keywordtype">double</span> time, ConnectionType <span class="keyword">const</span> &amp;host, recorder_port port );</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    std::vector&lt;DataAccessFct&gt; data_access_fct_;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// ConnectionDataLogger implementation.</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
-<div class="line"><a name="l00098"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">   98</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">ConnectionDataLogger&lt;ConnectionType&gt;::register_recordable_variable</a>( <span class="keyword">const</span> std::string &amp;name,</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;                                                                         DataAccessFct data_access_fct )</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;{</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    recorder_info_.push_back( <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a>(name) );</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    data_access_fct_.push_back(data_access_fct);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">   71</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a>(std::string name)</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        : name_(name)</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        };</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        std::string name_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    recorder_port <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html#a9b7c0e822a04ef3e8bdb410f9b4da4f3">add_recordable_connection</a>();</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    std::vector&lt;RecorderData*&gt; recorder_data_;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::vector&lt;RecorderInfo&gt; recorder_info_;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;};</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html">   92</a></span>&#160;<span class="keyword">class </span><a class="code" href="classspore_1_1ConnectionDataLogger.html">ConnectionDataLogger</a> : <span class="keyword">public</span> <a class="code" href="classspore_1_1ConnectionDataLoggerBase.html">ConnectionDataLoggerBase</a></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;{</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keyword">typedef</span> double ( ConnectionType::*DataAccessFct)() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">register_recordable_variable</a>(<span class="keyword">const</span> std::string &amp;name, DataAccessFct data_access_fct);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">record</a>(<span class="keywordtype">double</span> time, ConnectionType <span class="keyword">const</span> &amp;host, recorder_port port);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    std::vector&lt;DataAccessFct&gt; data_access_fct_;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;};</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">  115</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">ConnectionDataLogger&lt;ConnectionType&gt;::record</a>( <span class="keywordtype">double</span> time_step,</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;                                                   ConnectionType <span class="keyword">const</span> &amp;host,</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                                   recorder_port port )</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">// ConnectionDataLogger implementation.</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">  116</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">ConnectionDataLogger&lt;ConnectionType&gt;::register_recordable_variable</a>(<span class="keyword">const</span> std::string &amp;name,</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                                                                        DataAccessFct data_access_fct)</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;{</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordflow">if</span> (port == nest::invalid_index)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    assert( port &lt;  recorder_data_.size() );</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">ConnectionDataLoggerBase::RecorderData</a> &amp;recorder = *recorder_data_[port];</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordflow">if</span> (recorder.interval_==0)</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordflow">if</span> ( recorder.recorder_times_.empty() || (recorder.recorder_times_.back()+recorder.interval_&lt;=time_step) )</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    {</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        recorder.recorder_times_.push_back(time_step);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;recorder.recorder_values_.size(); i++)</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        {</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;            recorder.recorder_values_[i].push_back( ( (host).*( data_access_fct_[i] ) )() );</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        }</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;}</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    recorder_info_.push_back(<a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">RecorderInfo</a>(name));</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    data_access_fct_.push_back(data_access_fct);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> ConnectionType&gt;</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">  132</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">ConnectionDataLogger&lt;ConnectionType&gt;::record</a>(<span class="keywordtype">double</span> time_step,</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;                                                  ConnectionType <span class="keyword">const</span> &amp;host,</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;                                                  recorder_port port)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;{</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    <span class="keywordflow">if</span> (port == nest::invalid_index)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;        <span class="keywordflow">return</span>;</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">/* CONNECTION_DATA_LOGGER_H */</span><span class="preprocessor"></span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;</div>
-<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html_a1915e78635100309d76a7ce83c2b4848"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#a1915e78635100309d76a7ce83c2b4848">spore::ConnectionDataLoggerBase::RecorderData::RecorderData</a></div><div class="ttdeci">RecorderData(size_t size)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:120</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a420a698aa4028fb7c11b1922b98144de"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a420a698aa4028fb7c11b1922b98144de">spore::ConnectionDataLoggerBase::set_status</a></div><div class="ttdeci">void set_status(const DictionaryDatum &amp;d, recorder_port &amp;port)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:60</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a7ba6b1bbf879dda75b5e4b635c5f8832"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a7ba6b1bbf879dda75b5e4b635c5f8832">spore::ConnectionDataLoggerBase::get_status</a></div><div class="ttdeci">void get_status(DictionaryDatum &amp;d, recorder_port port) const </div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:36</div></div>
-<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo_html"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">spore::ConnectionDataLoggerBase::RecorderInfo</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:53</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLogger_html"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html">spore::ConnectionDataLogger</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:73</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLogger_html_ab6a86393673a8fb2c9ba34de6200ec13"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">spore::ConnectionDataLogger::register_recordable_variable</a></div><div class="ttdeci">void register_recordable_variable(const std::string &amp;name, DataAccessFct data_access_fct)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:98</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLogger_html_adb787d68b56009d54bc9f0d209019e02"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">spore::ConnectionDataLogger::record</a></div><div class="ttdeci">void record(double time, ConnectionType const &amp;host, recorder_port port)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:115</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a9b7c0e822a04ef3e8bdb410f9b4da4f3"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a9b7c0e822a04ef3e8bdb410f9b4da4f3">spore::ConnectionDataLoggerBase::add_recordable_connection</a></div><div class="ttdeci">recorder_port add_recordable_connection()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:89</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a15350c253f5a97fe92d29c0c01c436e8"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a15350c253f5a97fe92d29c0c01c436e8">spore::ConnectionDataLoggerBase::~ConnectionDataLoggerBase</a></div><div class="ttdeci">~ConnectionDataLoggerBase()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:20</div></div>
-<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html_aaded611aba816f7b0b62cbe01a5f8633"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#aaded611aba816f7b0b62cbe01a5f8633">spore::ConnectionDataLoggerBase::RecorderData::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:131</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a75f4b977dfe3256dec51de95ee998c4a"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a">spore::ConnectionDataLoggerBase::ConnectionDataLoggerBase</a></div><div class="ttdeci">ConnectionDataLoggerBase()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:13</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html">spore::ConnectionDataLoggerBase</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:24</div></div>
-<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">spore::ConnectionDataLoggerBase::RecorderData</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:40</div></div>
-<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_aae63a57ab2e4a1301fdccd28c5e0da7d"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#aae63a57ab2e4a1301fdccd28c5e0da7d">spore::ConnectionDataLoggerBase::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:101</div></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;    assert(port &lt; recorder_data_.size());</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <a class="code" href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">ConnectionDataLoggerBase::RecorderData</a> &amp;recorder = *recorder_data_[port];</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="keywordflow">if</span> (recorder.interval_ == 0)</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordflow">if</span> (recorder.recorder_times_.empty() || (recorder.recorder_times_.back() + recorder.interval_ &lt;= time_step))</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    {</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        recorder.recorder_times_.push_back(time_step);</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; recorder.recorder_values_.size(); i++)</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;        {</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            recorder.recorder_values_[i].push_back(((host).*(data_access_fct_[i]))());</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        }</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    }</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;}</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
+<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html_a1915e78635100309d76a7ce83c2b4848"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#a1915e78635100309d76a7ce83c2b4848">spore::ConnectionDataLoggerBase::RecorderData::RecorderData</a></div><div class="ttdeci">RecorderData(size_t size)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:143</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a420a698aa4028fb7c11b1922b98144de"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a420a698aa4028fb7c11b1922b98144de">spore::ConnectionDataLoggerBase::set_status</a></div><div class="ttdeci">void set_status(const DictionaryDatum &amp;d, recorder_port &amp;port)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:83</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a7ba6b1bbf879dda75b5e4b635c5f8832"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a7ba6b1bbf879dda75b5e4b635c5f8832">spore::ConnectionDataLoggerBase::get_status</a></div><div class="ttdeci">void get_status(DictionaryDatum &amp;d, recorder_port port) const </div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:60</div></div>
+<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo_html"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html">spore::ConnectionDataLoggerBase::RecorderInfo</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:71</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLogger_html"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html">spore::ConnectionDataLogger</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:92</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLogger_html_ab6a86393673a8fb2c9ba34de6200ec13"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html#ab6a86393673a8fb2c9ba34de6200ec13">spore::ConnectionDataLogger::register_recordable_variable</a></div><div class="ttdeci">void register_recordable_variable(const std::string &amp;name, DataAccessFct data_access_fct)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:116</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLogger_html_adb787d68b56009d54bc9f0d209019e02"><div class="ttname"><a href="classspore_1_1ConnectionDataLogger.html#adb787d68b56009d54bc9f0d209019e02">spore::ConnectionDataLogger::record</a></div><div class="ttdeci">void record(double time, ConnectionType const &amp;host, recorder_port port)</div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:132</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a9b7c0e822a04ef3e8bdb410f9b4da4f3"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a9b7c0e822a04ef3e8bdb410f9b4da4f3">spore::ConnectionDataLoggerBase::add_recordable_connection</a></div><div class="ttdeci">recorder_port add_recordable_connection()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:112</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a15350c253f5a97fe92d29c0c01c436e8"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a15350c253f5a97fe92d29c0c01c436e8">spore::ConnectionDataLoggerBase::~ConnectionDataLoggerBase</a></div><div class="ttdeci">~ConnectionDataLoggerBase()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:44</div></div>
+<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html_aaded611aba816f7b0b62cbe01a5f8633"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#aaded611aba816f7b0b62cbe01a5f8633">spore::ConnectionDataLoggerBase::RecorderData::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:154</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_a75f4b977dfe3256dec51de95ee998c4a"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a">spore::ConnectionDataLoggerBase::ConnectionDataLoggerBase</a></div><div class="ttdeci">ConnectionDataLoggerBase()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:37</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html">spore::ConnectionDataLoggerBase</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:41</div></div>
+<div class="ttc" id="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData_html"><div class="ttname"><a href="structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html">spore::ConnectionDataLoggerBase::RecorderData</a></div><div class="ttdef"><b>Definition:</b> connection_data_logger.h:58</div></div>
+<div class="ttc" id="classspore_1_1ConnectionDataLoggerBase_html_aae63a57ab2e4a1301fdccd28c5e0da7d"><div class="ttname"><a href="classspore_1_1ConnectionDataLoggerBase.html#aae63a57ab2e4a1301fdccd28c5e0da7d">spore::ConnectionDataLoggerBase::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> connection_data_logger.cpp:124</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 29 2017 18:10:01 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

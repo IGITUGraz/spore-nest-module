@@ -9,7 +9,7 @@ var indexSectionsWithContent =
 {
   0: "acdghilnoprstu~",
   1: "cdprst",
-  2: "d",
+  2: "s",
   3: "acdghilnoprstu~",
   4: "dpr",
   5: "c"
@@ -19,7 +19,7 @@ var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "files",
+  2: "namespaces",
   3: "functions",
   4: "variables",
   5: "typedefs"

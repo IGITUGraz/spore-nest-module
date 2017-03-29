@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html">SynapticSamplingRewardGradientConnection</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html">SynapticSamplingRewardGradientConnection</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -200,17 +201,7 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td>max_param_change </td><td>double </td><td>maximum synaptic parameter change </td></tr>
 <tr>
-<td>direct_gradient_rate </td><td>double </td><td>rate of directly applying changes to tde synaptic parameter </td></tr>
-<tr>
-<td>consolidation_time </td><td>double </td><td>time point when consolidation is triggered </td></tr>
-<tr>
-<td>consolidation_interval </td><td>double </td><td>interval after which synapses become consolidated </td></tr>
-<tr>
-<td>consolidation_tdreshold </td><td>double </td><td>tdreshold of consolidation </td></tr>
-<tr>
-<td>consolidation_probability </td><td>double </td><td>probability of consolidation </td></tr>
-<tr>
-<td>consolidation_prior_std </td><td>double </td><td>prior STD of consolidated synapses </td></tr>
+<td>direct_gradient_rate </td><td>double </td><td>rate of directly applying changes to the synaptic parameter </td></tr>
 <tr>
 <td>gradient_scale </td><td>double </td><td>scaling parameter for tde gradient </td></tr>
 <tr>
@@ -220,7 +211,9 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td>dopa_trace_id </td><td>int </td><td>ID of tde dopamine trace (default 0) </td></tr>
 <tr>
-<td>verbose </td><td>bool </td><td>write status to std::out (for debugging) </td></tr>
+<td>simulate_retracted_synapses </td><td>bool </td><td>continue simulating retracted synapses (default false) </td></tr>
+<tr>
+<td>verbose </td><td>bool </td><td>write status to std::out (for debugging, default false) </td></tr>
 </table>
 <p>The following parameters can be set in the status dictionary: </p><table class="doxtable">
 <tr>
@@ -658,7 +651,7 @@ template&lt;typename targetidentifierT&gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 28 2017 14:18:25 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 29 2017 18:10:01 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>

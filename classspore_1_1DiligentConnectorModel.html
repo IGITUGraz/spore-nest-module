@@ -38,6 +38,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -82,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>spore</b></li><li class="navelem"><a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacespore.html">spore</a></li><li class="navelem"><a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -139,7 +140,7 @@ Protected Member Functions</h2></td></tr>
 class spore::DiligentConnectorModel&lt; ConnectionT &gt;</h3>
 
 <p>Connector model for diligent connections. </p>
-<p>Generic connector model for connections that require being updated on a regular time grid. Use the function <em> register_diligent_connection_model &lt;&gt; provided in <a class="el" href="diligent__connector__model_8h.html">diligent_connector_model.h</a>, to register your synapse model at the network, to use the diligent synapse model instead of NEST's build-in synapse model.</em></p>
+<p>Generic connector model for connections that require being updated on a regular time grid. Use the function <em> register_diligent_connection_model &lt;&gt; provided in <a class="el" href="diligent__connector__model_8h_source.html">diligent_connector_model.h</a>, to register your synapse model at the network, to use the diligent synapse model instead of NEST's build-in synapse model.</em></p>
 <p><em>Diligent connections are connection models that are updated on a regular time grid (as opposed to NEST's standard lazy update). More precisely, the API guarantees that the send function of the synapse is called at least once in a certain time window. If no presynaptic spike is send via the synapse during that time, a "dummy" spike is inserted to trigger a synapse update. The synapse can distinguish between "dummy" spikes and "real" spikes through the receptor port, which is set to the invalid value of -1 for dummy spikes.</em></p>
 <p><em>The length of the update time window can be controlled using the InitSynapseUpdater SLI function. It takes two arguments, the update interval and the maximum synaptic update latency. Both are tuning parameters that can be used to optimize the simulation performance. Long update intervals are likely more time efficient, but require more memory.</em></p>
 <p><em>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface to the API. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</em></p>
@@ -491,7 +492,7 @@ template&lt;typename ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 28 2017 14:18:24 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 29 2017 18:10:01 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.7
 </small></address>
