@@ -166,7 +166,7 @@ synapse_properties = {
     "max_param": 5.0,  # maximum synaptic parameter
     "min_param": -2.0,  # minimum synaptic parameter
     "max_param_change": 40.0,  # maximum synaptic parameter change
-    "gradient_scale": 1.0,  # FIXME comment="activate synaptic gradient integration
+    "gradient_scale": 1.0,  # activate synaptic gradient integration
     "direct_gradient_rate": 0.0,  # rate of direct effect of gradient on the synapse
     "prior_mean": 0.0,  # mean of parameter prior
     "prior_std": 2.0,  # std of parameter prior
