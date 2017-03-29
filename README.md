@@ -5,7 +5,14 @@ utilizing [MUSIC](https://github.com/INCF/MUSIC) for communication with other so
 
 The documentation of the module can be found [here](https://igitugraz.github.io/spore-nest-module/).
 
-## Installation
+[Here](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase/README.md) you find an example use case and a detailed description how to set up SPORE to run a first experiment.
+
+[![Plotting Animation][1]][2]
+
+[1]: https://cloud.githubusercontent.com/assets/22887425/24467479/f7235d1c-14b4-11e7-8ecf-ba19931d7f8d.gif
+[2]: https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase/README.md
+
+## Quick Installation Guide
 
 ### SPORE for NEST v2.12.0+
 
