@@ -25,9 +25,9 @@ The learning process is visualized by a third node, which is reading and, in tur
 
 # Detailed installation guide for the SPORE software framework
 
-This guide describes how to install the software framework that was built around the SPORE module for the NEST simulator. It has been tested with Debian GNU/Linux 8.7 (jessie).
+This guide describes how to install the SPORE module for the NEST 2.12 simulator. Note that SPORE does not support the release version v2.12.0 of NEST. Instead, SPORE currently requires a fix on the development branch so please make sure your development version of NEST corresponds to or is newer than revision [58fd190f5e4](https://github.com/nest/nest-simulator/commit/58fd190f5e404f1e3e822c0d3915e2321d102ed5). We used MUSIC version 1.1.15 in revision [8e0a609b298](https://github.com/INCF/MUSIC/commit/8e0a609b29835be604ae556c1592aad9b4be1827) and we assume that [MPI](https://www.open-mpi.org/) (Open MPI 1.6.5) and python with `numpy` and `matplotlib` are preinstalled on your system. Finally we used revision [be75545f516](https://github.com/IGITUGraz/spore-nest-module/commit/be75545f5168a9765dc8d7dce71a5defbd368c98) of SPORE (version 2.12). The installation procedure was tested on Debian GNU/Linux 8.7 (jessie).
 
-This guide assumes that you want to install everything into the folder `$HOME/opt/`. It is further assumed that you checkout the software into a local folder that is used for development, which we refer to as `devel` folder.
+This guide assumes that you want to install everything into your local home folder `$HOME/opt/`. It is further assumed that you checkout the software into a local folder that is used for development, which we refer to as `devel` folder.
 
 ## Preparation
 
@@ -146,7 +146,7 @@ pip install --user ujson
 
 ## Optional installs
 
-If you want to have nice plotting, you should upgrade `matplotlib`
+If you want to have nice plotting, you should upgrade `matplotlib` to the newest version
 
 ```bash
 pip install --user --upgrade matplotlib
@@ -156,5 +156,7 @@ pip install --user --upgrade matplotlib
 
 That should be it.
 
-Now you should be able to execute the script `experiment.sh` in `spore-nest-module/examples/pattern_matching_showcase`.
+Now you should be able to execute the script [`experiment.sh`](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase/experiment.sh) in
+
+`spore-nest-module/examples/pattern_matching_showcase`.
 
