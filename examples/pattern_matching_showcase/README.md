@@ -16,7 +16,7 @@ The spike activity of each sub population is then interpreted as the strength of
 Consequently, the strongest active sub population determines which pattern the network has detected and the difference to the weaker activities can be
 seen as the certainty of this decision.
 
-The learning process is visualized by a third node, which is reading and, in turn, plotting all the information available.
+The learning process is visualized by a third node, which is reading and, in turn, broadcasting all the information available via ZMQ to allow for live plotting in a process completely separate to the simulation.
 
 [![Plotting Animation][2]][1]
 
