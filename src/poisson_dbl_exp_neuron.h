@@ -47,7 +47,7 @@ namespace spore
  * PoissonDblExpNeuron - Point process neuron with double-exponential PSPs.
  * 
  * PoissonDblExpNeuron is a variant of the spike response model model with
- * double exponential PSP shapes an absolute refractory mechanism.
+ * double exponential PSP shapes and absolute refractory mechanism.
  *
  * Spikes are generated randomly according to the current value of the
  * transfer function which operates on the membrane potential. Spike
