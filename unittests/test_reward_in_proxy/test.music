@@ -1,0 +1,9 @@
+[send]
+  binary = ./time_sender.py
+  np = 1
+
+[nest]
+  binary = ./nest_receiver.py
+  np = 1
+
+send.out -> nest.in [3]

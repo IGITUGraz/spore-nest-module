@@ -25,3 +25,4 @@ add_test( NAME test_dbl_exp_neuron COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test
 add_test( NAME test_dbl_exp_neuron_rate COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron_rate.py )
 add_test( NAME test_tracing_node COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_tracing_node.py )
 add_test( NAME test_rewardgradient_connection COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_rewardgradient_connection.py )
+add_test( NAME test_reward_in_proxy COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_reward_in_proxy/test.py )
