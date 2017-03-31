@@ -22,14 +22,25 @@
 # Created on March 24, 2017
 #
 
-cd .docs
-doxygen
-if [ ! $? = 0 ]; then
-    echo "Running doxygen failed. Aborting."
+DOCS_FOLDER=.docs
+
+if [ ! -d $DOCS_FOLDER ]; then
+    echo "ERROR :: Build-folder for docs does not exist."
+    echo "Make sure you are running this script in the right directory"
+    echo " and that you have executed \`./utils/init-docs.sh\` before."
+    echo "Aborting."
     exit 1
 fi
-git add *
-git commit -m "Update docs to revision `git rev-parse HEAD`."
+cd $DOCS_FOLDER && doxygen
+if [ ! $? = 0 ]; then
+    echo "ERROR :: Running doxygen failed. Aborting."
+    exit 2
+fi
+git add * && git commit -m "Update docs to revision `git rev-parse HEAD`."
+if [ ! $? = 0 ]; then
+    echo "ERROR :: Creating commit failed. Aborting."
+    exit 3
+fi
 echo "Entering sub-shell. You can now check the docs for integrity. Press CTRL+D to continue."
 $SHELL
 read -p "Push commit? [Y/n] " answer
