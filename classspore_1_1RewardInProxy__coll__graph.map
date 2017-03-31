@@ -1,5 +1,5 @@
 <map id="spore::RewardInProxy" name="spore::RewardInProxy">
-<area shape="rect" id="node2" href="$classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. " alt="" coords="5,91,140,117"/>
-<area shape="rect" id="node4" href="$structspore_1_1RewardInProxy_1_1State__.html" title="spore::RewardInProxy\l::State_" alt="" coords="165,83,317,125"/>
-<area shape="rect" id="node5" href="$structspore_1_1RewardInProxy_1_1Parameters__.html" title="spore::RewardInProxy\l::Parameters_" alt="" coords="341,83,493,125"/>
+<area shape="rect" id="node2" href="$classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. " alt="" coords="5,89,141,115"/>
+<area shape="rect" id="node4" href="$structspore_1_1RewardInProxy_1_1State__.html" title="spore::RewardInProxy\l::State_" alt="" coords="165,81,317,123"/>
+<area shape="rect" id="node5" href="$structspore_1_1RewardInProxy_1_1Parameters__.html" title="spore::RewardInProxy\l::Parameters_" alt="" coords="341,81,493,123"/>
 </map>
