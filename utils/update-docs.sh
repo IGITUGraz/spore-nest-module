@@ -23,6 +23,7 @@
 #
 
 DOCS_FOLDER=.docs
+COMMIT_ID=`git rev-parse HEAD`
 
 if [ ! -d $DOCS_FOLDER ]; then
     echo "ERROR :: Build-folder for docs does not exist."
@@ -36,7 +37,7 @@ if [ ! $? = 0 ]; then
     echo "ERROR :: Running doxygen failed. Aborting."
     exit 2
 fi
-git add * && git commit -m "Update docs to revision `git rev-parse HEAD`."
+git add * && git commit -m "Update docs to revision $COMMIT_ID."
 if [ ! $? = 0 ]; then
     echo "ERROR :: Creating commit failed. Aborting."
     exit 3
