@@ -120,6 +120,8 @@ protected:
         assert(id < traces_.size());
         traces_[id][steps] = v;
     }
+    
+    virtual void get_trace_status(DictionaryDatum& d) const;
 
 private:
     std::vector< CircularBuffer<double> > traces_;

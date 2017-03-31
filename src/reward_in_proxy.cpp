@@ -179,6 +179,8 @@ void RewardInProxy::calibrate()
 
 void RewardInProxy::get_status(DictionaryDatum& d) const
 {
+    TracingNode::get_trace_status(d);
+    
     P_.get(d);
     S_.get(d);
 
