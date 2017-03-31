@@ -39,7 +39,8 @@ ConnectionUpdateManager::ConnectionUpdateManager()
 interval_(-1.0),
 cu_model_id_(nest::invalid_index),
 cu_id_(nest::invalid_index),
-has_connections_(false)
+has_connections_(false),
+is_initialized_(false)
 {
 }
 
@@ -111,6 +112,8 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
 {
     if (!has_connections())
         return;
+    
+    assert(is_initialized_);
 
     const double t_trig = time.get_steps();
 
@@ -206,6 +209,21 @@ void ConnectionUpdateManager::calibrate(nest::thread th)
 }
 
 /**
+ * Sets the update manager into the initialized state. This should be called
+ * by the updater nodes when their init_buffers method is triggered. After a
+ * successful call to this the method is_initialized() will return true.
+ */
+void ConnectionUpdateManager::prepare()
+{
+    if (has_connections_)
+    {
+        assert(is_valid());
+    }
+
+    is_initialized_ = true;
+}
+
+/**
  * Reset the ConnectionUpdateManager. Removes all connectors that have
  * been registered.
  * 
@@ -214,6 +232,7 @@ void ConnectionUpdateManager::calibrate(nest::thread th)
 void ConnectionUpdateManager::reset()
 {
     has_connections_ = false;
+    is_initialized_ = false;
     connectors_.clear();
     models_.clear();
     cu_id_ = nest::invalid_index;
@@ -252,6 +271,7 @@ ConnectionUpdater::ConnectionUpdater()
  * Copy Constructur.
  */
 ConnectionUpdater::ConnectionUpdater(const ConnectionUpdater& n)
+: nest::Node(n)
 {
 }
 
@@ -314,6 +334,7 @@ void ConnectionUpdater::init_state_(const nest::Node& proto)
  */
 void ConnectionUpdater::init_buffers_()
 {
+    ConnectionUpdateManager::instance()->prepare();
 }
 
 /**

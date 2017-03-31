@@ -133,7 +133,7 @@ public:
         updateValue<double>(d, "psp_depression_rate", psp_depression_rate_);
         updateValue<double>(d, "integration_time", integration_time_);
         updateValue<double>(d, "episode_length", episode_length_);
-        updateValue<long>(d, "weight_update_time", weight_update_time_);
+        updateValue<double>(d, "weight_update_time", weight_update_time_);
         updateValue<bool>(d, "simulate_retracted_synapses", simulate_retracted_synapses_);
 
         updateValue<bool>(d, "verbose", verbose_);
@@ -162,6 +162,12 @@ public:
      */
     void calibrate(const nest::TimeConverter &tc)
     {
+        // make sure this check is only performed shortly before the simulation starts.
+        if (ConnectionUpdateManager::instance()->is_initialized() && not reward_transmitter_)
+        {
+            throw nest::BadProperty("Reward transmitter was not set at simulation startup!");
+        }
+
         resolution_unit_ = nest::Time::get_resolution().get_ms();
 
         weight_update_steps_ = std::ceil(weight_update_time_ / resolution_unit_);

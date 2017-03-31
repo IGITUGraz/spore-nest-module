@@ -130,6 +130,14 @@ public:
         return has_connections_;
     }
 
+    /**
+     * @return true if the connection manager is initialized and ready for the simulation.
+     */
+    inline bool is_initialized() const
+    {
+        return is_initialized_;
+    }
+
     static ConnectionUpdateManager *instance();
 
 private:
@@ -137,6 +145,7 @@ private:
 
     void update(const nest::Time &time, nest::thread th);
     void calibrate(nest::thread th);
+    void prepare();
     void reset();
 
     ConnectionUpdateManager(const ConnectionUpdateManager&)
@@ -152,6 +161,7 @@ private:
     nest::index cu_model_id_;
     nest::index cu_id_;
     bool has_connections_;
+    bool is_initialized_;
 
     static ConnectionUpdateManager *instance_;
 };
