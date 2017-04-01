@@ -35,8 +35,9 @@ set( MODULE_SOURCES
     tracing_node.cpp tracing_node.h
     poisson_dbl_exp_neuron.cpp poisson_dbl_exp_neuron.h
     diligent_connector_model.h
-    synaptic_sampling_rewardgradient_connection.h
+    synaptic_sampling_rewardgradient_connection.cpp synaptic_sampling_rewardgradient_connection.h
     reward_in_proxy.h reward_in_proxy.cpp
+    param_utils.h param_utils.cpp
     spore_test_node.h spore_test_node.cpp
     spore_test_connection.h
     spore_test_base.h

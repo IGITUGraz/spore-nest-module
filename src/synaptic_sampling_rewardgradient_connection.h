@@ -36,6 +36,7 @@
 #include "tracing_node.h"
 #include "connection_updater.h"
 #include "connection_data_logger.h"
+#include "param_utils.h"
 
 
 namespace spore
@@ -49,139 +50,16 @@ class SynapticSamplingRewardGradientCommonProperties : public nest::CommonSynaps
 {
 public:
 
-    /**
-     * Default constructor.
-     */
-    SynapticSamplingRewardGradientCommonProperties()
-    : nest::CommonSynapseProperties(),
-    reward_transmitter_(0),
-    learning_rate_(0.0001),
-    episode_length_(100.0),
-    psp_facilitation_rate_(20.0),
-    psp_depression_rate_(2.0),
-    temperature_(0.01),
-    gradient_noise_(0.00),
-    max_param_(100.0),
-    min_param_(-100.0),
-    max_param_change_(100.0),
-    integration_time_(10000.0),
-    direct_gradient_rate_(0.0),
-    parameter_mapping_offset_(3.0),
-    weight_update_time_(100.0),
-    gradient_scale_(1.0),
-    resolution_unit_(-1.0),
-    gamma_(0.0),
-    lambda_(0.0),
-    psp_faciliation_update_(0.0),
-    psp_depression_update_(0.0),
-    psp_scale_factor_(0.0),
-    epsilon_(0.0001),
-    weight_update_steps_(0),
-    bap_trace_id_(0),
-    dopa_trace_id_(0),
-    simulate_retracted_synapses_(false),
-    verbose_(false),
-    std_wiener_(0.0),
-    std_gradient_(0.0)
-    {
-    }
-
-    /**
-     * Destructor.
-     */
-    ~SynapticSamplingRewardGradientCommonProperties()
-    {
-    }
+    SynapticSamplingRewardGradientCommonProperties();
+    ~SynapticSamplingRewardGradientCommonProperties();
 
     using CommonSynapseProperties::get_status;
     using CommonSynapseProperties::set_status;
     using CommonSynapseProperties::calibrate;
 
-    /**
-     * Status getter function.
-     */
-    void get_status(DictionaryDatum & d) const
-    {
-        nest::CommonSynapseProperties::get_status(d);
-
-        if (reward_transmitter_ != 0)
-            def<long>(d, "reward_transmitter", reward_transmitter_->get_gid());
-        else
-            def<long>(d, "reward_transmitter", -1);
-    }
-
-    /**
-     * Status setter function.
-     */
-    void set_status(const DictionaryDatum & d, nest::ConnectorModel& cm)
-    {
-        nest::CommonSynapseProperties::set_status(d, cm);
-
-        updateValue<double>(d, "max_param", max_param_);
-        updateValue<double>(d, "min_param", min_param_);
-        updateValue<double>(d, "max_param_change", max_param_change_);
-        updateValue<double>(d, "parameter_mapping_offset", parameter_mapping_offset_);
-        updateValue<double>(d, "direct_gradient_rate", direct_gradient_rate_);
-        updateValue<double>(d, "gradient_scale", gradient_scale_);
-        updateValue<long>(d, "bap_trace_id", bap_trace_id_);
-        updateValue<long>(d, "dopa_trace_id", dopa_trace_id_);
-
-        updateValue<double>(d, "learning_rate", learning_rate_);
-        updateValue<double>(d, "temperature", temperature_);
-        updateValue<double>(d, "gradient_noise", gradient_noise_);
-        updateValue<double>(d, "psp_facilitation_rate", psp_facilitation_rate_);
-        updateValue<double>(d, "psp_depression_rate", psp_depression_rate_);
-        updateValue<double>(d, "integration_time", integration_time_);
-        updateValue<double>(d, "episode_length", episode_length_);
-        updateValue<double>(d, "weight_update_time", weight_update_time_);
-        updateValue<bool>(d, "simulate_retracted_synapses", simulate_retracted_synapses_);
-
-        updateValue<bool>(d, "verbose", verbose_);
-
-        if (weight_update_time_ <= 0.0)
-        {
-            throw nest::BadProperty("weight_update_time must strictly bigger than 0");
-        }
-
-        long rtgid;
-        if (updateValue<long>(d, "reward_transmitter", rtgid))
-        {
-            reward_transmitter_ = dynamic_cast<TracingNode*> (nest::kernel().node_manager.get_node(rtgid));
-
-            if (reward_transmitter_ == 0)
-                throw nest::BadProperty("Reward transmitter must be of model RewardTransmitter");
-        }
-    }
-
-    /**
-     * Calibrate all time objects, which are contained in this object.
-     * This function is called when the time resolution changes and on
-     * simulation startup.
-     * 
-     * @param tc time converter object.
-     */
-    void calibrate(const nest::TimeConverter &tc)
-    {
-        // make sure this check is only performed shortly before the simulation starts.
-        if (ConnectionUpdateManager::instance()->is_initialized() && not reward_transmitter_)
-        {
-            throw nest::BadProperty("Reward transmitter was not set at simulation startup!");
-        }
-
-        resolution_unit_ = nest::Time::get_resolution().get_ms();
-
-        weight_update_steps_ = std::ceil(weight_update_time_ / resolution_unit_);
-
-        const double l_rate = weight_update_time_*learning_rate_;
-        std_wiener_ = std::sqrt(2.0 * temperature_ * l_rate);
-        std_gradient_ = std::sqrt(2.0 * gradient_noise_ * l_rate);
-
-        psp_faciliation_update_ = std::exp(-resolution_unit_ / psp_facilitation_rate_);
-        psp_depression_update_ = std::exp(-resolution_unit_ / psp_depression_rate_);
-        psp_scale_factor_ = (psp_facilitation_rate_ / (psp_facilitation_rate_ - psp_depression_rate_));
-        gamma_ = (integration_time_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / integration_time_);
-        lambda_ = (episode_length_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / episode_length_);
-    }
+    void get_status(DictionaryDatum & d) const;
+    void set_status(const DictionaryDatum & d, nest::ConnectorModel& cm);
+    void calibrate(const nest::TimeConverter &tc);
 
     /**
      * Check spike event.
@@ -246,8 +124,32 @@ public:
         return nest::kernel().rng_manager.get_rng(thread)->drand();
     }
 
-    TracingNode* reward_transmitter_;
+    /**
+     * @brief Define default values and constraints for synaptic parameters.
+     */
+    template < typename T >
+        void define_parameters( T & p )
+    {
+        p.parameter( learning_rate_, "learning_rate", 0.0001, pc::MinD(0.0) );
+        p.parameter( episode_length_, "episode_length", 100.0, pc::BiggerD(0.0) );
+        p.parameter( psp_facilitation_rate_, "psp_facilitation_rate", 20.0, pc::BiggerD(0.0) );
+        p.parameter( psp_depression_rate_, "psp_depression_rate", 2.0, pc::BiggerD(0.0) );
+        p.parameter( temperature_, "temperature", 0.01, pc::MinD(0.0) );
+        p.parameter( gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
+        p.parameter( max_param_, "max_param", 100.0 );
+        p.parameter( min_param_, "min_param", -100.0 );
+        p.parameter( max_param_change_, "max_param_change", 100.0, pc::MinD(0.0) );
+        p.parameter( integration_time_, "integration_time", 10000.0, pc::BiggerD(0.0) );
+        p.parameter( direct_gradient_rate_, "direct_gradient_rate", 0.0 );
+        p.parameter( parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
+        p.parameter( weight_update_time_, "weight_update_time", 100.0, pc::BiggerD(0.0) );
+        p.parameter( bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
+        p.parameter( dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
+        p.parameter( simulate_retracted_synapses_, "simulate_retracted_synapses", false );
+        p.parameter( verbose_, "verbose", false );
+    }
 
+    // parameters
     double learning_rate_;
     double episode_length_;
     double psp_facilitation_rate_;
@@ -264,6 +166,15 @@ public:
     double weight_update_time_;
     double gradient_scale_;
 
+    long bap_trace_id_;
+    long dopa_trace_id_;
+
+    bool simulate_retracted_synapses_;
+    bool verbose_;
+
+    // state variables
+    TracingNode* reward_transmitter_;
+
     double resolution_unit_;
     double gamma_;
     double lambda_;
@@ -271,15 +182,9 @@ public:
     double psp_faciliation_update_;
     double psp_depression_update_;
     double psp_scale_factor_;
-
     double epsilon_;
 
     long weight_update_steps_;
-    int bap_trace_id_;
-    int dopa_trace_id_;
-
-    bool simulate_retracted_synapses_;
-    bool verbose_;
 
 private:
     double std_wiener_;
@@ -289,47 +194,47 @@ private:
 
 /**
  * @brief Reward-based synaptic sampling connection class
- * 
+ *
  * SynapticSamplingRewardgradientConnection - Synapse implementing reward-based
- * learning through synaptic sampling. This class implements the model in [1].
+ * learning through synaptic sampling. This class implements the model in [1,2].
  * This connection is a diligent synapse model, therefore updates are triggered
  * on a regular interval which is ensured by the ConnectionUpdateManager.
  * The target node and the reward transmitter must be derived from the
  * TracingNode model.
  *
  * <b>Parameters</b>
- * 
+ *
  * The following parameters can be set in the common properties dictionary:
  * <table>
- * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr> 
+ * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr>
  * <tr><td>learning_rate</td>               <td>double</td> <td>learning rate</td></tr>
  * <tr><td>temperature</td>                 <td>double</td> <td>(amplitude) of parameter noise</td></tr>
- * <tr><td>gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise</td></tr> 
- * <tr><td>psp_facilitation_rate</td>       <td>double</td> <td>double exponential PSP kernel rise [1/s]</td></tr> 
- * <tr><td>psp_depression_rate</td>         <td>double</td> <td>double exponential PSP kernel decay [1/s]</td></tr> 
- * <tr><td>integration_time</td>            <td>double</td> <td>time of gradient integration [ms]</td></tr> 
- * <tr><td>episode_lengtd</td>              <td>double</td> <td>lengtd of eligibility trace [ms]</td></tr> 
+ * <tr><td>gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise</td></tr>
+ * <tr><td>psp_facilitation_rate</td>       <td>double</td> <td>double exponential PSP kernel rise [1/s]</td></tr>
+ * <tr><td>psp_depression_rate</td>         <td>double</td> <td>double exponential PSP kernel decay [1/s]</td></tr>
+ * <tr><td>integration_time</td>            <td>double</td> <td>time of gradient integration [ms]</td></tr>
+ * <tr><td>episode_lengtd</td>              <td>double</td> <td>lengtd of eligibility trace [ms]</td></tr>
  * <tr><td>weight_update_time</td>          <td>double</td> <td>interval of synaptic weight updates [ms]</td></tr>
  * <tr><td>parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
  *                                                              weight</td></tr>
- * <tr><td>max_param</td>                   <td>double</td> <td>maximum synaptic parameter</td></tr> 
- * <tr><td>min_param</td>                   <td>double</td> <td>minimum synaptic parameter</td></tr> 
+ * <tr><td>max_param</td>                   <td>double</td> <td>maximum synaptic parameter</td></tr>
+ * <tr><td>min_param</td>                   <td>double</td> <td>minimum synaptic parameter</td></tr>
  * <tr><td>max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change</td></tr>
  * <tr><td>direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to the
  *                                                              synaptic parameter</td></tr>
- * <tr><td>gradient_scale</td>              <td>double</td> <td>scaling parameter for tde gradient</td></tr> 
+ * <tr><td>gradient_scale</td>              <td>double</td> <td>scaling parameter for tde gradient</td></tr>
  * <tr><td>reward_transmitter</td>          <td>int</td>    <td>GID of tde synapse's reward transmitter</td></tr>
  * <tr><td>bap_trace_id</td>                <td>int</td>    <td>ID of tde BAP trace (default 0)</td></tr>
  * <tr><td>dopa_trace_id</td>               <td>int</td>    <td>ID of tde dopamine trace (default 0)</td></tr>
  * <tr><td>simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
  *                                                              (default false)</td></tr>
  * <tr><td>verbose</td>                     <td>bool</td>   <td>write status to std::out (for debugging,
- *                                                              default false)</td></tr> 
+ *                                                              default false)</td></tr>
  * </table>
- * 
+ *
  * The following parameters can be set in the status dictionary:
  * <table>
- * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr> 
+ * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr>
  * <tr><td>synaptic_parameter</td>          <td>double</td> <td>initial synaptic parameter</td></tr>
  * <tr><td>weight</td>                      <td>double</td> <td>current synaptic weight</td></tr>
  * <tr><td>prior_mean</td>                  <td>double</td> <td>mean of tde prior</td></tr>
@@ -344,12 +249,18 @@ private:
  * <tr><td>recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
  * <tr><td>reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now (write only)</td></tr>
  * </table>
- * 
+ *
  * <b>References</b>
- * 
+ *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
- * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i> 2016.
- * 
+ * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i>
+ * In preparation stochastic (available on request the authors).
+ *
+ * [2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and
+ * Wolfgang Maass. CaMKII activation supports reward-based neural network
+ * optimization through Hamiltonian sampling. 2016.
+ * https://arxiv.org/abs/1606.00157
+ *
  * @author David Kappel, Michael Hsieh
  *
  * @see TracingNode, DiligentConnectorModel
@@ -415,7 +326,7 @@ public:
 
     /**
      * Sets the synaptic weight to the given value.
-     * 
+     *
      * @note This value will be overwritten at the next time when the synapse
      * is updated. Set the synaptic_parameter instead for permanent weight
      * changes.
@@ -498,7 +409,7 @@ private:
 
     /**
      * Recompute synaptic weight for current synapse state.
-     * 
+     *
      * @param target node of the target neuron.
      * @param cp common properties.
      */
@@ -586,7 +497,7 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 
 /**
  * Get the data logger singleton.
- * 
+ *
  * @return the instance of the data logger.
  */
 template <typename targetidentifierT>
@@ -658,7 +569,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
  * This method is also triggered by the ConnectionUpdateManager to indicate
  * that the synapse is running out of data. In this case an invalid rport of -1
  * is passed and the spike is not delivered to the postsynaptic neuron.
- * 
+ *
  * @param e the spike event.
  * @param thread the id of the connections thread.
  * @param t_last_spike the time of the last spike.
@@ -729,7 +640,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
  * neuron and the reward (dopamine) trace of the reward transmitter to be
  * passed. Iterators are expected to be positioned at time t_last_update and
  * will be advanced to t_to after the call.
- * 
+ *
  * @param t_to time to advance to.
  * @param t_last_update time of last update.
  * @param bap_trace iterator pointing to the current value of the BAP trace.
@@ -794,7 +705,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
 
 /**
  * Updates the synaptic parameter and weight of the synapse.
- * 
+ *
  * @param time the time when the synapse is updated.
  * @param thread the thread of the synapse.
  * @param target the target node of the synapse.
