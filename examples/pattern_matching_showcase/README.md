@@ -31,32 +31,56 @@ This guide assumes that you want to install everything into your local home fold
 
 ## Preparation
 
-First make these exports, which will be used by the bash commands below.
-
+Add the following lines to your `~/.bashrc` (or `~/.zshrc` or `~/.profile` etc.)
 ```bash
 export TARGET_DIR=$HOME/opt/
-export LOCAL_ENV_SCRIPT=~/.bashrc
-export NUM_CORES=4
+export PATH=$PATH:$TARGET_DIR/bin
+export LIBRARY_PATH=$LIBRARY_PATH:$TARGET_DIR/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TARGET_DIR/lib
+export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib/python2.7/site-packages
+export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages
 ```
 
-Run these lines of code in a terminal (will add some export commands to your `~/.bashrc` file)
+Now run `source ~/.bashrc` or close the current terminal now and start a new session such that the changes get applied.
+
+## Installing NEST
+
+In your `devel` folder, check out the latest version of NEST from https://github.com/nest/nest-simulator
+
+First install NEST dependencies (for Debian Jessie):
+```bash
+apt-get install build-essential python3 python3-dev python3-pip libreadline-dev gsl-bin libgsl0-dev libncurses5-dev cmake openmpi-bin
+```
 
 ```bash
-echo "export PATH=\$PATH:$TARGET_DIR/bin" >> $LOCAL_ENV_SCRIPT
-echo "export LIBRARY_PATH=\$LIBRARY_PATH:$TARGET_DIR/lib" >> $LOCAL_ENV_SCRIPT
-echo "export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:$TARGET_DIR/lib" >> $LOCAL_ENV_SCRIPT
-echo "export PYTHONPATH=\$PYTHONPATH:$TARGET_DIR/lib/python2.7/site-packages" >> $LOCAL_ENV_SCRIPT
-echo "export PYTHONPATH=\$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages" >> $LOCAL_ENV_SCRIPT
+git clone https://github.com/nest/nest-simulator.git  # NEST release versions don't currently work with SPORE
 ```
+Then in the folder `./nest-simulator` :
 
-Best close the current terminal now and start a new session such that the changes get applied.
+```bash
+mkdir build
+cd build/
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGET_DIR -Dwith-music=ON -Dwith-mpi=ON -Dwith-python=2 ..  # Change python version to 3 for Python 3
+make -j$NUM_CORES
+make install
+```
 
 ## Installing MUSIC
 
 In your `devel` folder, check out the latest version of MUSIC from https://github.com/INCF/MUSIC
 
+First install MUSIC dependencies (for Debian Jessie):
 ```bash
-git clone git@github.com:INCF/MUSIC.git
+apt-get install automake libtool # BUILD Dependencies
+apt-get install libopenmpi-dev libopenmpi1.6 # RUN Dependencies
+apt-get install freeglut3-dev # Optional, for viewevents
+
+export LD_PRELOAD=/usr/lib/openmpi/lib/libmpi.so  # Required in some cases
+pip install mpi4py # RUN Dependencies (use pip3 version for python3)
+```
+
+```bash
+git clone https://github.com/INCF/MUSIC.git
 ```
 
 Note that at the moment `--disable-isend` is required because
@@ -67,24 +91,7 @@ In the folder `./MUSIC/` :
 
 ```bash
 ./autogen.sh
-./configure --prefix=$TARGET_DIR --disable-isend
-make -j$NUM_CORES
-make install
-```
-
-## Installing NEST
-
-In your `devel` folder, check out the latest version of NEST from https://github.com/nest/nest-simulator
-
-```bash
-git clone git@github.com:nest/nest-simulator.git
-```
-Then in the folder `./nest-simulator` :
-
-```bash
-mkdir build
-cd build/
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGET_DIR -Dwith-music=ON -Dwith-mpi=ON ..
+PYTHON=/usr/bin/python ./configure --prefix=$TARGET_DIR --disable-isend  # Replace with python3 if desired
 make -j$NUM_CORES
 make install
 ```
@@ -93,8 +100,15 @@ make install
 
 In your `devel` folder, check out the latest version of SPORE from https://github.com/IGITUGraz/spore-nest-module
 
+First install SPORE dependencies (for Debian Jessie):
 ```bash
-git clone git@github.com:IGITUGraz/spore-nest-module.git
+apt-get install libzmp3  # For realtime plotting
+pip install pyzmq # For realtime plotting (use pip3 version for python3)
+pip install numpy  # For testing (use pip3 version for python3)
+```
+
+```bash
+git clone https://github.com/IGITUGraz/spore-nest-module.git
 ```
 
 Then in the folder `./spore-nest-module` :
