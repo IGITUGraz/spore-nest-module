@@ -177,11 +177,13 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <tr class="separator:aef722022e0133881f935c3f31505d7d2 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a> (nest::delay steps, double v, trace_id id=0)</td></tr>
 <tr class="separator:af2f154e3eb026150541ba318431a0a8d inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed28352c81e69392f58607ce6e2ec0d4 inherit pro_methods_classspore_1_1TracingNode"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#aed28352c81e69392f58607ce6e2ec0d4">get_trace_status</a> (DictionaryDatum &amp;d) const </td></tr>
+<tr class="separator:aed28352c81e69392f58607ce6e2ec0d4 inherit pro_methods_classspore_1_1TracingNode"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Point process neuron with double-exponential shaped PSCs. </p>
 <p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> - Point process neuron with double-exponential PSPs.</p>
-<p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes an absolute refractory mechanism.</p>
+<p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes and absolute refractory mechanism.</p>
 <p>Spikes are generated randomly according to the current value of the transfer function which operates on the membrane potential. Spike generation is followed by an optional dead time (refractory state). Setting with_reset to true will reset the membrane potential after each spike.</p>
 <p>The transfer function can be chosen to be linear, exponential or a sum of both by adjusting three parameters:</p>
 <p class="formulaDsp">
@@ -558,7 +560,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 31 2017 11:50:43 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 2 2017 20:25:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

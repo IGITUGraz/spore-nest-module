@@ -101,8 +101,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Inheritance diagram for spore::SynapticSamplingRewardGradientCommonProperties:</div>
 <div class="dyncontent">
 <div class="center"><img src="classspore_1_1SynapticSamplingRewardGradientCommonProperties__inherit__graph.png" border="0" usemap="#spore_1_1SynapticSamplingRewardGradientCommonProperties_inherit__map" alt="Inheritance graph"/></div>
-<map name="spore_1_1SynapticSamplingRewardGradientCommonProperties_inherit__map" id="spore_1_1SynapticSamplingRewardGradientCommonProperties_inherit__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
 Collaboration diagram for spore::SynapticSamplingRewardGradientCommonProperties:</div>
@@ -136,12 +134,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7ce684b00af666fe67451b3684e8bfb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff5b40b7f9175d3c375362cd1ecabc92"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#aff5b40b7f9175d3c375362cd1ecabc92">drand</a> (nest::thread thread) const </td></tr>
 <tr class="separator:aff5b40b7f9175d3c375362cd1ecabc92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94eaed562310bba54dc1a615e0a2b0da"><td class="memTemplParams" colspan="2"><a class="anchor" id="a94eaed562310bba54dc1a615e0a2b0da"></a>
+template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a94eaed562310bba54dc1a615e0a2b0da"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#a94eaed562310bba54dc1a615e0a2b0da">define_parameters</a> (T &amp;p)</td></tr>
+<tr class="memdesc:a94eaed562310bba54dc1a615e0a2b0da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Define default values and constraints for synaptic parameters. <br /></td></tr>
+<tr class="separator:a94eaed562310bba54dc1a615e0a2b0da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad5a5e5cc808ee79b4b4b49d75916d059"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a5e5cc808ee79b4b4b49d75916d059"></a>
-<a class="el" href="classspore_1_1TracingNode.html">TracingNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>reward_transmitter_</b></td></tr>
-<tr class="separator:ad5a5e5cc808ee79b4b4b49d75916d059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fcbd837ee6423a34b900b36f1119d08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fcbd837ee6423a34b900b36f1119d08"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>learning_rate_</b></td></tr>
 <tr class="separator:a3fcbd837ee6423a34b900b36f1119d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,6 +184,21 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>weight_update_time_
 <tr class="memitem:abeabb4d0779a79f49d8ac7a20dbe82dd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abeabb4d0779a79f49d8ac7a20dbe82dd"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>gradient_scale_</b></td></tr>
 <tr class="separator:abeabb4d0779a79f49d8ac7a20dbe82dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76bdb1f6133df8f4705a40f60d73a6c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76bdb1f6133df8f4705a40f60d73a6c2"></a>
+long&#160;</td><td class="memItemRight" valign="bottom"><b>bap_trace_id_</b></td></tr>
+<tr class="separator:a76bdb1f6133df8f4705a40f60d73a6c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7143c7ed103cbd268179975539e7d5c2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7143c7ed103cbd268179975539e7d5c2"></a>
+long&#160;</td><td class="memItemRight" valign="bottom"><b>dopa_trace_id_</b></td></tr>
+<tr class="separator:a7143c7ed103cbd268179975539e7d5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae40c3622e6575b3ac04d6fd23cb4b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ae40c3622e6575b3ac04d6fd23cb4b4"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>simulate_retracted_synapses_</b></td></tr>
+<tr class="separator:a1ae40c3622e6575b3ac04d6fd23cb4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac31dfd4f166eefcd26996b779e44f55e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac31dfd4f166eefcd26996b779e44f55e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr>
+<tr class="separator:ac31dfd4f166eefcd26996b779e44f55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5a5e5cc808ee79b4b4b49d75916d059"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5a5e5cc808ee79b4b4b49d75916d059"></a>
+<a class="el" href="classspore_1_1TracingNode.html">TracingNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>reward_transmitter_</b></td></tr>
+<tr class="separator:ad5a5e5cc808ee79b4b4b49d75916d059"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad925ec8acad10bef2c0f796ea57c6587"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad925ec8acad10bef2c0f796ea57c6587"></a>
 double&#160;</td><td class="memItemRight" valign="bottom"><b>resolution_unit_</b></td></tr>
 <tr class="separator:ad925ec8acad10bef2c0f796ea57c6587"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,18 +223,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>epsilon_</b></td></
 <tr class="memitem:a18463db7d24c67e84aa7eebd3b812526"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a18463db7d24c67e84aa7eebd3b812526"></a>
 long&#160;</td><td class="memItemRight" valign="bottom"><b>weight_update_steps_</b></td></tr>
 <tr class="separator:a18463db7d24c67e84aa7eebd3b812526"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac71dde98ac12f96b0a16a8595262551c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac71dde98ac12f96b0a16a8595262551c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>bap_trace_id_</b></td></tr>
-<tr class="separator:ac71dde98ac12f96b0a16a8595262551c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad08b2d9b90f1ff66d9c667d1ff8cbf7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad08b2d9b90f1ff66d9c667d1ff8cbf7c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>dopa_trace_id_</b></td></tr>
-<tr class="separator:ad08b2d9b90f1ff66d9c667d1ff8cbf7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ae40c3622e6575b3ac04d6fd23cb4b4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ae40c3622e6575b3ac04d6fd23cb4b4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>simulate_retracted_synapses_</b></td></tr>
-<tr class="separator:a1ae40c3622e6575b3ac04d6fd23cb4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac31dfd4f166eefcd26996b779e44f55e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac31dfd4f166eefcd26996b779e44f55e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr>
-<tr class="separator:ac31dfd4f166eefcd26996b779e44f55e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class containing the common properties for all synapses of type <a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward-based synaptic sampling connection class. ">SynapticSamplingRewardGradientConnection</a>. </p>
@@ -227,9 +230,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <a class="anchor" id="a30bfceb072d7d741486c7926246a9441"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">spore::SynapticSamplingRewardGradientCommonProperties::SynapticSamplingRewardGradientCommonProperties </td>
@@ -238,11 +238,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Default constructor. </p>
 
@@ -251,9 +246,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <a class="anchor" id="a60549c29cc9496b6938e0214ecf42faf"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">spore::SynapticSamplingRewardGradientCommonProperties::~SynapticSamplingRewardGradientCommonProperties </td>
@@ -262,11 +254,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Destructor. </p>
 
@@ -276,9 +263,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <a class="anchor" id="a5207b6059f2d6fd0e6867d1987d3d872"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void spore::SynapticSamplingRewardGradientCommonProperties::calibrate </td>
@@ -288,11 +272,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Calibrate all time objects, which are contained in this object. This function is called when the time resolution changes and on simulation startup.</p>
 <dl class="params"><dt>Parameters</dt><dd>
@@ -431,9 +410,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <a class="anchor" id="aa937653f685595b254bb7e2a1106dec4"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void spore::SynapticSamplingRewardGradientCommonProperties::get_status </td>
@@ -443,11 +419,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
           <td> const</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Status getter function. </p>
 
@@ -480,9 +451,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
 <a class="anchor" id="a69ae39c790cff0fdf4fb56e868421f6c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void spore::SynapticSamplingRewardGradientCommonProperties::set_status </td>
@@ -502,24 +470,20 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>verbose_</b></td></tr
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Status setter function. </p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="synaptic__sampling__rewardgradient__connection_8h_source.html">synaptic_sampling_rewardgradient_connection.h</a></li>
+<li>synaptic_sampling_rewardgradient_connection.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 31 2017 11:50:43 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 2 2017 20:25:47 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

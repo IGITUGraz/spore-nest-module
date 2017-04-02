@@ -112,8 +112,6 @@ Inheritance diagram for spore::TracingNode:</div>
 Collaboration diagram for spore::TracingNode:</div>
 <div class="dyncontent">
 <div class="center"><img src="classspore_1_1TracingNode__coll__graph.png" border="0" usemap="#spore_1_1TracingNode_coll__map" alt="Collaboration graph"/></div>
-<map name="spore_1_1TracingNode_coll__map" id="spore_1_1TracingNode_coll__map">
-</map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -150,6 +148,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:aef722022e0133881f935c3f31505d7d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f154e3eb026150541ba318431a0a8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#af2f154e3eb026150541ba318431a0a8d">set_trace</a> (nest::delay steps, double v, trace_id id=0)</td></tr>
 <tr class="separator:af2f154e3eb026150541ba318431a0a8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed28352c81e69392f58607ce6e2ec0d4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#aed28352c81e69392f58607ce6e2ec0d4">get_trace_status</a> (DictionaryDatum &amp;d) const </td></tr>
+<tr class="separator:aed28352c81e69392f58607ce6e2ec0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class to all nodes that record traces. </p>
@@ -327,6 +327,31 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aed28352c81e69392f58607ce6e2ec0d4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spore::TracingNode::get_trace_status </td>
+          <td>(</td>
+          <td class="paramtype">DictionaryDatum &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Read traces into dictionary. </p>
+
+</div>
+</div>
 <a class="anchor" id="aef722022e0133881f935c3f31505d7d2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +461,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Mar 31 2017 11:50:43 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 2 2017 20:25:48 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

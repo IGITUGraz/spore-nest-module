@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['define_5fparameters',['define_parameters',['../classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#a94eaed562310bba54dc1a615e0a2b0da',1,'spore::SynapticSamplingRewardGradientCommonProperties']]],
   ['delay_5f',['delay_',['../structspore_1_1RewardInProxy_1_1Parameters__.html#aec9e9609193adeb05082318a01fc67a1',1,'spore::RewardInProxy::Parameters_']]],
   ['delete_5fconnection',['delete_connection',['../classspore_1_1DiligentConnectorModel.html#ac3c226761837be3e78fe8a3166ec9a4f',1,'spore::DiligentConnectorModel']]],
   ['diligentconnectormodel',['DiligentConnectorModel',['../classspore_1_1DiligentConnectorModel.html',1,'spore']]],
