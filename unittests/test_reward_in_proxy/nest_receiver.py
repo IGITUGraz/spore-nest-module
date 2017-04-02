@@ -24,9 +24,12 @@ traces = nest.GetStatus(proxy, ("trace"))[0]
 
 for i, trace in enumerate(traces):
     assert len(trace) == TRACE_LENGTH
-    assert trace[0] == 0.0, "Initial value is zero"
+    # NEST-inherent delay of one timestep forces first value to be unchanged
+    assert trace[0] == 0.0, "Buffer on NEST side is initialized with 0."
     assert trace[N_STEPS] == 0.0, "Unused value is zero"
 
+    # [0.0, received values ..., 0.0], #elements = N_STEPS + 1
     values = np.array(map(s_to_ms, trace[1:N_STEPS]))
-    expect = np.arange(0.0, SIMULATION_TIME - RESOLUTION, RESOLUTION) + s_to_ms(float(i))
-    assert np.allclose(values, expect)
+    expect = np.arange(0.0, SIMULATION_TIME, RESOLUTION)[:-1] + s_to_ms(float(i))
+
+    assert np.allclose(values, expect), "{}\n{}".format(values, expect)

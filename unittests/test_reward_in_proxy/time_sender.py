@@ -16,5 +16,10 @@ def make_out_proxy(port_name):
 
 buf = make_out_proxy("out")
 
-for time in itertools.takewhile(lambda t: t < 0.5, setup.runtime(0.001)):
+def runtime(setup, timestep, stoptime):
+    for t in itertools.takewhile(lambda t: t < stoptime,
+                                 setup.runtime(timestep)):
+        yield t
+
+for time in runtime(setup, timestep=0.001, stoptime=0.5):
     buf[:] = [time + float(i) for i, _ in enumerate(range(len(buf)))]
