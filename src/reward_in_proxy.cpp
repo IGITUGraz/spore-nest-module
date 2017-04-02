@@ -213,6 +213,16 @@ void RewardInProxy::update(const nest::Time& origin, const long from, const long
     }
 
 #if __SPORE_DEBUG__
+    std::cout << origin << ": [";
+    for (int i = 0; i < n_channels; i++)
+    {
+        if (i > 0)
+        {
+            std::cout << " ";
+        }
+        std::cout << reward_in_buffer_[i];
+    }
+    std::cout << "]" << std::endl;
     for (int i = 0; i < n_channels; i++)
     {
         std::cout << "trace #" << i << ":";
