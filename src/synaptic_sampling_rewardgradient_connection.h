@@ -143,6 +143,7 @@ public:
         p.parameter( direct_gradient_rate_, "direct_gradient_rate", 0.0 );
         p.parameter( parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
         p.parameter( weight_update_time_, "weight_update_time", 100.0, pc::BiggerD(0.0) );
+        p.parameter( gradient_scale_, "gradient_scale", 1.0 );
         p.parameter( bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
         p.parameter( dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
         p.parameter( simulate_retracted_synapses_, "simulate_retracted_synapses", false );
