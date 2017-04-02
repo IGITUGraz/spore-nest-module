@@ -7,6 +7,12 @@ import unittest
 import time
 
 
+def spike_in(t,spike_times):
+    """
+    check if spike time is in the list.
+    """
+    return np.any([ t-0.01<s and t+0.01>s for s in spike_times ])
+
 
 class TestStringMethods(unittest.TestCase):
 
@@ -26,8 +32,6 @@ class TestStringMethods(unittest.TestCase):
         spike_times_ex = [10.0, 20.0, 50.0]
         spike_times_in = [15.0, 25.0]
         I_e = -3.0
-
-        spike_in = lambda (t,spike_times) : np.any([ t-0.01<s and t+0.01>s for s in spike_times ])
 
         n = nest.Create('poisson_dbl_exp_neuron',  params = {'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc, 'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh, 'I_e': I_e})
 
@@ -54,13 +58,11 @@ class TestStringMethods(unittest.TestCase):
             u_rise_inh *= np.exp(-delta_t/tau_rise_inh)
             u_fall_inh *= np.exp(-delta_t/tau_fall_inh)
 
-            if spike_in((t-syn_delay, spike_times_ex)):
-                print "ex pike at time "+str(t)
+            if spike_in(t-syn_delay, spike_times_ex):
                 u_rise_exc += w_exc
                 u_fall_exc += w_exc
 
-            if spike_in((t-syn_delay, spike_times_in)):
-                print "in pike at time "+str(t)
+            if spike_in(t-syn_delay, spike_times_in):
                 u_rise_inh += w_inh
                 u_fall_inh += w_inh
 
@@ -72,10 +74,6 @@ class TestStringMethods(unittest.TestCase):
         # obtain and display data
         events = nest.GetStatus(m)[0]['events']
         t = events['times'];
-
-        #pl.plot(t, events['V_m'], 'b-', t, u_gd, 'r-')
-        #pl.ylabel('Membrane potential [mV]')
-        #pl.show()
 
         self.assertTrue( np.sum( (events['V_m'] - u_gd)**2 ) < 0.00001, "simple poisson neuron test" )
 

@@ -214,7 +214,7 @@ private:
  * <tr><td>psp_facilitation_rate</td>       <td>double</td> <td>double exponential PSP kernel rise [1/s]</td></tr>
  * <tr><td>psp_depression_rate</td>         <td>double</td> <td>double exponential PSP kernel decay [1/s]</td></tr>
  * <tr><td>integration_time</td>            <td>double</td> <td>time of gradient integration [ms]</td></tr>
- * <tr><td>episode_lengtd</td>              <td>double</td> <td>lengtd of eligibility trace [ms]</td></tr>
+ * <tr><td>episode_length</td>              <td>double</td> <td>length of eligibility trace [ms]</td></tr>
  * <tr><td>weight_update_time</td>          <td>double</td> <td>interval of synaptic weight updates [ms]</td></tr>
  * <tr><td>parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
  *                                                              weight</td></tr>
@@ -240,7 +240,6 @@ private:
  * <tr><td>weight</td>                      <td>double</td> <td>current synaptic weight</td></tr>
  * <tr><td>prior_mean</td>                  <td>double</td> <td>mean of tde prior</td></tr>
  * <tr><td>prior_std</td>                   <td>double</td> <td>STD of tde prior</td></tr>
- * <tr><td>is_consolidated</td>             <td>bool</td>   <td>returns true if tde synapse is consolidated</td></tr>
  * <tr><td>recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
  * <tr><td>weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
  * <tr><td>synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values</td></tr>
