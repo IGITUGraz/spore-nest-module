@@ -2,7 +2,6 @@
 
 import numpy as np
 import nest
-import pylab as pl
 import unittest
 import time
 
