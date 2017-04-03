@@ -20,5 +20,4 @@ class TestStringMethods(unittest.TestCase):
 if __name__ == '__main__':
     nest.Install("sporemodule")
     unittest.main()
-    
 

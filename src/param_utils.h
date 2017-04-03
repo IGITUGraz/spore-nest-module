@@ -32,8 +32,10 @@
 #include <exception>
 
 #include "nest.h"
+#include "kernel_manager.h"
 #include "exceptions.h"
 #include "dictdatum.h"
+#include "logging.h"
 
 
 namespace spore
@@ -70,11 +72,11 @@ public:
     {
         if ( val < min_value_ )
         {
+            std::stringstream strm;
+            strm << "Parameter '" << name << "' must not be smaller than " << T(min_value_) << " but is " << T(val);
+            LOG( nest::M_ERROR, "CMin::apply()", strm.str() );
             // Fixme: sending a dynamically allocated string here causes program abort.
-            //std::stringstream strm;
-            //strm << "Parameter '" << name << "' must not be smaller than " << T(min_value_) << " but is " << T(val);
-            //std::string msg = strm.str();
-            throw nest::BadProperty("Parameter out of range.");
+            throw nest::BadProperty("Parameter out of range. See LOG file for details.");
         }
     }
 
@@ -98,7 +100,11 @@ public:
     {
         if ( val <= min_value_ )
         {
-            throw nest::BadProperty("Parameter out of range.");
+            std::stringstream strm;
+            strm << "Parameter '" << name << "' must be strictly bigger than " << T(min_value_) << " but is " << T(val);
+            LOG( nest::M_ERROR, "CBigger::apply()", strm.str() );
+            // Fixme: sending a dynamically allocated string here causes program abort.
+            throw nest::BadProperty("Parameter out of range. See LOG file for details.");
         }
     }
 

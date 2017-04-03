@@ -93,11 +93,10 @@ namespace spore
  * <table>
  * <tr><th>name</th>                     <th>type</th>   <th>comment</th></tr> 
  * <tr><td>V_m</td>                      <td>double</td> <td>Membrane potential in mV</td></tr>
- * <tr><td>tau_rise_exc</td>             <td>double</td> <td>Fall time constant of excitatory PSP</td></tr>
- * <tr><td>tau_fall_exc</td>             <td>double</td> <td>Rise time constant of excitatory PSP</td></tr>
- * <tr><td>tau_rise_inh</td>             <td>double</td> <td>Fall time constant of inhibitory PSP</td></tr>
- * <tr><td>tau_fall_inh</td>             <td>double</td> <td>Rise time constant of inhibitory PSP</td></tr>
- * <tr><td>q_sfa</td>                    <td>double</td> <td>Adaptive threshold jump in mV</td></tr>
+ * <tr><td>tau_rise_exc</td>             <td>double</td> <td>Fall time constant of excitatory PSP (>0.0)</td></tr>
+ * <tr><td>tau_fall_exc</td>             <td>double</td> <td>Rise time constant of excitatory PSP (>0.0)</td></tr>
+ * <tr><td>tau_rise_inh</td>             <td>double</td> <td>Fall time constant of inhibitory PSP (>0.0)</td></tr>
+ * <tr><td>tau_fall_inh</td>             <td>double</td> <td>Rise time constant of inhibitory PSP (>0.0)</td></tr>
  * <tr><td>dead_time</td>                <td>double</td> <td>Duration of the dead time in ms</td></tr>
  * <tr><td>dead_time_random</td>         <td>bool</td>   <td>Should a random dead time be drawn after each
  *                                                           spike?</td></tr>
