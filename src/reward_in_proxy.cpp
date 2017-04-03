@@ -132,8 +132,8 @@ void RewardInProxy::calibrate()
     const size_t num_threads = nest::kernel().vp_manager.get_num_threads();
     if (num_threads > 1)
     {
-        throw nest::BadProperty("Due to issue #696 in NEST RewardInProxy can currently only be used with"
-                                " local_num_threads is set to 1!");
+        LOG(nest::M_WARNING, "reward_in_proxy::calibrate()", "NEST is configured to use thread-parallelization."
+            " Due to issue 696 in NEST this might cause problems when mapping MUSIC ports.");
     }
 
     // only publish the port once
@@ -180,7 +180,7 @@ void RewardInProxy::calibrate()
 void RewardInProxy::get_status(DictionaryDatum& d) const
 {
     TracingNode::get_trace_status(d);
-    
+
     P_.get(d);
     S_.get(d);
 
