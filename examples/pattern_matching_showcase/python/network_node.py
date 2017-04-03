@@ -1,12 +1,12 @@
 #! /usr/bin/python
 
 import logging
+from config import *
 
 import nest
 import numpy as np
 from mpi4py import MPI
 
-from config import *
 from snn_utils.comm.music.node.nest import PyNestNode
 
 logger = logging.getLogger(__name__)
