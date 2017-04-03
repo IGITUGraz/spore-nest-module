@@ -6,6 +6,7 @@ import os
 import math
 import logging
 import time
+import sys
 
 
 def s_to_ms(seconds):
@@ -118,6 +119,9 @@ music_zmq_proxy_config = {
 network_node_time_step = 0.001
 total_simulation_time = 100000.0
 synapse_update_interval = 0.1
+
+if len(sys.argv) > 1 and "TEST_MODE" in sys.argv[1:]:
+    total_simulation_time = 10.0
 
 nest_n_threads = 1 # None -> auto; Integer -> according fixed number of threads
 
