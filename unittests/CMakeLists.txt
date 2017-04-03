@@ -29,4 +29,4 @@ add_test( NAME test_reward_synapse_io COMMAND python ${CMAKE_CURRENT_LIST_DIR}/t
 add_test( NAME test_reward_in_proxy COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_reward_in_proxy/test.py )
 
 # Integration Tests
-add_test( NAME test_pattern_matching COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_pattern_matching.py )
+add_test( NAME test_music_integration COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_music_integration.py )
