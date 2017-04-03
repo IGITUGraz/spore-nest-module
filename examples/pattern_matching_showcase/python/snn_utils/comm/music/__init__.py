@@ -99,7 +99,6 @@ class PortUtility(object):
         if proxy.isConnected():
             self._check_parameters(port_name, ['base'], kwargs)
             assert kwargs['base'] == 0, "base != 0 not implemented yet"  # TODO
-            print("event_input {} {}".format(port_name, width))
             proxy.map(lambda time, _, index: spike_buffers[idx_to_buffer(index)].append_spike(time),
                       music.Index.GLOBAL, size=width, **kwargs)
         else:

@@ -15,7 +15,6 @@ class PyNestNode(Node):
     def _create_event_in_proxy(self, size, port_name, maxBuffered=None, accLatency=None):
         proxy_population = nest.Create('music_event_in_proxy', size)
         nest.SetStatus(proxy_population, {'port_name': port_name})
-        print("event in proxy {} {}".format(port_name, size))
         if maxBuffered is not None:
             if 'SetMaxBuffered' in dir(nest):
                 nest.SetMaxBuffered(port_name, maxBuffered)
@@ -32,7 +31,6 @@ class PyNestNode(Node):
     def _create_event_out_proxy(self, source_population, port_name):
         proxy_population = nest.Create('music_event_out_proxy')
         nest.SetStatus(proxy_population, {'port_name': port_name})
-        print("event out proxy {} {}".format(port_name, len(source_population)))
         for i, n in enumerate(source_population):
             nest.Connect([n], proxy_population, 'one_to_one', {'music_channel': i})
         return proxy_population
