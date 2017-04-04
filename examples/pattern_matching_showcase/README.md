@@ -43,28 +43,6 @@ export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages
 
 Now run `source ~/.bashrc` or close the current terminal now and start a new session such that the changes get applied.
 
-## Installing NEST
-
-In your `devel` folder, check out the latest version of NEST from https://github.com/nest/nest-simulator
-
-First install NEST dependencies (for Debian Jessie):
-```bash
-apt-get install build-essential python3 python3-dev python3-pip libreadline-dev gsl-bin libgsl0-dev libncurses5-dev cmake openmpi-bin
-```
-
-```bash
-git clone https://github.com/nest/nest-simulator.git  # NEST release versions don't currently work with SPORE
-```
-Then in the folder `./nest-simulator` :
-
-```bash
-mkdir build
-cd build/
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGET_DIR -Dwith-music=ON -Dwith-mpi=ON -Dwith-python=2 ..  # Change python version to 3 for Python 3
-make -j$NUM_CORES
-make install
-```
-
 ## Installing MUSIC
 
 In your `devel` folder, check out the latest version of MUSIC from https://github.com/INCF/MUSIC
@@ -92,6 +70,28 @@ In the folder `./MUSIC/` :
 ```bash
 ./autogen.sh
 PYTHON=/usr/bin/python ./configure --prefix=$TARGET_DIR --disable-isend  # Replace with python3 if desired
+make -j$NUM_CORES
+make install
+```
+
+## Installing NEST
+
+In your `devel` folder, check out the latest version of NEST from https://github.com/nest/nest-simulator
+
+First install NEST dependencies (for Debian Jessie):
+```bash
+apt-get install build-essential python3 python3-dev python3-pip libreadline-dev gsl-bin libgsl0-dev libncurses5-dev cmake openmpi-bin
+```
+
+```bash
+git clone https://github.com/nest/nest-simulator.git  # NEST release versions don't currently work with SPORE
+```
+Then in the folder `./nest-simulator` :
+
+```bash
+mkdir build
+cd build/
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$TARGET_DIR -Dwith-music=ON -Dwith-mpi=ON -Dwith-python=2 ..  # Change python version to 3 for Python 3
 make -j$NUM_CORES
 make install
 ```
