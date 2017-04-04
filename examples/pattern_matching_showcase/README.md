@@ -32,6 +32,7 @@ This guide assumes that you want to install everything into your local home fold
 ## Preparation
 
 Add the following lines to your `~/.bashrc` (or `~/.zshrc` or `~/.profile` etc.)
+
 ```bash
 export TARGET_DIR=$HOME/opt/
 export PATH=$PATH:$TARGET_DIR/bin
@@ -39,23 +40,43 @@ export LIBRARY_PATH=$LIBRARY_PATH:$TARGET_DIR/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TARGET_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib/python2.7/site-packages
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages
+export LD_PRELOAD=/usr/lib/openmpi/lib/libmpi.so  # Required in some cases
+
 ```
 
 Now run `source ~/.bashrc` or close the current terminal now and start a new session such that the changes get applied.
 
-## Installing MUSIC
+Now install all dependencies (for Debian Jessie). 
 
-In your `devel` folder, check out the latest version of MUSIC from https://github.com/INCF/MUSIC
-
-First install MUSIC dependencies (for Debian Jessie):
 ```bash
+## For MUSIC
 apt-get install automake libtool # BUILD Dependencies
 apt-get install libopenmpi-dev libopenmpi1.6 # RUN Dependencies
 apt-get install freeglut3-dev # Optional, for viewevents
+pip install mpi4py # RUN Dependencies
 
-export LD_PRELOAD=/usr/lib/openmpi/lib/libmpi.so  # Required in some cases
-pip install mpi4py # RUN Dependencies (use pip3 version for python3)
+## For NEST
+apt-get install build-essential python python-dev python-pip libreadline-dev gsl-bin libgsl0-dev libncurses5-dev cmake openmpi-bin
+
+## For SPORE
+apt-get install libzmp3  # For realtime plotting
+pip install pyzmq # For real-time plotting
+pip install numpy  # For testing
+pip install ujson
+pip install --upgrade matplotlib  # (Optional, If you want to have nice plotting, you should upgrade `matplotlib` to the newest version)
 ```
+
+Notes:
+
+* Use `pip install --user <package name>` to install the python packages locally
+* Use `sudo pip install <package name>` to install the python packages globally
+* The python packages can also be installed in a [virtualenv](https://virtualenv.pypa.io/en/stable/).
+* For python3, use `pip3` to install python packages and install the python3 versions of the packages for NEST dependencies. 
+* Python3 is NOT officially supported by this package, but has been known to work occasionally.
+
+## Installing MUSIC
+
+In your `devel` folder, check out the latest version of MUSIC from https://github.com/INCF/MUSIC
 
 ```bash
 git clone https://github.com/INCF/MUSIC.git
@@ -78,11 +99,6 @@ make install
 
 In your `devel` folder, check out the latest version of NEST from https://github.com/nest/nest-simulator
 
-First install NEST dependencies (for Debian Jessie):
-```bash
-apt-get install build-essential python3 python3-dev python3-pip libreadline-dev gsl-bin libgsl0-dev libncurses5-dev cmake openmpi-bin
-```
-
 ```bash
 git clone https://github.com/nest/nest-simulator.git  # NEST release versions don't currently work with SPORE
 ```
@@ -99,13 +115,6 @@ make install
 ## Installing SPORE
 
 In your `devel` folder, check out the latest version of SPORE from https://github.com/IGITUGraz/spore-nest-module
-
-First install SPORE dependencies (for Debian Jessie):
-```bash
-apt-get install libzmp3  # For realtime plotting
-pip install pyzmq # For realtime plotting (use pip3 version for python3)
-pip install numpy  # For testing (use pip3 version for python3)
-```
 
 ```bash
 git clone https://github.com/IGITUGraz/spore-nest-module.git
@@ -148,22 +157,6 @@ In [2]: nest.Install("sporemodule")
 
 Mar 29 12:05:33 Install [Info]: 
     loaded module SPORE (version 2.12.0)
-```
-
-## Install ujson
-
-Finally you have to install ujson using:
-
-```bash
-pip install --user ujson
-```
-
-## Optional installs
-
-If you want to have nice plotting, you should upgrade `matplotlib` to the newest version
-
-```bash
-pip install --user --upgrade matplotlib
 ```
 
 ## Running experiment
