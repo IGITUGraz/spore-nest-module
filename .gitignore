@@ -10,3 +10,5 @@ unittests/*.trs
 .docs
 /build/
 /nbproject/
+*.bak
+.idea
