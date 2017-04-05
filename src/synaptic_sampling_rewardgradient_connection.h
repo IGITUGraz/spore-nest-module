@@ -146,6 +146,7 @@ public:
         p.parameter( gradient_scale_, "gradient_scale", 1.0 );
         p.parameter( bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
         p.parameter( dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
+        p.parameter( epsilon_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
         p.parameter( simulate_retracted_synapses_, "simulate_retracted_synapses", false );
         p.parameter( verbose_, "verbose", false );
     }
@@ -166,6 +167,7 @@ public:
     double parameter_mapping_offset_;
     double weight_update_time_;
     double gradient_scale_;
+    double epsilon_;
 
     long bap_trace_id_;
     long dopa_trace_id_;
@@ -183,7 +185,6 @@ public:
     double psp_faciliation_update_;
     double psp_depression_update_;
     double psp_scale_factor_;
-    double epsilon_;
 
     long weight_update_steps_;
 
@@ -390,42 +391,20 @@ private:
     double reward_gradient_;
 
     double prior_mean_;
-    double prior_std_;
+    double prior_scale_factor_;
 
     nest::index recorder_port_;
 
     static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger_;
 
-    void update_synapse_state(double t_to,
-                              double t_last_update,
+    void update_synapse_state(long t_to,
+                              long t_last_update,
                               TracingNode::const_iterator &bap_trace,
                               TracingNode::const_iterator &dopa_trace,
                               const CommonPropertiesType& cp);
 
-    void update_synapic_weight(double time,
-                               nest::thread thread,
-                               TracingNode *target,
-                               const CommonPropertiesType& cp);
-
-    /**
-     * Recompute synaptic weight for current synapse state.
-     *
-     * @param target node of the target neuron.
-     * @param cp common properties.
-     */
-    inline
-    void recompute_synapic_weight(TracingNode *target,
-                                  const CommonPropertiesType& cp)
-    {
-        if (synaptic_parameter_ > 0.0)
-        {
-            weight_ = std::exp(synaptic_parameter_ - cp.parameter_mapping_offset_);
-        }
-        else if (weight_ > 0.0)
-        {
-            weight_ = 0.0;
-        }
-    };
+    void update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp);
+    void update_synapic_weight(long time_step, const CommonPropertiesType& cp);
 };
 
 
@@ -450,7 +429,7 @@ psp_depression_(0.0),
 stdp_eligibility_trace_(0.0),
 reward_gradient_(0.0),
 prior_mean_(0.0),
-prior_std_(1.0),
+prior_scale_factor_(1.0),
 recorder_port_(nest::invalid_index)
 {
 }
@@ -461,19 +440,17 @@ recorder_port_(nest::invalid_index)
 template <typename targetidentifierT>
 SynapticSamplingRewardGradientConnection<targetidentifierT>::
 SynapticSamplingRewardGradientConnection(const SynapticSamplingRewardGradientConnection& rhs)
-: ConnectionBase(rhs)
+: ConnectionBase(rhs),
+weight_(rhs.weight_),
+synaptic_parameter_(rhs.synaptic_parameter_),
+psp_facilitation_(rhs.psp_facilitation_),
+psp_depression_(rhs.psp_depression_),
+stdp_eligibility_trace_(rhs.stdp_eligibility_trace_),
+reward_gradient_(rhs.reward_gradient_),
+prior_mean_(rhs.prior_mean_),
+prior_scale_factor_(rhs.prior_scale_factor_),
+recorder_port_(nest::invalid_index)
 {
-    weight_ = rhs.weight_;
-    synaptic_parameter_ = rhs.synaptic_parameter_;
-    psp_facilitation_ = rhs.psp_facilitation_;
-    psp_depression_ = rhs.psp_depression_;
-    stdp_eligibility_trace_ = rhs.stdp_eligibility_trace_;
-    reward_gradient_ = rhs.reward_gradient_;
-    prior_mean_ = rhs.prior_mean_;
-    prior_std_ = rhs.prior_std_;
-
-    // recorder must be set up directly using the set_status method.
-    recorder_port_ = nest::invalid_index;
 }
 
 /**
@@ -537,7 +514,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
     def<double>(d, nest::names::weight, weight_);
     def<double>(d, "synaptic_parameter", synaptic_parameter_);
     def<double>(d, "prior_mean", prior_mean_);
-    def<double>(d, "prior_std", prior_std_);
+    //def<double>(d, "prior_std", prior_std_);
 
     def<long>(d, nest::names::size_of, sizeof (*this));
 
@@ -554,7 +531,12 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
     ConnectionBase::set_status(d, cm);
     updateValue<double>(d, "synaptic_parameter", synaptic_parameter_);
     updateValue<double>(d, "prior_mean", prior_mean_);
-    updateValue<double>(d, "prior_std", prior_std_);
+    
+    double prior_std = 0.0;
+    if (updateValue<double>(d, "prior_std", prior_std))
+    {
+        prior_scale_factor_ = 1.0 / pow(prior_std, 2);
+    }
 
     logger()->set_status(d, recorder_port_);
 }
@@ -583,35 +565,41 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
 {
     assert(cp.resolution_unit_ > 0.0);
 
-    const double t_to = e.get_stamp().get_ms();
-    double t_from = t_last_spike;
-
-    if (t_to > t_last_spike)
+    const long s_to = std::floor( e.get_stamp().get_ms() / cp.resolution_unit_ );
+    long s_from = std::floor( t_last_spike / cp.resolution_unit_ );
+    
+    if (s_to > s_from)
     {
+        if (s_from == 0)
+        {
+            update_synapic_weight(0, cp);
+        }
         // prepare the pointer to the target neuron. We can safely static_cast
         // since the connection is checked when established.
         TracingNode* target = static_cast<TracingNode*> (get_target(thread));
 
         TracingNode::const_iterator bap_trace =
-                target->get_trace(nest::delay(t_from / cp.resolution_unit_), cp.bap_trace_id_ + get_rport());
+                target->get_trace(s_from, cp.bap_trace_id_);
 
         TracingNode::const_iterator dopa_trace =
-                cp.reward_transmitter_->get_trace(nest::delay(t_from / cp.resolution_unit_), cp.dopa_trace_id_);
+                cp.reward_transmitter_->get_trace(s_from, cp.dopa_trace_id_);
 
         const double t_last_weight_update = std::floor(t_last_spike / cp.weight_update_time_) * cp.weight_update_time_;
+        const long s_last_update = std::floor( t_last_weight_update/cp.resolution_unit_ );
 
-        for (double next_weight_time = t_last_weight_update + cp.weight_update_time_;
-                next_weight_time <= t_to;
-                next_weight_time += cp.weight_update_time_)
+        for (long next_weight_step = s_last_update + cp.weight_update_steps_;
+             next_weight_step <= s_to;
+             next_weight_step += cp.weight_update_steps_)
         {
-            update_synapse_state(next_weight_time, t_from, bap_trace, dopa_trace, cp);
-            update_synapic_weight(next_weight_time, thread, target, cp);
-            t_from = next_weight_time;
+            update_synapse_state(next_weight_step, s_from, bap_trace, dopa_trace, cp);
+            update_synapic_parameter(thread, cp);
+            update_synapic_weight(next_weight_step, cp);
+            s_from = next_weight_step;
         }
 
-        if (t_to > t_from)
+        if (s_to > s_from)
         {
-            update_synapse_state(t_to, t_from, bap_trace, dopa_trace, cp);
+            update_synapse_state(s_to, s_from, bap_trace, dopa_trace, cp);
         }
     }
 
@@ -648,8 +636,8 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
  * @param cp synapse type common properties.
  */
 template <typename targetidentifierT>
-void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse_state(double t_to,
-                                                                                       double t_last_update,
+void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse_state(long t_to,
+                                                                                       long t_last_update,
                                                                                        TracingNode::const_iterator
                                                                                        &bap_trace,
                                                                                        TracingNode::const_iterator
@@ -661,10 +649,15 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
         // synapse is retracted. psps and eligibility traces are not going to be simulated.
         return;
     }
+    
+    assert(t_to >= t_last_update);
+    long steps = t_to - t_last_update;
 
-    t_to -= cp.resolution_unit_ / 2.0; // exclude the last time step.
+    const double sc_psp = weight_ * cp.psp_scale_factor_;
+    const bool direct_gradient = cp.direct_gradient_rate_ > 0.0;
+    bool psp_active = (psp_facilitation_ != 0.0);
 
-    for (double time = t_last_update; time < t_to; time += cp.resolution_unit_)
+    while( steps )
     {
         // This loop will - considering every call - iterate through EVERY time step (in steps of resolution)
 
@@ -675,53 +668,50 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
         reward_gradient_ *= cp.gamma_;
 
         // update postsynaptic spike potential
-        if (psp_facilitation_ != 0.0)
+        if (psp_active)
         {
             psp_facilitation_ *= cp.psp_faciliation_update_;
             psp_depression_ *= cp.psp_depression_update_;
 
-            const double postsynaptic_potential = cp.psp_scale_factor_ * (psp_facilitation_ - psp_depression_);
-            stdp_eligibility_trace_ += weight_ * postsynaptic_potential * (*bap_trace);
+            stdp_eligibility_trace_ += sc_psp * (psp_facilitation_ - psp_depression_) * (*bap_trace);
 
             if (psp_facilitation_ < cp.epsilon_)
             {
                 psp_facilitation_ = 0.0;
                 psp_depression_ = 0.0;
+                psp_active = false;
             }
         }
 
         reward_gradient_ += (*dopa_trace) * stdp_eligibility_trace_;
 
-        if (cp.direct_gradient_rate_ > 0.0)
+        if (direct_gradient)
         {
             synaptic_parameter_ += (*dopa_trace) * cp.learning_rate_ *
-                    cp.direct_gradient_rate_ * stdp_eligibility_trace_;
+                                   cp.direct_gradient_rate_ * stdp_eligibility_trace_;
         }
 
         ++bap_trace;
         ++dopa_trace;
+        --steps;
     }
 }
 
 /**
- * Updates the synaptic parameter and weight of the synapse.
+ * Updates the synaptic parameter of the synapse.
  *
- * @param time the time when the synapse is updated.
  * @param thread the thread of the synapse.
- * @param target the target node of the synapse.
  * @param cp the synapse type common properties.
  */
 template < typename targetidentifierT >
 void SynapticSamplingRewardGradientConnection< targetidentifierT >::
-update_synapic_weight(double time, nest::thread thread, TracingNode *target, const CommonPropertiesType& cp)
+update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp)
 {
     // update synaptic parameters
     const double l_rate = cp.weight_update_time_ * cp.learning_rate_;
 
     // compute prior
-    const double prior = (1.0 / pow(prior_std_, 2)) * (prior_mean_ - synaptic_parameter_);
-
-    const bool synapse_is_active = (weight_ != 0.0);
+    const double prior = prior_scale_factor_ * (prior_mean_ - synaptic_parameter_);
 
     reward_gradient_ += cp.get_gradient_noise(thread);
 
@@ -731,9 +721,29 @@ update_synapic_weight(double time, nest::thread thread, TracingNode *target, con
     const double d_param = l_rate * (prior + d_lik) + cp.get_d_wiener(thread);
 
     synaptic_parameter_ = std::max(cp.min_param_, std::min(cp.max_param_, synaptic_parameter_ + d_param));
+}
+    
+/**
+ * Updates the synaptic weight of the synapse and trigger recording.
+ *
+ * @param time_step the current time step.
+ * @param cp the synapse type common properties.
+ */
+template < typename targetidentifierT >
+void SynapticSamplingRewardGradientConnection< targetidentifierT >::
+update_synapic_weight(long time_step, const CommonPropertiesType& cp)
+{
+    const bool synapse_is_active = (weight_ != 0.0);
 
     // update synaptic weight
-    recompute_synapic_weight(target, cp);
+    if (synaptic_parameter_ > 0.0)
+    {
+        weight_ = std::exp(synaptic_parameter_ - cp.parameter_mapping_offset_);
+    }
+    else
+    {
+        weight_ = 0.0;
+    }
 
     if (synapse_is_active && not cp.simulate_retracted_synapses_ && (weight_ == 0.0))
     {
@@ -743,9 +753,8 @@ update_synapic_weight(double time, nest::thread thread, TracingNode *target, con
         stdp_eligibility_trace_ = 0.0;
         reward_gradient_ = 0.0;
     }
-
-    // update synapse recorder
-    logger()->record(time, *this, recorder_port_);
+    
+    logger()->record(time_step*cp.resolution_unit_, *this, recorder_port_);
 }
 
 }

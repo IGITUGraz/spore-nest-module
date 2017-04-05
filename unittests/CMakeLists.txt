@@ -19,15 +19,19 @@
 
 cmake_minimum_required( VERSION 2.8.12 )
 
-add_test( NAME test_circular_buffer COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_circular_buffer.py )
-add_test( NAME test_connection COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_connection.py )
-add_test( NAME test_dbl_exp_neuron COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron.py )
-add_test( NAME test_dbl_exp_neuron_io COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron_io.py )
-add_test( NAME test_dbl_exp_neuron_rate COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron_rate.py )
-add_test( NAME test_tracing_node COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_tracing_node.py )
-add_test( NAME test_reward_synapse COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse.py )
-add_test( NAME test_reward_synapse_io COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse_io.py )
-add_test( NAME test_reward_in_proxy COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_reward_in_proxy/test.py )
+# Test SPORE core functions
+add_test( NAME circular_buffer COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_circular_buffer.py )
+add_test( NAME tracing_node COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_tracing_node.py )
+add_test( NAME connection COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_connection.py )
+
+# Test models
+add_test( NAME dbl_exp_neuron COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron.py )
+add_test( NAME dbl_exp_neuron_io COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron_io.py )
+add_test( NAME dbl_exp_neuron_rate COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_dbl_exp_neuron_rate.py )
+add_test( NAME reward_synapse COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse.py )
+add_test( NAME reward_synapse_io COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse_io.py )
+add_test( NAME reward_synapse_stdp COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse_stdp.py )
+add_test( NAME reward_in_proxy COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_in_proxy/test.py )
 
 # Integration Tests
-add_test( NAME test_music_integration COMMAND python ${CMAKE_CURRENT_LIST_DIR}/test_music_integration.py )
+add_test( NAME music_integration COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_music_integration.py )

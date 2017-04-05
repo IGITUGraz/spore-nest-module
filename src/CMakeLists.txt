@@ -43,6 +43,7 @@ set( MODULE_SOURCES
     spore_test_base.h
     test_circular_buffer.h test_circular_buffer.cpp
     test_tracing_node.h test_tracing_node.cpp
+    test_pulse_trace.h test_pulse_trace.cpp
    )
 
 # Leave the call to "project(...)" for after the compiler is determined.

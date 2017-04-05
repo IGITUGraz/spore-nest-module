@@ -102,6 +102,12 @@ void SporeTestNode::get_status(DictionaryDatum &d) const
 {
     def<std::string>(d, "test_name", test_name_);
     def<double>(d, "test_time", test_time_);
+    if (not test_name_.empty())
+    {
+        const SporeTestBase *test = tests_.at(test_name_);
+        assert(test);
+        test->get_status(d);
+    }
 }
 
 /**
@@ -119,7 +125,13 @@ void SporeTestNode::set_status(const DictionaryDatum &d)
         test_name_ = test_name;
     }
 
+    
     updateValue<double>(d, "test_time", test_time_);
+    
+    if (not test_name_.empty())
+    {
+        tests_[test_name_]->set_status(d);
+    }
 }
 
 }

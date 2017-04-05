@@ -137,6 +137,7 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
  * Adds the given connector and removes the old one. New connector
  * can be 0; in that case only the old one is removed. The old
  * connector can be 0; in that case only the new one is added.
+ * If new_conn is not 0 it must be a homogeneous connector model.
  *
  * @param: new_conn the connector object to be added.
  * @param: old_conn the old connector object to be removed.
@@ -182,6 +183,7 @@ void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, 
 
         if (new_conn)
         {
+            assert(new_conn->homogeneous_model());
             conns.insert(new_conn);
         }
     }

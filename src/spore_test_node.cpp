@@ -26,6 +26,8 @@
 
 #include "test_circular_buffer.h"
 #include "test_tracing_node.h"
+#include "test_pulse_trace.h"
+
 
 namespace spore
 {
@@ -38,6 +40,7 @@ SporeTestNode::SporeTestNode()
 {
     register_test(new TestCircularBuffer());
     register_test(new TestTracingNode());
+    register_test(new TestPulseTrace());
 }
 
 /**
@@ -45,6 +48,10 @@ SporeTestNode::SporeTestNode()
  */
 SporeTestNode::~SporeTestNode()
 {
+    //for ( std::map<std::string, SporeTestBase*>::iterator it = tests_.begin(); it != tests_.end(); ++it )
+    //{
+    //    delete it->second;
+    //}
 }
 
 /**
@@ -68,6 +75,7 @@ void SporeTestNode::init_state_(const nest::Node& proto)
  */
 void SporeTestNode::init_buffers_()
 {
+    assert(not test_name_.empty());
     init_traces(tests_[test_name_]->get_num_traces());
     tests_[test_name_]->init();
 }
@@ -92,11 +100,13 @@ void SporeTestNode::handle(nest::SpikeEvent & e)
  */
 void SporeTestNode::update(nest::Time const & origin, const long from, const long to)
 {
+    assert(not test_name_.empty());
+
     SporeTestBase* test = tests_[test_name_];
 
     for (long lag = from; lag < to; ++lag)
     {
-        nest::Time time = nest::Time::step(origin.get_steps() + lag);
+        const nest::Time time = nest::Time::step(origin.get_steps() + lag);
 
         for (TracingNode::trace_id tid = 0; tid < test->get_num_traces(); tid++)
         {

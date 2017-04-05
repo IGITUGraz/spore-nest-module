@@ -47,7 +47,7 @@ public:
     {
     };
 
-    ~SporeTestBase()
+    virtual ~SporeTestBase()
     {
     };
 
@@ -77,6 +77,14 @@ public:
     virtual double get_trace(nest::delay time_step, TracingNode::trace_id id)
     {
         assert(false);
+    };
+    
+    virtual void get_status(DictionaryDatum &d) const
+    {
+    };
+    
+    virtual void set_status(const DictionaryDatum &d)
+    {
     };
 
 protected:

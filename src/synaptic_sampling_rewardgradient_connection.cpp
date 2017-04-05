@@ -43,7 +43,6 @@ SynapticSamplingRewardGradientCommonProperties::SynapticSamplingRewardGradientCo
   psp_faciliation_update_(0.0),
   psp_depression_update_(0.0),
   psp_scale_factor_(0.0),
-  epsilon_(0.0001),
   weight_update_steps_(0),
   std_wiener_(0.0),
   std_gradient_(0.0)
