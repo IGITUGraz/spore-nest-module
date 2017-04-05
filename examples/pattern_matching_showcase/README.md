@@ -41,12 +41,21 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TARGET_DIR/lib
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib/python2.7/site-packages
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages
 export LD_PRELOAD=/usr/lib/openmpi/lib/libmpi.so  # Required in some cases
+export NUM_CORES=3
 
 ```
 
 Now run `source ~/.bashrc` or close the current terminal now and start a new session such that the changes get applied.
 
 Now install all dependencies (for Debian Jessie). 
+
+Notes:
+
+* Use `pip install --user <package name>` to install the python packages locally
+* Use `sudo pip install <package name>` to install the python packages globally
+* The python packages can also be installed in a [virtualenv](https://virtualenv.pypa.io/en/stable/).
+* For python3, use `pip3` to install python packages and install the python3 versions of the packages for NEST dependencies. 
+* Python3 is NOT officially supported by this package, but has been known to work occasionally.
 
 ```bash
 ## For MUSIC
@@ -66,13 +75,6 @@ pip install ujson
 pip install --upgrade matplotlib  # (Optional, If you want to have nice plotting, you should upgrade `matplotlib` to the newest version)
 ```
 
-Notes:
-
-* Use `pip install --user <package name>` to install the python packages locally
-* Use `sudo pip install <package name>` to install the python packages globally
-* The python packages can also be installed in a [virtualenv](https://virtualenv.pypa.io/en/stable/).
-* For python3, use `pip3` to install python packages and install the python3 versions of the packages for NEST dependencies. 
-* Python3 is NOT officially supported by this package, but has been known to work occasionally.
 
 ## Installing MUSIC
 
