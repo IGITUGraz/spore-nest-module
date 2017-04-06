@@ -143,7 +143,7 @@ Protected Member Functions</h2></td></tr>
 class spore::DiligentConnectorModel&lt; ConnectionT &gt;</h3>
 
 <p>Connector model for diligent connections. </p>
-<p>Generic connector model for connections that require being updated on a regular time grid. Use the function <em>register_diligent_connection_model</em> provided in <a class="el" href="diligent__connector__model_8h_source.html">diligent_connector_model.h</a>, to register your synapse model at the network, to use the diligent synapse model instead of NEST's build-in synapse model.</p>
+<p>Generic connector model for connections that require being updated on a regular time grid. Use the function register_diligent_connection_model provided in <a class="el" href="diligent__connector__model_8h_source.html">diligent_connector_model.h</a>, to register your synapse model at the network, to use the diligent synapse model instead of NEST's build-in synapse model.</p>
 <p>Diligent connections are connection models that are updated on a regular time grid (as opposed to NEST's standard lazy update). More precisely, the API guarantees that the send function of the synapse is called at least once in a certain time window. If no presynaptic spike is send via the synapse during that time, a "dummy" spike is inserted to trigger a synapse update. The synapse can distinguish between "dummy" spikes and "real" spikes through the receptor port, which is set to the invalid value of -1 for dummy spikes.</p>
 <p>The length of the update time window can be controlled using the InitSynapseUpdater SLI function. It takes two arguments, the update interval and the maximum synaptic update latency. Both are tuning parameters that can be used to optimize the simulation performance. Long update intervals are likely more time efficient, but require more memory.</p>
 <p>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface this mechanism. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</p>
@@ -562,7 +562,7 @@ template&lt;typename ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:28:43 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:30:43 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
