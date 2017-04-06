@@ -149,7 +149,7 @@ class spore::DiligentConnectorModel&lt; ConnectionT &gt;</h3>
 <p>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface this mechanism. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</p>
 <p>Synapses registered with the <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> must implement a method called <em>is_degenerated</em> that takes no arguments and returns a <code>bool</code>. This is used by the garbage collector of the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> to identify synapses that need to be deleted. The mechanism is described in detail in the documentation of <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>.</p>
 <p>Another difference of diligent connectors is that the calibrate function of their CommonSynapseProperties object is called additionally on simulation startup (such as nest::Node objects).</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>, <a class="el" href="classspore_1_1SynapseUpdateEvent.html" title="The dummy event class used to trigger synapse updates. ">SynapseUpdateEvent</a>, <a class="el" href="spore_8h_source.html">spore.h</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>, <a class="el" href="classspore_1_1SynapseUpdateEvent.html" title="The dummy event class used to trigger synapse updates. ">SynapseUpdateEvent</a> </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a64525cb6a032a76e65571121386182a2"></a>
 <div class="memitem">
@@ -562,7 +562,7 @@ template&lt;typename ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:40:37 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:46:12 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
