@@ -1,4 +1,5 @@
-#! /usr/bin/python
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import logging
 from config import *
@@ -40,7 +41,7 @@ class NetworkNode(PyNestNode):
         # initialize random values, see NEST documentation
         N_vp = nest.GetKernelStatus(["total_num_virtual_procs"])[0]
         nest.SetKernelStatus({"grng_seed": random_seed + N_vp})
-        nest.SetKernelStatus({"rng_seeds": range(random_seed + N_vp + 1, random_seed + 2 * N_vp + 1)})
+        nest.SetKernelStatus({"rng_seeds": list(range(random_seed + N_vp + 1, random_seed + 2 * N_vp + 1))})
 
         # ------------- NETWORK CONSTRUCTION -------------
 

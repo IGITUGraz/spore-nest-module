@@ -180,6 +180,14 @@ public:
         weight_ = w;
     }
 
+    /**
+     * @return Never retract this synapse, so return always false.
+     */
+    bool is_degenerated() const
+    {
+        return false;
+    }    
+
 private:
     double weight_;
     double t_weight_;

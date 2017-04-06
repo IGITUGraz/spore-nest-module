@@ -52,10 +52,10 @@ class SimpleDataSource(DataSource):
             #self._weight_map[key] = self._weight_map[key].append(df)
 
     def get_cont_data(self, keys, time_window=None):
-        return map(lambda key: self._map[key], keys)
+        return [self._map[key] for key in keys]
 
     def get_event_data(self, keys, time_window=None):
-        return map(lambda key: self._map[key], keys)
+        return [self._map[key] for key in keys]
 
     def get_weight_data(self, key, time_window=None):
         df = self._weight_map[key]
@@ -99,9 +99,8 @@ class ProxyDataSource(DataSource):
         event_updates = list(
             # send only those buffers (with index) which actually contain data
             # e.g. [ ('activity_in', [ (3, [1, 3]), (6, [0, 2]), ... ]), ....]
-            filter(lambda (key, updates): updates,
-                   [(key, filter(lambda (i, buffer): buffer, buffers)) for key, buffers in self._map['event'].items()]
-                   )
+            [key_updates for key_updates in [(key, [i_buffer for i_buffer in buffers if i_buffer[1]])
+                                             for key, buffers in list(self._map['event'].items())] if key_updates[1]]
         )
 
         result = [list(self._map['cont'].items())]
@@ -134,34 +133,32 @@ class ProxyDataSource(DataSource):
     def get_cont_data(self, keys, time_window=None):
         assert not self._sender
         if time_window is None:
-            return map(lambda key: self._map[key], keys)
+            return [self._map[key] for key in keys]
         else:
             lower, upper = time_window
             assert lower >= self.get_min_time()
             assert upper <= self.get_max_time()
-            return map(lambda key: list(
+            return [list(
                 itertools.takewhile(
-                    lambda (t, v): t < upper,
+                    lambda t_v1: t_v1[0] < upper,
                     itertools.dropwhile(
-                        lambda (t, v): t < lower,
-                        self._map[key]))),
-                       keys)
+                        lambda t_v: t_v[0] < lower,
+                        self._map[key]))) for key in keys]
 
     def get_event_data(self, keys, time_window=None):
         assert not self._sender
         if time_window is None:
-            return map(lambda key: self._map[key], keys)
+            return [self._map[key] for key in keys]
         else:
             lower, upper = time_window
             assert lower >= self.get_min_time()
             assert upper <= self.get_max_time()
-            return map(lambda key: list(
+            return [list(
                 itertools.takewhile(
                     lambda t: t < upper,
                     itertools.dropwhile(
                         lambda t: t < lower,
-                        self._map[key]))),
-                       keys)
+                        self._map[key]))) for key in keys]
 
     def _reset(self):
         assert not self._sender
@@ -179,11 +176,11 @@ class ProxyDataSource(DataSource):
         assert lower is None or upper is None or lower <= upper
         cleanup = 0
         ts_before = time.time()
-        for key, buffer in self._map.items():
+        for key, buffer in list(self._map.items()):
             times = buffer
             if times and (isinstance(times[0], tuple) or isinstance(times[0], list)):
                 # continuous
-                times = map(operator.itemgetter(0), times)
+                times = list(map(operator.itemgetter(0), times))
             lower_idx = bisect.bisect_left(times, lower) if lower is not None else None
             upper_idx = bisect.bisect_right(times, upper) if upper is not None else None
             buffer[:] = buffer[lower_idx:upper_idx]

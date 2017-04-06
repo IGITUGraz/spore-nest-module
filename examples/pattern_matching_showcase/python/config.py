@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO,
 # ############################################## NEST TOPOLOGY #########################################################
 
 n_patterns = 2
-n_input_neurons = 200
+n_input_neurons = 50
 n_hidden_neurons = n_patterns * 10
 n_reward_channels = 1
 
@@ -163,7 +163,7 @@ synapse_properties = {
     "gradient_noise": 0.0,  # temperature on reward gradient
     "episode_length": s_to_ms(1.0),  # episode length parameter of synapse
     "integration_time": s_to_ms(50.0),  # time to estimate expectations over
-    "learning_rate": 0.001 * (1.0 / 100000.0),  # learning rate
+    "learning_rate": 0.005 * (1.0 / 100000.0),  # learning rate
     "parameter_mapping_offset": 3.0,  # offset theta_0
     "psp_facilitation_rate": 20.0,  # psp falling edge time constant
     "psp_depression_rate": 2.0,  # psp rising edge time constant

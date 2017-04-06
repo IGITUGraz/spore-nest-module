@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 
 import logging
 import numpy as np
@@ -33,7 +33,7 @@ class WeightCommunicator(object):
         self._conn_spec[key] = (conns, WeightCommunicator._create_base_message(pre, post, conns))
 
     def communicate(self, sim_time):
-        for key, (conns, msg) in self._conn_spec.items():
+        for key, (conns, msg) in list(self._conn_spec.items()):
             msg['sim_time'] = sim_time
             msg['weight'] = nest.GetStatus(conns, 'weight')
             self._send(["{prefix}/{key}".format(prefix=self._prefix, key=key), self._serialize(msg)])

@@ -74,7 +74,8 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
     if (connectors_.size() == 0)
     {
         connectors_.resize(num_threads);
-        models_.resize(num_threads);
+        used_models_.resize(num_threads);
+        garbage_pile_.resize(num_threads);
     }
     else
     {
@@ -119,17 +120,25 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
 
     SynapseUpdateEvent ev;
     ev.set_stamp(time);
+    
+    std::vector<nest::ConnectorModel*> models = nest::kernel().model_manager.get_synapse_prototypes( th );
 
-    for (std::set<nest::ConnectorBase*>::iterator it = connectors_[th].begin();
+    for (std::set<Connection>::iterator it = connectors_[th].begin();
             it != connectors_[th].end();
             it++)
     {
-        assert(*it);
-
-        if (t_trig > (*it)->get_t_lastspike())
+        assert(it->connector_);
+        
+        if (t_trig > it->connector_->get_t_lastspike())
         {
-            (*it)->send(ev, th, models_[th]);
+            ev.set_sender_gid(it->sender_gid_);
+            it->connector_->send(ev, th, models);
         }
+    }
+    
+    if (not garbage_pile_[th].empty())
+    {
+        execute_garbage_collector(th);
     }
 }
 
@@ -146,7 +155,8 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
  * @param: syn_id the connection (synapse) type id.
  */
 void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,
-                                                 nest::thread th, nest::ConnectorModel* cm, nest::synindex syn_id)
+                                                 nest::index sender_gid, nest::thread th, nest::ConnectorModel* cm,
+                                                 nest::synindex syn_id)
 {
     assert(cm);
 
@@ -156,18 +166,13 @@ void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, 
                                 " to 'Connect'! Maybe you forgot to call 'InitSynapseUpdater'?");
     }
 
-    if (models_[th].size() <= syn_id)
-    {
-        models_[th].resize(syn_id + 1, 0);
-    }
+    used_models_[th].insert(syn_id);
 
-    models_[th][syn_id] = cm;
-
-    std::set<nest::ConnectorBase*> &conns = connectors_[th];
+    std::set<Connection> &conns = connectors_[th];
 
     if (new_conn == old_conn)
     {
-        assert(conns.find(new_conn) != conns.end());
+        assert(conns.find(Connection(new_conn)) != conns.end());
     }
     else
     {
@@ -176,19 +181,50 @@ void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, 
             // at this time the old connector is already deleted.
             // just check if it is still in the update set and
             // remove if found.
-            std::set<nest::ConnectorBase*>::iterator it = conns.find(old_conn);
+            std::set<Connection>::iterator it = conns.find(Connection(old_conn));
             assert(it != conns.end());
+            if (sender_gid == nest::invalid_index)
+            {
+                sender_gid = it->sender_gid_;
+            }
             conns.erase(it);
         }
 
         if (new_conn)
         {
             assert(new_conn->homogeneous_model());
-            conns.insert(new_conn);
+            assert(sender_gid != nest::invalid_index);
+            conns.insert(Connection(new_conn, sender_gid));
         }
     }
 
     has_connections_ = true;
+}
+
+/**
+ * Trigger garbage collector for given connection.
+ */
+void ConnectionUpdateManager::trigger_garbage_collector(nest::index target_gid, nest::index sender_gid,
+                                                        nest::thread target_thread, nest::synindex syn_id)
+{
+    assert(nest::thread(garbage_pile_.size()) > target_thread);
+    garbage_pile_[target_thread].push_back(GarbageCollectorEntry(target_gid, sender_gid, syn_id));
+}
+
+/**
+ * Execute the garbage collector for the given thread.
+ */
+void ConnectionUpdateManager::execute_garbage_collector(nest::thread th)
+{
+    for ( std::vector<GarbageCollectorEntry>::const_iterator it = garbage_pile_[th].begin();
+          it != garbage_pile_[th].end();
+          it++ )
+    {
+        nest::Node* target = nest::kernel().node_manager.get_node(it->target_gid_);
+        assert(target);
+        nest::kernel().connection_manager.disconnect( *target, it->sender_gid_, th, it->syn_id_ );
+    }
+    garbage_pile_[th].clear();
 }
 
 /**
@@ -201,12 +237,13 @@ void ConnectionUpdateManager::calibrate(nest::thread th)
 {
     nest::TimeConverter tc;
 
-    for (std::vector<nest::ConnectorModel*>::iterator it = models_[th].begin();
-            it != models_[th].end();
-            ++it)
+    std::vector<nest::ConnectorModel*> models = nest::kernel().model_manager.get_synapse_prototypes( th );
+
+    for (std::set<nest::synindex>::const_iterator it = used_models_[th].begin();
+         it != used_models_[th].end();
+         it++)
     {
-        if (*it)
-            (*it)->calibrate(tc);
+        models[*it]->calibrate(tc);
     }
 }
 
@@ -236,7 +273,8 @@ void ConnectionUpdateManager::reset()
     has_connections_ = false;
     is_initialized_ = false;
     connectors_.clear();
-    models_.clear();
+    used_models_.clear();
+    garbage_pile_.clear();
     cu_id_ = nest::invalid_index;
 }
 
@@ -263,14 +301,14 @@ ConnectionUpdateManager* ConnectionUpdateManager::instance_ = 0;
 //
 
 /**
- * Constructur.
+ * Constructor.
  */
 ConnectionUpdater::ConnectionUpdater()
 {
 }
 
 /**
- * Copy Constructur.
+ * Copy Constructor.
  */
 ConnectionUpdater::ConnectionUpdater(const ConnectionUpdater& n)
 : nest::Node(n)
@@ -278,7 +316,7 @@ ConnectionUpdater::ConnectionUpdater(const ConnectionUpdater& n)
 }
 
 /**
- * Destructur.
+ * Destructor.
  */
 ConnectionUpdater::~ConnectionUpdater()
 {

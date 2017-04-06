@@ -68,17 +68,23 @@ namespace spore
  * be used to optimize the simulation performance. Long update intervals are
  * likely more time efficient, but require more memory.
  * 
- * The DiligentConnectorModel provides the interface to the API. New synapse
+ * The DiligentConnectorModel provides the interface this mechanism. New synapse
  * models that use the diligent connection framework should be registered using
  * the register_diligent_connection_model template function. Connections
  * instantiated from this model will be automatically registered at the global
  * ConnectionUpdateManager object that takes care of triggering the synapse
  * updates.
- * 
+ *
+ * Synapses registered with the DiligentConnectorModel must implement a method
+ * called \a is_degenerated that takes no arguments and returns a \c bool. This
+ * is used by the garbage collector of the ConnectionUpdateManager to identify
+ * synapses that need to be deleted. The mechanism is described in detail in
+ * the documentation of ConnectionUpdateManager.
+ *
  * Another difference of diligent connectors is that the calibrate function of
- * their CommonSynapseProperties object is called whenever a simulation is
- * started (same behavior as for nest::Node objects). 
- * 
+ * their CommonSynapseProperties object is called additionally on simulation
+ * startup (such as nest::Node objects).
+ *
  * @see ConnectionUpdateManager, SynapseUpdateEvent, spore.h
  * 
  */
@@ -112,7 +118,11 @@ public:
 
 protected:
 
-    void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, size_t target_thread, nest::synindex syn_id);
+    nest::ConnectorBase* cleanup_delete_connection(nest::Node& tgt, size_t target_thread,
+                                                   nest::ConnectorBase* conn, nest::synindex syn_id);
+
+    void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, nest::index sender_gid,
+                            size_t target_thread, nest::synindex syn_id);
 
     nest::ConnectorBase* get_hom_connector(nest::ConnectorBase* conn, nest::synindex syn_id);
 
@@ -145,9 +155,10 @@ DiligentConnectorModel< ConnectionT >::add_connection(nest::Node& src,
                                                       double weight)
 {
     nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
-    nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, delay, weight);
+    nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn,
+                                                                                               syn_id, delay, weight);
     nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, src.get_gid(), tgt.get_thread(), syn_id);
     return new_conn;
 }
 
@@ -180,9 +191,10 @@ DiligentConnectorModel< ConnectionT >::add_connection(nest::Node& src,
                                                       double weight)
 {
     nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
-    nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id, p, delay, weight);
+    nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::add_connection(src, tgt, conn, syn_id,
+                                                                                               p, delay, weight);
     nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, src.get_gid(), tgt.get_thread(), syn_id);
     return new_conn;
 }
 
@@ -204,9 +216,9 @@ DiligentConnectorModel< ConnectionT >::delete_connection(nest::Node& tgt,
                                                          nest::synindex syn_id)
 {
     nest::ConnectorBase* old_hom_conn = get_hom_connector(nest::validate_pointer(conn), syn_id);
-    nest::ConnectorBase* new_conn = nest::GenericConnectorModel< ConnectionT >::delete_connection(tgt, target_thread, conn, syn_id);
+    nest::ConnectorBase* new_conn = cleanup_delete_connection(tgt, target_thread, conn, syn_id);
     nest::ConnectorBase* new_hom_conn = get_hom_connector(nest::validate_pointer(new_conn), syn_id);
-    register_connector(new_hom_conn, old_hom_conn, tgt.get_thread(), syn_id);
+    register_connector(new_hom_conn, old_hom_conn, nest::invalid_index, tgt.get_thread(), syn_id);
     return new_conn;
 }
 
@@ -226,11 +238,146 @@ DiligentConnectorModel< ConnectionT >::clone(std::string name) const
 template < typename ConnectionT >
 void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBase* new_conn,
                                                                nest::ConnectorBase* old_conn,
+                                                               nest::index sender_gid,
                                                                size_t target_thread,
                                                                nest::synindex syn_id)
 {
-    ConnectionUpdateManager::instance()->register_connector(new_conn, old_conn,
+    ConnectionUpdateManager::instance()->register_connector(new_conn, old_conn, sender_gid,
                                                             target_thread, this, syn_id);
+}
+
+/**
+ * @brief Cleanup and delete the given connection.
+ * 
+ * This deviates from the standard NEST implementation only in that it
+ * preferably deletes synapses that are marked for deletion instead of
+ * taking the first synapse that matches the specifications. Synapses
+ * indicate that are marked for deletion by returning true from their
+ * `is_degenerated()` method.
+ *
+ * @param tgt Target node
+ * @param target_thread Thread of the target
+ * @param conn Connector Base from where the connection will be deleted
+ * @param syn_id Synapse type
+ * @return A new Connector, equal to the original but with an erased
+ * connection to the defined target.
+ */
+template < typename ConnectionT >
+nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_connection(nest::Node& tgt,
+                                                                                      size_t target_thread,
+                                                                                      nest::ConnectorBase* conn,
+                                                                                      nest::synindex syn_id)
+{
+    using nest::HetConnector;
+    using nest::vector_like;
+    using nest::pack_pointer;
+    using nest::kernel;
+
+    assert(conn != 0); // we should not delete not existing synapses
+    bool found = false;
+    vector_like< ConnectionT >* vc;
+
+    bool b_has_primary = has_primary(conn);
+    bool b_has_secondary = has_secondary(conn);
+
+    conn = validate_pointer(conn);
+    // from here on we can use conn as a valid pointer
+
+    if (conn->homogeneous_model())
+    {
+        assert(conn->get_syn_id() == syn_id);
+        vc = static_cast<vector_like< ConnectionT >*> (conn);
+        // delete the first Connection corresponding to the target
+        for (size_t i = 0; i < vc->size(); i++)
+        {
+            ConnectionT* connection = &vc->at(i);
+
+            // only remove synapse if marked for deletion.
+            if ((connection->get_target(target_thread)->get_gid() == tgt.get_gid()) && connection->is_degenerated())
+            {
+                if (vc->get_num_connections() > 1)
+                    conn = &vc->erase(i);
+                else
+                {
+                    delete vc;
+                    conn = 0;
+                }
+                bool is_primary = DiligentConnectorModel< ConnectionT >::is_primary_;
+                if (conn != 0)
+                    conn = pack_pointer(conn, is_primary, !is_primary);
+                found = true;
+                break;
+            }
+        }
+    }
+    else
+    {
+        // heterogeneous case
+        // go through all entries and search for correct syn_id
+        // if not found create new entry for this syn_id
+        HetConnector* hc = static_cast<HetConnector*> (conn);
+
+        for (size_t i = 0; i < hc->size() && !found; i++)
+        {
+            // need to cast to vector_like to access syn_id there is already an entry
+            // for this type
+            if ((*hc)[ i ]->get_syn_id() == syn_id)
+            {
+                // here we know that the type is vector_like<connectionT>, because
+                // syn_id agrees so we can safely static cast
+                vector_like< ConnectionT >* vc =
+                        static_cast<vector_like< ConnectionT >*> ((*hc)[ i ]);
+                // Find and delete the first Connection corresponding to the target
+                for (size_t j = 0; j < vc->size(); j++)
+                {
+                    ConnectionT* connection = &vc->at(j);
+
+                    if ((connection->get_target(target_thread)->get_gid() == tgt.get_gid()) &&
+                        connection->is_degenerated()) // only remove synapse if marked for deletion.
+                    {
+                        // Get rid of the ConnectionBase for this type of synapse if there
+                        // is only this element left
+                        if (vc->size() == 1)
+                        {
+                            (*hc).erase((*hc).begin() + i);
+                            // Test if the homogeneous vector of connections went back to only
+                            // 1 type of synapse... then go back to the simple vector_like
+                            // case.
+                            if (hc->size() == 1)
+                            {
+                                conn = (*hc)[ 0 ];
+                                const bool is_primary =
+                                        kernel()
+                                        .model_manager.get_synapse_prototype(conn->get_syn_id())
+                                        .is_primary();
+                                conn = pack_pointer(conn, is_primary, not is_primary);
+                            }
+                            else
+                            {
+                                conn = pack_pointer(hc, b_has_primary, b_has_secondary);
+                            }
+                        } // Otherwise, just remove the desired connection
+                        else
+                        {
+                            (*hc)[ i ] = &vc->erase(j);
+                            conn = pack_pointer(hc, b_has_primary, b_has_secondary);
+                        }
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (found)
+    {
+        return conn;
+    }
+    else
+    {
+        return nest::GenericConnectorModel< ConnectionT >::delete_connection(tgt, target_thread, conn, syn_id);
+    }
 }
 
 /**
@@ -281,7 +428,8 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(ne
 template <class ConnectionT>
 void register_diligent_connection_model(const std::string &name, bool requires_symmetric = false)
 {
-    nest::kernel().model_manager.register_connection_model< ConnectionT, DiligentConnectorModel > (name, requires_symmetric);
+    nest::kernel().model_manager.register_connection_model< ConnectionT, DiligentConnectorModel >
+            (name, requires_symmetric);
 }
 
 }

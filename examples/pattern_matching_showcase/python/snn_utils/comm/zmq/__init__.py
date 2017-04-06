@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+
 
 import logging
 import zmq
@@ -82,7 +82,7 @@ class MultiSubscriber(ContextHelper):
             exhausted = not polled
 
     def close(self):
-        logger.info("Closing {} sockets.".format(len(self._handler.keys())))
-        for sock in self._handler.keys():
+        logger.info("Closing {} sockets.".format(len(list(self._handler.keys()))))
+        for sock in list(self._handler.keys()):
             sock.close()
         ContextHelper.close(self)

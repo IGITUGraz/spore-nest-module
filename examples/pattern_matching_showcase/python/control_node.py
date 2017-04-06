@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from config import *
@@ -113,7 +113,7 @@ class ControlNode(PyMusicNode):
             buf.update(curr_time)
 
         # compute rate of output spikes
-        self._activity_rates_out[:] = map(lambda b: b.rate(), self._spike_buffers)
+        self._activity_rates_out[:] = [b.rate() for b in self._spike_buffers]
 
         # update rewards
         self._reward_generator.compute_reward(self._current_pattern_id, list(self._activity_rates_out))

@@ -124,6 +124,45 @@ public:
         return nest::kernel().rng_manager.get_rng(thread)->drand();
     }
 
+    // parameters
+    double learning_rate_;
+    double episode_length_;
+    double psp_facilitation_rate_;
+    double psp_depression_rate_;
+
+    double temperature_;
+    double gradient_noise_;
+    double max_param_;
+    double min_param_;
+    double max_param_change_;
+    double integration_time_;
+    double direct_gradient_rate_;
+    double parameter_mapping_offset_;
+    double weight_update_time_;
+    double gradient_scale_;
+    double epsilon_;
+
+    long bap_trace_id_;
+    long dopa_trace_id_;
+
+    bool simulate_retracted_synapses_;
+    bool delete_retracted_synapses_;
+    bool verbose_;
+
+    // state variables
+    TracingNode* reward_transmitter_;
+
+    double resolution_unit_;
+    double gamma_;
+    double lambda_;
+
+    double psp_faciliation_update_;
+    double psp_depression_update_;
+    double psp_scale_factor_;
+
+    long weight_update_steps_;
+
+private:
     /**
      * @brief Define default values and constraints for synaptic parameters.
      */
@@ -148,47 +187,10 @@ public:
         p.parameter( dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
         p.parameter( epsilon_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
         p.parameter( simulate_retracted_synapses_, "simulate_retracted_synapses", false );
+        p.parameter( delete_retracted_synapses_, "delete_retracted_synapses", false );
         p.parameter( verbose_, "verbose", false );
     }
 
-    // parameters
-    double learning_rate_;
-    double episode_length_;
-    double psp_facilitation_rate_;
-    double psp_depression_rate_;
-
-    double temperature_;
-    double gradient_noise_;
-    double max_param_;
-    double min_param_;
-    double max_param_change_;
-    double integration_time_;
-    double direct_gradient_rate_;
-    double parameter_mapping_offset_;
-    double weight_update_time_;
-    double gradient_scale_;
-    double epsilon_;
-
-    long bap_trace_id_;
-    long dopa_trace_id_;
-
-    bool simulate_retracted_synapses_;
-    bool verbose_;
-
-    // state variables
-    TracingNode* reward_transmitter_;
-
-    double resolution_unit_;
-    double gamma_;
-    double lambda_;
-
-    double psp_faciliation_update_;
-    double psp_depression_update_;
-    double psp_scale_factor_;
-
-    long weight_update_steps_;
-
-private:
     double std_wiener_;
     double std_gradient_;
     librandom::NormalRandomDev normal_dev_;
@@ -230,6 +232,9 @@ private:
  * <tr><td>dopa_trace_id</td>               <td>int</td>    <td>ID of tde dopamine trace (default 0)</td></tr>
  * <tr><td>simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
  *                                                              (default false)</td></tr>
+ * <tr><td>delete_retracted_synapses</td>   <td>bool</td>   <td>delete retracted synapses. simulate_retracted_synapses
+ *                                                              must also be true for this to be effective.
+ *                                                              (default false)</td></tr>
  * <tr><td>verbose</td>                     <td>bool</td>   <td>write status to std::out (for debugging,
  *                                                              default false)</td></tr>
  * </table>
@@ -255,11 +260,11 @@ private:
  *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
  * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i>
- * In preparation stochastic (available on request the authors).
+ * In preparation (available on request from the authors).
  *
  * [2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and
- * Wolfgang Maass. CaMKII activation supports reward-based neural network
- * optimization through Hamiltonian sampling. 2016.
+ * Wolfgang Maass. <i>CaMKII activation supports reward-based neural network
+ * optimization through Hamiltonian sampling.</i> 2016.
  * https://arxiv.org/abs/1606.00157
  *
  * @author David Kappel, Michael Hsieh
@@ -375,6 +380,14 @@ public:
     double get_reward_gradient() const
     {
         return reward_gradient_;
+    }
+
+    /**
+     * @returns true if the synapse should be picked up by the garbage collector.
+     */
+    bool is_degenerated() const
+    {
+        return (psp_facilitation_ == -1.0);
     }
 
     static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger();
@@ -563,6 +576,12 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
                                                                        double t_last_spike,
                                                                        const CommonPropertiesType &cp)
 {
+    if (is_degenerated())
+    {
+        // synapse is waiting for the garbage collector.
+        return;
+    }
+
     assert(cp.resolution_unit_ > 0.0);
 
     const long s_to = std::floor( e.get_stamp().get_ms() / cp.resolution_unit_ );
@@ -601,6 +620,19 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
         {
             update_synapse_state(s_to, s_from, bap_trace, dopa_trace, cp);
         }
+    }
+
+    if (cp.delete_retracted_synapses_ && (weight_==0.0))
+    {
+        // synapse prepares to be picked up by the garbage collector.
+        // invalid value of -1.0 for psp_facilitation_ is used to indicate
+        // synapses to be deleted. The synapse will be removed next time
+        // when the garbage collector is invoked.
+        psp_facilitation_ = -1.0;
+        nest::synindex syn_id = nest::Connection<targetidentifierT>::get_syn_id();
+        ConnectionUpdateManager::instance()->trigger_garbage_collector(get_target(thread)->get_gid(),
+                                                                       e.get_sender_gid(), thread, syn_id );
+        return;
     }
 
     // Make sure that the event is not a SynapseUpdateEvent.
@@ -733,10 +765,10 @@ template < typename targetidentifierT >
 void SynapticSamplingRewardGradientConnection< targetidentifierT >::
 update_synapic_weight(long time_step, const CommonPropertiesType& cp)
 {
-    const bool synapse_is_active = (weight_ != 0.0);
+    const bool synapse_is_active = (weight_ != 0.0) || (time_step==0);
 
     // update synaptic weight
-    if (synaptic_parameter_ > 0.0)
+    if (synaptic_parameter_ >= 0.0)
     {
         weight_ = std::exp(synaptic_parameter_ - cp.parameter_mapping_offset_);
     }
@@ -753,7 +785,7 @@ update_synapic_weight(long time_step, const CommonPropertiesType& cp)
         stdp_eligibility_trace_ = 0.0;
         reward_gradient_ = 0.0;
     }
-    
+
     logger()->record(time_step*cp.resolution_unit_, *this, recorder_port_);
 }
 

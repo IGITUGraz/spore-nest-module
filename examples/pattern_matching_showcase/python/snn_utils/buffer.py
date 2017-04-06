@@ -86,7 +86,7 @@ class ValueBuffer(TimeBuffer):
         return self._values
 
     def get_timed_values(self):
-        return zip(self._times, self._values)
+        return list(zip(self._times, self._values))
 
     def __repr__(self):
         return str(self.get_timed_values())
