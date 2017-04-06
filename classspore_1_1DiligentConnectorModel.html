@@ -130,8 +130,11 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a86c964525034097e925b29ab1f7024c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a86c964525034097e925b29ab1f7024c6">register_connector</a> (nest::ConnectorBase *new_conn, nest::ConnectorBase *old_conn, size_t target_thread, nest::synindex syn_id)</td></tr>
-<tr class="separator:a86c964525034097e925b29ab1f7024c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22867e58e2138643ce608e3758c751db"><td class="memItemLeft" align="right" valign="top">nest::ConnectorBase *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a22867e58e2138643ce608e3758c751db">cleanup_delete_connection</a> (nest::Node &amp;tgt, size_t target_thread, nest::ConnectorBase *conn, nest::synindex syn_id)</td></tr>
+<tr class="memdesc:a22867e58e2138643ce608e3758c751db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleanup and delete the given connection.  <a href="#a22867e58e2138643ce608e3758c751db">More...</a><br /></td></tr>
+<tr class="separator:a22867e58e2138643ce608e3758c751db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b7fc76ac899bcab0c9dd7da26ac6126"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a1b7fc76ac899bcab0c9dd7da26ac6126">register_connector</a> (nest::ConnectorBase *new_conn, nest::ConnectorBase *old_conn, nest::index sender_gid, size_t target_thread, nest::synindex syn_id)</td></tr>
+<tr class="separator:a1b7fc76ac899bcab0c9dd7da26ac6126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07fa9543674ee66ffbedd54008803e76"><td class="memItemLeft" align="right" valign="top">nest::ConnectorBase *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a07fa9543674ee66ffbedd54008803e76">get_hom_connector</a> (nest::ConnectorBase *conn, nest::synindex syn_id)</td></tr>
 <tr class="separator:a07fa9543674ee66ffbedd54008803e76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -143,8 +146,9 @@ class spore::DiligentConnectorModel&lt; ConnectionT &gt;</h3>
 <p>Generic connector model for connections that require being updated on a regular time grid. Use the function <em> register_diligent_connection_model &lt;&gt; provided in <a class="el" href="diligent__connector__model_8h_source.html">diligent_connector_model.h</a>, to register your synapse model at the network, to use the diligent synapse model instead of NEST's build-in synapse model.</em></p>
 <p><em>Diligent connections are connection models that are updated on a regular time grid (as opposed to NEST's standard lazy update). More precisely, the API guarantees that the send function of the synapse is called at least once in a certain time window. If no presynaptic spike is send via the synapse during that time, a "dummy" spike is inserted to trigger a synapse update. The synapse can distinguish between "dummy" spikes and "real" spikes through the receptor port, which is set to the invalid value of -1 for dummy spikes.</em></p>
 <p><em>The length of the update time window can be controlled using the InitSynapseUpdater SLI function. It takes two arguments, the update interval and the maximum synaptic update latency. Both are tuning parameters that can be used to optimize the simulation performance. Long update intervals are likely more time efficient, but require more memory.</em></p>
-<p><em>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface to the API. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</em></p>
-<p><em>Another difference of diligent connectors is that the calibrate function of their CommonSynapseProperties object is called whenever a simulation is started (same behavior as for nest::Node objects).</em></p>
+<p><em>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface this mechanism. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</em></p>
+<p><em>Synapses registered with the <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> must implement a method called <em>is_degenerated</em> that takes no arguments and returns a <code>bool</code>. This is used by the garbage collector of the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> to identify synapses that need to be deleted. The mechanism is described in detail in the documentation of <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>.</em></p>
+<p><em>Another difference of diligent connectors is that the calibrate function of their CommonSynapseProperties object is called additionally on simulation startup (such as nest::Node objects).</em></p>
 <p><em></p><dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>, <a class="el" href="classspore_1_1SynapseUpdateEvent.html" title="The dummy event class used to trigger synapse updates. ">SynapseUpdateEvent</a>, <a class="el" href="spore_8h_source.html">spore.h</a> </dd></dl>
 <p></em></p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -305,6 +309,67 @@ template&lt;typename ConnectionT &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a22867e58e2138643ce608e3758c751db"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConnectionT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">nest::ConnectorBase * <a class="el" href="classspore_1_1DiligentConnectorModel.html">spore::DiligentConnectorModel</a>&lt; ConnectionT &gt;::cleanup_delete_connection </td>
+          <td>(</td>
+          <td class="paramtype">nest::Node &amp;&#160;</td>
+          <td class="paramname"><em>tgt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>target_thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::ConnectorBase *&#160;</td>
+          <td class="paramname"><em>conn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::synindex&#160;</td>
+          <td class="paramname"><em>syn_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cleanup and delete the given connection. </p>
+<p>This deviates from the standard NEST implementation only in that it preferably deletes synapses that are marked for deletion instead of taking the first synapse that matches the specifications. Synapses indicate that are marked for deletion by returning true from their <code>is_degenerated()</code> method.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tgt</td><td>Target node </td></tr>
+    <tr><td class="paramname">target_thread</td><td>Thread of the target </td></tr>
+    <tr><td class="paramname">conn</td><td>Connector Base from where the connection will be deleted </td></tr>
+    <tr><td class="paramname">syn_id</td><td>Synapse type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new Connector, equal to the original but with an erased connection to the defined target. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a755c00649a59daa8c836e4ac29eefdff"></a>
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +501,7 @@ template&lt;typename ConnectionT &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a86c964525034097e925b29ab1f7024c6"></a>
+<a class="anchor" id="a1b7fc76ac899bcab0c9dd7da26ac6126"></a>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
@@ -456,6 +521,12 @@ template&lt;typename ConnectionT &gt; </div>
           <td></td>
           <td class="paramtype">nest::ConnectorBase *&#160;</td>
           <td class="paramname"><em>old_conn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::index&#160;</td>
+          <td class="paramname"><em>sender_gid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -492,7 +563,7 @@ template&lt;typename ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 3 2017 18:51:45 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:23:38 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

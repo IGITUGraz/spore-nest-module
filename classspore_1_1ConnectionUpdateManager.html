@@ -88,6 +88,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -112,8 +113,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3b9555e0ee6ddd5f0189aff561d2f563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c4604e6fd095fa30c972eaa7fe0d738"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a5c4604e6fd095fa30c972eaa7fe0d738">setup</a> (long interval, long exceptable_latency)</td></tr>
 <tr class="separator:a5c4604e6fd095fa30c972eaa7fe0d738"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42ca8c60b63e642cea69f8ce323805ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a42ca8c60b63e642cea69f8ce323805ab">register_connector</a> (nest::ConnectorBase *new_conn, nest::ConnectorBase *old_conn, nest::thread th, nest::ConnectorModel *cm, nest::synindex syn_id)</td></tr>
-<tr class="separator:a42ca8c60b63e642cea69f8ce323805ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a934dba11054bc65f8f968582ab01b2c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a934dba11054bc65f8f968582ab01b2c8">register_connector</a> (nest::ConnectorBase *new_conn, nest::ConnectorBase *old_conn, nest::index sender_gid, nest::thread th, nest::ConnectorModel *cm, nest::synindex syn_id)</td></tr>
+<tr class="separator:a934dba11054bc65f8f968582ab01b2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ac86e353cb1da866770c751f054ecd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector</a> (nest::index target_gid, nest::index sender_gid, nest::thread target_thread, nest::synindex syn_id)</td></tr>
+<tr class="separator:a46ac86e353cb1da866770c751f054ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11efd381748aeb2bddfcde3e1f56fd19"><td class="memItemLeft" align="right" valign="top">nest::delay&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a11efd381748aeb2bddfcde3e1f56fd19">get_interval</a> () const </td></tr>
 <tr class="separator:a11efd381748aeb2bddfcde3e1f56fd19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a915fee88a403b8fe827fb31b17c440f9"><td class="memItemLeft" align="right" valign="top">nest::delay&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a915fee88a403b8fe827fb31b17c440f9">get_acceptable_latency</a> () const </td></tr>
@@ -145,6 +148,8 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that manages updating diligent synapses. </p>
 <p>Singleton class that manages updating connections that require regular updates (diligent connections). The object is supposed to be updated in a regular interval (defined by <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a11efd381748aeb2bddfcde3e1f56fd19">get_interval()</a>). Synapses that were not updated for longer than specified by <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a915fee88a403b8fe827fb31b17c440f9">get_acceptable_latency()</a> will by updated. The maximum update latency that may occur can be retrieved through the <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a7b53ac7db11d6120536a9327bc4a08e7">get_max_latency()</a> method.</p>
+<p>Synapses that use the functionality of the update manager should be registered using the <em>register_connector</em> method. Synapse Models that are instantiated using the <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> do this automatically.</p>
+<p><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> also provides a mechanism to removed synapses that become nonfunctional (garbage collection). The synapse must take care of invoking the garbage collector by calling the trigger_garbage_collector method. After a call to this the synapse must return <code>true</code> in its <em>is_degenerated</em> method. The synapse is not deleted immediately. If <em>trigger_garbage_collector</em> was triggered from within the <em>send</em> function of the synapse the function is guaranteed to be finished before the synapse is removed. The <em>send</em> function may also be triggered again multiple times after a call to <em>trigger_garbage_collector</em> before the synapse is finally removed. The synapse should in that case not call <em>trigger_garbage_collector</em> again or change its behavior of returning <code>true</code> from <em>is_degenerated</em>, as this would lead to undefined behavior.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a58f84ee59f7d7415935550542265aaa6"></a>
@@ -413,7 +418,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 
 </div>
 </div>
-<a class="anchor" id="a42ca8c60b63e642cea69f8ce323805ab"></a>
+<a class="anchor" id="a934dba11054bc65f8f968582ab01b2c8"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -428,6 +433,12 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
           <td></td>
           <td class="paramtype">nest::ConnectorBase *&#160;</td>
           <td class="paramname"><em>old_conn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::index&#160;</td>
+          <td class="paramname"><em>sender_gid</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -454,7 +465,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Adds the given connector and removes the old one. New connector can be 0; in that case only the old one is removed. The old connector can be 0; in that case only the new one is added.</p>
+<p>Adds the given connector and removes the old one. New connector can be 0; in that case only the old one is removed. The old connector can be 0; in that case only the new one is added. If new_conn is not 0 it must be a homogeneous connector model.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname"></td><td>new_conn the connector object to be added. </td></tr>
@@ -504,6 +515,45 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 
 </div>
 </div>
+<a class="anchor" id="a46ac86e353cb1da866770c751f054ecd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spore::ConnectionUpdateManager::trigger_garbage_collector </td>
+          <td>(</td>
+          <td class="paramtype">nest::index&#160;</td>
+          <td class="paramname"><em>target_gid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::index&#160;</td>
+          <td class="paramname"><em>sender_gid</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::thread&#160;</td>
+          <td class="paramname"><em>target_thread</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">nest::synindex&#160;</td>
+          <td class="paramname"><em>syn_id</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Trigger garbage collector for given connection. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="connection__updater_8h_source.html">connection_updater.h</a></li>
 <li>connection_updater.cpp</li>
@@ -512,7 +562,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 3 2017 18:51:45 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:23:38 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -7,6 +7,7 @@ var searchData=
   ['check_5fevent',['check_event',['../classspore_1_1SporeTestConnectionCommonProperties.html#ae0de2898f8d6537442626cf1eece3551',1,'spore::SporeTestConnectionCommonProperties::check_event()'],['../classspore_1_1SynapticSamplingRewardGradientCommonProperties.html#ac64fe7843efe15bffe92326305a5e8f0',1,'spore::SynapticSamplingRewardGradientCommonProperties::check_event()']]],
   ['circularbuffer',['CircularBuffer',['../classspore_1_1CircularBuffer.html',1,'spore']]],
   ['circularbuffer',['CircularBuffer',['../classspore_1_1CircularBuffer.html#a4b8c8947b28f34ce73872250aec35259',1,'spore::CircularBuffer::CircularBuffer()'],['../classspore_1_1CircularBuffer.html#af4c5d30cfd8c6a48eda592f6c808d73e',1,'spore::CircularBuffer::CircularBuffer(const CircularBuffer &amp;src)']]],
+  ['cleanup_5fdelete_5fconnection',['cleanup_delete_connection',['../classspore_1_1DiligentConnectorModel.html#a22867e58e2138643ce608e3758c751db',1,'spore::DiligentConnectorModel']]],
   ['clear',['clear',['../classspore_1_1ConnectionDataLoggerBase.html#aae63a57ab2e4a1301fdccd28c5e0da7d',1,'spore::ConnectionDataLoggerBase::clear()'],['../structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html#aaded611aba816f7b0b62cbe01a5f8633',1,'spore::ConnectionDataLoggerBase::RecorderData::clear()']]],
   ['clone',['clone',['../classspore_1_1DiligentConnectorModel.html#a755c00649a59daa8c836e4ac29eefdff',1,'spore::DiligentConnectorModel']]],
   ['cmin',['CMin',['../classspore_1_1pc_1_1CMin.html',1,'spore::pc']]],
@@ -18,12 +19,12 @@ var searchData=
   ['connectiondatalogger_3c_20spore_3a_3asynapticsamplingrewardgradientconnection_20_3e',['ConnectionDataLogger&lt; spore::SynapticSamplingRewardGradientConnection &gt;',['../classspore_1_1ConnectionDataLogger.html',1,'spore']]],
   ['connectiondataloggerbase',['ConnectionDataLoggerBase',['../classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a',1,'spore::ConnectionDataLoggerBase']]],
   ['connectiondataloggerbase',['ConnectionDataLoggerBase',['../classspore_1_1ConnectionDataLoggerBase.html',1,'spore']]],
-  ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html',1,'spore']]],
   ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html#a58f84ee59f7d7415935550542265aaa6',1,'spore::ConnectionUpdateManager']]],
+  ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html',1,'spore']]],
   ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html#a10474505267a4555f65e1b334ad847b6',1,'spore::ConnectionUpdater::ConnectionUpdater()'],['../classspore_1_1ConnectionUpdater.html#a042239fab84d264219d0f5feac28e621',1,'spore::ConnectionUpdater::ConnectionUpdater(const ConnectionUpdater &amp;n)']]],
   ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html',1,'spore']]],
-  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SporeTestConnection_1_1ConnTestDummyNode.html',1,'spore::SporeTestConnection']]],
   ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SynapticSamplingRewardGradientConnection_1_1ConnTestDummyNode.html',1,'spore::SynapticSamplingRewardGradientConnection']]],
-  ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b',1,'spore::CircularBuffer::const_iterator']]],
-  ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html',1,'spore::CircularBuffer']]]
+  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SporeTestConnection_1_1ConnTestDummyNode.html',1,'spore::SporeTestConnection']]],
+  ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html',1,'spore::CircularBuffer']]],
+  ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b',1,'spore::CircularBuffer::const_iterator']]]
 ];

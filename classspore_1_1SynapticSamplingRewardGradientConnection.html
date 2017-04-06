@@ -159,6 +159,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a44b1b3f73a2bd626bfe5aeb7d6203210"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4b44465d1a9504f4a857ff94af1debd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html#af4b44465d1a9504f4a857ff94af1debd">get_reward_gradient</a> () const </td></tr>
 <tr class="separator:af4b44465d1a9504f4a857ff94af1debd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65605b381342af5f6eb5f84bab459feb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html#a65605b381342af5f6eb5f84bab459feb">is_degenerated</a> () const </td></tr>
+<tr class="separator:a65605b381342af5f6eb5f84bab459feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -213,6 +215,8 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td>simulate_retracted_synapses </td><td>bool </td><td>continue simulating retracted synapses (default false) </td></tr>
 <tr>
+<td>delete_retracted_synapses </td><td>bool </td><td>delete retracted synapses. simulate_retracted_synapses must also be true for this to be effective. (default false) </td></tr>
+<tr>
 <td>verbose </td><td>bool </td><td>write status to std::out (for debugging, default false) </td></tr>
 </table>
 <p>The following parameters can be set in the status dictionary: </p><table class="doxtable">
@@ -244,8 +248,8 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <td>reset_recorder </td><td>bool </td><td>clear all recorded values now (write only) </td></tr>
 </table>
 <p><b>References</b></p>
-<p>[1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and Wolfgang Maass. <em>Reward-based self-configuration of neural circuits.</em> In preparation stochastic (available on request the authors).</p>
-<p>[2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and Wolfgang Maass. CaMKII activation supports reward-based neural network optimization through Hamiltonian sampling. 2016. <a href="https://arxiv.org/abs/1606.00157">https://arxiv.org/abs/1606.00157</a></p>
+<p>[1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and Wolfgang Maass. <em>Reward-based self-configuration of neural circuits.</em> In preparation (available on request from the authors).</p>
+<p>[2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and Wolfgang Maass. <em>CaMKII activation supports reward-based neural network optimization through Hamiltonian sampling.</em> 2016. <a href="https://arxiv.org/abs/1606.00157">https://arxiv.org/abs/1606.00157</a></p>
 <dl class="section author"><dt>Author</dt><dd>David Kappel, Michael Hsieh</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>, <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -509,6 +513,32 @@ template&lt;typename targetidentifierT&gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a65605b381342af5f6eb5f84bab459feb"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename targetidentifierT&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html">spore::SynapticSamplingRewardGradientConnection</a>&lt; targetidentifierT &gt;::is_degenerated </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>true if the synapse should be picked up by the garbage collector. </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="ac6477c248a79a5db53d82b460e293749"></a>
 <div class="memitem">
 <div class="memproto">
@@ -650,7 +680,7 @@ template&lt;typename targetidentifierT&gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 3 2017 18:51:45 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:23:38 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

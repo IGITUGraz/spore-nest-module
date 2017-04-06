@@ -130,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    ~<a class="code" href="classspore_1_1SporeTestBase.html">SporeTestBase</a>()</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keyword">virtual</span> ~<a class="code" href="classspore_1_1SporeTestBase.html">SporeTestBase</a>()</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    {</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    };</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
@@ -161,24 +161,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    {</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        assert(<span class="keyword">false</span>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> test_assert(<span class="keywordtype">bool</span> condition, <span class="keyword">const</span> std::string &amp;msg)</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    {</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">if</span> (!condition)</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(name_ + <span class="stringliteral">&quot; failed: &quot;</span> + msg);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    </div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> get_status(DictionaryDatum &amp;d)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    };</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_status(<span class="keyword">const</span> DictionaryDatum &amp;d)</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    {</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    };</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    std::string name_;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    nest::delay t_max_;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;};</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> test_assert(<span class="keywordtype">bool</span> condition, <span class="keyword">const</span> std::string &amp;msg)</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    {</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">if</span> (!condition)</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            <span class="keywordflow">throw</span> std::runtime_error(name_ + <span class="stringliteral">&quot; failed: &quot;</span> + msg);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    };</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    std::string name_;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    nest::delay t_max_;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;};</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;}</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
 <div class="ttc" id="classspore_1_1TracingNode_html"><div class="ttname"><a href="classspore_1_1TracingNode.html">spore::TracingNode</a></div><div class="ttdoc">Base class to all nodes that record traces. </div><div class="ttdef"><b>Definition:</b> tracing_node.h:50</div></div>
 <div class="ttc" id="classspore_1_1SporeTestBase_html"><div class="ttname"><a href="classspore_1_1SporeTestBase.html">spore::SporeTestBase</a></div><div class="ttdef"><b>Definition:</b> spore_test_base.h:41</div></div>
 <div class="ttc" id="namespacespore_html"><div class="ttname"><a href="namespacespore.html">spore</a></div><div class="ttdef"><b>Definition:</b> circular_buffer.h:28</div></div>
@@ -186,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 3 2017 18:51:45 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:23:38 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
