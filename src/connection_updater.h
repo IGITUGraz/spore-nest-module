@@ -61,19 +61,19 @@ namespace spore
  * get_max_latency() method.
  *
  * Synapses that use the functionality of the update manager should be
- * registered using the \a register_connector method. Synapse Models that
+ * registered using the register_connector() method. Synapse Models that
  * are instantiated using the DiligentConnectorModel do this automatically.
  *
  * ConnectionUpdateManager also provides a mechanism to removed synapses that
  * become nonfunctional (garbage collection). The synapse must take care of
- * invoking the garbage collector by calling the trigger_garbage_collector
+ * invoking the garbage collector by calling the trigger_garbage_collector()
  * method. After a call to this the synapse must return \c true in its
  * \a is_degenerated method. The synapse is not deleted immediately. If
- * \a trigger_garbage_collector was triggered from within the \a send function
+ * trigger_garbage_collector() was triggered from within the \a send function
  * of the synapse the function is guaranteed to be finished before the synapse
  * is removed. The \a send function may also be triggered again multiple times
- * after a call to \a trigger_garbage_collector before the synapse is finally
- * removed. The synapse should in that case not call \a trigger_garbage_collector
+ * after a call to trigger_garbage_collector before the synapse is finally
+ * removed. The synapse should in that case not call trigger_garbage_collector()
  * again or change its behavior of returning \c true from \a is_degenerated, as
  * this would lead to undefined behavior.
  *

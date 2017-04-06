@@ -46,10 +46,7 @@ namespace spore
  * @brief Connector model for diligent connections.
  * 
  * Generic connector model for connections that require being updated on a
- * regular time grid. Use the function
- * <i>
- *   register_diligent_connection_model
- * <\i>
+ * regular time grid. Use the function spore::register_diligent_connection_model
  * provided in diligent_connector_model.h, to register your synapse model at
  * the network, to use the diligent synapse model instead of NEST's build-in
  * synapse model.
@@ -423,7 +420,17 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(ne
 }
 
 /**
- * @brief Convenience function to register diligent synapses.
+ * @function register_diligent_connection_model
+ *
+ * Convenience function to register diligent synapses. The template argument
+ * specifies the new synapse type. Connections registered in this way must
+ * implement a method \a is_degenerated() which returns true if the synapse
+ * wishes to be picked up by the garbage collector.
+ *
+ * @param name name of the connection model.
+ * @param requires_symmetric indicate that the model requires symmetric connections.
+ * 
+ * @see DiligentConnectorModel, ConnectionUpdateManager
  */
 template <class ConnectionT>
 void register_diligent_connection_model(const std::string &name, bool requires_symmetric = false)
