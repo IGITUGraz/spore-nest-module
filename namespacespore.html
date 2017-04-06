@@ -203,13 +203,15 @@ template&lt;class ConnectionT &gt; </div>
 
 <p>Convenience function to register diligent synapses. </p>
 <p>register_diligent_connection_model</p>
+<p>The template argument specifies the new synapse type. Connections registered in this way must implement a method <em>is_degenerated</em> which returns true if the synapse wishes to be picked up by the garbage collector.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>name of the connection model. </td></tr>
-    <tr><td class="paramname">requires_symmetric</td><td>indicate that the model requires symmetric connections. </td></tr>
+    <tr><td class="paramname">requires_symmetric</td><td>indicate that the model requires symmetric connections.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>, <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> </dd></dl>
 
 </div>
 </div>
@@ -217,7 +219,7 @@ template&lt;class ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:31:40 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 6 2017 11:35:14 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
