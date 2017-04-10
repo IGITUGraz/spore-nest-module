@@ -27,6 +27,7 @@ import subprocess
 
 
 plotter = None
+exitcode = -1
 
 if not "TEST_MODE" in sys.argv[1:]:
     # don't create plotter in test mode
@@ -49,9 +50,11 @@ try:
 
     cmd = "mpirun -n 3 music `readlink -f "+ music_filename +"`"+("".join([" "+str(arg) for arg in sys.argv[1:]]))
 
-    subprocess.call( cmd, shell=True )
+    exitcode = subprocess.call( cmd, shell=True )
 
 finally:
     if plotter is not None:
         plotter.kill()
+
+sys.exit(exitcode)
 

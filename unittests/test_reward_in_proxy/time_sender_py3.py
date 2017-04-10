@@ -4,5 +4,5 @@
 import sys
 import subprocess
 
-sys.exit( subprocess.call([sys.executable, "network_node.py"]+sys.argv[1:]) )
+sys.exit( subprocess.call([sys.executable, "time_sender.py"]+sys.argv[1:]) )
 

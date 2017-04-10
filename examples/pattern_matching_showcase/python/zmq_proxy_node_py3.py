@@ -4,5 +4,5 @@
 import sys
 import subprocess
 
-subprocess.call([sys.executable, "zmq_proxy_node.py"]+sys.argv[1:])
+sys.exit( subprocess.call([sys.executable, "zmq_proxy_node.py"]+sys.argv[1:]) )
 
