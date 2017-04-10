@@ -21,7 +21,20 @@
 
 cmake_minimum_required( VERSION 2.8.12 )
 
-find_package( PythonInterp 2 REQUIRED )
+if ( ${with-python} STREQUAL "ON" OR  ${with-python} STREQUAL "2" OR  ${with-python} STREQUAL "3" )
+
+    # Localize the Python interpreter
+    if ( ${with-python} STREQUAL "ON" )
+      find_package( PythonInterp )
+    elseif ( ${with-python} STREQUAL "2" )  
+      find_package( PythonInterp 2 REQUIRED )
+    elseif ( ${with-python} STREQUAL "3" )
+      find_package( PythonInterp 3 REQUIRED )
+    endif ()
+
+  else ()
+    message( FATAL_ERROR "Invalid option: -Dwith-python=" ${with-python} )
+  endif ()
 
 enable_testing()
 
