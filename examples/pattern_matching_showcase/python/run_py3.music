@@ -1,14 +1,14 @@
 [nest]
   np = 1
-  binary = python/network_node.py
+  binary = ./network_node_py3.py
 
 [control_node]
   np = 1
-  binary = python/control_node.py
+  binary = ./control_node_py3.py
 
 [plotter]
   np = 1
-  binary = python/zmq_proxy_node.py
+  binary = ./zmq_proxy_node_py3.py
 
 nest.activity_out -> control_node.activity_in [20]
 control_node.pattern_out -> nest.pattern_in [200]

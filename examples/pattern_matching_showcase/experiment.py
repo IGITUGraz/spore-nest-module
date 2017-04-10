@@ -21,16 +21,37 @@
 # For more information see: https://github.com/IGITUGraz/spore-nest-module
 #
 
-import unittest
-import subprocess
-import sys
 import os
+import sys
+import subprocess
 
 
-class MusicIntegrationTest(unittest.TestCase):
-    def test_pattern_matching(self):
-        showcase_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..', 'examples', 'pattern_matching_showcase')
-        subprocess.check_call([sys.executable, "experiment.py", "TEST_MODE"], cwd=showcase_path)
+plotter = None
 
-if __name__ == '__main__':
-    unittest.main()
+if not "TEST_MODE" in sys.argv[1:]:
+    # don't create plotter in test mode
+    try:
+        dev0 = open("/dev/null", "w")
+        plotter = subprocess.Popen([sys.executable, "./python/interface.py"], stdout=dev0)
+
+    except:
+        print("Error when running the plotter interface.")
+
+try:
+    os.chdir("python")
+
+    if (sys.version_info[0] == 3):
+        music_filename = "run_py3.music"
+    else:
+        music_filename = "run.music"
+
+    print("Starting MUSIC/NEST simulation")
+
+    cmd = "mpirun -n 3 music `readlink -f "+ music_filename +"`"+("".join([" "+str(arg) for arg in sys.argv[1:]]))
+
+    subprocess.call( cmd, shell=True )
+
+finally:
+    if plotter is not None:
+        plotter.kill()
+

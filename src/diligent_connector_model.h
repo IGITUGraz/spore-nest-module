@@ -53,11 +53,12 @@ namespace spore
  * 
  * Diligent connections are connection models that are updated on a regular
  * time grid (as opposed to NEST's standard lazy update). More precisely, the
- * API guarantees that the send function of the synapse is called at least once
+ * API guarantees that the \a send function of the synapse is called at least once
  * in a certain time window. If no presynaptic spike is send via the synapse
  * during that time, a "dummy" spike is inserted to trigger a synapse update.
  * The synapse can distinguish between "dummy" spikes and "real" spikes through
- * the receptor port, which is set to the invalid value of -1 for dummy spikes.
+ * the receptor port, which is set to the invalid value of -1 for dummy spikes
+ * (see SynapseUpdateEvent).
  * 
  * The length of the update time window can be controlled using the
  * InitSynapseUpdater SLI function. It takes two arguments, the update interval
@@ -82,7 +83,7 @@ namespace spore
  * their CommonSynapseProperties object is called additionally on simulation
  * startup (such as nest::Node objects).
  *
- * @see ConnectionUpdateManager, SynapseUpdateEvent, spore.h
+ * @see ConnectionUpdateManager, SynapseUpdateEvent
  * 
  */
 template < typename ConnectionT >

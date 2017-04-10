@@ -1,3 +1,24 @@
+#
+# This file is part of SPORE.
+#
+# Copyright (C) 2016 Institute for Theoretical Computer Science, Graz University of Technology
+#
+# SPORE is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# SPORE is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
+#
+# For more information see: https://github.com/IGITUGraz/spore-nest-module
+#
+
 # ##########################################################
 #           GLOBAL CONFIGURATION FILE
 # ##########################################################
@@ -121,9 +142,9 @@ total_simulation_time = 100000.0
 synapse_update_interval = 0.1
 
 if len(sys.argv) > 1 and "TEST_MODE" in sys.argv[1:]:
-    total_simulation_time = 10.0
+    total_simulation_time = 20.0
 
-nest_n_threads = 1 # None -> auto; Integer -> according fixed number of threads
+nest_n_threads = 2 # None -> auto; Integer -> according fixed number of threads
 
 # EXPERIMENT
 

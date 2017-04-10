@@ -51,10 +51,10 @@ namespace spore
  *   synapse models that were developed for reward-based learning.
  * 
  * - It introduces a MUSIC proxy that allows to receive traces from a MUSIC
- *   port.
+ *   port (RewardInProxy).
  * 
  * 
- * @see DiligentConnectorModel, TracingNode.
+ * @see DiligentConnectorModel, TracingNode, RewardInProxy
  */
 
 // version number of the module

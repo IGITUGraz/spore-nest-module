@@ -319,7 +319,7 @@ private:
  * The event sent to the synapse for updates. This is a dummy event, that must
  * not be communicated to the postsynaptic neuron. Trying to send or clone an
  * instance of SynapseUpdateEvent will raise an exception. SynapseUpdateEvent
- * should have an invalid rport of -1.
+ * should have an invalid \a rport of -1.
  */
 class SynapseUpdateEvent : public nest::Event
 {
