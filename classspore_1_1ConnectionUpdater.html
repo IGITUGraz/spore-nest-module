@@ -120,6 +120,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a060c245ccba33e23de1aba29af0c1f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83c52f8a192bb9350ae38397320b625c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdater.html#a83c52f8a192bb9350ae38397320b625c">update</a> (nest::Time const &amp;origin, const long from, const long to)</td></tr>
 <tr class="separator:a83c52f8a192bb9350ae38397320b625c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9f1c00d27b295afd529ede945508496"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdater.html#ad9f1c00d27b295afd529ede945508496">calibrate</a> ()</td></tr>
+<tr class="separator:ad9f1c00d27b295afd529ede945508496"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321a83c068a4f9c8a37908f300485e7a"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdater.html#a321a83c068a4f9c8a37908f300485e7a">finalize</a> ()</td></tr>
+<tr class="separator:a321a83c068a4f9c8a37908f300485e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d57d2a5ea035414edb7be7da6581a7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d57d2a5ea035414edb7be7da6581a7d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>get_status</b> (DictionaryDatum &amp;) const </td></tr>
 <tr class="separator:a2d57d2a5ea035414edb7be7da6581a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -194,6 +198,54 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>one_node_per_process<
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ad9f1c00d27b295afd529ede945508496"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spore::ConnectionUpdater::calibrate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called when a simulation is about to be started. This Will set the node frozen if the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> does not need updates. </p>
+
+</div>
+</div>
+<a class="anchor" id="a321a83c068a4f9c8a37908f300485e7a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void spore::ConnectionUpdater::finalize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called when a simulation is finished. </p>
+
+</div>
+</div>
 <a class="anchor" id="a83c52f8a192bb9350ae38397320b625c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +303,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>one_node_per_process<
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:51:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 14:17:55 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

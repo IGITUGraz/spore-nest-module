@@ -112,6 +112,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3b9555e0ee6ddd5f0189aff561d2f563"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a3b9555e0ee6ddd5f0189aff561d2f563">init</a> (nest::index cu_model_id)</td></tr>
 <tr class="separator:a3b9555e0ee6ddd5f0189aff561d2f563"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5c4604e6fd095fa30c972eaa7fe0d738"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a5c4604e6fd095fa30c972eaa7fe0d738">setup</a> (long interval, long exceptable_latency)</td></tr>
+<tr class="memdesc:a5c4604e6fd095fa30c972eaa7fe0d738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> with the given update interval and acceptable latency.  <a href="#a5c4604e6fd095fa30c972eaa7fe0d738">More...</a><br /></td></tr>
 <tr class="separator:a5c4604e6fd095fa30c972eaa7fe0d738"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a934dba11054bc65f8f968582ab01b2c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1ConnectionUpdateManager.html#a934dba11054bc65f8f968582ab01b2c8">register_connector</a> (nest::ConnectorBase *new_conn, nest::ConnectorBase *old_conn, nest::index sender_gid, nest::thread th, nest::ConnectorModel *cm, nest::synindex syn_id)</td></tr>
 <tr class="separator:a934dba11054bc65f8f968582ab01b2c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,6 +150,11 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <div class="textblock"><p>Class that manages updating diligent synapses. </p>
 <p>Singleton class that manages updating connections that require regular updates (diligent connections). The object is supposed to be updated in a regular interval (defined by <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a11efd381748aeb2bddfcde3e1f56fd19">get_interval()</a>). Synapses that were not updated for longer than specified by <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a915fee88a403b8fe827fb31b17c440f9">get_acceptable_latency()</a> will by updated. The maximum update latency that may occur can be retrieved through the <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a7b53ac7db11d6120536a9327bc4a08e7">get_max_latency()</a> method.</p>
 <p>Synapses that use the functionality of the update manager should be registered using the <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a934dba11054bc65f8f968582ab01b2c8">register_connector()</a> method. Synapse Models that are instantiated using the <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> do this automatically.</p>
+<p><b>Initializing the Update Manager</b></p>
+<p>If diligent connections are used the SLI function <em>InitSynapseUpdater</em> must be called before the first call to <em>Connect</em>. This is done automatically when the SPORE module is loaded but must be done manually after the NEST kernel has been reset using <em>ResetKernel</em> or its state has changed using <em>SetKernelStatus</em>. Therefore a line of code </p><div class="fragment"><div class="line">&lt;update_interval&gt; &lt;acceptable_latency&gt; InitSynapseUpdater</div>
+</div><!-- fragment --><p> is required, where &lt;update_interval&gt; is an integer (default: 100) value that defines interval (in number of nest time steps) in which the update manager is invoked and &lt;acceptable_latency&gt; is an integer (default: 100) acceptable latency for synapses. Equivalently, if using python, add a line </p><div class="fragment"><div class="line"><a class="code" href="namespacenest.html">nest</a>.sli_func(<span class="stringliteral">&#39;InitSynapseUpdater&#39;</span>,&lt;update_interval&gt;,&lt;acceptable_latency&gt;)</div>
+</div><!-- fragment --><p> after each call to <em>ResetKernel</em> / <em>SetKernelStatus</em>. <em>InitSynapseUpdater</em> may be called multiple times to change the parameters of the update manager, but must not be invoked again after the first call to <em>Simulate</em> (see: <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a5c4604e6fd095fa30c972eaa7fe0d738" title="Sets up the ConnectionUpdateManager with the given update interval and acceptable latency...">setup()</a>).</p>
+<p><b>Garbage Collection</b></p>
 <p><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> also provides a mechanism to removed synapses that become nonfunctional (garbage collection). The synapse must take care of invoking the garbage collector by calling the <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> method. After a call to this the synapse must return <code>true</code> in its <em>is_degenerated</em> method. The synapse is not deleted immediately. If <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> was triggered from within the <em>send</em> function of the synapse the function is guaranteed to be finished before the synapse is removed. The <em>send</em> function may also be triggered again multiple times after a call to trigger_garbage_collector before the synapse is finally removed. The synapse should in that case not call <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> again or change its behavior of returning <code>true</code> from <em>is_degenerated</em>, as this would lead to undefined behavior.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -502,16 +508,17 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets up the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> with the given update interval and acceptable latency.</p>
-<p>This function must be called once at start up and after a call to ConnectionUpdateManager::reset to inform the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> about the number of threads used by NEST.</p>
-<p>This function may not be thread safe.</p>
+
+<p>Sets up the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> with the given update interval and acceptable latency. </p>
+<p>This function must be called once before the first call to <em>Connect</em> after the NEST kernel was reset or its status has changed. This function is invoked by the <em>InitSynapseUpdater</em> SLI function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">interval</td><td>the update interval used to update connections. </td></tr>
-    <tr><td class="paramname">delay</td><td>the maximum delay allowed for a connection. </td></tr>
+    <tr><td class="paramname">acceptable_latency</td><td>the maximum acceptable latency allowed for a connection.</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function may not be thread safe. </dd></dl>
 
 </div>
 </div>
@@ -562,7 +569,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:51:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 14:17:55 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

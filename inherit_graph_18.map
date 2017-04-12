@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classspore_1_1SporeTestConnectionCommonProperties.html" title="spore::SporeTestConnection\lCommonProperties" alt="" coords="251,5,439,47"/>
-<area shape="rect" id="node3" href="$classspore_1_1SynapticSamplingRewardGradientCommonProperties.html" title="spore::SynapticSamplingReward\lGradientCommonProperties" alt="" coords="239,71,451,112"/>
+<area shape="rect" id="node2" href="$classspore_1_1SporeTestConnection_1_1ConnTestDummyNode.html" title="spore::SporeTestConnection\l\&lt; targetidentifierT \&gt;::ConnTest\lDummyNode" alt="" coords="255,5,456,61"/>
+<area shape="rect" id="node3" href="$classspore_1_1SynapticSamplingRewardGradientConnection_1_1ConnTestDummyNode.html" title="spore::SynapticSamplingReward\lGradientConnection\&lt; targetidentifier\lT \&gt;::ConnTestDummyNode" alt="" coords="240,85,471,141"/>
 </map>

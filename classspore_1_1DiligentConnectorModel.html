@@ -113,11 +113,9 @@ Collaboration diagram for spore::DiligentConnectorModel&lt; ConnectionT &gt;:</d
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae5265a2fb87f9b8aea17f866f665c13f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae5265a2fb87f9b8aea17f866f665c13f"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DiligentConnectorModel</b> (const std::string name, bool is_primary=true, bool has_delay=true, bool requires_symmetric=false)</td></tr>
+<tr class="memitem:ae5265a2fb87f9b8aea17f866f665c13f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#ae5265a2fb87f9b8aea17f866f665c13f">DiligentConnectorModel</a> (const std::string name, bool is_primary=true, bool has_delay=true, bool requires_symmetric=false)</td></tr>
 <tr class="separator:ae5265a2fb87f9b8aea17f866f665c13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e384af8064a0d597950a690f1b71fdc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e384af8064a0d597950a690f1b71fdc"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DiligentConnectorModel</b> (const <a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a> &amp;other, const std::string name)</td></tr>
+<tr class="memitem:a7e384af8064a0d597950a690f1b71fdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a7e384af8064a0d597950a690f1b71fdc">DiligentConnectorModel</a> (const <a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a> &amp;other, const std::string name)</td></tr>
 <tr class="separator:a7e384af8064a0d597950a690f1b71fdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64525cb6a032a76e65571121386182a2"><td class="memItemLeft" align="right" valign="top">virtual nest::ConnectorBase *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1DiligentConnectorModel.html#a64525cb6a032a76e65571121386182a2">add_connection</a> (nest::Node &amp;src, nest::Node &amp;tgt, nest::ConnectorBase *conn, nest::synindex syn_id, double weight, double delay)</td></tr>
 <tr class="separator:a64525cb6a032a76e65571121386182a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,8 +147,95 @@ class spore::DiligentConnectorModel&lt; ConnectionT &gt;</h3>
 <p>The <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> provides the interface this mechanism. New synapse models that use the diligent connection framework should be registered using the register_diligent_connection_model template function. Connections instantiated from this model will be automatically registered at the global <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> object that takes care of triggering the synapse updates.</p>
 <p>Synapses registered with the <a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> must implement a method called <em>is_degenerated</em> that takes no arguments and returns a <code>bool</code>. This is used by the garbage collector of the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a> to identify synapses that need to be deleted. The mechanism is described in detail in the documentation of <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>.</p>
 <p>Another difference of diligent connectors is that the calibrate function of their CommonSynapseProperties object is called additionally on simulation startup (such as nest::Node objects).</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>, <a class="el" href="classspore_1_1SynapseUpdateEvent.html" title="The dummy event class used to trigger synapse updates. ">SynapseUpdateEvent</a> </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>, <a class="el" href="classspore_1_1SynapseUpdateEvent.html" title="The dummy event class used to trigger synapse updates. ">SynapseUpdateEvent</a>, <a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward-based synaptic sampling connection class. ">SynapticSamplingRewardGradientConnection</a> </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ae5265a2fb87f9b8aea17f866f665c13f"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConnectionT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classspore_1_1DiligentConnectorModel.html">spore::DiligentConnectorModel</a>&lt; ConnectionT &gt;::<a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a> </td>
+          <td>(</td>
+          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>is_primary</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>has_delay</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>requires_symmetric</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Constructor. </p>
+
+</div>
+</div>
+<a class="anchor" id="a7e384af8064a0d597950a690f1b71fdc"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename ConnectionT &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classspore_1_1DiligentConnectorModel.html">spore::DiligentConnectorModel</a>&lt; ConnectionT &gt;::<a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classspore_1_1DiligentConnectorModel.html">DiligentConnectorModel</a>&lt; ConnectionT &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Constructor. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a64525cb6a032a76e65571121386182a2"></a>
 <div class="memitem">
 <div class="memproto">
@@ -562,7 +647,7 @@ template&lt;typename ConnectionT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:51:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 14:17:55 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

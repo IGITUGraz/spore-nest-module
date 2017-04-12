@@ -2,3 +2,59 @@
 \form#1:$ V' = V_m - E_{sfa}$
 \form#2:$ E_{sfa} $
 \form#3:$ 1 - exp(-rate*h) $
+\form#4:$\frac{1}{\sigma^2}$</td></tr> <tr><td>recorder_times</td> <td>double</td> <td>time points of parameter recordings</td></tr> <tr><td>weight_values</td> <td>double</td> <td>array of recorded synaptic weight values</td></tr> <tr><td>synaptic_parameter_values</td> <td>double</td> <td>array of recorded synaptic parameter values</td></tr> <tr><td>reward_gradient_values</td> <td>double</td> <td>array of recorded reward gradient values</td></tr> <tr><td>eligibility_trace_values</td> <td>double</td> <td>array of recorded eligibility trace values</td></tr> <tr><td>psp_values</td> <td>double</td> <td>array of recorded psp values</td></tr> <tr><td>recorder_interval</td> <td>double</td> <td>interval of synaptic recordings [ms]</td></tr> <tr><td>reset_recorder</td> <td>bool </td> <td>clear all recorded values now (write only)</td></tr> </table> If <td>reset_recorder</td> is set to \c true all recorded fields will be erased. <b>Implementation Details</b> The state of each synapse consists of the variables $
+\form#5:\[ \]
+\form#6:$\frac{1}{\sigma^2}$
+\form#7:$(1/\sigma^2)$
+\form#8:$\theta$
+\form#9:$w$
+\form#10:$\mu$
+\form#11:$e$
+\form#12:$g$
+\form#13:$\theta, w, e, f, g$
+\form#14:$\theta(t), w(t), e(t), g(t)$
+\form#15:\[ \frac{d e(t)}{dt} = -\frac{1}{\tau_e} \]
+\form#16:$\theta(t), w(t), e(t), g(t), y(t)$
+\form#17:\[ \frac{d e(t)}{dt} = -\frac{1}{\tau_e} + w(t) y(t) bap(t) \]
+\form#18:\[ \frac{d e(t)}{dt} = -\frac{1}{\tau_e} \,+\, w(t)\,y(t)\,bap(t) \]
+\form#19:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} \,+\, w(t)\,y(t)\,bap(t) \]
+\form#20:$y(t), e(t), g(t), \theta(t), w(t)$
+\form#21:$y(t)$
+\form#22:\[ \epsilon(t) = \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \]
+\form#23:$\epsilon(t)$
+\form#24:\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \]
+\form#25:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} \,+\, w(t)\,y(t)\,bap(t) (1) \\ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} \,+\, w(t)\,y(t)\,bap(t) (2) \]
+\form#26:$\tau_m$
+\form#27:$\tau_r$
+\form#28:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \]
+\form#29:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \]
+\form#30:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,\nu_g \]
+\form#31:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \]
+\form#32:\[ d \theta(t) \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,\nu_g \]
+\form#33:\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + g(t) \right) dt \,+\, \mathcal{W}_{\theta} \]
+\form#34:\[ w(t) \;=\; \exp ( \theta(t) - \theta_0 ) \]
+\form#35:\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + g(t) \right) dt \,+\, \sqrt{ 2 T \beta } \mathcal{W}_{\theta} \]
+\form#36:$\beta$
+\form#37:$T_\theta$
+\form#38:$T_g$
+\form#39:$^1$
+\form#40:$\,^1$
+\form#41:$ (default false)</td></tr> <tr><td>verbose</td> <td>bool</td> <td>write status to the standard output (for debugging, default: false)</td></tr> </table> The following parameters can be set in the status dictionary: <table> <tr><th>name</th> <th>type</th> <th>comment</th></tr> <tr><td>synaptic_parameter</td> <td>double</td> <td>initial synaptic parameter ($
+\form#42:$ (default false)</td></tr> <tr><td>verbose</td> <td>bool</td> <td>write status to the standard output (for debugging, default: false)</td></tr> </table> *) simulate_retracted_synapses must also be true for this to be effective. The following parameters can be set in the status dictionary: <table> <tr><th>name</th> <th>type</th> <th>comment</th></tr> <tr><td>synaptic_parameter</td> <td>double</td> <td>initial synaptic parameter ($
+\form#43:\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + g(t) + \beta_g \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T \beta } \mathcal{W}_{\theta} \]
+\form#44:$\beta_g$
+\form#45:$\tau_g$
+\form#46:$\tau_e$
+\form#47:$\theta_0$
+\form#48:\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T \beta } \mathcal{W}_{\theta} \]
+\form#49:$dopa(t)$
+\form#50:$bap(t)$
+\form#51:$c_e$
+\form#52:$c_g$
+\form#53:\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \]
+\form#54:$y(t), e(t)$
+\form#55:$g(t)$
+\form#56:$\theta(t)$
+\form#57:$w(t)$
+\form#58:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \quad \text{ eligibility trace } \]
+\form#59:$e(t)$

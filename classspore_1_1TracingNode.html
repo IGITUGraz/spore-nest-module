@@ -135,7 +135,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad6b52cd3abb76b5f6ea44fe390d011d5"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#ad6b52cd3abb76b5f6ea44fe390d011d5">set_status</a> (const DictionaryDatum &amp;d)</td></tr>
 <tr class="separator:ad6b52cd3abb76b5f6ea44fe390d011d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4b6747dfeb40cd23b6cbd08b951048e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#ad4b6747dfeb40cd23b6cbd08b951048e">get_trace</a> (nest::delay steps, trace_id id) const </td></tr>
-<tr class="memdesc:ad4b6747dfeb40cd23b6cbd08b951048e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class to all nodes that record traces.  <a href="#ad4b6747dfeb40cd23b6cbd08b951048e">More...</a><br /></td></tr>
+<tr class="memdesc:ad4b6747dfeb40cd23b6cbd08b951048e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access the trace of <em>id</em> at time step <em>step</em>.  <a href="#ad4b6747dfeb40cd23b6cbd08b951048e">More...</a><br /></td></tr>
 <tr class="separator:ad4b6747dfeb40cd23b6cbd08b951048e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab481ff1ce74b32636c35d485be0253ac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1TracingNode.html#ab481ff1ce74b32636c35d485be0253ac">get_trace</a> (nest::Time const &amp;time, trace_id id) const </td></tr>
 <tr class="separator:ab481ff1ce74b32636c35d485be0253ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,7 +153,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class to all nodes that record traces. </p>
-<p>Node that allows to record traces. A trace is a fixed-length buffer that stores the most recent values of a real-valued time-dependent variable, e.g., the neuron's membrane potential. Traces can be read by other nodes or connections. </p>
+<p>Node that allows to record traces. A trace is a fixed-length buffer that stores the most recent values of a real-valued time-dependent variable, e.g., the neuron's membrane potential. Traces can be read by other nodes or connections. Traces can be accessed using the <a class="el" href="classspore_1_1TracingNode.html#ad4b6747dfeb40cd23b6cbd08b951048e" title="Access the trace of id at time step step. ">get_trace()</a> method. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a033022cfbc5ad24e2304107dabcaded6"></a>
 <div class="memitem">
@@ -271,7 +271,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Base class to all nodes that record traces. </p>
+<p>Access the trace of <em>id</em> at time step <em>step</em>. </p>
 <p>Get the trace at the given time step. Returns an iterator to a circular buffer that allows to read the trace. Note that neither this function nor the iterator checks for the limits of the trace. Instead values wrap around at the buffer limits. Reading at or beyond <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46a47207e0cf6d564786e80af00ef69e">ConnectionUpdateManager::get_origin()</a> (which is equal to the slice origin), or values older than <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a28cd6389e8f692469a2831d04a30d290">ConnectionUpdateManager::get_horizon()</a> will lead to undefined behavior.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -461,7 +461,7 @@ Protected Member Functions</h2></td></tr>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 6 2017 11:51:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 14:17:55 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

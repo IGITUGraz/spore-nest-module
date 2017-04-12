@@ -1,4 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classspore_1_1SporeTestConnection.html" title="Connection for testing the spore module. " alt="" coords="173,5,361,47"/>
-<area shape="rect" id="node3" href="$classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward&#45;based synaptic sampling connection class. " alt="" coords="141,71,392,112"/>
+<area shape="rect" id="node1" href="$classspore_1_1SporeTestBase.html" title="spore::SporeTestBase" alt="" coords="5,56,157,83"/>
+<area shape="rect" id="node2" href="$classspore_1_1TestCircularBuffer.html" title="spore::TestCircularBuffer" alt="" coords="205,5,373,32"/>
+<area shape="rect" id="node3" href="$classspore_1_1TestPulseTrace.html" title="spore::TestPulseTrace" alt="" coords="212,56,367,83"/>
+<area shape="rect" id="node4" href="$classspore_1_1TestTracingNode.html" title="spore::TestTracingNode" alt="" coords="208,107,371,133"/>
 </map>

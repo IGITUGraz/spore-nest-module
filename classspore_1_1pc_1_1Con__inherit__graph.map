@@ -1,4 +1,6 @@
 <map id="spore::pc::Con&lt; T &gt;" name="spore::pc::Con&lt; T &gt;">
-<area shape="rect" id="node2" href="$classspore_1_1pc_1_1CBigger.html" title="&quot;Bigger than&quot; condition. Parameter must be larger or equal to given value. " alt="" coords="5,80,168,107"/>
-<area shape="rect" id="node3" href="$classspore_1_1pc_1_1CMin.html" title="Minimum condition. Parameter must be larger or equal to given value. " alt="" coords="192,80,339,107"/>
+<area shape="rect" id="node2" href="$classspore_1_1pc_1_1CBigger.html" title="&quot;Bigger than&quot; condition. Parameter must be larger or equal to given value. " alt="" coords="197,5,360,32"/>
+<area shape="rect" id="node3" href="$classspore_1_1pc_1_1CMax.html" title="Maximum condition. Parameter must be smaller or equal to given value. " alt="" coords="203,56,354,83"/>
+<area shape="rect" id="node4" href="$classspore_1_1pc_1_1CMin.html" title="Minimum condition. Parameter must be larger or equal to given value. " alt="" coords="205,107,352,133"/>
+<area shape="rect" id="node5" href="$classspore_1_1pc_1_1CSmaller.html" title="&quot;Smaller than&quot; condition. Parameter must be larger or equal to given value. " alt="" coords="193,157,364,184"/>
 </map>
