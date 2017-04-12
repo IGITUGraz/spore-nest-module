@@ -294,11 +294,11 @@ private:
  *     \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;.
  * \f]
  * A node derived from type TracingNode must be registered to the synapse
- * model. The trace of this node at id \a dopa_trace_id is used as reward
- * signal \f$dopa(t)\f$. The postsynaptic neuron must also be derived from
- * type TracingNode. Its trace with id \a bap_trace_id is used as
- * back-propagating signal \f$bap(t)\f$. The synapse then solves the following
- * set of differential equations:
+ * model at its \a reward_transmitter parameter. The trace of this node at
+ * id \a dopa_trace_id is used as reward signal \f$dopa(t)\f$. The postsynaptic
+ * neuron must also be derived from type TracingNode. Its trace with id
+ * \a bap_trace_id is used as back-propagating signal \f$bap(t)\f$. The synapse
+ * then solves the following set of differential equations:
  * \f[
  *     \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t)
  * \f]

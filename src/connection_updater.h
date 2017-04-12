@@ -98,6 +98,11 @@ namespace spore
  * removed. The synapse should in that case not call trigger_garbage_collector()
  * again or change its behavior of returning \c true from \a is_degenerated, as
  * this would lead to undefined behavior.
+ * 
+ * The garbage collection feature should not be used together with structural
+ * plasticity mechanisms of NEST which \em delete synapses of the same synapse
+ * type, since these may interfere with the garbage collector. Using structural
+ * plasticity mechanisms which only \em add synapses is however possible.
  *
  * @see DiligentConnectorModel
  */
