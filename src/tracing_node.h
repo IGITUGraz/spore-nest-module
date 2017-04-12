@@ -1,6 +1,9 @@
 /* 
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -45,7 +48,7 @@ namespace spore
  * Node that allows to record traces. A trace is a fixed-length buffer that
  * stores the most recent values of a real-valued time-dependent variable,
  * e.g., the neuron's membrane potential. Traces can be read by other nodes
- * or connections.
+ * or connections. Traces can be accessed using the get_trace() method.
  */
 class TracingNode : public nest::Node
 {
@@ -60,7 +63,7 @@ public:
     virtual void set_status(const DictionaryDatum& d);
 
     /**
-     * @brief Base class to all nodes that record traces.
+     * @brief Access the trace of \a id at time step \a step.
      * 
      * Get the trace at the given time step. Returns an iterator to a
      * circular buffer that allows to read the trace. Note that neither

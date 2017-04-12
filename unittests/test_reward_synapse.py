@@ -30,16 +30,16 @@ import time
 class TestStringMethods(unittest.TestCase):
 
     # test connection
-    def spore_connection_test(self, resolution, interval, delay, exp_len):
+    def spore_connection_test(self, resolution, interval, delay, exp_len, synapse_properties, times, values):
 
         nest.ResetKernel()
         nest.SetKernelStatus({"resolution":resolution})
         nest.sli_func('InitSynapseUpdater',interval,delay)
         nest.CopyModel("spore_test_node", "test_tracing_node", {"test_name":"test_tracing_node"})
         nodes = nest.Create("test_tracing_node",2)
+        synapse_properties["reward_transmitter"] = nodes[0]
         nest.CopyModel("synaptic_sampling_rewardgradient_synapse", "test_synapse")
-        #nest.SetDefaults("test_synapse", { "weight_update_time" : 50.0 })
-        nest.SetDefaults("test_synapse", { "temperature" : 0.0, "synaptic_parameter" : 1.0, "reward_transmitter" : nodes[0] })
+        nest.SetDefaults("test_synapse", synapse_properties )
         nest.Connect( [nodes[0]], [nodes[1]], "one_to_one", { "model" : "test_synapse" } )
         conns = nest.GetConnections([nodes[0]], [nodes[1]], "test_synapse")
         nest.SetStatus(conns,{ "recorder_interval" : 100.0 })
@@ -48,6 +48,17 @@ class TestStringMethods(unittest.TestCase):
         
         results = nest.GetStatus(conns, ["recorder_times","synaptic_parameter_values"])
         
+        self.assertAlmostEqual( np.sum( ( np.array(results[0][0]) - np.array(times) )**2 ), 0.0 )
+        self.assertAlmostEqual( np.sum( ( np.array(results[0][1]) - np.array(values) )**2 ), 0.0 )
+
+
+    def test_reward_synapse(self):
+        synapse_properties = { "weight_update_interval" : 100.0, "temperature" : 0.0,
+                               "synaptic_parameter" : 1.0, "reward_transmitter" : None,
+                               "learning_rate": 0.0001, "episode_length": 100.0,
+                               "max_param": 100.0, "min_param": -100.0, "max_param_change": 100.0,
+                               "integration_time": 10000.0 }
+
         times = (0.0, 100.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0, 800.0, 900.0, 1000.0, 1100.0, 1200.0, 1300.0,
                  1400.0, 1500.0, 1600.0, 1700.0, 1800.0, 1900.0, 2000.0, 2100.0, 2200.0, 2300.0, 2400.0, 2500.0, 2600.0,
                  2700.0, 2800.0, 2900.0, 3000.0, 3100.0, 3200.0, 3300.0, 3400.0, 3500.0, 3600.0, 3700.0, 3800.0, 3900.0,
@@ -78,11 +89,7 @@ class TestStringMethods(unittest.TestCase):
                   0.39271102835780536, 0.3887839180742273, 0.38489607889348504, 0.38104711810455016, 0.377236646923504,
                   0.3734642804542696, 0.3697296376497269)
 
-        self.assertAlmostEqual( np.sum( ( np.array(results[0][0]) - np.array(times) )**2 ), 0.0 )
-        self.assertAlmostEqual( np.sum( ( np.array(results[0][1]) - np.array(values) )**2 ), 0.0 )
-
-    def test_reward_synapse(self):
-        self.spore_connection_test(1.0, 100, 100, 10000.0)
+        self.spore_connection_test(1.0, 100, 100, 10000.0, synapse_properties, times, values)
 
 if __name__ == '__main__':
     nest.Install("sporemodule")

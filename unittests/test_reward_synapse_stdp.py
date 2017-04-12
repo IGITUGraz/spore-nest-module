@@ -34,6 +34,12 @@ class TestStringMethods(unittest.TestCase):
         spike_times_in = [10.0, 15.0, 20.0, 25.0, 50.0]
         spike_times_out = [ 40.0, 50.0, 60.0, 70.0 ]
 
+        synapse_properties = { "weight_update_interval" : 100.0, "temperature" : 0.0,
+                               "synaptic_parameter" : 1.0, "reward_transmitter" : None,
+                               "learning_rate": 0.0001, "episode_length": 100.0,
+                               "max_param": 100.0, "min_param": -100.0, "max_param_change": 100.0,
+                               "integration_time": 10000.0 }
+
         nest.ResetKernel()
         nest.SetKernelStatus({"resolution":resolution})
         nest.sli_func("InitSynapseUpdater",interval,delay)
@@ -48,9 +54,8 @@ class TestStringMethods(unittest.TestCase):
 
         nodes = nest.Create("test_pulse_trace",1)
         nest.CopyModel("synaptic_sampling_rewardgradient_synapse", "test_synapse")
-        nest.SetDefaults("test_synapse", { "temperature" : 0.0,
-                                           "synaptic_parameter" : 1.0,
-                                           "reward_transmitter" : nodes[0] })
+        synapse_properties["reward_transmitter"] = nodes[0]
+        nest.SetDefaults("test_synapse", synapse_properties )
         nest.Connect( [gin[0]], [nout[0]], "one_to_one", { "model" : "test_synapse" } )
         conns = nest.GetConnections([gin[0]], [nout[0]], "test_synapse")
         nest.SetStatus(conns,{ "recorder_interval" : 100.0 })

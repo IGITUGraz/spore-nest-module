@@ -186,15 +186,15 @@ synapse_properties = {
     "integration_time": s_to_ms(50.0),  # time to estimate expectations over
     "learning_rate": 0.005 * (1.0 / 100000.0),  # learning rate
     "parameter_mapping_offset": 3.0,  # offset theta_0
-    "psp_facilitation_rate": 20.0,  # psp falling edge time constant
-    "psp_depression_rate": 2.0,  # psp rising edge time constant
+    "psp_tau_fall": 20.0,  # psp falling edge time constant
+    "psp_tau_rise": 2.0,  # psp rising edge time constant
     "max_param": 5.0,  # maximum synaptic parameter
     "min_param": -2.0,  # minimum synaptic parameter
     "max_param_change": 40.0,  # maximum synaptic parameter change
     "gradient_scale": 1.0,  # activate synaptic gradient integration
     "direct_gradient_rate": 0.0,  # rate of direct effect of gradient on the synapse
     "prior_mean": 0.0,  # mean of parameter prior
-    "prior_std": 2.0,  # std of parameter prior
+    "prior_inverse_variance": 0.25,  # inverse variance of parameter prior
 }
 
 hidden_neuron_properties = {

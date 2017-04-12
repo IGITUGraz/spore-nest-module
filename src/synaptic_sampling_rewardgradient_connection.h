@@ -1,6 +1,9 @@
 /* 
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -127,8 +130,8 @@ public:
     // parameters
     double learning_rate_;
     double episode_length_;
-    double psp_facilitation_rate_;
-    double psp_depression_rate_;
+    double psp_tau_rise_;
+    double psp_tau_fall_;
 
     double temperature_;
     double gradient_noise_;
@@ -138,9 +141,9 @@ public:
     double integration_time_;
     double direct_gradient_rate_;
     double parameter_mapping_offset_;
-    double weight_update_time_;
+    double weight_update_interval_;
     double gradient_scale_;
-    double epsilon_;
+    double psp_cutoff_amplitude_;
 
     long bap_trace_id_;
     long dopa_trace_id_;
@@ -153,8 +156,8 @@ public:
     TracingNode* reward_transmitter_;
 
     double resolution_unit_;
-    double gamma_;
-    double lambda_;
+    double reward_gradient_update_;
+    double eligibility_trace_update_;
 
     double psp_faciliation_update_;
     double psp_depression_update_;
@@ -166,29 +169,29 @@ private:
     /**
      * @brief Define default values and constraints for synaptic parameters.
      */
-    template < typename T >
-        void define_parameters( T & p )
+    template < typename T, typename C >
+        static void define_parameters( T & p, C &v )
     {
-        p.parameter( learning_rate_, "learning_rate", 0.0001, pc::MinD(0.0) );
-        p.parameter( episode_length_, "episode_length", 100.0, pc::BiggerD(0.0) );
-        p.parameter( psp_facilitation_rate_, "psp_facilitation_rate", 20.0, pc::BiggerD(0.0) );
-        p.parameter( psp_depression_rate_, "psp_depression_rate", 2.0, pc::BiggerD(0.0) );
-        p.parameter( temperature_, "temperature", 0.01, pc::MinD(0.0) );
-        p.parameter( gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
-        p.parameter( max_param_, "max_param", 100.0 );
-        p.parameter( min_param_, "min_param", -100.0 );
-        p.parameter( max_param_change_, "max_param_change", 100.0, pc::MinD(0.0) );
-        p.parameter( integration_time_, "integration_time", 10000.0, pc::BiggerD(0.0) );
-        p.parameter( direct_gradient_rate_, "direct_gradient_rate", 0.0 );
-        p.parameter( parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
-        p.parameter( weight_update_time_, "weight_update_time", 100.0, pc::BiggerD(0.0) );
-        p.parameter( gradient_scale_, "gradient_scale", 1.0 );
-        p.parameter( bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
-        p.parameter( dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
-        p.parameter( epsilon_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
-        p.parameter( simulate_retracted_synapses_, "simulate_retracted_synapses", false );
-        p.parameter( delete_retracted_synapses_, "delete_retracted_synapses", false );
-        p.parameter( verbose_, "verbose", false );
+        p.parameter( v.learning_rate_, "learning_rate", 5e-08, pc::MinD(0.0) );
+        p.parameter( v.episode_length_, "episode_length", 1000.0, pc::BiggerD(0.0) );
+        p.parameter( v.psp_tau_rise_, "psp_tau_rise", 2.0, pc::BiggerD(0.0) );
+        p.parameter( v.psp_tau_fall_, "psp_tau_fall", 20.0, pc::BiggerD(0.0) );
+        p.parameter( v.temperature_, "temperature", 0.1, pc::MinD(0.0) );
+        p.parameter( v.gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
+        p.parameter( v.max_param_, "max_param", 5.0 );
+        p.parameter( v.min_param_, "min_param", -2.0 );
+        p.parameter( v.max_param_change_, "max_param_change", 40.0, pc::MinD(0.0) );
+        p.parameter( v.integration_time_, "integration_time", 50000.0, pc::BiggerD(0.0) );
+        p.parameter( v.direct_gradient_rate_, "direct_gradient_rate", 0.0 );
+        p.parameter( v.parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
+        p.parameter( v.weight_update_interval_, "weight_update_interval", 100.0, pc::BiggerD(0.0) );
+        p.parameter( v.gradient_scale_, "gradient_scale", 1.0 );
+        p.parameter( v.bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
+        p.parameter( v.dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
+        p.parameter( v.psp_cutoff_amplitude_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
+        p.parameter( v.simulate_retracted_synapses_, "simulate_retracted_synapses", false );
+        p.parameter( v.delete_retracted_synapses_, "delete_retracted_synapses", false );
+        p.parameter( v.verbose_, "verbose", false );
     }
 
     double std_wiener_;
@@ -199,7 +202,7 @@ private:
 /**
  * @brief Reward-based synaptic sampling connection class
  *
- * SynapticSamplingRewardgradientConnection - Synapse implementing reward-based
+ * SynapticSamplingRewardGradientConnection - Synapse implementing reward-based
  * learning through synaptic sampling. This class implements the model in [1,2].
  * This connection is a diligent synapse model, therefore updates are triggered
  * on a regular interval which is ensured by the ConnectionUpdateManager.
@@ -208,54 +211,118 @@ private:
  *
  * <b>Parameters</b>
  *
- * The following parameters can be set in the common properties dictionary:
+ * The following parameters can be set in the common properties dictionary
+ * (default values given in parentheses, corresponding symbols in the equations
+ * given below and in [1,2] given in braces):
  * <table>
- * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr>
- * <tr><td>learning_rate</td>               <td>double</td> <td>learning rate</td></tr>
- * <tr><td>temperature</td>                 <td>double</td> <td>(amplitude) of parameter noise</td></tr>
- * <tr><td>gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise</td></tr>
- * <tr><td>psp_facilitation_rate</td>       <td>double</td> <td>double exponential PSP kernel rise [1/s]</td></tr>
- * <tr><td>psp_depression_rate</td>         <td>double</td> <td>double exponential PSP kernel decay [1/s]</td></tr>
- * <tr><td>integration_time</td>            <td>double</td> <td>time of gradient integration [ms]</td></tr>
- * <tr><td>episode_length</td>              <td>double</td> <td>length of eligibility trace [ms]</td></tr>
- * <tr><td>weight_update_time</td>          <td>double</td> <td>interval of synaptic weight updates [ms]</td></tr>
- * <tr><td>parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
- *                                                              weight</td></tr>
- * <tr><td>max_param</td>                   <td>double</td> <td>maximum synaptic parameter</td></tr>
- * <tr><td>min_param</td>                   <td>double</td> <td>minimum synaptic parameter</td></tr>
- * <tr><td>max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change</td></tr>
- * <tr><td>direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to the
- *                                                              synaptic parameter</td></tr>
- * <tr><td>gradient_scale</td>              <td>double</td> <td>scaling parameter for tde gradient</td></tr>
- * <tr><td>reward_transmitter</td>          <td>int</td>    <td>GID of tde synapse's reward transmitter</td></tr>
- * <tr><td>bap_trace_id</td>                <td>int</td>    <td>ID of tde BAP trace (default 0)</td></tr>
- * <tr><td>dopa_trace_id</td>               <td>int</td>    <td>ID of tde dopamine trace (default 0)</td></tr>
- * <tr><td>simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
- *                                                              (default false)</td></tr>
- * <tr><td>delete_retracted_synapses</td>   <td>bool</td>   <td>delete retracted synapses. simulate_retracted_synapses
- *                                                              must also be true for this to be effective.
- *                                                              (default false)</td></tr>
- * <tr><td>verbose</td>                     <td>bool</td>   <td>write status to std::out (for debugging,
- *                                                              default false)</td></tr>
+ * <tr><th>name</th>                           <th>type</th>   <th>comment</th></tr>
+ * <tr><td>\a learning_rate</td>               <td>double</td> <td>learning rate (5e-08) {\f$\beta\f$}</td></tr>
+ * <tr><td>\a temperature</td>                 <td>double</td> <td>amplitude of parameter noise (0.1) {\f$T_\theta\f$}
+ *                                             </td></tr>
+ * <tr><td>\a gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise (0.0)
+ *                                                              {\f$T_g\f$}</td></tr>
+ * <tr><td>\a psp_tau_rise</td>                <td>double</td> <td>double exponential PSP kernel rise (2.0) [ms]
+ *                                                              {\f$\tau_r\f$}</td></tr>
+ * <tr><td>\a psp_tau_fall</td>                <td>double</td> <td>double exponential PSP kernel decay (20.0) [ms]
+ *                                                              {\f$\tau_m\f$}</td></tr>
+ * <tr><td>\a psp_cutoff_amplitude</td>        <td>double</td> <td>psp is clipped to 0 below this value (0.0001) [ms]
+ *                                                              {\f$\tau_m\f$}</td></tr>
+ * <tr><td>\a integration_time</td>            <td>double</td> <td>time of gradient integration (50000.0) [ms]
+ *                                                              {\f$\tau_g\f$}</td></tr>
+ * <tr><td>\a episode_length</td>              <td>double</td> <td>length of eligibility trace (0.0001) [ms]
+ *                                                              {\f$\tau_e\f$}</td></tr>
+ * <tr><td>\a weight_update_interval</td>      <td>double</td> <td>interval of synaptic weight updates (100.0)
+ *                                                              [ms]</td></tr>
+ * <tr><td>\a parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
+ *                                                              weight (3.0) {\f$\theta_0\f$}</td></tr>
+ * <tr><td>\a direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to the
+ *                                                              synaptic parameter (0.0) {\f$c_e\f$}</td></tr>
+ * <tr><td>\a gradient_scale</td>              <td>double</td> <td>scaling parameter for the gradient (1.0)
+ *                                                              {\f$c_g\f$}</td></tr>
+ * <tr><td>\a max_param</td>                   <td>double</td> <td>maximum synaptic parameter (5.0)</td></tr>
+ * <tr><td>\a min_param</td>                   <td>double</td> <td>minimum synaptic parameter (-2.0)</td></tr>
+ * <tr><td>\a max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change (40.0)</td></tr>
+ * <tr><td>\a reward_transmitter</td>          <td>int</td>    <td>GID of the synapse's reward transmitter*</td></tr>
+ * <tr><td>\a bap_trace_id</td>                <td>int</td>    <td>ID of the BAP trace (0)</td></tr>
+ * <tr><td>\a dopa_trace_id</td>               <td>int</td>    <td>ID of the dopamine trace (0)</td></tr>
+ * <tr><td>\a simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
+ *                                                              (false)</td></tr>
+ * <tr><td>\a delete_retracted_synapses</td>   <td>bool</td>   <td>delete retracted synapses (false)</td></tr>
+ * <tr><td>\a verbose</td>                     <td>bool</td>   <td>write status to the standard output (false)</td></tr>
  * </table>
+ * 
+ * *)  \a reward_transmitter must be set to a the GID of a TracingNode before
+ *        simulation startup.
  *
  * The following parameters can be set in the status dictionary:
  * <table>
- * <tr><th>name</th>                        <th>type</th>   <th>comment</th></tr>
- * <tr><td>synaptic_parameter</td>          <td>double</td> <td>initial synaptic parameter</td></tr>
- * <tr><td>weight</td>                      <td>double</td> <td>current synaptic weight</td></tr>
- * <tr><td>prior_mean</td>                  <td>double</td> <td>mean of tde prior</td></tr>
- * <tr><td>prior_std</td>                   <td>double</td> <td>STD of tde prior</td></tr>
- * <tr><td>recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
- * <tr><td>weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
- * <tr><td>synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values</td></tr>
- * <tr><td>reward_gradient_values</td>      <td>double</td> <td>array of recorded reward gradient values</td></tr>
- * <tr><td>eligibility_trace_values</td>    <td>double</td> <td>array of recorded eligibility trace values</td></tr>
- * <tr><td>psp_values</td>                  <td>double</td> <td>array of recorded psp values</td></tr>
- * <tr><td>recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
- * <tr><td>reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now (write only)</td></tr>
+ * <tr><th>name</th>                           <th>type</th>   <th>comment</th></tr>
+ * <tr><td>\a synaptic_parameter</td>          <td>double</td> <td>initial synaptic parameter (\f$\theta\f$)</td></tr>
+ * <tr><td>\a weight</td>                      <td>double</td> <td>current synaptic weight (\f$w\f$)</td></tr>
+ * <tr><td>\a eligibility_trace</td>           <td>double</td> <td>current eligibility trace (\f$e\f$)</td></tr>
+ * <tr><td>\a reward_gradient</td>             <td>double</td> <td>current reward gradient (\f$g\f$)</td></tr>
+ * <tr><td>\a prior_mean</td>                  <td>double</td> <td>mean of the prior (\f$\mu\f$)</td></tr>
+ * <tr><td>\a prior_inverse_variance</td>      <td>double</td> <td>inverse variance of the prior
+ *                                                              \f$(1/\sigma^2)\f$</td></tr>
+ * <tr><td>\a recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
+ * <tr><td>\a weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
+ * <tr><td>\a synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values</td></tr>
+ * <tr><td>\a reward_gradient_values</td>      <td>double</td> <td>array of recorded reward gradient values</td></tr>
+ * <tr><td>\a eligibility_trace_values</td>    <td>double</td> <td>array of recorded eligibility trace values</td></tr>
+ * <tr><td>\a psp_values</td>                  <td>double</td> <td>array of recorded psp values</td></tr>
+ * <tr><td>\a recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
+ * <tr><td>\a reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now* (write only)</td></tr>
  * </table>
  *
+ * *) if \a reset_recorder is set to \c true all recorded fields will be erased
+ *       instantaneously.
+ *
+ * <b>Implementation Details</b>
+ * 
+ * The state of each synapse consists of the variables
+ * \f$y(t), e(t), g(t), \theta(t), w(t)\f$.
+ * The variable \f$y(t)\f$ is the presynaptic spike train filtered with a PSP
+ * kernel \f$\epsilon(t)\f$ of the form
+ * \f[
+ *     \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;.
+ * \f]
+ * A node derived from type TracingNode must be registered to the synapse
+ * model. The trace of this node at id \a dopa_trace_id is used as reward
+ * signal \f$dopa(t)\f$. The postsynaptic neuron must also be derived from
+ * type TracingNode. Its trace with id \a bap_trace_id is used as
+ * back-propagating signal \f$bap(t)\f$. The synapse then solves the following
+ * set of differential equations:
+ * \f[
+ *     \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t)
+ * \f]
+ * \f[
+ *     \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g
+ * \f]
+ * \f[
+ *     d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + c_g\,g(t) +
+ *                                     c_e \, dopa(t) \,e(t) \right) dt \,+\,
+ *                       \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta}
+ * \f]
+ * \f[
+ *     w(t) \;=\; \exp ( \theta(t) - \theta_0 )
+ * \f]
+ * The dynamics of the postsynaptic term \f$y(t)\f$, the eligibility trace
+ * \f$e(t)\f$ and the reward gradient \f$g(t)\f$ are updated at each NEST
+ * time step. The dynamics of \f$\theta(t)\f$ and \f$w(t)\f$ are updated
+ * on a time grid based on \a weight_update_interval. The synaptic weights
+ * remain constant between two updates. The synapse recorder is only invoked
+ * after each weight update which means that \a recorder_interval must be a
+ * multiple of \a weight_update_interval. Synaptic parameters are clipped at
+ * \a min_param and \a max_param. Parameter gradients are clipped at +/-
+ * \a max_param_change. If \a simulate_retracted_synapses is set to \c false
+ * simulation of \f$y(t), e(t)\f$ and \f$g(t)\f$ is not continued if
+ * \f$\theta(t)\f$ falls below 0 (retracted synapse). This means that only
+ * the stochastic dynamics of \f$\theta(t)\f$ are simulated until the synapse
+ * is reformed again. During this time, the reward gradient \f$g(t)\f$ is
+ * fixed to 0. If \a delete_retracted_synapses is set to \c true, retracted
+ * synapses will be removed from the network using the garbage collector of the
+ * ConnectionUpdateManager.
+ *  
  * <b>References</b>
  *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
@@ -304,8 +371,8 @@ public:
 
     /**
      * Checks if the type of the postsynaptic node is supported. Throws an
-     * IllegalConnection exception if the postsynaptic node is not derived
-     * from TracingNode.
+     * \a IllegalConnection exception if the postsynaptic node is not
+     * derived from TracingNode.
      */
     void check_connection(nest::Node & s, nest::Node & t,
                           nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
@@ -331,11 +398,12 @@ public:
     using ConnectionBase::get_target;
 
     /**
-     * Sets the synaptic weight to the given value.
+     * Sets the synaptic parameter to the given value.
      *
-     * @note This value will be overwritten at the next time when the synapse
-     * is updated. Set the synaptic_parameter instead for permanent weight
-     * changes.
+     * @note This function deviates from the default behavior of nest as it not directly sets the
+     * weight of the synapse, but the value of the synaptic parameter \f$\theta$. The actual synaptic
+     * weight of the synapse will only change after the next weight update is triggered. Use \c set_status
+     * to set the weight directly.
      */
     void set_weight(double w)
     {
@@ -347,7 +415,7 @@ public:
      */
     double get_eligibility_trace() const
     {
-        return stdp_eligibility_trace_;
+        return eligibility_trace_;
     }
 
     /**
@@ -400,11 +468,11 @@ private:
     double psp_facilitation_;
     double psp_depression_;
 
-    double stdp_eligibility_trace_;
+    double eligibility_trace_;
     double reward_gradient_;
 
     double prior_mean_;
-    double prior_scale_factor_;
+    double prior_inv_var_;
 
     nest::index recorder_port_;
 
@@ -439,10 +507,10 @@ weight_(0.0),
 synaptic_parameter_(0.0),
 psp_facilitation_(0.0),
 psp_depression_(0.0),
-stdp_eligibility_trace_(0.0),
+eligibility_trace_(0.0),
 reward_gradient_(0.0),
 prior_mean_(0.0),
-prior_scale_factor_(1.0),
+prior_inv_var_(1.0),
 recorder_port_(nest::invalid_index)
 {
 }
@@ -458,10 +526,10 @@ weight_(rhs.weight_),
 synaptic_parameter_(rhs.synaptic_parameter_),
 psp_facilitation_(rhs.psp_facilitation_),
 psp_depression_(rhs.psp_depression_),
-stdp_eligibility_trace_(rhs.stdp_eligibility_trace_),
+eligibility_trace_(rhs.eligibility_trace_),
 reward_gradient_(rhs.reward_gradient_),
 prior_mean_(rhs.prior_mean_),
-prior_scale_factor_(rhs.prior_scale_factor_),
+prior_inv_var_(rhs.prior_inv_var_),
 recorder_port_(nest::invalid_index)
 {
 }
@@ -526,30 +594,29 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
     ConnectionBase::get_status(d);
     def<double>(d, nest::names::weight, weight_);
     def<double>(d, "synaptic_parameter", synaptic_parameter_);
+    def<double>(d, "eligibility_trace", eligibility_trace_);
+    def<double>(d, "reward_gradient", reward_gradient_);
     def<double>(d, "prior_mean", prior_mean_);
-    //def<double>(d, "prior_std", prior_std_);
-
+    def<double>(d, "prior_inverse_variance", prior_inv_var_);
     def<long>(d, nest::names::size_of, sizeof (*this));
 
     logger()->get_status(d, recorder_port_);
 }
 
 /**
- * Status setter function.
+ * @brief Status setter function.
+ * 
+ * @Note \c weight will be overwritten next time when the synapse is updated.
  */
 template <typename targetidentifierT>
 void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(const DictionaryDatum & d,
                                                                              nest::ConnectorModel &cm)
 {
     ConnectionBase::set_status(d, cm);
+    updateValue<double>(d, nest::names::weight, weight_);
     updateValue<double>(d, "synaptic_parameter", synaptic_parameter_);
     updateValue<double>(d, "prior_mean", prior_mean_);
-    
-    double prior_std = 0.0;
-    if (updateValue<double>(d, "prior_std", prior_std))
-    {
-        prior_scale_factor_ = 1.0 / pow(prior_std, 2);
-    }
+    updateValue<double>(d, "prior_inverse_variance", prior_inv_var_);
 
     logger()->set_status(d, recorder_port_);
 }
@@ -562,7 +629,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
  * Send an event to the postsynaptic neuron. This will update the synapse state
  * and synaptic weights to the current slice origin and send the spike event.
  * This method is also triggered by the ConnectionUpdateManager to indicate
- * that the synapse is running out of data. In this case an invalid rport of -1
+ * that the synapse is running out of date. In this case an invalid rport of -1
  * is passed and the spike is not delivered to the postsynaptic neuron.
  *
  * @param e the spike event.
@@ -603,7 +670,8 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
         TracingNode::const_iterator dopa_trace =
                 cp.reward_transmitter_->get_trace(s_from, cp.dopa_trace_id_);
 
-        const double t_last_weight_update = std::floor(t_last_spike / cp.weight_update_time_) * cp.weight_update_time_;
+        const double t_last_weight_update =
+            std::floor(t_last_spike / cp.weight_update_interval_) * cp.weight_update_interval_;
         const long s_last_update = std::floor( t_last_weight_update/cp.resolution_unit_ );
 
         for (long next_weight_step = s_last_update + cp.weight_update_steps_;
@@ -694,10 +762,10 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
         // This loop will - considering every call - iterate through EVERY time step (in steps of resolution)
 
         // decay eligibility trace
-        stdp_eligibility_trace_ *= cp.lambda_;
+        eligibility_trace_ *= cp.eligibility_trace_update_;
 
         // decay gradient variable
-        reward_gradient_ *= cp.gamma_;
+        reward_gradient_ *= cp.reward_gradient_update_;
 
         // update postsynaptic spike potential
         if (psp_active)
@@ -705,9 +773,9 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
             psp_facilitation_ *= cp.psp_faciliation_update_;
             psp_depression_ *= cp.psp_depression_update_;
 
-            stdp_eligibility_trace_ += sc_psp * (psp_facilitation_ - psp_depression_) * (*bap_trace);
+            eligibility_trace_ += sc_psp * (psp_facilitation_ - psp_depression_) * (*bap_trace);
 
-            if (psp_facilitation_ < cp.epsilon_)
+            if (psp_facilitation_ < cp.psp_cutoff_amplitude_)
             {
                 psp_facilitation_ = 0.0;
                 psp_depression_ = 0.0;
@@ -715,12 +783,12 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
             }
         }
 
-        reward_gradient_ += (*dopa_trace) * stdp_eligibility_trace_;
+        reward_gradient_ += (*dopa_trace) * eligibility_trace_;
 
         if (direct_gradient)
         {
             synaptic_parameter_ += (*dopa_trace) * cp.learning_rate_ *
-                                   cp.direct_gradient_rate_ * stdp_eligibility_trace_;
+                                   cp.direct_gradient_rate_ * eligibility_trace_;
         }
 
         ++bap_trace;
@@ -740,10 +808,10 @@ void SynapticSamplingRewardGradientConnection< targetidentifierT >::
 update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp)
 {
     // update synaptic parameters
-    const double l_rate = cp.weight_update_time_ * cp.learning_rate_;
+    const double l_rate = cp.weight_update_interval_ * cp.learning_rate_;
 
     // compute prior
-    const double prior = prior_scale_factor_ * (prior_mean_ - synaptic_parameter_);
+    const double prior = prior_inv_var_ * (prior_mean_ - synaptic_parameter_);
 
     reward_gradient_ += cp.get_gradient_noise(thread);
 
@@ -782,7 +850,7 @@ update_synapic_weight(long time_step, const CommonPropertiesType& cp)
         // synapse is entering the retracted state, eligibility trace is reset.
         psp_facilitation_ = 0.0;
         psp_depression_ = 0.0;
-        stdp_eligibility_trace_ = 0.0;
+        eligibility_trace_ = 0.0;
         reward_gradient_ = 0.0;
     }
 

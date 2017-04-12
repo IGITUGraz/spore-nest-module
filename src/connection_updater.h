@@ -1,6 +1,9 @@
 /*
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -42,11 +45,6 @@
 #include "kernel_manager.h"
 
 
-namespace nest
-{
-class ConnectorBase;
-}
-
 namespace spore
 {
 
@@ -63,7 +61,31 @@ namespace spore
  * Synapses that use the functionality of the update manager should be
  * registered using the register_connector() method. Synapse Models that
  * are instantiated using the DiligentConnectorModel do this automatically.
+ * 
+ * <b>Initializing the Update Manager</b>
  *
+ * If diligent connections are used the SLI function \a InitSynapseUpdater
+ * must be called before the first call to \a Connect. This is done
+ * automatically when the SPORE module is loaded but must be done manually
+ * after the NEST kernel has been reset using \a ResetKernel or its state
+ * has changed using \a SetKernelStatus. Therefore a line of code
+ * \code
+ *   <update_interval> <acceptable_latency> InitSynapseUpdater
+ * \endcode
+ * is required, where <update_interval> is an integer (default: 100) value
+ * that defines interval (in number of nest time steps) in which the update
+ * manager is invoked and <acceptable_latency> is an integer (default: 100)
+ * acceptable latency for synapses. Equivalently, if using python, add a line
+ * \code
+ *   nest.sli_func('InitSynapseUpdater',<update_interval>,<acceptable_latency>)
+ * \endcode
+ * after each call to \a ResetKernel / \a SetKernelStatus.
+ * \a InitSynapseUpdater may be called multiple times to change the parameters
+ * of the update manager, but must not be invoked again after the first call to
+ * \a Simulate (see: setup()).
+ * 
+ * <b>Garbage Collection</b>
+ * 
  * ConnectionUpdateManager also provides a mechanism to removed synapses that
  * become nonfunctional (garbage collection). The synapse must take care of
  * invoking the garbage collector by calling the trigger_garbage_collector()
@@ -139,7 +161,7 @@ public:
      */
     inline bool is_valid() const
     {
-        return (interval_ > 0) && (acceptable_latency_ >= 0);
+        return (interval_ > 0) && (acceptable_latency_ >= 0) && (cu_id_ != nest::invalid_index);
     }
 
     /**
@@ -163,73 +185,90 @@ public:
 private:
     friend class ConnectionUpdater;
 
+    /**
+     * @brief ConnectionUpdateManager is a singleton. Copy constructor is private and not implement.
+     */
+    ConnectionUpdateManager(const ConnectionUpdateManager&);
+
     void execute_garbage_collector(nest::thread th);
     void update(const nest::Time &time, nest::thread th);
     void calibrate(nest::thread th);
+    void finalize(nest::thread th);
     void prepare();
     void reset();
-
-    ConnectionUpdateManager(const ConnectionUpdateManager&)
-    {
-    }
+    void finalize();
 
     /**
      * @brief Class for connection entries.
      */
-    class Connection
+    class ConnectionEntry
     {
     public:
-        Connection( nest::ConnectorBase* connector, nest::index sender_gid )
+        ConnectionEntry( nest::ConnectorBase* connector, nest::Node* sender=0 )
         : connector_(connector),
-          sender_gid_(sender_gid)
+          sender_(sender)
         {
         }
 
-        Connection( nest::ConnectorBase* connector )
-        : connector_(connector),
-          sender_gid_(nest::invalid_index)
+        ConnectionEntry( const ConnectionEntry& src )
+        : connector_(src.connector_),
+          sender_(src.sender_)
         {
+            assert(sender_);
         }
 
-        bool operator==(const Connection &conn) const
+        bool operator==(const ConnectionEntry &conn) const
         {
             return (conn.connector_ == connector_);
         }
 
-        bool operator!=(const Connection &conn) const
+        bool operator!=(const ConnectionEntry &conn) const
         {
             return (conn.connector_ != connector_);
         }
         
-        bool operator<=(const Connection &conn) const
+        bool operator<=(const ConnectionEntry &conn) const
         {
             return (conn.connector_ <= connector_);
         }
 
-        bool operator>=(const Connection &conn) const
+        bool operator>=(const ConnectionEntry &conn) const
         {
             return (conn.connector_ >= connector_);
         }
 
-        bool operator<(const Connection &conn) const
+        bool operator<(const ConnectionEntry &conn) const
         {
             return (conn.connector_ < connector_);
         }
 
-        bool operator>(const Connection &conn) const
+        bool operator>(const ConnectionEntry &conn) const
         {
             return (conn.connector_ > connector_);
         }
 
-        const Connection& operator=(const Connection &conn)
+        const ConnectionEntry& operator=(const ConnectionEntry &conn)
         {
+            assert(sender_);
             connector_ = conn.connector_;
-            sender_gid_ = conn.sender_gid_;
+            sender_ = conn.sender_;
             return *this;
         }
 
+        nest::ConnectorBase* get_connector() const
+        {
+            return connector_;
+        }
+
+        nest::Node& get_sender() const
+        {
+            assert(sender_);
+            return *sender_;
+        }
+
+    private:
         nest::ConnectorBase* connector_;
-        nest::index sender_gid_;        
+        nest::Node* sender_;        
     };
 
     /**
@@ -260,14 +299,41 @@ private:
             return *this;
         }
 
+        nest::index get_target_gid() const
+        {
+            return target_gid_;
+        }
+
+        nest::index get_sender_gid() const
+        {
+            return sender_gid_;
+        }
+
+        nest::synindex get_syn_id() const
+        {
+            return syn_id_;
+        }
+
+    private:
         nest::index target_gid_;
         nest::index sender_gid_;
         nest::synindex syn_id_;
     };
 
-    std::vector< std::set<Connection> > connectors_;  //!< set of all connections under control of the manager.
-    std::vector< std::set<nest::synindex> > used_models_;  //!< set of connection models that are in use.
-    std::vector< std::vector<GarbageCollectorEntry> > garbage_pile_;  //!< connections waiting for garbage collection.
+    /**
+     * @brief set of all connections under control by the manager.
+     */
+    std::vector< std::set<ConnectionEntry> > connectors_;
+
+    /**
+     * @brief set of connection models that are in use by the manager.
+     */
+    std::vector< std::set<nest::synindex> > used_models_;
+
+    /**
+     * @brief connections waiting for garbage collection.
+     */
+    std::vector< std::vector<GarbageCollectorEntry> > garbage_pile_;
 
     long acceptable_latency_;
     long interval_;
@@ -290,6 +356,8 @@ public:
     virtual ~ConnectionUpdater();
 
     virtual void update(nest::Time const &origin, const long from, const long to);
+    virtual void calibrate();
+    virtual void finalize();
 
     void get_status(DictionaryDatum &) const;
     void set_status(const DictionaryDatum &);
@@ -308,9 +376,8 @@ public:
 
 private:
 
-    virtual void calibrate();
-    virtual void init_state_(const nest::Node& proto);
     virtual void init_buffers_();
+    virtual void init_state_(const nest::Node& proto);
 };
 
 /**

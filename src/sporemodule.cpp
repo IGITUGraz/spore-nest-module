@@ -1,6 +1,9 @@
 /*
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -134,8 +137,6 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
 /**
  * Initialize module by registering models with the interpreter.
  * @param SLIInterpreter* SLI interpreter
- * @note  Parameter Network is needed for historical compatibility
- *        only.
  */
 void spore::SporeModule::init(SLIInterpreter *i)
 {

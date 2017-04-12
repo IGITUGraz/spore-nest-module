@@ -1,6 +1,7 @@
 /* 
  * This file is part of SPORE.
- * Copyright (c) 2016-2017, Institute for Theoretical Computer Science,
+ *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
  * Graz University of Technology
  *
  * SPORE is free software: you can redistribute it and/or modify
@@ -41,6 +42,15 @@ SetDefault::SetDefault()
  * Constructor.
  */
 GetStatus::GetStatus(DictionaryDatum & d)
+: d_(d)
+{
+}
+
+
+/**
+ * Constructor.
+ */
+CheckParameters::CheckParameters(const DictionaryDatum & d)
 : d_(d)
 {
 }

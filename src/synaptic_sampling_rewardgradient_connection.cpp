@@ -1,6 +1,9 @@
 /* 
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -38,8 +41,8 @@ SynapticSamplingRewardGradientCommonProperties::SynapticSamplingRewardGradientCo
 : nest::CommonSynapseProperties(),
   reward_transmitter_(0),
   resolution_unit_(-1.0),
-  gamma_(0.0),
-  lambda_(0.0),
+  reward_gradient_update_(0.0),
+  eligibility_trace_update_(0.0),
   psp_faciliation_update_(0.0),
   psp_depression_update_(0.0),
   psp_scale_factor_(0.0),
@@ -48,7 +51,7 @@ SynapticSamplingRewardGradientCommonProperties::SynapticSamplingRewardGradientCo
   std_gradient_(0.0)
 {
     SetDefault p;
-    define_parameters < SetDefault > ( p );
+    define_parameters < SetDefault > ( p, *this );
 }
 
 /**
@@ -64,6 +67,9 @@ SynapticSamplingRewardGradientCommonProperties::~SynapticSamplingRewardGradientC
 void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum & d) const
 {
     nest::CommonSynapseProperties::get_status(d);
+
+    GetStatus p( d );
+    define_parameters < GetStatus > ( p, *this );
 
     if (reward_transmitter_ != 0)
     {
@@ -82,8 +88,8 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
 {
     nest::CommonSynapseProperties::set_status(d, cm);
 
-    SetStatus p( d );
-    define_parameters < SetStatus > ( p );
+    CheckParameters p_check( d );
+    define_parameters < CheckParameters > ( p_check, *this );
 
     long rtgid;
     if (updateValue<long>(d, "reward_transmitter", rtgid))
@@ -97,6 +103,9 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
 
         reward_transmitter_ = new_reward_transmitter;
     }
+    
+    SetStatus p_set( d );
+    define_parameters < SetStatus > ( p_set, *this );
 }
 
 /**
@@ -116,17 +125,17 @@ void SynapticSamplingRewardGradientCommonProperties::calibrate(const nest::TimeC
 
     resolution_unit_ = nest::Time::get_resolution().get_ms();
 
-    weight_update_steps_ = std::ceil(weight_update_time_ / resolution_unit_);
+    weight_update_steps_ = std::ceil(weight_update_interval_ / resolution_unit_);
 
-    const double l_rate = weight_update_time_*learning_rate_;
+    const double l_rate = weight_update_interval_*learning_rate_;
     std_wiener_ = std::sqrt(2.0 * temperature_ * l_rate);
     std_gradient_ = std::sqrt(2.0 * gradient_noise_ * l_rate);
 
-    psp_faciliation_update_ = std::exp(-resolution_unit_ / psp_facilitation_rate_);
-    psp_depression_update_ = std::exp(-resolution_unit_ / psp_depression_rate_);
-    psp_scale_factor_ = (psp_facilitation_rate_ / (psp_facilitation_rate_ - psp_depression_rate_));
-    gamma_ = (integration_time_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / integration_time_);
-    lambda_ = (episode_length_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / episode_length_);
+    psp_faciliation_update_ = std::exp(-resolution_unit_ / psp_tau_fall_);
+    psp_depression_update_ = std::exp(-resolution_unit_ / psp_tau_rise_);
+    psp_scale_factor_ = (psp_tau_fall_ / (psp_tau_fall_ - psp_tau_rise_));
+    reward_gradient_update_ = (integration_time_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / integration_time_);
+    eligibility_trace_update_ = (episode_length_ == 0.0) ? 0.0 : std::exp(-resolution_unit_ / episode_length_);
 }
 
 }

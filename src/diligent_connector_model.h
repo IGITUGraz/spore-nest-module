@@ -1,6 +1,9 @@
 /**
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -83,19 +86,25 @@ namespace spore
  * their CommonSynapseProperties object is called additionally on simulation
  * startup (such as nest::Node objects).
  *
- * @see ConnectionUpdateManager, SynapseUpdateEvent
+ * @see ConnectionUpdateManager, SynapseUpdateEvent, SynapticSamplingRewardGradientConnection
  * 
  */
 template < typename ConnectionT >
 class DiligentConnectorModel : public nest::GenericConnectorModel<ConnectionT>
 {
 public:
-
-    DiligentConnectorModel(const std::string name, bool is_primary = true, bool has_delay = true, bool requires_symmetric = false)
+    /**
+     * Constructor.
+     */
+    DiligentConnectorModel(const std::string name, bool is_primary = true,
+                           bool has_delay = true, bool requires_symmetric = false)
     : nest::GenericConnectorModel<ConnectionT>(name, is_primary, has_delay, requires_symmetric)
     {
     }
 
+    /**
+     * Constructor.
+     */
     DiligentConnectorModel(const DiligentConnectorModel &other, const std::string name)
     : nest::GenericConnectorModel<ConnectionT>(other, name)
     {

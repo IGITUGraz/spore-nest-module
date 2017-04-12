@@ -1,6 +1,9 @@
 /*
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -52,18 +55,17 @@ ConnectionUpdateManager::~ConnectionUpdateManager()
 }
 
 /**
- * Sets up the ConnectionUpdateManager with the given update interval and
+ * @brief Sets up the ConnectionUpdateManager with the given update interval and
  * acceptable latency.
- * 
- * This function must be called once at start up and after a
- * call to ConnectionUpdateManager::reset to inform the
- * ConnectionUpdateManager about the number of threads used
- * by NEST.
  *
- * This function may not be thread safe.
+ * This function must be called once before the first call to \a Connect after
+ * the NEST kernel was reset or its status has changed. This function is invoked
+ * by the \a InitSynapseUpdater SLI function.
  *
  * @param interval the update interval used to update connections.
- * @param delay the maximum delay allowed for a connection.
+ * @param acceptable_latency the maximum acceptable latency allowed for a connection.
+ * 
+ * @note This function may not be thread safe.
  */
 void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
 {
@@ -113,33 +115,33 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
 {
     if (!has_connections())
         return;
-    
+
     assert(is_initialized_);
 
     const double t_trig = time.get_steps();
 
     SynapseUpdateEvent ev;
     ev.set_stamp(time);
-    
+
     std::vector<nest::ConnectorModel*> models = nest::kernel().model_manager.get_synapse_prototypes( th );
 
-    for (std::set<Connection>::iterator it = connectors_[th].begin();
+    for (std::set<ConnectionEntry>::iterator it = connectors_[th].begin();
             it != connectors_[th].end();
             it++)
     {
-        assert(it->connector_);
-        
-        if (t_trig > it->connector_->get_t_lastspike())
+        assert(it->get_connector());
+
+        if (t_trig > it->get_connector()->get_t_lastspike())
         {
-            ev.set_sender_gid(it->sender_gid_);
-            it->connector_->send(ev, th, models);
+            nest::Node &sender = it->get_sender();
+            ev.set_sender(sender);
+            ev.set_sender_gid(sender.get_gid());
+
+            it->get_connector()->send(ev, th, models);
         }
     }
-    
-    if (not garbage_pile_[th].empty())
-    {
-        execute_garbage_collector(th);
-    }
+
+    execute_garbage_collector(th);
 }
 
 /**
@@ -168,33 +170,37 @@ void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, 
 
     used_models_[th].insert(syn_id);
 
-    std::set<Connection> &conns = connectors_[th];
+    std::set<ConnectionEntry> &conns = connectors_[th];
 
     if (new_conn == old_conn)
     {
-        assert(conns.find(Connection(new_conn)) != conns.end());
+        assert(conns.find(ConnectionEntry(new_conn)) != conns.end());
     }
     else
     {
+        nest::Node *sender = 0;
+
         if (old_conn)
         {
             // at this time the old connector is already deleted.
             // just check if it is still in the update set and
             // remove if found.
-            std::set<Connection>::iterator it = conns.find(Connection(old_conn));
+            std::set<ConnectionEntry>::iterator it = conns.find(ConnectionEntry(old_conn));
             assert(it != conns.end());
-            if (sender_gid == nest::invalid_index)
-            {
-                sender_gid = it->sender_gid_;
-            }
+            sender = &it->get_sender();
             conns.erase(it);
+        }
+
+        if (sender_gid != nest::invalid_index)
+        {
+            sender = nest::kernel().node_manager.get_node(sender_gid);
         }
 
         if (new_conn)
         {
             assert(new_conn->homogeneous_model());
-            assert(sender_gid != nest::invalid_index);
-            conns.insert(Connection(new_conn, sender_gid));
+            assert(sender);
+            conns.insert(ConnectionEntry(new_conn, sender));
         }
     }
 
@@ -216,13 +222,18 @@ void ConnectionUpdateManager::trigger_garbage_collector(nest::index target_gid, 
  */
 void ConnectionUpdateManager::execute_garbage_collector(nest::thread th)
 {
+    if (garbage_pile_[th].empty())
+    {
+        return;
+    }
+
     for ( std::vector<GarbageCollectorEntry>::const_iterator it = garbage_pile_[th].begin();
           it != garbage_pile_[th].end();
           it++ )
     {
-        nest::Node* target = nest::kernel().node_manager.get_node(it->target_gid_);
+        nest::Node* target = nest::kernel().node_manager.get_node(it->get_target_gid());
         assert(target);
-        nest::kernel().connection_manager.disconnect( *target, it->sender_gid_, th, it->syn_id_ );
+        nest::kernel().connection_manager.disconnect( *target, it->get_sender_gid(), th, it->get_syn_id() );
     }
     garbage_pile_[th].clear();
 }
@@ -245,6 +256,24 @@ void ConnectionUpdateManager::calibrate(nest::thread th)
     {
         models[*it]->calibrate(tc);
     }
+
+    if (has_connections_ && !is_valid())
+    {
+        throw nest::BadProperty("Connection update manager was not set up correctly before the call"
+                                " to 'Simulate'! Maybe you forgot to call 'InitSynapseUpdater'?");
+    }
+}
+
+/**
+ * Finalize the connection update manager. This should be called
+ * by the updater nodes when they are finalized. This will execute
+ * the garbage collector.
+ *
+ * @param: th the thread of the calling node.
+ */
+void ConnectionUpdateManager::finalize(nest::thread th)
+{
+    execute_garbage_collector(th);
 }
 
 /**
@@ -254,9 +283,10 @@ void ConnectionUpdateManager::calibrate(nest::thread th)
  */
 void ConnectionUpdateManager::prepare()
 {
-    if (has_connections_)
+    if (has_connections_ && !is_valid())
     {
-        assert(is_valid());
+        throw nest::BadProperty("Connection update manager was not set up correctly before the first call"
+                                " to 'Simulate'! Maybe you forgot to call 'InitSynapseUpdater'?");
     }
 
     is_initialized_ = true;
@@ -265,7 +295,7 @@ void ConnectionUpdateManager::prepare()
 /**
  * Reset the ConnectionUpdateManager. Removes all connectors that have
  * been registered.
- * 
+ *
  * This function may not be thread safe.
  */
 void ConnectionUpdateManager::reset()
@@ -353,8 +383,8 @@ void ConnectionUpdater::update(nest::Time const &origin, const long from, const 
 }
 
 /**
- * Will set the node frozen if the ConnectionUpdateManager does not need
- * updates.
+ * Called when a simulation is about to be started. This Will set the node
+ * frozen if the ConnectionUpdateManager does not need updates.
  */
 void ConnectionUpdater::calibrate()
 {
@@ -365,9 +395,11 @@ void ConnectionUpdater::calibrate()
 }
 
 /**
+ * Called when a simulation is finished.
  */
-void ConnectionUpdater::init_state_(const nest::Node& proto)
+void ConnectionUpdater::finalize()
 {
+    ConnectionUpdateManager::instance()->finalize(get_thread());
 }
 
 /**
@@ -375,6 +407,12 @@ void ConnectionUpdater::init_state_(const nest::Node& proto)
 void ConnectionUpdater::init_buffers_()
 {
     ConnectionUpdateManager::instance()->prepare();
+}
+
+/**
+ */
+void ConnectionUpdater::init_state_(const nest::Node& proto)
+{
 }
 
 /**
