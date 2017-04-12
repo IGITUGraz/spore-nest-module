@@ -1,5 +1,5 @@
 <map id="spore::TracingNode" name="spore::TracingNode">
 <area shape="rect" id="node3" href="$classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double&#45;exponential shaped PSCs. " alt="" coords="5,155,200,181"/>
 <area shape="rect" id="node4" href="$classspore_1_1RewardInProxy.html" title="A device which receives reward traces from MUSIC. " alt="" coords="224,155,376,181"/>
-<area shape="rect" id="node5" href="$classspore_1_1SporeTestNode.html" title="spore::SporeTestNode" alt="" coords="401,155,554,181"/>
+<area shape="rect" id="node5" href="$classspore_1_1SporeTestNode.html" title="Node to test the SPORE module. " alt="" coords="401,155,554,181"/>
 </map>

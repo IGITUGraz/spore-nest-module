@@ -23,10 +23,8 @@ var searchData=
   ['connectiondataloggerbase',['ConnectionDataLoggerBase',['../classspore_1_1ConnectionDataLoggerBase.html#a75f4b977dfe3256dec51de95ee998c4a',1,'spore::ConnectionDataLoggerBase']]],
   ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html',1,'spore']]],
   ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html#a58f84ee59f7d7415935550542265aaa6',1,'spore::ConnectionUpdateManager']]],
-  ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html',1,'spore']]],
   ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html#a10474505267a4555f65e1b334ad847b6',1,'spore::ConnectionUpdater::ConnectionUpdater()'],['../classspore_1_1ConnectionUpdater.html#a042239fab84d264219d0f5feac28e621',1,'spore::ConnectionUpdater::ConnectionUpdater(const ConnectionUpdater &amp;n)']]],
-  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SporeTestConnection_1_1ConnTestDummyNode.html',1,'spore::SporeTestConnection']]],
-  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SynapticSamplingRewardGradientConnection_1_1ConnTestDummyNode.html',1,'spore::SynapticSamplingRewardGradientConnection']]],
+  ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html',1,'spore']]],
   ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b',1,'spore::CircularBuffer::const_iterator']]],
   ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html',1,'spore::CircularBuffer']]],
   ['csmaller',['CSmaller',['../classspore_1_1pc_1_1CSmaller.html',1,'spore::pc']]]

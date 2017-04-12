@@ -88,7 +88,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classspore_1_1SynapticSamplingRewardGradientConnection-members.html">List of all members</a>  </div>
@@ -112,11 +111,6 @@ Collaboration diagram for spore::SynapticSamplingRewardGradientConnection&lt; ta
 <div class="center"><img src="classspore_1_1SynapticSamplingRewardGradientConnection__coll__graph.png" border="0" usemap="#spore_1_1SynapticSamplingRewardGradientConnection_3_01targetidentifierT_01_4_coll__map" alt="Collaboration graph"/></div>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection_1_1ConnTestDummyNode.html">ConnTestDummyNode</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:af001fdaff51333b8945684ebc21e3118"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af001fdaff51333b8945684ebc21e3118"></a>
@@ -155,27 +149,27 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <p>Reward-based synaptic sampling connection class. </p>
 <p><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward-based synaptic sampling connection class. ">SynapticSamplingRewardGradientConnection</a> - Synapse implementing reward-based learning through synaptic sampling. This class implements the model in [1,2]. This connection is a diligent synapse model, therefore updates are triggered on a regular interval which is ensured by the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>. The target node and the reward transmitter must be derived from the <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> model.</p>
 <p><b>Parameters</b></p>
-<p>The following parameters can be set in the common properties dictionary (default values given in parentheses, corresponding symbols in the equations given below and in [1,2] given in braces): </p><table class="doxtable">
+<p>The following parameters can be set in the common properties dictionary (default values and constraints are given in parentheses, corresponding symbols in the equations given below and in [1,2] are given in braces): </p><table class="doxtable">
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
 <tr>
-<td><em>learning_rate</em>  </td><td>double </td><td>learning rate (5e-08) { <img class="formulaInl" alt="$\beta$" src="form_36.png"/>} </td></tr>
+<td><em>learning_rate</em>  </td><td>double </td><td>learning rate (5e-08, &ge;0.0) { <img class="formulaInl" alt="$\beta$" src="form_36.png"/>} </td></tr>
 <tr>
-<td><em>temperature</em>  </td><td>double </td><td>amplitude of parameter noise (0.1) { <img class="formulaInl" alt="$T_\theta$" src="form_37.png"/>}  </td></tr>
+<td><em>temperature</em>  </td><td>double </td><td>amplitude of parameter noise (0.1, &ge;0.0) { <img class="formulaInl" alt="$T_\theta$" src="form_37.png"/>} </td></tr>
 <tr>
-<td><em>gradient_noise</em>  </td><td>double </td><td>amplitude of gradient noise (0.0) { <img class="formulaInl" alt="$T_g$" src="form_38.png"/>} </td></tr>
+<td><em>gradient_noise</em>  </td><td>double </td><td>amplitude of gradient noise (0.0, &ge;0.0) { <img class="formulaInl" alt="$T_g$" src="form_38.png"/>} </td></tr>
 <tr>
-<td><em>psp_tau_rise</em>  </td><td>double </td><td>double exponential PSP kernel rise (2.0) [ms] { <img class="formulaInl" alt="$\tau_r$" src="form_27.png"/>} </td></tr>
+<td><em>psp_tau_rise</em>  </td><td>double </td><td>double exponential PSP kernel rise (2.0, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_r$" src="form_27.png"/>} </td></tr>
 <tr>
-<td><em>psp_tau_fall</em>  </td><td>double </td><td>double exponential PSP kernel decay (20.0) [ms] { <img class="formulaInl" alt="$\tau_m$" src="form_26.png"/>} </td></tr>
+<td><em>psp_tau_fall</em>  </td><td>double </td><td>double exponential PSP kernel decay (20.0, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_m$" src="form_26.png"/>} </td></tr>
 <tr>
-<td><em>psp_cutoff_amplitude</em>  </td><td>double </td><td>psp is clipped to 0 below this value (0.0001) [ms] { <img class="formulaInl" alt="$\tau_m$" src="form_26.png"/>} </td></tr>
+<td><em>psp_cutoff_amplitude</em>  </td><td>double </td><td>psp is clipped to 0 below this value (0.0001, &ge;0.0) { <img class="formulaInl" alt="$\tau_m$" src="form_26.png"/>} </td></tr>
 <tr>
-<td><em>integration_time</em>  </td><td>double </td><td>time of gradient integration (50000.0) [ms] { <img class="formulaInl" alt="$\tau_g$" src="form_45.png"/>} </td></tr>
+<td><em>integration_time</em>  </td><td>double </td><td>time of gradient integration (50000.0, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_g$" src="form_45.png"/>} </td></tr>
 <tr>
-<td><em>episode_length</em>  </td><td>double </td><td>length of eligibility trace (0.0001) [ms] { <img class="formulaInl" alt="$\tau_e$" src="form_46.png"/>} </td></tr>
+<td><em>episode_length</em>  </td><td>double </td><td>length of eligibility trace (0.0001, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_e$" src="form_46.png"/>} </td></tr>
 <tr>
-<td><em>weight_update_interval</em>  </td><td>double </td><td>interval of synaptic weight updates (100.0) [ms] </td></tr>
+<td><em>weight_update_interval</em>  </td><td>double </td><td>interval of synaptic weight updates (100.0, &gt;0.0) [ms] </td></tr>
 <tr>
 <td><em>parameter_mapping_offset</em>  </td><td>double </td><td>offset parameter for computing synaptic weight (3.0) { <img class="formulaInl" alt="$\theta_0$" src="form_47.png"/>} </td></tr>
 <tr>
@@ -187,21 +181,21 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td><em>min_param</em>  </td><td>double </td><td>minimum synaptic parameter (-2.0) </td></tr>
 <tr>
-<td><em>max_param_change</em>  </td><td>double </td><td>maximum synaptic parameter change (40.0) </td></tr>
+<td><em>max_param_change</em>  </td><td>double </td><td>maximum synaptic parameter change (40.0, &ge;0.0)  </td></tr>
 <tr>
-<td><em>reward_transmitter</em>  </td><td>int </td><td>GID of the synapse's reward transmitter* </td></tr>
+<td><em>reward_transmitter</em>  </td><td>long </td><td>GID of the synapse's reward transmitter* </td></tr>
 <tr>
-<td><em>bap_trace_id</em>  </td><td>int </td><td>ID of the BAP trace (0) </td></tr>
+<td><em>bap_trace_id</em>  </td><td>long </td><td>ID of the BAP trace (0, &ge;0) </td></tr>
 <tr>
-<td><em>dopa_trace_id</em>  </td><td>int </td><td>ID of the dopamine trace (0) </td></tr>
+<td><em>dopa_trace_id</em>  </td><td>long </td><td>ID of the dopamine trace (0, &ge;0) </td></tr>
 <tr>
 <td><em>simulate_retracted_synapses</em>  </td><td>bool </td><td>continue simulating retracted synapses (false) </td></tr>
 <tr>
 <td><em>delete_retracted_synapses</em>  </td><td>bool </td><td>delete retracted synapses (false) </td></tr>
 <tr>
-<td><em>verbose</em>  </td><td>bool </td><td>write status to the standard output (false) </td></tr>
+<td><em>verbose</em>  </td><td>bool </td><td>write status to the standard output (false)  </td></tr>
 </table>
-<p>*) <em>reward_transmitter</em> must be set to a the GID of a <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> before simulation startup.</p>
+<p>*) <em>reward_transmitter</em> must be set to the GID of a <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> before simulation startup.</p>
 <p>The following parameters can be set in the status dictionary: </p><table class="doxtable">
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
@@ -222,7 +216,7 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td><em>weight_values</em>  </td><td>double </td><td>array of recorded synaptic weight values </td></tr>
 <tr>
-<td><em>synaptic_parameter_values</em>  </td><td>double </td><td>array of recorded synaptic parameter values </td></tr>
+<td><em>synaptic_parameter_values</em>  </td><td>double </td><td>array of recorded synaptic parameter values  </td></tr>
 <tr>
 <td><em>reward_gradient_values</em>  </td><td>double </td><td>array of recorded reward gradient values </td></tr>
 <tr>
@@ -232,7 +226,7 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td><em>recorder_interval</em>  </td><td>double </td><td>interval of synaptic recordings [ms] </td></tr>
 <tr>
-<td><em>reset_recorder</em>  </td><td>bool </td><td>clear all recorded values now* (write only) </td></tr>
+<td><em>reset_recorder</em>  </td><td>bool </td><td>clear all recorded values now* (write only)  </td></tr>
 </table>
 <p>*) if <em>reset_recorder</em> is set to <code>true</code> all recorded fields will be erased instantaneously.</p>
 <p><b>Implementation Details</b></p>
@@ -476,7 +470,7 @@ template&lt;typename targetidentifierT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 12 2017 14:17:55 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 15:54:44 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

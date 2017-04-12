@@ -10,8 +10,6 @@ var searchData=
   ['connectiondataloggerbase',['ConnectionDataLoggerBase',['../classspore_1_1ConnectionDataLoggerBase.html',1,'spore']]],
   ['connectionupdatemanager',['ConnectionUpdateManager',['../classspore_1_1ConnectionUpdateManager.html',1,'spore']]],
   ['connectionupdater',['ConnectionUpdater',['../classspore_1_1ConnectionUpdater.html',1,'spore']]],
-  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SynapticSamplingRewardGradientConnection_1_1ConnTestDummyNode.html',1,'spore::SynapticSamplingRewardGradientConnection']]],
-  ['conntestdummynode',['ConnTestDummyNode',['../classspore_1_1SporeTestConnection_1_1ConnTestDummyNode.html',1,'spore::SporeTestConnection']]],
   ['const_5fiterator',['const_iterator',['../classspore_1_1CircularBuffer_1_1const__iterator.html',1,'spore::CircularBuffer']]],
   ['csmaller',['CSmaller',['../classspore_1_1pc_1_1CSmaller.html',1,'spore::pc']]]
 ];
