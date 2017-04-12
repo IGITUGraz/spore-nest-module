@@ -46,8 +46,10 @@ namespace spore
 {
 
 /**
- * Class containing the common properties for all synapses of type
- * SynapticSamplingRewardGradientConnection.
+ * @brief Class holding the common properties for all synapses of type SynapticSamplingRewardGradientConnection.
+ * 
+ * The parameters, their constraints and their default values are described
+ * in detail in the documentation of SynapticSamplingRewardGradientConnection.
  */
 class SynapticSamplingRewardGradientCommonProperties : public nest::CommonSynapseProperties
 {
@@ -212,26 +214,27 @@ private:
  * <b>Parameters</b>
  *
  * The following parameters can be set in the common properties dictionary
- * (default values given in parentheses, corresponding symbols in the equations
- * given below and in [1,2] given in braces):
+ * (default values and constraints are given in parentheses, corresponding symbols
+ * in the equations given below and in [1,2] are given in braces):
  * <table>
  * <tr><th>name</th>                           <th>type</th>   <th>comment</th></tr>
- * <tr><td>\a learning_rate</td>               <td>double</td> <td>learning rate (5e-08) {\f$\beta\f$}</td></tr>
- * <tr><td>\a temperature</td>                 <td>double</td> <td>amplitude of parameter noise (0.1) {\f$T_\theta\f$}
- *                                             </td></tr>
- * <tr><td>\a gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise (0.0)
+ * <tr><td>\a learning_rate</td>               <td>double</td> <td>learning rate (5e-08, &ge;0.0)
+ *                                                              {\f$\beta\f$}</td></tr>
+ * <tr><td>\a temperature</td>                 <td>double</td> <td>amplitude of parameter noise (0.1, &ge;0.0)
+ *                                                              {\f$T_\theta\f$}</td></tr>
+ * <tr><td>\a gradient_noise</td>              <td>double</td> <td>amplitude of gradient noise (0.0, &ge;0.0)
  *                                                              {\f$T_g\f$}</td></tr>
- * <tr><td>\a psp_tau_rise</td>                <td>double</td> <td>double exponential PSP kernel rise (2.0) [ms]
+ * <tr><td>\a psp_tau_rise</td>                <td>double</td> <td>double exponential PSP kernel rise (2.0, >0.0) [ms]
  *                                                              {\f$\tau_r\f$}</td></tr>
- * <tr><td>\a psp_tau_fall</td>                <td>double</td> <td>double exponential PSP kernel decay (20.0) [ms]
- *                                                              {\f$\tau_m\f$}</td></tr>
- * <tr><td>\a psp_cutoff_amplitude</td>        <td>double</td> <td>psp is clipped to 0 below this value (0.0001) [ms]
- *                                                              {\f$\tau_m\f$}</td></tr>
- * <tr><td>\a integration_time</td>            <td>double</td> <td>time of gradient integration (50000.0) [ms]
+ * <tr><td>\a psp_tau_fall</td>                <td>double</td> <td>double exponential PSP kernel decay (20.0, >0.0)
+ *                                                              [ms] {\f$\tau_m\f$}</td></tr>
+ * <tr><td>\a psp_cutoff_amplitude</td>        <td>double</td> <td>psp is clipped to 0 below this value
+ *                                                              (0.0001, &ge;0.0) {\f$\tau_m\f$}</td></tr>
+ * <tr><td>\a integration_time</td>            <td>double</td> <td>time of gradient integration (50000.0, >0.0) [ms]
  *                                                              {\f$\tau_g\f$}</td></tr>
- * <tr><td>\a episode_length</td>              <td>double</td> <td>length of eligibility trace (0.0001) [ms]
+ * <tr><td>\a episode_length</td>              <td>double</td> <td>length of eligibility trace (0.0001, >0.0) [ms]
  *                                                              {\f$\tau_e\f$}</td></tr>
- * <tr><td>\a weight_update_interval</td>      <td>double</td> <td>interval of synaptic weight updates (100.0)
+ * <tr><td>\a weight_update_interval</td>      <td>double</td> <td>interval of synaptic weight updates (100.0, >0.0)
  *                                                              [ms]</td></tr>
  * <tr><td>\a parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
  *                                                              weight (3.0) {\f$\theta_0\f$}</td></tr>
@@ -241,17 +244,19 @@ private:
  *                                                              {\f$c_g\f$}</td></tr>
  * <tr><td>\a max_param</td>                   <td>double</td> <td>maximum synaptic parameter (5.0)</td></tr>
  * <tr><td>\a min_param</td>                   <td>double</td> <td>minimum synaptic parameter (-2.0)</td></tr>
- * <tr><td>\a max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change (40.0)</td></tr>
- * <tr><td>\a reward_transmitter</td>          <td>int</td>    <td>GID of the synapse's reward transmitter*</td></tr>
- * <tr><td>\a bap_trace_id</td>                <td>int</td>    <td>ID of the BAP trace (0)</td></tr>
- * <tr><td>\a dopa_trace_id</td>               <td>int</td>    <td>ID of the dopamine trace (0)</td></tr>
+ * <tr><td>\a max_param_change</td>            <td>double</td> <td>maximum synaptic parameter change (40.0, &ge;0.0)
+ *                                                             </td></tr>
+ * <tr><td>\a reward_transmitter</td>          <td>long</td>   <td>GID of the synapse's reward transmitter*</td></tr>
+ * <tr><td>\a bap_trace_id</td>                <td>long</td>   <td>ID of the BAP trace (0, &ge;0)</td></tr>
+ * <tr><td>\a dopa_trace_id</td>               <td>long</td>   <td>ID of the dopamine trace (0, &ge;0)</td></tr>
  * <tr><td>\a simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
  *                                                              (false)</td></tr>
  * <tr><td>\a delete_retracted_synapses</td>   <td>bool</td>   <td>delete retracted synapses (false)</td></tr>
- * <tr><td>\a verbose</td>                     <td>bool</td>   <td>write status to the standard output (false)</td></tr>
+ * <tr><td>\a verbose</td>                     <td>bool</td>   <td>write status to the standard output (false)
+ *                                                             </td></tr>
  * </table>
  * 
- * *)  \a reward_transmitter must be set to a the GID of a TracingNode before
+ * *)  \a reward_transmitter must be set to the GID of a TracingNode before
  *        simulation startup.
  *
  * The following parameters can be set in the status dictionary:
@@ -266,12 +271,14 @@ private:
  *                                                              \f$(1/\sigma^2)\f$</td></tr>
  * <tr><td>\a recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
  * <tr><td>\a weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
- * <tr><td>\a synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values</td></tr>
+ * <tr><td>\a synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values
+ *                                                             </td></tr>
  * <tr><td>\a reward_gradient_values</td>      <td>double</td> <td>array of recorded reward gradient values</td></tr>
  * <tr><td>\a eligibility_trace_values</td>    <td>double</td> <td>array of recorded eligibility trace values</td></tr>
  * <tr><td>\a psp_values</td>                  <td>double</td> <td>array of recorded psp values</td></tr>
  * <tr><td>\a recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
- * <tr><td>\a reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now* (write only)</td></tr>
+ * <tr><td>\a reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now* (write only)
+ *                                                             </td></tr>
  * </table>
  *
  * *) if \a reset_recorder is set to \c true all recorded fields will be erased
@@ -352,22 +359,6 @@ public:
 
     //! Shortcut for base class
     typedef nest::Connection<targetidentifierT> ConnectionBase;
-
-    class ConnTestDummyNode : public nest::ConnTestDummyNodeBase
-    {
-    public:
-        using nest::ConnTestDummyNodeBase::handles_test_event;
-
-        nest::port handles_test_event(nest::SpikeEvent&, nest::rport)
-        {
-            return nest::invalid_port_;
-        }
-
-        nest::port handles_test_event(nest::DSSpikeEvent&, nest::rport)
-        {
-            return nest::invalid_port_;
-        }
-    };
 
     /**
      * Checks if the type of the postsynaptic node is supported. Throws an
@@ -486,6 +477,22 @@ private:
 
     void update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp);
     void update_synapic_weight(long time_step, const CommonPropertiesType& cp);
+
+    class ConnTestDummyNode : public nest::ConnTestDummyNodeBase
+    {
+    public:
+        using nest::ConnTestDummyNodeBase::handles_test_event;
+
+        nest::port handles_test_event(nest::SpikeEvent&, nest::rport)
+        {
+            return nest::invalid_port_;
+        }
+
+        nest::port handles_test_event(nest::DSSpikeEvent&, nest::rport)
+        {
+            return nest::invalid_port_;
+        }
+    };
 };
 
 

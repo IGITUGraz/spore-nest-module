@@ -25,6 +25,11 @@
 #ifndef SPORE_H
 #define SPORE_H
 
+/**
+ * @brief Global namespace holding all classes of the SPORE NEST module.
+ *
+ * @see DiligentConnectorModel, ConnectionUpdateManager, TracingNode, RewardInProxy
+ */
 namespace spore
 {
 

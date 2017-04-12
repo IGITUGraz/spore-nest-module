@@ -1,6 +1,9 @@
 /* 
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -31,7 +34,7 @@ namespace spore
 {
 
 /**
- * Test class for circular buffer container.
+ * @brief Test class for TracingNode.
  */
 class TestTracingNode : public SporeTestBase
 {

@@ -94,7 +94,7 @@ namespace spore
  * trigger_garbage_collector() was triggered from within the \a send function
  * of the synapse the function is guaranteed to be finished before the synapse
  * is removed. The \a send function may also be triggered again multiple times
- * after a call to trigger_garbage_collector before the synapse is finally
+ * after a call to trigger_garbage_collector() before the synapse is finally
  * removed. The synapse should in that case not call trigger_garbage_collector()
  * again or change its behavior of returning \c true from \a is_degenerated, as
  * this would lead to undefined behavior.

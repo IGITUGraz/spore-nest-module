@@ -1,6 +1,9 @@
 /* 
  * This file is part of SPORE.
  *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -38,7 +41,7 @@ namespace spore
 {
 
 /**
- * Class containing the common properties for all synapses of type SporeTestConnection.
+ * @brief Class holding the common properties for all synapses of type SporeTestConnection.
  */
 class SporeTestConnectionCommonProperties : public nest::CommonSynapseProperties
 {
@@ -137,22 +140,6 @@ public:
     //! Shortcut for base class
     typedef nest::Connection<targetidentifierT> ConnectionBase;
 
-    class ConnTestDummyNode : public nest::ConnTestDummyNodeBase
-    {
-    public:
-        using nest::ConnTestDummyNodeBase::handles_test_event;
-
-        nest::port handles_test_event(nest::SpikeEvent&, nest::rport)
-        {
-            return nest::invalid_port_;
-        }
-
-        nest::port handles_test_event(nest::DSSpikeEvent&, nest::rport)
-        {
-            return nest::invalid_port_;
-        }
-    };
-
     void check_connection(nest::Node & s, nest::Node & t,
                           nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
     {
@@ -204,6 +191,22 @@ private:
                                nest::thread thread,
                                TracingNode *target,
                                const CommonPropertiesType& cp);
+
+    class ConnTestDummyNode : public nest::ConnTestDummyNodeBase
+    {
+    public:
+        using nest::ConnTestDummyNodeBase::handles_test_event;
+
+        nest::port handles_test_event(nest::SpikeEvent&, nest::rport)
+        {
+            return nest::invalid_port_;
+        }
+
+        nest::port handles_test_event(nest::DSSpikeEvent&, nest::rport)
+        {
+            return nest::invalid_port_;
+        }
+    };
 };
 
 

@@ -44,7 +44,7 @@ class CircularBuffer
 public:
 
     /**
-     * Constant iterator class.
+     * @brief Constant iterator class.
      */
     class const_iterator
     {

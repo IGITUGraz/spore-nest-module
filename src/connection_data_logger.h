@@ -39,7 +39,7 @@ namespace spore
 {
 
 /**
- * Base class to all data loggers for connections.
+ * @brief Base class to all data loggers for connections.
  */
 class ConnectionDataLoggerBase
 {
@@ -56,7 +56,7 @@ public:
 protected:
 
     /**
-     * Data structure that holds the recorded data.
+     * @brief Data structure that holds the recorded data.
      */
     struct RecorderData
     {
@@ -69,7 +69,7 @@ protected:
     };
 
     /**
-     * Data structure that holds information about variables.
+     * @brief Data structure that holds information about variables.
      */
     struct RecorderInfo
     {
@@ -89,7 +89,7 @@ protected:
 };
 
 /**
- * Generic version of data logger for connections.
+ * @brief Generic version of data logger for connections.
  */
 template<typename ConnectionType>
 class ConnectionDataLogger : public ConnectionDataLoggerBase
@@ -159,4 +159,3 @@ void ConnectionDataLogger<ConnectionType>::record(double time_step,
 }
 
 #endif
-

@@ -1,4 +1,4 @@
-/**
+/*
  * This file is part of SPORE.
  *
  * Copyright (c) 2016, Institute for Theoretical Computer Science,
