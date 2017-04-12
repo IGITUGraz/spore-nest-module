@@ -233,7 +233,7 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <p>The state of each synapse consists of the variables <img class="formulaInl" alt="$y(t), e(t), g(t), \theta(t), w(t)$" src="form_20.png"/>. The variable <img class="formulaInl" alt="$y(t)$" src="form_21.png"/> is the presynaptic spike train filtered with a PSP kernel <img class="formulaInl" alt="$\epsilon(t)$" src="form_23.png"/> of the form </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \]" src="form_24.png"/>
 </p>
-<p> A node derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model. The trace of this node at id <em>dopa_trace_id</em> is used as reward signal <img class="formulaInl" alt="$dopa(t)$" src="form_49.png"/>. The postsynaptic neuron must also be derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. Its trace with id <em>bap_trace_id</em> is used as back-propagating signal <img class="formulaInl" alt="$bap(t)$" src="form_50.png"/>. The synapse then solves the following set of differential equations: </p><p class="formulaDsp">
+<p> A node derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The trace of this node at id <em>dopa_trace_id</em> is used as reward signal <img class="formulaInl" alt="$dopa(t)$" src="form_49.png"/>. The postsynaptic neuron must also be derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. Its trace with id <em>bap_trace_id</em> is used as back-propagating signal <img class="formulaInl" alt="$bap(t)$" src="form_50.png"/>. The synapse then solves the following set of differential equations: </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \]" src="form_28.png"/>
 </p>
  <p class="formulaDsp">
@@ -470,7 +470,7 @@ template&lt;typename targetidentifierT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 12 2017 15:54:44 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Apr 12 2017 16:52:58 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
