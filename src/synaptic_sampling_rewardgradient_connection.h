@@ -222,7 +222,7 @@ private:
  *                                                              [ms]</td></tr>
  * <tr><td>\a parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
  *                                                              weight (3.0) {\f$\theta_0\f$}</td></tr>
- * <tr><td>\a weight_scale</td>                <td>double</td> <td>scaling factor for the synaptic weight (3.0)
+ * <tr><td>\a weight_scale</td>                <td>double</td> <td>scaling factor for the synaptic weight (1.0)
  *                                                              {\f$w_0\f$} </td></tr>
  * <tr><td>\a direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to the
  *                                                              synaptic parameter (0.0) {\f$c_e\f$} </td></tr>
