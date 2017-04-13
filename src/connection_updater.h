@@ -72,10 +72,11 @@ namespace spore
  * \code
  *   <update_interval> <acceptable_latency> InitSynapseUpdater
  * \endcode
- * is required, where <update_interval> is an integer (default: 100) value
+ * is required, where <update_interval> is an integer value (default: 100)
  * that defines interval (in number of nest time steps) in which the update
- * manager is invoked and <acceptable_latency> is an integer (default: 100)
- * acceptable latency for synapses. Equivalently, if using python, add a line
+ * manager is invoked and <acceptable_latency> is an integer value (default: 100)
+ * defining the acceptable latency for synapses. Equivalently, if using python,
+ * add a line
  * \code
  *   nest.sli_func('InitSynapseUpdater',<update_interval>,<acceptable_latency>)
  * \endcode

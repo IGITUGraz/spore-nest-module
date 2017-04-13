@@ -64,12 +64,13 @@ namespace spore
  * (see SynapseUpdateEvent).
  * 
  * The length of the update time window can be controlled using the
- * InitSynapseUpdater SLI function. It takes two arguments, the update interval
+ * \a InitSynapseUpdater SLI function. It takes two arguments, the update interval
  * and the maximum synaptic update latency. Both are tuning parameters that can
  * be used to optimize the simulation performance. Long update intervals are
- * likely more time efficient, but require more memory.
+ * likely more time efficient, but require more memory (see also
+ * ConnectionUpdateManager)
  * 
- * The DiligentConnectorModel provides the interface this mechanism. New synapse
+ * The DiligentConnectorModel provides the interface to this mechanism. New synapse
  * models that use the diligent connection framework should be registered using
  * the register_diligent_connection_model template function. Connections
  * instantiated from this model will be automatically registered at the global
@@ -256,11 +257,13 @@ void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBa
 /**
  * @brief Cleanup and delete the given connection.
  * 
- * This deviates from the standard NEST implementation only in that it
+ * This deviates from the standard NEST implementation in that it
  * preferably deletes synapses that are marked for deletion instead of
  * taking the first synapse that matches the specifications. Synapses
- * indicate that are marked for deletion by returning true from their
- * `is_degenerated()` method.
+ * indicate that they are marked for deletion by returning \c true from
+ * their \a is_degenerated method. If no connection is found that
+ * is marked for deletion this function behaves the same way as
+ * \a delete_connection of NEST's generic connector model.
  *
  * @param tgt Target node
  * @param target_thread Thread of the target
