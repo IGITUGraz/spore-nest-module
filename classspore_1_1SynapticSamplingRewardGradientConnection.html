@@ -147,8 +147,8 @@ Public Member Functions</h2></td></tr>
 class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;</h3>
 
 <p>Reward-based synaptic sampling connection class. </p>
-<p><a class="el" href="classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward-based synaptic sampling connection class. ">SynapticSamplingRewardGradientConnection</a> - Synapse implementing reward-based learning through synaptic sampling. This class implements the model in [1,2]. This connection is a diligent synapse model, therefore updates are triggered on a regular interval which is ensured by the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>. The target node and the reward transmitter must be derived from the <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> model.</p>
-<p><b>Parameters</b></p>
+<p>This connection type implements the Bayesian policy sampling algorithm introduced in [1,2]. The target node to which synapses of this type are connected must be derived from <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. A second node which is also derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The synapse model performs a stochastic policy search which tries to maximize the reward signal provided by the <em>reward_transmitter</em> node. At the same time synaptic weights are constraint by a Gaussian prior with mean <img class="formulaInl" alt="$\mu$" src="form_10.png"/> and standard deviation <img class="formulaInl" alt="$\sigma$" src="form_81.png"/>. This synapse type can not change its sign, i.e. synapses are either excitatory or inhibitory depending on the sign of the <em>weight_scale</em> parameter. If synaptic weights fall below a threshold (determined by parameter <em>parameter_mapping_offset</em>) weights are clipped to zero (retracted synapses). The synapse model also implements an optional mechanism to automatically remove retracted synapses from the simulation. This mechanism can be turned on using the  delete_retracted_synapses parameter.</p>
+<p><b>Parameters and state variables</b></p>
 <p>The following parameters can be set in the common properties dictionary (default values and constraints are given in parentheses, corresponding symbols in the equations given below and in [1,2] are given in braces): </p><table class="doxtable">
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
@@ -173,7 +173,9 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td><em>parameter_mapping_offset</em>  </td><td>double </td><td>offset parameter for computing synaptic weight (3.0) { <img class="formulaInl" alt="$\theta_0$" src="form_47.png"/>} </td></tr>
 <tr>
-<td><em>direct_gradient_rate</em>  </td><td>double </td><td>rate of directly applying changes to the synaptic parameter (0.0) { <img class="formulaInl" alt="$c_e$" src="form_51.png"/>} </td></tr>
+<td><em>weight_scale</em>  </td><td>double </td><td>scaling factor for the synaptic weight (3.0) { <img class="formulaInl" alt="$w_0$" src="form_84.png"/>}  </td></tr>
+<tr>
+<td><em>direct_gradient_rate</em>  </td><td>double </td><td>rate of directly applying changes to the synaptic parameter (0.0) { <img class="formulaInl" alt="$c_e$" src="form_51.png"/>}  </td></tr>
 <tr>
 <td><em>gradient_scale</em>  </td><td>double </td><td>scaling parameter for the gradient (1.0) { <img class="formulaInl" alt="$c_g$" src="form_52.png"/>} </td></tr>
 <tr>
@@ -200,52 +202,53 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
 <tr>
-<td><em>synaptic_parameter</em>  </td><td>double </td><td>initial synaptic parameter ( <img class="formulaInl" alt="$\theta$" src="form_8.png"/>) </td></tr>
+<td><em>synaptic_parameter</em>  </td><td>double </td><td>current synaptic parameter { <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/>}  </td></tr>
 <tr>
-<td><em>weight</em>  </td><td>double </td><td>current synaptic weight ( <img class="formulaInl" alt="$w$" src="form_9.png"/>) </td></tr>
+<td><em>weight</em>  </td><td>double </td><td>current synaptic weight { <img class="formulaInl" alt="$w(t)$" src="form_57.png"/>} </td></tr>
 <tr>
-<td><em>eligibility_trace</em>  </td><td>double </td><td>current eligibility trace ( <img class="formulaInl" alt="$e$" src="form_11.png"/>) </td></tr>
+<td><em>eligibility_trace</em>  </td><td>double </td><td>current eligibility trace { <img class="formulaInl" alt="$e(t)$" src="form_59.png"/>} </td></tr>
 <tr>
-<td><em>reward_gradient</em>  </td><td>double </td><td>current reward gradient ( <img class="formulaInl" alt="$g$" src="form_12.png"/>) </td></tr>
+<td><em>reward_gradient</em>  </td><td>double </td><td>current reward gradient { <img class="formulaInl" alt="$g(t)$" src="form_55.png"/>} </td></tr>
 <tr>
-<td><em>prior_mean</em>  </td><td>double </td><td>mean of the prior ( <img class="formulaInl" alt="$\mu$" src="form_10.png"/>) </td></tr>
+<td><em>prior_mean</em>  </td><td>double </td><td>mean of the Gaussian prior { <img class="formulaInl" alt="$\mu$" src="form_10.png"/>} </td></tr>
 <tr>
-<td><em>prior_inverse_variance</em>  </td><td>double </td><td>inverse variance of the prior <img class="formulaInl" alt="$(1/\sigma^2)$" src="form_7.png"/> </td></tr>
+<td><em>prior_precision</em>  </td><td>double </td><td>precision of the Gaussian prior { <img class="formulaInl" alt="$c_p$" src="form_60.png"/>} </td></tr>
 <tr>
-<td><em>recorder_times</em>  </td><td>double </td><td>time points of parameter recordings </td></tr>
+<td><em>recorder_times</em>  </td><td>[double] </td><td>time points of parameter recordings* </td></tr>
 <tr>
-<td><em>weight_values</em>  </td><td>double </td><td>array of recorded synaptic weight values </td></tr>
+<td><em>weight_values</em>  </td><td>[double] </td><td>array of recorded synaptic weight values*  </td></tr>
 <tr>
-<td><em>synaptic_parameter_values</em>  </td><td>double </td><td>array of recorded synaptic parameter values  </td></tr>
+<td><em>synaptic_parameter_values</em>  </td><td>[double] </td><td>array of recorded synaptic parameter values*  </td></tr>
 <tr>
-<td><em>reward_gradient_values</em>  </td><td>double </td><td>array of recorded reward gradient values </td></tr>
+<td><em>reward_gradient_values</em>  </td><td>[double] </td><td>array of recorded reward gradient values*  </td></tr>
 <tr>
-<td><em>eligibility_trace_values</em>  </td><td>double </td><td>array of recorded eligibility trace values </td></tr>
+<td><em>eligibility_trace_values</em>  </td><td>[double] </td><td>array of recorded eligibility trace values*  </td></tr>
 <tr>
-<td><em>psp_values</em>  </td><td>double </td><td>array of recorded psp values </td></tr>
+<td><em>psp_values</em>  </td><td>[double] </td><td>array of recorded psp values* </td></tr>
 <tr>
 <td><em>recorder_interval</em>  </td><td>double </td><td>interval of synaptic recordings [ms] </td></tr>
 <tr>
 <td><em>reset_recorder</em>  </td><td>bool </td><td>clear all recorded values now* (write only)  </td></tr>
 </table>
-<p>*) if <em>reset_recorder</em> is set to <code>true</code> all recorded fields will be erased instantaneously.</p>
+<p>*) Recorder fields are read only. If <em>reset_recorder</em> is set to <code>true</code> all recorder fields will be cleared instantaneously.</p>
 <p><b>Implementation Details</b></p>
-<p>The state of each synapse consists of the variables <img class="formulaInl" alt="$y(t), e(t), g(t), \theta(t), w(t)$" src="form_20.png"/>. The variable <img class="formulaInl" alt="$y(t)$" src="form_21.png"/> is the presynaptic spike train filtered with a PSP kernel <img class="formulaInl" alt="$\epsilon(t)$" src="form_23.png"/> of the form </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \]" src="form_24.png"/>
+<p>This connection type is a diligent synapse model, therefore updates are triggered on a regular interval which is ensured by the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>. The state of each synapse consists of the variables <img class="formulaInl" alt="$y(t), e(t), g(t), \theta(t), w(t)$" src="form_20.png"/>. The variable <img class="formulaInl" alt="$y(t)$" src="form_21.png"/> is the presynaptic spike train filtered with a PSP kernel <img class="formulaInl" alt="$\epsilon(t)$" src="form_23.png"/> of the form </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \hspace{24px} (1) \]" src="form_75.png"/>
 </p>
-<p> A node derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The trace of this node at id <em>dopa_trace_id</em> is used as reward signal <img class="formulaInl" alt="$dopa(t)$" src="form_49.png"/>. The postsynaptic neuron must also be derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. Its trace with id <em>bap_trace_id</em> is used as back-propagating signal <img class="formulaInl" alt="$bap(t)$" src="form_50.png"/>. The synapse then solves the following set of differential equations: </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \]" src="form_28.png"/>
-</p>
- <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \]" src="form_31.png"/>
+<p> A node derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The trace of this node at id <em>dopa_trace_id</em> is used as reward signal <img class="formulaInl" alt="$dopa(t)$" src="form_49.png"/>. The trace of the postsynaptic neuron with id <em>bap_trace_id</em> is used as back-propagating signal <img class="formulaInl" alt="$bap(t)$" src="form_50.png"/>. The synapse then solves the following set of differential equations: </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \hspace{24px} (2) \]" src="form_77.png"/>
 </p>
  <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \]" src="form_53.png"/>
+<img class="formulaDsp" alt="\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{24px} (3) \]" src="form_78.png"/>
 </p>
  <p class="formulaDsp">
-<img class="formulaDsp" alt="\[ w(t) \;=\; \exp ( \theta(t) - \theta_0 ) \]" src="form_34.png"/>
+<img class="formulaDsp" alt="\[ d \theta(t) \;=\; \beta\,\bigg( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \bigg) dt \,+\, \sqrt{ 2 T_\theta \beta } \, \mathcal{W}_{\theta} \hspace{24px} (4) \]" src="form_87.png"/>
 </p>
-<p> The dynamics of the postsynaptic term <img class="formulaInl" alt="$y(t)$" src="form_21.png"/>, the eligibility trace <img class="formulaInl" alt="$e(t)$" src="form_59.png"/> and the reward gradient <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> are updated at each NEST time step. The dynamics of <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> and <img class="formulaInl" alt="$w(t)$" src="form_57.png"/> are updated on a time grid based on <em>weight_update_interval</em>. The synaptic weights remain constant between two updates. The synapse recorder is only invoked after each weight update which means that <em>recorder_interval</em> must be a multiple of <em>weight_update_interval</em>. Synaptic parameters are clipped at <em>min_param</em> and <em>max_param</em>. Parameter gradients are clipped at +/- <em>max_param_change</em>. If <em>simulate_retracted_synapses</em> is set to <code>false</code> simulation of <img class="formulaInl" alt="$y(t), e(t)$" src="form_54.png"/> and <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> is not continued if <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> falls below 0 (retracted synapse). This means that only the stochastic dynamics of <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> are simulated until the synapse is reformed again. During this time, the reward gradient <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> is fixed to 0. If <em>delete_retracted_synapses</em> is set to <code>true</code>, retracted synapses will be removed from the network using the garbage collector of the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>.</p>
+ <p class="formulaDsp">
+<img class="formulaDsp" alt="\[ w(t) \;=\; w_0 \, \exp ( \theta(t) - \theta_0 ) \hspace{24px} (5) \]" src="form_85.png"/>
+</p>
+<p> The precision of the prior in equation (4) relates to the standard deviation as <img class="formulaInl" alt="$c_p = 1/\sigma^2$" src="form_82.png"/>. Setting <img class="formulaInl" alt="$c_p=0$" src="form_83.png"/> corresponds to a non-informative (flat) prior.</p>
+<p>The differential equations (2-5) are solved using Euler integration. The dynamics of the postsynaptic term <img class="formulaInl" alt="$y(t)$" src="form_21.png"/>, the eligibility trace <img class="formulaInl" alt="$e(t)$" src="form_59.png"/> and the reward gradient <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> are updated at each NEST time step. The dynamics of <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> and <img class="formulaInl" alt="$w(t)$" src="form_57.png"/> are updated on a time grid based on <em>weight_update_interval</em>. The synaptic weights remain constant between two updates. The synapse recorder is only invoked after each weight update which means that <em>recorder_interval</em> must be a multiple of <em>weight_update_interval</em>. Synaptic parameters are clipped at <em>min_param</em> and <em>max_param</em>. Parameter gradients are clipped at +/- <em>max_param_change</em>. Synaptic weights of synapses for which <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> falls below 0 are clipped to 0 (retracted synapses). If <em>simulate_retracted_synapses</em> is set to <code>false</code> simulation of <img class="formulaInl" alt="$y(t), e(t)$" src="form_54.png"/> and <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> is not continued for retracted synapse. This means that only the stochastic dynamics of <img class="formulaInl" alt="$\theta(t)$" src="form_56.png"/> are simulated until the synapse is reformed again. During this time, the reward gradient <img class="formulaInl" alt="$g(t)$" src="form_55.png"/> is fixed to 0. If <em>delete_retracted_synapses</em> is set to <code>true</code>, retracted synapses will be removed from the network using the garbage collector of the <a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent synapses. ">ConnectionUpdateManager</a>.</p>
 <p><b>References</b></p>
 <p>[1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and Wolfgang Maass. <em>Reward-based self-configuration of neural circuits.</em> In preparation (available on request from the authors).</p>
 <p>[2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and Wolfgang Maass. <em>CaMKII activation supports reward-based neural network optimization through Hamiltonian sampling.</em> 2016. <a href="https://arxiv.org/abs/1606.00157">https://arxiv.org/abs/1606.00157</a></p>
@@ -459,7 +462,7 @@ template&lt;typename targetidentifierT &gt; </div>
 </div><div class="memdoc">
 
 <p>Status setter function. </p>
-<p><code>weight</code> will be overwritten next time when the synapse is updated. </p>
+<dl class="section note"><dt>Note</dt><dd><em>weight</em> will be overwritten next time when the synapse is updated. </dd></dl>
 
 </div>
 </div>
@@ -470,7 +473,7 @@ template&lt;typename targetidentifierT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 12 2017 16:53:56 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 13 2017 20:24:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

@@ -58,3 +58,32 @@
 \form#57:$w(t)$
 \form#58:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \quad \text{ eligibility trace } \]
 \form#59:$e(t)$
+\form#60:$c_p$
+\form#61:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \quad (1) \]
+\form#62:\[ d \theta(t) \;=\; \beta\,\left( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \]
+\form#63:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \hspace{1cm} (1) \]
+\form#64:\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \hspace{16mm} (1) \]
+\form#65:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \hspace{16mm} (2) \]
+\form#66:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{16mm} (3) \]
+\form#67:\[ d \theta(t) \;=\; \beta\,\left( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \hspace{16mm} (4) \]
+\form#68:\[ w(t) \;=\; \exp ( \theta(t) - \theta_0 ) \hspace{16mm} (5) \]
+\form#69:\[ d \theta(t) \;=\; \beta\,\left( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \hspace{54px} (1) \]
+\form#70:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{123px} (1) \]
+\form#71:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{140px} (1) \]
+\form#72:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{204px} (1) \]
+\form#73:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{172px} (1) \]
+\form#74:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{182px} (1) \]
+\form#75:\[ \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;. \hspace{24px} (1) \]
+\form#76:\[ d \theta(t) \;=\; \beta\,\left( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \hspace{24px} (1) \]
+\form#77:\[ \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \hspace{24px} (2) \]
+\form#78:\[ \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{24px} (3) \]
+\form#79:\[ d \theta(t) \;=\; \beta\,\left( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \right) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \hspace{24px} (4) \]
+\form#80:\[ w(t) \;=\; \exp ( \theta(t) - \theta_0 ) \hspace{24px} (5) \]
+\form#81:$\sigma$
+\form#82:$c_p = 1/\sigma^2$
+\form#83:$c_p=0$
+\form#84:$w_0$
+\form#85:\[ w(t) \;=\; w_0 \, \exp ( \theta(t) - \theta_0 ) \hspace{24px} (5) \]
+\form#86:\[ d \theta(t) \;=\; \beta\,\bigg( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \bigg) dt \,+\, \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta} \hspace{24px} (4) \]
+\form#87:\[ d \theta(t) \;=\; \beta\,\bigg( c_p (\mu - \theta(t)) + c_g\,g(t) + c_e \, dopa(t) \,e(t) \bigg) dt \,+\, \sqrt{ 2 T_\theta \beta } \, \mathcal{W}_{\theta} \hspace{24px} (4) \]
+\form#88:$\epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r} \left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)$

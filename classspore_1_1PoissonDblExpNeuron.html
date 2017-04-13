@@ -182,8 +182,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Point process neuron with double-exponential shaped PSCs. </p>
-<p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> - Point process neuron with double-exponential PSPs.</p>
-<p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes and absolute refractory mechanism.</p>
+<p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes of the from <img class="formulaInl" alt="$\epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r} \left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)$" src="form_88.png"/> and absolute refractory mechanism.</p>
 <p>Spikes are generated randomly according to the current value of the transfer function which operates on the membrane potential. Spike generation is followed by an optional dead time (refractory state). Setting with_reset to true will reset the membrane potential after each spike.</p>
 <p>The transfer function can be chosen to be linear, exponential or a sum of both by adjusting three parameters:</p>
 <p class="formulaDsp">
@@ -199,23 +198,23 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
 <tr>
-<td><em>V_m</em>  </td><td>double </td><td>Membrane potential in mV </td></tr>
+<td><em>V_m</em>  </td><td>double </td><td>Membrane potential [mV] </td></tr>
 <tr>
-<td><em>tau_rise_exc</em>  </td><td>double </td><td>Fall time constant of excitatory PSP (&gt;0.0) </td></tr>
+<td><em>tau_rise_exc</em>  </td><td>double </td><td>Fall time constant of excitatory PSP (&gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_fall_exc</em>  </td><td>double </td><td>Rise time constant of excitatory PSP (&gt;0.0) </td></tr>
+<td><em>tau_fall_exc</em>  </td><td>double </td><td>Rise time constant of excitatory PSP (&gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_rise_inh</em>  </td><td>double </td><td>Fall time constant of inhibitory PSP (&gt;0.0) </td></tr>
+<td><em>tau_rise_inh</em>  </td><td>double </td><td>Fall time constant of inhibitory PSP (&gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_fall_inh</em>  </td><td>double </td><td>Rise time constant of inhibitory PSP (&gt;0.0) </td></tr>
+<td><em>tau_fall_inh</em>  </td><td>double </td><td>Rise time constant of inhibitory PSP (&gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>dead_time</em>  </td><td>double </td><td>Duration of the dead time in ms </td></tr>
+<td><em>dead_time</em>  </td><td>double </td><td>Duration of the dead time [ms] </td></tr>
 <tr>
 <td><em>dead_time_random</em>  </td><td>bool </td><td>Should a random dead time be drawn after each spike? </td></tr>
 <tr>
 <td><em>dead_time_shape</em>  </td><td>int </td><td>Shape parameter of dead time gamma distribution  </td></tr>
 <tr>
-<td><em>t_ref_remaining</em>  </td><td>double </td><td>Remaining dead time at simulation start </td></tr>
+<td><em>t_ref_remaining</em>  </td><td>double </td><td>Remaining dead time at simulation start (&gt;0.0) [ms]  </td></tr>
 <tr>
 <td><em>with_reset</em>  </td><td>bool </td><td>Should the membrane potential be reset after a spike? </td></tr>
 <tr>
@@ -223,13 +222,13 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <tr>
 <td><em>input_conductance</em>  </td><td>double </td><td>Conductance of input currents [S] </td></tr>
 <tr>
-<td><em>c_1</em>  </td><td>double </td><td>Slope of linear part of transfer function in Hz/mV </td></tr>
+<td><em>c_1</em>  </td><td>double </td><td>Slope of linear part of transfer function [Hz/mV] </td></tr>
 <tr>
-<td><em>c_2</em>  </td><td>double </td><td>Prefactor of exponential part of transfer function in Hz </td></tr>
+<td><em>c_2</em>  </td><td>double </td><td>Prefactor of exponential part of transfer function [Hz] </td></tr>
 <tr>
-<td><em>c_3</em>  </td><td>double </td><td>Coefficient of exponential non-linearity of transfer function in 1/mV </td></tr>
+<td><em>c_3</em>  </td><td>double </td><td>Coefficient of exponential non-linearity of transfer function [1/mV] </td></tr>
 <tr>
-<td><em>target_rate</em>  </td><td>double </td><td>Target rate of neuron for adaptation mechanism in Hz </td></tr>
+<td><em>target_rate</em>  </td><td>double </td><td>Target rate of neuron for adaptation mechanism [Hz] </td></tr>
 <tr>
 <td><em>target_adaptation_speed</em>  </td><td>double </td><td>Speed of rate adaptation </td></tr>
 </table>
@@ -558,7 +557,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 12 2017 16:53:56 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 13 2017 20:24:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
