@@ -194,7 +194,7 @@ synapse_properties = {
     "gradient_scale": 1.0,  # activate synaptic gradient integration
     "direct_gradient_rate": 0.0,  # rate of direct effect of gradient on the synapse
     "prior_mean": 0.0,  # mean of parameter prior
-    "prior_inverse_variance": 0.25,  # inverse variance of parameter prior
+    "prior_precision": 0.25,  # inverse variance of parameter prior
 }
 
 hidden_neuron_properties = {

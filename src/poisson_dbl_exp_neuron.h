@@ -47,10 +47,11 @@ namespace spore
 /**
  * @brief Point process neuron with double-exponential shaped PSCs.
  * 
- * PoissonDblExpNeuron - Point process neuron with double-exponential PSPs.
- * 
  * PoissonDblExpNeuron is a variant of the spike response model model with
- * double exponential PSP shapes and absolute refractory mechanism.
+ * double exponential PSP shapes of the from
+ * \f$\epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}
+ * \left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\f$
+ * and absolute refractory mechanism.
  *
  * Spikes are generated randomly according to the current value of the
  * transfer function which operates on the membrane potential. Spike
@@ -95,29 +96,34 @@ namespace spore
  *
  * <table>
  * <tr><th>name</th>                       <th>type</th>   <th>comment</th></tr> 
- * <tr><td>\a V_m</td>                     <td>double</td> <td>Membrane potential in mV</td></tr>
- * <tr><td>\a tau_rise_exc</td>            <td>double</td> <td>Fall time constant of excitatory PSP (>0.0)</td></tr>
- * <tr><td>\a tau_fall_exc</td>            <td>double</td> <td>Rise time constant of excitatory PSP (>0.0)</td></tr>
- * <tr><td>\a tau_rise_inh</td>            <td>double</td> <td>Fall time constant of inhibitory PSP (>0.0)</td></tr>
- * <tr><td>\a tau_fall_inh</td>            <td>double</td> <td>Rise time constant of inhibitory PSP (>0.0)</td></tr>
- * <tr><td>\a dead_time</td>               <td>double</td> <td>Duration of the dead time in ms</td></tr>
+ * <tr><td>\a V_m</td>                     <td>double</td> <td>Membrane potential [mV]</td></tr>
+ * <tr><td>\a tau_rise_exc</td>            <td>double</td> <td>Fall time constant of excitatory PSP (>0.0) [ms] 
+ *                                                         </td></tr>
+ * <tr><td>\a tau_fall_exc</td>            <td>double</td> <td>Rise time constant of excitatory PSP (>0.0) [ms]
+ *                                                         </td></tr>
+ * <tr><td>\a tau_rise_inh</td>            <td>double</td> <td>Fall time constant of inhibitory PSP (>0.0) [ms]
+ *                                                         </td></tr>
+ * <tr><td>\a tau_fall_inh</td>            <td>double</td> <td>Rise time constant of inhibitory PSP (>0.0) [ms]
+ *                                                         </td></tr>
+ * <tr><td>\a dead_time</td>               <td>double</td> <td>Duration of the dead time [ms]</td></tr>
  * <tr><td>\a dead_time_random</td>        <td>bool</td>   <td>Should a random dead time be drawn after each
  *                                                             spike?</td></tr>
  * <tr><td>\a dead_time_shape</td>         <td>int</td>    <td>Shape parameter of dead time gamma distribution
  *                                                         </td></tr>
- * <tr><td>\a t_ref_remaining</td>         <td>double</td> <td>Remaining dead time at simulation start</td></tr>
+ * <tr><td>\a t_ref_remaining</td>         <td>double</td> <td>Remaining dead time at simulation start (>0.0) [ms]
+ *                                                         </td></tr>
  * <tr><td>\a with_reset</td>              <td>bool</td>   <td>Should the membrane potential be reset after a
  *                                                             spike?</td></tr>
  * <tr><td>\a I_e</td>                     <td>double</td> <td>Constant input current [pA]</td></tr>
  * <tr><td>\a input_conductance</td>       <td>double</td> <td>Conductance of input currents [S]</td></tr> 
  * <tr><td>\a c_1</td>                     <td>double</td> <td>Slope of linear part of transfer function
- *                                                             in Hz/mV</td></tr>
+ *                                                             [Hz/mV]</td></tr>
  * <tr><td>\a c_2</td>                     <td>double</td> <td>Prefactor of exponential part of transfer function
- *                                                             in Hz</td></tr>
+ *                                                             [Hz]</td></tr>
  * <tr><td>\a c_3</td>                     <td>double</td> <td>Coefficient of exponential non-linearity of transfer
- *                                                             function in 1/mV</td></tr>
+ *                                                             function [1/mV]</td></tr>
  * <tr><td>\a target_rate</td>             <td>double</td> <td>Target rate of neuron for adaptation mechanism
- *                                                             in Hz</td></tr>
+ *                                                             [Hz]</td></tr>
  * <tr><td>\a target_adaptation_speed</td> <td>double</td> <td>Speed of rate adaptation</td></tr>
  * </table>
  * 

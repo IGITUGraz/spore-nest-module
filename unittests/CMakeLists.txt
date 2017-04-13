@@ -31,6 +31,7 @@ add_test( NAME dbl_exp_neuron_rate COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_
 add_test( NAME reward_synapse COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse.py )
 add_test( NAME reward_synapse_io COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse_io.py )
 add_test( NAME reward_synapse_stdp COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_synapse_stdp.py )
+add_test( NAME garbage_collector COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_garbage_collector.py )
 add_test( NAME reward_in_proxy COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/test_reward_in_proxy/test.py )
 
 # Integration Tests

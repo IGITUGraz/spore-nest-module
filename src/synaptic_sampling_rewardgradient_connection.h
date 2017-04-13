@@ -143,6 +143,7 @@ public:
     double integration_time_;
     double direct_gradient_rate_;
     double parameter_mapping_offset_;
+    double weight_scale_;
     double weight_update_interval_;
     double gradient_scale_;
     double psp_cutoff_amplitude_;
@@ -168,33 +169,6 @@ public:
     long weight_update_steps_;
 
 private:
-    /**
-     * @brief Define default values and constraints for synaptic parameters.
-     */
-    template < typename T, typename C >
-        static void define_parameters( T & p, C &v )
-    {
-        p.parameter( v.learning_rate_, "learning_rate", 5e-08, pc::MinD(0.0) );
-        p.parameter( v.episode_length_, "episode_length", 1000.0, pc::BiggerD(0.0) );
-        p.parameter( v.psp_tau_rise_, "psp_tau_rise", 2.0, pc::BiggerD(0.0) );
-        p.parameter( v.psp_tau_fall_, "psp_tau_fall", 20.0, pc::BiggerD(0.0) );
-        p.parameter( v.temperature_, "temperature", 0.1, pc::MinD(0.0) );
-        p.parameter( v.gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
-        p.parameter( v.max_param_, "max_param", 5.0 );
-        p.parameter( v.min_param_, "min_param", -2.0 );
-        p.parameter( v.max_param_change_, "max_param_change", 40.0, pc::MinD(0.0) );
-        p.parameter( v.integration_time_, "integration_time", 50000.0, pc::BiggerD(0.0) );
-        p.parameter( v.direct_gradient_rate_, "direct_gradient_rate", 0.0 );
-        p.parameter( v.parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
-        p.parameter( v.weight_update_interval_, "weight_update_interval", 100.0, pc::BiggerD(0.0) );
-        p.parameter( v.gradient_scale_, "gradient_scale", 1.0 );
-        p.parameter( v.bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
-        p.parameter( v.dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
-        p.parameter( v.psp_cutoff_amplitude_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
-        p.parameter( v.simulate_retracted_synapses_, "simulate_retracted_synapses", false );
-        p.parameter( v.delete_retracted_synapses_, "delete_retracted_synapses", false );
-        p.parameter( v.verbose_, "verbose", false );
-    }
 
     double std_wiener_;
     double std_gradient_;
@@ -204,14 +178,24 @@ private:
 /**
  * @brief Reward-based synaptic sampling connection class
  *
- * SynapticSamplingRewardGradientConnection - Synapse implementing reward-based
- * learning through synaptic sampling. This class implements the model in [1,2].
- * This connection is a diligent synapse model, therefore updates are triggered
- * on a regular interval which is ensured by the ConnectionUpdateManager.
- * The target node and the reward transmitter must be derived from the
- * TracingNode model.
+ * This connection type implements the Bayesian policy sampling algorithm
+ * introduced in [1,2]. The target node to which synapses of this type
+ * are connected must be derived from TracingNode. A second node which
+ * is also derived from type TracingNode must be registered to the synapse
+ * model at its \a reward_transmitter parameter. The synapse model performs
+ * a stochastic policy search which tries to maximize the reward signal
+ * provided by the \a reward_transmitter node. At the same time synaptic
+ * weights are constraint by a Gaussian prior with mean \f$\mu\f$ and standard
+ * deviation \f$\sigma\f$. This synapse type can not change its sign, i.e.
+ * synapses are either excitatory or inhibitory depending on the sign of the
+ * \a weight_scale parameter. If synaptic weights fall below a threshold
+ * (determined by parameter \a parameter_mapping_offset) weights are clipped
+ * to zero (retracted synapses). The synapse model also implements an optional
+ * mechanism to automatically remove retracted synapses from the simulation.
+ * This mechanism can be turned on using the \q delete_retracted_synapses
+ * parameter.
  *
- * <b>Parameters</b>
+ * <b>Parameters and state variables</b>
  *
  * The following parameters can be set in the common properties dictionary
  * (default values and constraints are given in parentheses, corresponding symbols
@@ -238,8 +222,10 @@ private:
  *                                                              [ms]</td></tr>
  * <tr><td>\a parameter_mapping_offset</td>    <td>double</td> <td>offset parameter for computing synaptic
  *                                                              weight (3.0) {\f$\theta_0\f$}</td></tr>
+ * <tr><td>\a weight_scale</td>                <td>double</td> <td>scaling factor for the synaptic weight (3.0)
+ *                                                              {\f$w_0\f$} </td></tr>
  * <tr><td>\a direct_gradient_rate</td>        <td>double</td> <td>rate of directly applying changes to the
- *                                                              synaptic parameter (0.0) {\f$c_e\f$}</td></tr>
+ *                                                              synaptic parameter (0.0) {\f$c_e\f$} </td></tr>
  * <tr><td>\a gradient_scale</td>              <td>double</td> <td>scaling parameter for the gradient (1.0)
  *                                                              {\f$c_g\f$}</td></tr>
  * <tr><td>\a max_param</td>                   <td>double</td> <td>maximum synaptic parameter (5.0)</td></tr>
@@ -262,57 +248,68 @@ private:
  * The following parameters can be set in the status dictionary:
  * <table>
  * <tr><th>name</th>                           <th>type</th>   <th>comment</th></tr>
- * <tr><td>\a synaptic_parameter</td>          <td>double</td> <td>initial synaptic parameter (\f$\theta\f$)</td></tr>
- * <tr><td>\a weight</td>                      <td>double</td> <td>current synaptic weight (\f$w\f$)</td></tr>
- * <tr><td>\a eligibility_trace</td>           <td>double</td> <td>current eligibility trace (\f$e\f$)</td></tr>
- * <tr><td>\a reward_gradient</td>             <td>double</td> <td>current reward gradient (\f$g\f$)</td></tr>
- * <tr><td>\a prior_mean</td>                  <td>double</td> <td>mean of the prior (\f$\mu\f$)</td></tr>
- * <tr><td>\a prior_inverse_variance</td>      <td>double</td> <td>inverse variance of the prior
- *                                                              \f$(1/\sigma^2)\f$</td></tr>
- * <tr><td>\a recorder_times</td>              <td>double</td> <td>time points of parameter recordings</td></tr>
- * <tr><td>\a weight_values</td>               <td>double</td> <td>array of recorded synaptic weight values</td></tr>
- * <tr><td>\a synaptic_parameter_values</td>   <td>double</td> <td>array of recorded synaptic parameter values
+ * <tr><td>\a synaptic_parameter</td>          <td>double</td> <td>current synaptic parameter {\f$\theta(t)\f$}
  *                                                             </td></tr>
- * <tr><td>\a reward_gradient_values</td>      <td>double</td> <td>array of recorded reward gradient values</td></tr>
- * <tr><td>\a eligibility_trace_values</td>    <td>double</td> <td>array of recorded eligibility trace values</td></tr>
- * <tr><td>\a psp_values</td>                  <td>double</td> <td>array of recorded psp values</td></tr>
+ * <tr><td>\a weight</td>                      <td>double</td> <td>current synaptic weight {\f$w(t)\f$}</td></tr>
+ * <tr><td>\a eligibility_trace</td>           <td>double</td> <td>current eligibility trace {\f$e(t)\f$}</td></tr>
+ * <tr><td>\a reward_gradient</td>             <td>double</td> <td>current reward gradient {\f$g(t)\f$}</td></tr>
+ * <tr><td>\a prior_mean</td>                  <td>double</td> <td>mean of the Gaussian prior {\f$\mu\f$}</td></tr>
+ * <tr><td>\a prior_precision</td>             <td>double</td> <td>precision of the Gaussian prior {\f$c_p\f$}</td></tr>
+ * <tr><td>\a recorder_times</td>              <td>[double]</td> <td>time points of parameter recordings*</td></tr>
+ * <tr><td>\a weight_values</td>               <td>[double]</td> <td>array of recorded synaptic weight values*
+ *                                                               </td></tr>
+ * <tr><td>\a synaptic_parameter_values</td>   <td>[double]</td> <td>array of recorded synaptic parameter values*
+ *                                                               </td></tr>
+ * <tr><td>\a reward_gradient_values</td>      <td>[double]</td> <td>array of recorded reward gradient values*
+ *                                                               </td></tr>
+ * <tr><td>\a eligibility_trace_values</td>    <td>[double]</td> <td>array of recorded eligibility trace values*
+ *                                                               </td></tr>
+ * <tr><td>\a psp_values</td>                  <td>[double]</td> <td>array of recorded psp values*</td></tr>
  * <tr><td>\a recorder_interval</td>           <td>double</td> <td>interval of synaptic recordings [ms]</td></tr>
  * <tr><td>\a reset_recorder</td>              <td>bool</td>   <td>clear all recorded values now* (write only)
  *                                                             </td></tr>
  * </table>
  *
- * *) if \a reset_recorder is set to \c true all recorded fields will be erased
- *       instantaneously.
+ * *) Recorder fields are read only. If \a reset_recorder is set to \c true
+ *    all recorder fields will be cleared instantaneously.
  *
  * <b>Implementation Details</b>
  * 
- * The state of each synapse consists of the variables
+ * This connection type is a diligent synapse model, therefore updates are triggered
+ * on a regular interval which is ensured by the ConnectionUpdateManager. The
+ * state of each synapse consists of the variables
  * \f$y(t), e(t), g(t), \theta(t), w(t)\f$.
  * The variable \f$y(t)\f$ is the presynaptic spike train filtered with a PSP
  * kernel \f$\epsilon(t)\f$ of the form
  * \f[
  *     \epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}\left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)\;.
+ *     \hspace{24px} (1)
  * \f]
  * A node derived from type TracingNode must be registered to the synapse
  * model at its \a reward_transmitter parameter. The trace of this node at
- * id \a dopa_trace_id is used as reward signal \f$dopa(t)\f$. The postsynaptic
- * neuron must also be derived from type TracingNode. Its trace with id
- * \a bap_trace_id is used as back-propagating signal \f$bap(t)\f$. The synapse
- * then solves the following set of differential equations:
+ * id \a dopa_trace_id is used as reward signal \f$dopa(t)\f$. The trace
+ * of the postsynaptic neuron with id \a bap_trace_id is used as
+ * back-propagating signal \f$bap(t)\f$. The synapse then solves the following
+ * set of differential equations:
  * \f[
- *     \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t)
+ *     \frac{d e(t)}{dt} \;=\; -\frac{1}{\tau_e} e(t) \,+\, w(t)\,y(t)\,bap(t) \hspace{24px} (2)
  * \f]
  * \f[
- *     \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g
+ *     \frac{d g(t)}{dt} \;=\; -\frac{1}{\tau_g} g(t) \,+\, dopa(t)\,e(t) \,+\, T_g\,d \mathcal{W}_g \hspace{24px} (3)
  * \f]
  * \f[
- *     d \theta(t) \;=\; \beta\,\left( \frac{1}{\sigma^2} (\mu - \theta(t)) + c_g\,g(t) +
- *                                     c_e \, dopa(t) \,e(t) \right) dt \,+\,
- *                       \sqrt{ 2 T_\theta \beta } \mathcal{W}_{\theta}
+ *     d \theta(t) \;=\; \beta\,\bigg( c_p (\mu - \theta(t)) + c_g\,g(t) +
+ *                                     c_e \, dopa(t) \,e(t) \bigg) dt \,+\,
+ *                       \sqrt{ 2 T_\theta \beta } \, \mathcal{W}_{\theta}  \hspace{24px} (4)
  * \f]
  * \f[
- *     w(t) \;=\; \exp ( \theta(t) - \theta_0 )
+ *     w(t) \;=\; w_0 \, \exp ( \theta(t) - \theta_0 ) \hspace{24px} (5)
  * \f]
+ * The precision of the prior in equation (4) relates to the standard deviation
+ * as \f$c_p = 1/\sigma^2\f$. Setting \f$c_p=0\f$ corresponds to a
+ * non-informative (flat) prior.
+ * 
+ * The differential equations (2-5) are solved using Euler integration.
  * The dynamics of the postsynaptic term \f$y(t)\f$, the eligibility trace
  * \f$e(t)\f$ and the reward gradient \f$g(t)\f$ are updated at each NEST
  * time step. The dynamics of \f$\theta(t)\f$ and \f$w(t)\f$ are updated
@@ -321,14 +318,15 @@ private:
  * after each weight update which means that \a recorder_interval must be a
  * multiple of \a weight_update_interval. Synaptic parameters are clipped at
  * \a min_param and \a max_param. Parameter gradients are clipped at +/-
- * \a max_param_change. If \a simulate_retracted_synapses is set to \c false
- * simulation of \f$y(t), e(t)\f$ and \f$g(t)\f$ is not continued if
- * \f$\theta(t)\f$ falls below 0 (retracted synapse). This means that only
- * the stochastic dynamics of \f$\theta(t)\f$ are simulated until the synapse
- * is reformed again. During this time, the reward gradient \f$g(t)\f$ is
- * fixed to 0. If \a delete_retracted_synapses is set to \c true, retracted
- * synapses will be removed from the network using the garbage collector of the
- * ConnectionUpdateManager.
+ * \a max_param_change. Synaptic weights of synapses for which \f$\theta(t)\f$
+ * falls below 0 are clipped to 0 (retracted synapses). If
+ * \a simulate_retracted_synapses is set to \c false simulation of
+ * \f$y(t), e(t)\f$ and \f$g(t)\f$ is not continued for retracted synapse.
+ * This means that only the stochastic dynamics of \f$\theta(t)\f$ are simulated
+ * until the synapse is reformed again. During this time, the reward gradient
+ * \f$g(t)\f$ is fixed to 0. If \a delete_retracted_synapses is set to \c true,
+ * retracted synapses will be removed from the network using the garbage
+ * collector of the ConnectionUpdateManager.
  *  
  * <b>References</b>
  *
@@ -463,7 +461,7 @@ private:
     double reward_gradient_;
 
     double prior_mean_;
-    double prior_inv_var_;
+    double prior_precision_;
 
     nest::index recorder_port_;
 
@@ -517,7 +515,7 @@ psp_depression_(0.0),
 eligibility_trace_(0.0),
 reward_gradient_(0.0),
 prior_mean_(0.0),
-prior_inv_var_(1.0),
+prior_precision_(1.0),
 recorder_port_(nest::invalid_index)
 {
 }
@@ -536,7 +534,7 @@ psp_depression_(rhs.psp_depression_),
 eligibility_trace_(rhs.eligibility_trace_),
 reward_gradient_(rhs.reward_gradient_),
 prior_mean_(rhs.prior_mean_),
-prior_inv_var_(rhs.prior_inv_var_),
+prior_precision_(rhs.prior_precision_),
 recorder_port_(nest::invalid_index)
 {
 }
@@ -604,7 +602,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
     def<double>(d, "eligibility_trace", eligibility_trace_);
     def<double>(d, "reward_gradient", reward_gradient_);
     def<double>(d, "prior_mean", prior_mean_);
-    def<double>(d, "prior_inverse_variance", prior_inv_var_);
+    def<double>(d, "prior_precision", prior_precision_);
     def<long>(d, nest::names::size_of, sizeof (*this));
 
     logger()->get_status(d, recorder_port_);
@@ -613,7 +611,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
 /**
  * @brief Status setter function.
  * 
- * @Note \c weight will be overwritten next time when the synapse is updated.
+ * @note \a weight will be overwritten next time when the synapse is updated.
  */
 template <typename targetidentifierT>
 void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(const DictionaryDatum & d,
@@ -623,7 +621,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
     updateValue<double>(d, nest::names::weight, weight_);
     updateValue<double>(d, "synaptic_parameter", synaptic_parameter_);
     updateValue<double>(d, "prior_mean", prior_mean_);
-    updateValue<double>(d, "prior_inverse_variance", prior_inv_var_);
+    updateValue<double>(d, "prior_precision", prior_precision_);
 
     logger()->set_status(d, recorder_port_);
 }
@@ -735,6 +733,8 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
  * neuron and the reward (dopamine) trace of the reward transmitter to be
  * passed. Iterators are expected to be positioned at time t_last_update and
  * will be advanced to t_to after the call.
+ * 
+ * This method implements equations (1-3).
  *
  * @param t_to time to advance to.
  * @param t_last_update time of last update.
@@ -805,7 +805,9 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
 }
 
 /**
- * Updates the synaptic parameter of the synapse.
+ * @brief Updates the synaptic parameter of the synapse.
+ * 
+ * This method implements equation (4).
  *
  * @param thread the thread of the synapse.
  * @param cp the synapse type common properties.
@@ -818,7 +820,7 @@ update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp)
     const double l_rate = cp.weight_update_interval_ * cp.learning_rate_;
 
     // compute prior
-    const double prior = prior_inv_var_ * (prior_mean_ - synaptic_parameter_);
+    const double prior = prior_precision_ * (prior_mean_ - synaptic_parameter_);
 
     reward_gradient_ += cp.get_gradient_noise(thread);
 
@@ -831,7 +833,9 @@ update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp)
 }
     
 /**
- * Updates the synaptic weight of the synapse and trigger recording.
+ * @brief Updates the synaptic weight of the synapse and trigger recording.
+ *
+ * This method implements equation (5).
  *
  * @param time_step the current time step.
  * @param cp the synapse type common properties.
@@ -845,7 +849,7 @@ update_synapic_weight(long time_step, const CommonPropertiesType& cp)
     // update synaptic weight
     if (synaptic_parameter_ >= 0.0)
     {
-        weight_ = std::exp(synaptic_parameter_ - cp.parameter_mapping_offset_);
+        weight_ = cp.weight_scale_ * std::exp(synaptic_parameter_ - cp.parameter_mapping_offset_);
     }
     else
     {

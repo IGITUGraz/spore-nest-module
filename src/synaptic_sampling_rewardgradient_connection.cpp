@@ -34,6 +34,35 @@
 namespace spore
 {
 
+/*
+ * Define default values and constraints for synaptic parameters.
+ */
+template < typename T, typename C >
+    static void define_parameters( T & p, C &v )
+{
+    p.parameter( v.learning_rate_, "learning_rate", 5e-08, pc::MinD(0.0) );
+    p.parameter( v.episode_length_, "episode_length", 1000.0, pc::BiggerD(0.0) );
+    p.parameter( v.psp_tau_rise_, "psp_tau_rise", 2.0, pc::BiggerD(0.0) );
+    p.parameter( v.psp_tau_fall_, "psp_tau_fall", 20.0, pc::BiggerD(0.0) );
+    p.parameter( v.temperature_, "temperature", 0.1, pc::MinD(0.0) );
+    p.parameter( v.gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
+    p.parameter( v.max_param_, "max_param", 5.0 );
+    p.parameter( v.min_param_, "min_param", -2.0 );
+    p.parameter( v.max_param_change_, "max_param_change", 40.0, pc::MinD(0.0) );
+    p.parameter( v.integration_time_, "integration_time", 50000.0, pc::BiggerD(0.0) );
+    p.parameter( v.direct_gradient_rate_, "direct_gradient_rate", 0.0 );
+    p.parameter( v.parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
+    p.parameter( v.weight_scale_, "weight_scale", 1.0 );
+    p.parameter( v.weight_update_interval_, "weight_update_interval", 100.0, pc::BiggerD(0.0) );
+    p.parameter( v.gradient_scale_, "gradient_scale", 1.0 );
+    p.parameter( v.bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
+    p.parameter( v.dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
+    p.parameter( v.psp_cutoff_amplitude_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
+    p.parameter( v.simulate_retracted_synapses_, "simulate_retracted_synapses", false );
+    p.parameter( v.delete_retracted_synapses_, "delete_retracted_synapses", false );
+    p.parameter( v.verbose_, "verbose", false );
+}
+
 /**
  * Default constructor.
  */
