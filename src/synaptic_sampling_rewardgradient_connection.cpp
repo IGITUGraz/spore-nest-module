@@ -1,4 +1,4 @@
-/* 
+/*
  * This file is part of SPORE.
  *
  * Copyright (c) 2016, Institute for Theoretical Computer Science,
@@ -27,9 +27,7 @@
  * See: http://nest-initiative.org/
  */
 
-
 #include "synaptic_sampling_rewardgradient_connection.h"
-
 
 namespace spore
 {
@@ -132,7 +130,7 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
 
         reward_transmitter_ = new_reward_transmitter;
     }
-    
+
     SetStatus p_set( d );
     define_parameters < SetStatus > ( p_set, *this );
 }

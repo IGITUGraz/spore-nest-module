@@ -1,4 +1,4 @@
-/* 
+/*
  * This file is part of SPORE.
  *
  * Copyright (c) 2016, Institute for Theoretical Computer Science,
@@ -47,7 +47,7 @@ namespace spore
 
 /**
  * @brief Class holding the common properties for all synapses of type SynapticSamplingRewardGradientConnection.
- * 
+ *
  * The parameters, their constraints and their default values are described
  * in detail in the documentation of SynapticSamplingRewardGradientConnection.
  */
@@ -241,7 +241,7 @@ private:
  * <tr><td>\a verbose</td>                     <td>bool</td>   <td>write status to the standard output (false)
  *                                                             </td></tr>
  * </table>
- * 
+ *
  * *)  \a reward_transmitter must be set to the GID of a TracingNode before
  *        simulation startup.
  *
@@ -274,7 +274,7 @@ private:
  *    all recorder fields will be cleared instantaneously.
  *
  * <b>Implementation Details</b>
- * 
+ *
  * This connection type is a diligent synapse model, therefore updates are triggered
  * on a regular interval which is ensured by the ConnectionUpdateManager. The
  * state of each synapse consists of the variables
@@ -308,7 +308,7 @@ private:
  * The precision of the prior in equation (4) relates to the standard deviation
  * as \f$c_p = 1/\sigma^2\f$. Setting \f$c_p=0\f$ corresponds to a
  * non-informative (flat) prior.
- * 
+ *
  * The differential equations (2-5) are solved using Euler integration.
  * The dynamics of the postsynaptic term \f$y(t)\f$, the eligibility trace
  * \f$e(t)\f$ and the reward gradient \f$g(t)\f$ are updated at each NEST
@@ -327,7 +327,7 @@ private:
  * \f$g(t)\f$ is fixed to 0. If \a delete_retracted_synapses is set to \c true,
  * retracted synapses will be removed from the network using the garbage
  * collector of the ConnectionUpdateManager.
- *  
+ *
  * <b>References</b>
  *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
@@ -610,7 +610,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
 
 /**
  * @brief Status setter function.
- * 
+ *
  * @note \a weight will be overwritten next time when the synapse is updated.
  */
 template <typename targetidentifierT>
@@ -658,7 +658,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
 
     const long s_to = std::floor( e.get_stamp().get_ms() / cp.resolution_unit_ );
     long s_from = std::floor( t_last_spike / cp.resolution_unit_ );
-    
+
     if (s_to > s_from)
     {
         if (s_from == 0)
@@ -733,7 +733,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
  * neuron and the reward (dopamine) trace of the reward transmitter to be
  * passed. Iterators are expected to be positioned at time t_last_update and
  * will be advanced to t_to after the call.
- * 
+ *
  * This method implements equations (1-3).
  *
  * @param t_to time to advance to.
@@ -756,7 +756,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
         // synapse is retracted. psps and eligibility traces are not going to be simulated.
         return;
     }
-    
+
     assert(t_to >= t_last_update);
     long steps = t_to - t_last_update;
 
@@ -806,7 +806,7 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse
 
 /**
  * @brief Updates the synaptic parameter of the synapse.
- * 
+ *
  * This method implements equation (4).
  *
  * @param thread the thread of the synapse.
@@ -831,7 +831,7 @@ update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp)
 
     synaptic_parameter_ = std::max(cp.min_param_, std::min(cp.max_param_, synaptic_parameter_ + d_param));
 }
-    
+
 /**
  * @brief Updates the synaptic weight of the synapse and trigger recording.
  *

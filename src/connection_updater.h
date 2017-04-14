@@ -50,7 +50,7 @@ namespace spore
 
 /**
  * @brief Class that manages updating diligent synapses.
- * 
+ *
  * Singleton class that manages updating connections that require regular
  * updates (diligent connections). The object is supposed to be updated in a
  * regular interval (defined by get_interval()). Synapses that were not updated
@@ -61,7 +61,7 @@ namespace spore
  * Synapses that use the functionality of the update manager should be
  * registered using the register_connector() method. Synapse Models that
  * are instantiated using the DiligentConnectorModel do this automatically.
- * 
+ *
  * <b>Initializing the Update Manager</b>
  *
  * If diligent connections are used the SLI function \a InitSynapseUpdater
@@ -84,9 +84,9 @@ namespace spore
  * \a InitSynapseUpdater may be called multiple times to change the parameters
  * of the update manager, but must not be invoked again after the first call to
  * \a Simulate (see: setup()).
- * 
+ *
  * <b>Garbage Collection</b>
- * 
+ *
  * ConnectionUpdateManager also provides a mechanism to removed synapses that
  * become nonfunctional (garbage collection). The synapse must take care of
  * invoking the garbage collector by calling the trigger_garbage_collector()
@@ -99,7 +99,7 @@ namespace spore
  * removed. The synapse should in that case not call trigger_garbage_collector()
  * again or change its behavior of returning \c true from \a is_degenerated, as
  * this would lead to undefined behavior.
- * 
+ *
  * @node The garbage collection feature should not be used together with structural
  * plasticity mechanisms of NEST which \em delete synapses of the same synapse
  * type, since these may interfere with the garbage collector. Using structural
@@ -232,7 +232,7 @@ private:
         {
             return (conn.connector_ != connector_);
         }
-        
+
         bool operator<=(const ConnectionEntry &conn) const
         {
             return (conn.connector_ <= connector_);
@@ -274,7 +274,7 @@ private:
 
     private:
         nest::ConnectorBase* connector_;
-        nest::Node* sender_;        
+        nest::Node* sender_;
     };
 
     /**
@@ -388,7 +388,7 @@ private:
 
 /**
  * @brief The dummy event class used to trigger synapse updates.
- * 
+ *
  * The event sent to the synapse for updates. This is a dummy event, that must
  * not be communicated to the postsynaptic neuron. Trying to send or clone an
  * instance of SynapseUpdateEvent will raise an exception. SynapseUpdateEvent
