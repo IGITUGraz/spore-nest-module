@@ -76,7 +76,7 @@ class Plot(object):
         return None
 
     def _create_primitives(self):
-        self._ps = dict(zip(self._keys, map(lambda c: self._create_primitive(c), self._colors)))
+        self._ps = dict(zip(self._keys, [self._create_primitive(c) for c in self._colors]))
 
     def _get_data_source(self):
         return self._data_source
@@ -172,7 +172,7 @@ class PhasePlot(TimeSeriesPlot):
         self._ax.yaxis.set_ticks([])
 
     def _create_primitives(self):
-        self._ps = map(lambda ls: self._ax.plot([], [], **ls)[0], self._line_styles)
+        self._ps = [self._ax.plot([], [], **ls)[0] for ls in self._line_styles]
 
     def get_artists(self):
         return self._ps
@@ -204,9 +204,9 @@ class AnalogSignalPlot(TimeSeriesPlot):
             self._ax.set_ylim(*self._y_lim)
         if self._y_ticks is not None:
             if isinstance(self._y_ticks, dict):
-                self._ax.yaxis.set_ticks(self._y_ticks.keys())
+                self._ax.yaxis.set_ticks(list(self._y_ticks.keys()))
                 # TODO test this. Presumable map onto values is needed to retain order
-                self._ax.set_yticklabels(self._y_ticks.values())
+                self._ax.set_yticklabels(list(self._y_ticks.values()))
             else:
                 assert isinstance(self._y_ticks, list)
                 self._ax.yaxis.set_ticks(self._y_ticks)
@@ -228,7 +228,7 @@ class AnalogSignalPlot(TimeSeriesPlot):
 class SpikeTrainPlot(TimeSeriesPlot):
     def __init__(self, data_source, keys, label=None, legend=None, legend_loc=None, colors=None,
                  y_tick_filter=lambda ids: [],
-                 y_tick_labels=lambda ids: map(str, ids), y_ticks_right=True):
+                 y_tick_labels=lambda ids: list(map(str, ids)), y_ticks_right=True):
         Plot.__init__(self, data_source, keys, label, legend, legend_loc, colors)
         self._y_tick_filter = y_tick_filter
         self._y_tick_labels = y_tick_labels
@@ -238,7 +238,7 @@ class SpikeTrainPlot(TimeSeriesPlot):
         TimeSeriesPlot._configure_axis(self)
         self._ax.set_ylim(-1, len(self._keys))
 
-        y_ticks = self._y_tick_filter(range(len(self._keys)))
+        y_ticks = self._y_tick_filter(list(range(len(self._keys))))
         if y_ticks:
             self._ax.yaxis.set_ticks(y_ticks)
             self._ax.set_yticklabels(self._y_tick_labels(y_ticks))
@@ -262,9 +262,9 @@ class SpikeMapPlot(Plot):
     def __init__(self, data_source, keys, key_to_xy, events_to_value=lambda events: len(events), value_bounds=None,
                  time_window=None, show_ticks=False, label=None, legend=None, legend_loc=None, colors=None):
         Plot.__init__(self, data_source, keys, label, legend, legend_loc, colors)
-        self._positions = map(key_to_xy, keys)
-        self._n_cols = max(map(lambda p: p[0], self._positions)) + 1
-        self._n_rows = max(map(lambda p: p[1], self._positions)) + 1
+        self._positions = list(map(key_to_xy, keys))
+        self._n_cols = max([p[0] for p in self._positions]) + 1
+        self._n_rows = max([p[1] for p in self._positions]) + 1
         self._data = np.zeros(shape=(self._n_cols, self._n_rows))
         self._xlim = (0, 0)
         self._time_window = time_window if time_window is not None else np.inf

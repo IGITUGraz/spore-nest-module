@@ -1,7 +1,11 @@
 from __future__ import absolute_import
 
-from Tkinter import *
-from ttk import *
+try:
+    from tkinter import *
+    from tkinter.ttk import *
+except ImportError:
+    from TKinter import *
+    from ttk import *
 
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure

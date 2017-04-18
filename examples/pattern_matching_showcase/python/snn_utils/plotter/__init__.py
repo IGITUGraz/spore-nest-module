@@ -1,6 +1,6 @@
 import matplotlib.gridspec as gridspec
 
-import plots as plot_widgets
+from . import plots as plot_widgets
 
 
 class BaseRow(object):
@@ -121,7 +121,7 @@ class AggregateRow(RowContainer, BaseRow):
         self.show_x = show_x
 
     def height_ratio(self):
-        return sum(map(lambda row: row.height_ratio(), self._rows))
+        return sum([row.height_ratio() for row in self._rows])
 
     def fill_figure(self, fig, gs_coord, **build_params):
         self._create_row_ax(fig, gs_coord)
@@ -129,7 +129,7 @@ class AggregateRow(RowContainer, BaseRow):
         n_rows = self.n_rows()
         n_cols = self.n_cols()
         # assert n_cols == 1, "More than one column is not implemented yet."
-        height_ratios = list(map(lambda row: row.height_ratio(), self._rows))
+        height_ratios = [row.height_ratio() for row in self._rows]
 
         # assert self.width_ratios is None or len(self.width_ratios) == n_cols
 
@@ -146,7 +146,7 @@ class AggregateRow(RowContainer, BaseRow):
         return dynamic_plots
 
     def n_cols(self):
-        return max(map(lambda row: row.n_cols(), self._rows))
+        return max([row.n_cols() for row in self._rows])
 
     def add_row_group(self, plots, vertical_padding_ratio=None, label=None, height_ratio=1, hlines=False):
         if isinstance(height_ratio, int) or isinstance(height_ratio, float):
