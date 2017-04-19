@@ -47,7 +47,7 @@ class MultiSubscriber(ContextHelper):
         self._handler = {}
         self._poll_timeout = poll_timeout
 
-    def add_subscriber(self, host, port, callback, transport="tcp", prefix="", deserialize=None, multipart=False):
+    def add_subscriber(self, host, port, callback, transport="tcp", prefix=u"", deserialize=None, multipart=False):
         address = "{}://{}:{}".format(transport, host, port)
         logger.info("Subscribing to {}".format(address))
         sock = self._context.socket(zmq.SUB)
