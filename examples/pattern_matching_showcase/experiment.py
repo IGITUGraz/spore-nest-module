@@ -57,4 +57,3 @@ finally:
         plotter.kill()
 
 sys.exit(exitcode)
-
