@@ -331,8 +331,8 @@ private:
  * <b>References</b>
  *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
- * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i>
- * 2017. https://arxiv.org/abs/1704.04238
+ * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i> 2017.
+ * https://arxiv.org/abs/1704.04238
  *
  * [2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and
  * Wolfgang Maass. <i>CaMKII activation supports reward-based neural network
