@@ -81,7 +81,7 @@ class ProxyDataSource(DataSource):
             # receiver
             self._map = collections.defaultdict(list)
             self._min_time = None
-            self._max_time = None
+            self._max_time = 0.
             self._auto_reset = auto_reset
 
     def map_cont_buffers(self, keys, buffers):

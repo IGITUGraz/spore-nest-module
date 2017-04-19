@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
-import subprocess
+import time_sender
 
-sys.exit( subprocess.call([sys.executable, "time_sender.py"]+sys.argv[1:]) )
+
+if __name__ == "__main__":
+    time_sender.main()
 

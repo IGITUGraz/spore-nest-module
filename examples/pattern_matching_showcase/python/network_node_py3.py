@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
-import subprocess
+from network_node import NetworkNode
 
-sys.exit( subprocess.call([sys.executable, "network_node.py"]+sys.argv[1:]) )
+if __name__ == '__main__':
+    NetworkNode().main()
 

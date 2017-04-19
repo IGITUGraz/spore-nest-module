@@ -29,7 +29,7 @@ class Publisher(ContextHelper):
         self._sock.bind(address)
 
     def send(self, data):
-        self._sock.send(data)
+        self._sock.send_string(data)
 
     def send_multipart(self, *data):
         self._sock.send_multipart(*data)
@@ -52,7 +52,7 @@ class MultiSubscriber(ContextHelper):
         logger.info("Subscribing to {}".format(address))
         sock = self._context.socket(zmq.SUB)
         sock.connect(address)
-        sock.setsockopt(zmq.SUBSCRIBE, prefix)
+        sock.setsockopt_string(zmq.SUBSCRIBE, prefix)
 
         if multipart:
             receive = lambda: sock.recv_multipart(zmq.NOBLOCK)

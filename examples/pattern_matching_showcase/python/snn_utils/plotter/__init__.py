@@ -146,7 +146,7 @@ class AggregateRow(RowContainer, BaseRow):
         return dynamic_plots
 
     def n_cols(self):
-        return max([row.n_cols() for row in self._rows])
+        return max([row.n_cols() for row in self._rows if row.n_cols() is not None])
 
     def add_row_group(self, plots, vertical_padding_ratio=None, label=None, height_ratio=1, hlines=False):
         if isinstance(height_ratio, int) or isinstance(height_ratio, float):
