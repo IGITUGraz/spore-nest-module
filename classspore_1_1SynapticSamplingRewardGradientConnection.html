@@ -148,7 +148,7 @@ Public Member Functions</h2></td></tr>
 class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;</h3>
 
 <p>Reward-based synaptic sampling connection class. </p>
-<p>This connection type implements the Bayesian policy sampling algorithm introduced in [1,2]. The target node to which synapses of this type are connected must be derived from <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. A second node which is also derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The synapse model performs a stochastic policy search which tries to maximize the reward signal provided by the <em>reward_transmitter</em> node. At the same time synaptic weights are constraint by a Gaussian prior with mean <img class="formulaInl" alt="$\mu$" src="form_10.png"/> and standard deviation <img class="formulaInl" alt="$\sigma$" src="form_81.png"/>. This synapse type can not change its sign, i.e. synapses are either excitatory or inhibitory depending on the sign of the <em>weight_scale</em> parameter. If synaptic weights fall below a threshold (determined by parameter <em>parameter_mapping_offset</em>) weights are clipped to zero (retracted synapses). The synapse model also implements an optional mechanism to automatically remove retracted synapses from the simulation. This mechanism can be turned on using the  delete_retracted_synapses parameter.</p>
+<p>This connection type implements the Bayesian policy sampling algorithm introduced in [1,2]. The target node to which synapses of this type are connected must be derived from <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a>. A second node which is also derived from type <a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> must be registered to the synapse model at its <em>reward_transmitter</em> parameter. The synapse model performs a stochastic policy search which tries to maximize the reward signal provided by the <em>reward_transmitter</em> node. At the same time synaptic weights are constraint by a Gaussian prior with mean <img class="formulaInl" alt="$\mu$" src="form_10.png"/> and standard deviation <img class="formulaInl" alt="$\sigma$" src="form_81.png"/>. This synapse type can not change its sign, i.e. synapses are either excitatory or inhibitory depending on the sign of the <em>weight_scale</em> parameter. If synaptic weights fall below a threshold (determined by parameter <em>parameter_mapping_offset</em>) weights are clipped to zero (retracted synapses). The synapse model also implements an optional mechanism to automatically remove retracted synapses from the simulation. This mechanism can be turned on using the <em>delete_retracted_synapses</em> parameter.</p>
 <p><b>Parameters and state variables</b></p>
 <p>The following parameters can be set in the common properties dictionary (default values and constraints are given in parentheses, corresponding symbols in the equations given below and in [1,2] are given in braces): </p><table class="doxtable">
 <tr>
@@ -168,7 +168,7 @@ class spore::SynapticSamplingRewardGradientConnection&lt; targetidentifierT &gt;
 <tr>
 <td><em>integration_time</em>  </td><td>double </td><td>time of gradient integration (50000.0, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_g$" src="form_45.png"/>} </td></tr>
 <tr>
-<td><em>episode_length</em>  </td><td>double </td><td>length of eligibility trace (0.0001, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_e$" src="form_46.png"/>} </td></tr>
+<td><em>episode_length</em>  </td><td>double </td><td>length of eligibility trace (1000.0, &gt;0.0) [ms] { <img class="formulaInl" alt="$\tau_e$" src="form_46.png"/>} </td></tr>
 <tr>
 <td><em>weight_update_interval</em>  </td><td>double </td><td>interval of synaptic weight updates (100.0, &gt;0.0) [ms] </td></tr>
 <tr>
@@ -474,7 +474,7 @@ template&lt;typename targetidentifierT &gt; </div>
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Apr 19 2017 18:43:25 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 20 2017 08:51:53 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
