@@ -1,8 +1,29 @@
 /*
- * File: poisson_dbl_exp_neuron.h
- * Author: Hsieh, Kappel
- * 
- * This file is mainly based on pp_psc_delta.h which is part of NEST.
+ * This file is part of SPORE.
+ *
+ * Copyright (c) 2016, Institute for Theoretical Computer Science,
+ * Graz University of Technology
+ *
+ * SPORE is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * SPORE is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with SPORE.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information see: https://github.com/IGITUGraz/spore-nest-module
+ *
+ * File:   poisson_dbl_exp_neuron.h
+ *
+ * This file is based on pp_psc_delta.h which is part of NEST
+ * (Copyright (C) 2004 The NEST Initiative).
+ * See: http://nest-initiative.org/
  */
 
 #ifndef POISSON_DBL_EXP_NEURON_H
