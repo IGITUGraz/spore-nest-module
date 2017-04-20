@@ -192,7 +192,7 @@ private:
  * (determined by parameter \a parameter_mapping_offset) weights are clipped
  * to zero (retracted synapses). The synapse model also implements an optional
  * mechanism to automatically remove retracted synapses from the simulation.
- * This mechanism can be turned on using the \q delete_retracted_synapses
+ * This mechanism can be turned on using the \a delete_retracted_synapses
  * parameter.
  *
  * <b>Parameters and state variables</b>
@@ -216,7 +216,7 @@ private:
  *                                                              (0.0001, &ge;0.0) {\f$\tau_m\f$}</td></tr>
  * <tr><td>\a integration_time</td>            <td>double</td> <td>time of gradient integration (50000.0, >0.0) [ms]
  *                                                              {\f$\tau_g\f$}</td></tr>
- * <tr><td>\a episode_length</td>              <td>double</td> <td>length of eligibility trace (0.0001, >0.0) [ms]
+ * <tr><td>\a episode_length</td>              <td>double</td> <td>length of eligibility trace (1000.0, >0.0) [ms]
  *                                                              {\f$\tau_e\f$}</td></tr>
  * <tr><td>\a weight_update_interval</td>      <td>double</td> <td>interval of synaptic weight updates (100.0, >0.0)
  *                                                              [ms]</td></tr>
