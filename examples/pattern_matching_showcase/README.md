@@ -127,7 +127,7 @@ Then in the folder `./spore-nest-module` :
 ```bash
 mkdir build
 cd build/
-cmake ..
+cmake -Dwith-python=2 ..  # Change python version to 3 for Python 3, or provide a path to a python binary
 make -j$NUM_CORES
 make install
 make test
@@ -165,7 +165,7 @@ Mar 29 12:05:33 Install [Info]:
 
 That should be it.
 
-Now you should be able to execute the script [`experiment.sh`](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase/experiment.sh) in
+Now you should be able to execute the script [`experiment.py`](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase/experiment.py) in
 
 `spore-nest-module/examples/pattern_matching_showcase`.
 
