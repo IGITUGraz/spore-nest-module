@@ -1,8 +1,7 @@
 /*
  * This file is part of SPORE.
  *
- * Copyright (c) 2016-2017, Institute for Theoretical Computer Science,
- * Graz University of Technology
+ * Copyright (C) 2016, the SPORE team (see AUTHORS).
  *
  * SPORE is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

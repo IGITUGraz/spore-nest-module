@@ -1,7 +1,8 @@
 # NEST module SPORE:<br> Synaptic Plasticity with Online Reinforcement learning
 
-SPORE is a custom-module for [NEST](http://www.nest-simulator.org/)
-utilizing [MUSIC](https://github.com/INCF/MUSIC) for communication with other software components.
+SPORE is a custom-module for [NEST](http://www.nest-simulator.org/) that provides a simulation framework
+for reward-based learning with spiking neurons. SPORE utilizes [MUSIC](https://github.com/INCF/MUSIC)
+for communication with other software components.
 
 The documentation of the module can be found [here](https://igitugraz.github.io/spore-nest-module/).
 
@@ -54,4 +55,3 @@ make test
 
 SPORE is open source software and is licensed under the [GNU General Public
 License v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or later.
-
