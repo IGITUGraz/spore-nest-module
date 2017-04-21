@@ -1,4 +1,4 @@
-# NEST module *SPORE*: Synaptic Plasticity with Online Reinforcement learning
+# NEST module *SPORE*:<br />Synaptic Plasticity with Online Reinforcement learning
 
 SPORE is a custom-module for [NEST](http://www.nest-simulator.org/) that provides
 a simulation framework for reward-based learning with spiking neurons. SPORE
