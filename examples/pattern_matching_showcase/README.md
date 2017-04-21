@@ -51,11 +51,15 @@ Now install all dependencies (for Debian Jessie).
 
 Notes:
 
-* Use `pip install --user <package name>` to install the python packages locally
-* Use `sudo pip install <package name>` to install the python packages globally
+* Use `pip install --user <package name>` to install the python packages locally.
+* Use `sudo pip install <package name>` to install the python packages globally.
 * The python packages can also be installed in a [virtualenv](https://virtualenv.pypa.io/en/stable/).
 * For python3, use `pip3` to install python packages and install the python3 versions of the packages for NEST dependencies. 
 * Python3 is NOT officially supported by this package, but has been known to work occasionally.
+* The use of multiple different python3 versions is discouraged.
+  Make sure to consistently use *one* version for installing libraries and actually running experiments.
+  When installing MUSIC, the specification of the precise executable (e.g. `python3.4`), rather than `python3`,
+  may be necessary in ambigous cases (see [#9](https://github.com/IGITUGraz/spore-nest-module/issues/9)).
 
 ```bash
 ## For MUSIC
@@ -92,7 +96,7 @@ In the folder `./MUSIC/` :
 
 ```bash
 ./autogen.sh
-PYTHON=/usr/bin/python ./configure --prefix=$TARGET_DIR --disable-isend  # Replace with python3 if desired
+PYTHON=/usr/bin/python ./configure --prefix=$TARGET_DIR --disable-isend  # Replace with python3[.x] if desired
 make -j$NUM_CORES
 make install
 ```
