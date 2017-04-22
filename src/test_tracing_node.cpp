@@ -26,11 +26,6 @@
 
 #include "test_tracing_node.h"
 
-#include <iostream>
-#include <stdexcept>
-#include <string>
-#include <vector>
-
 #include "tracing_node.h"
 
 namespace spore

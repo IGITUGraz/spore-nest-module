@@ -28,6 +28,9 @@
 
 #include "synaptic_sampling_rewardgradient_connection.h"
 
+#include "param_utils.h"
+
+
 namespace spore
 {
 

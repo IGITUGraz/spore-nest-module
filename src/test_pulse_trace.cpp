@@ -26,9 +26,6 @@
 
 #include "test_pulse_trace.h"
 
-#include <iostream>
-#include <stdexcept>
-#include <string>
 #include <vector>
 
 #include "nest_time.h"

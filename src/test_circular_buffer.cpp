@@ -26,9 +26,6 @@
 
 #include "test_circular_buffer.h"
 
-#include <iostream>
-#include <stdexcept>
-#include <string>
 #include <vector>
 
 #include "circular_buffer.h"
