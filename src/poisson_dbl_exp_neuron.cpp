@@ -39,10 +39,13 @@
 #include <string>
 #include <limits>
 
+#include "param_utils.h"
+
+
 namespace nest
 {
 
-/* 
+/*
  * Recordables map of PoissonDblExpNeuron.
  */
 template < >
@@ -56,7 +59,7 @@ void nest::RecordablesMap<spore::PoissonDblExpNeuron>::create()
 
 namespace spore
 {
-/* 
+/*
  * Recordables map instance.
  */
 nest::RecordablesMap<PoissonDblExpNeuron> PoissonDblExpNeuron::recordablesMap_;
@@ -65,28 +68,64 @@ nest::RecordablesMap<PoissonDblExpNeuron> PoissonDblExpNeuron::recordablesMap_;
 // PoissonDblExpNeuron::Parameters_ implementation.
 //
 
+/*
+ * Define default values and constraints for synaptic parameters.
+ */
+template < typename T, typename C >
+    static void define_parameters( T & p, C &v )
+{
+    p.parameter( v.dead_time_, nest::names::dead_time, 1.0, pc::MinD(0.0) );
+    p.parameter( v.dead_time_random_, nest::names::dead_time_random, false );
+    p.parameter( v.dead_time_shape_, nest::names::dead_time_shape, 1l, pc::MinL(1) );
+    p.parameter( v.with_reset_, nest::names::with_reset, true );
+    p.parameter( v.c_1_, nest::names::c_1, 0.0 );
+    p.parameter( v.c_2_, nest::names::c_2, 1.238 );
+    p.parameter( v.c_3_, nest::names::c_3, 0.25, pc::MinD(0.0) );
+    p.parameter( v.I_e_, nest::names::I_e, 0.0 );
+    p.parameter( v.t_ref_remaining_, nest::names::t_ref_remaining, 0.0, pc::MinD(0.0) );
+    p.parameter( v.tau_rise_exc_, "tau_rise_exc", 2.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_fall_exc_, "tau_fall_exc", 20.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_rise_inh_, "tau_rise_inh", 1.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_fall_inh_, "tau_fall_inh", 10.0, pc::BiggerD(0.0) );
+    p.parameter( v.input_conductance_, "input_conductance", 1.0 );
+    p.parameter( v.target_rate_, "target_rate", 10.0, pc::MinD(0.0) );
+    p.parameter( v.target_adaptation_speed_, "target_adaptation_speed", 0.0, pc::MinD(0.0) );
+}
+
 /**
  * Default constructor defining default parameters.
  */
 PoissonDblExpNeuron::Parameters_::Parameters_()
-: tau_rise_exc_(2.0), // ms
-tau_fall_exc_(20.0), // ms
-tau_rise_inh_(1.0), // ms
-tau_fall_inh_(10.0), // ms
-input_conductance_(1.0), // S
-dead_time_(1.0), // ms
-dead_time_random_(0), // bool
-dead_time_shape_(1), // int
-with_reset_(1), // bool
-c_1_(0.0), // Hz / mV
-c_2_(1.238), // Hz / mV
-c_3_(0.25), // 1.0 / mV
-I_e_(0.0), // pA
-t_ref_remaining_(0.0), // ms
-target_rate_(10.0), // Hz
-target_adaptation_speed_(0.0) //
 {
+    SetDefault p;
+    define_parameters < SetDefault > ( p, *this );
 }
+
+/**
+ * Parameter getter function.
+ */
+void PoissonDblExpNeuron::Parameters_::get(DictionaryDatum &d) const
+{
+    GetStatus p( d );
+    define_parameters < GetStatus > ( p, *this );
+}
+
+/**
+ * Parameter setter function.
+ */
+void PoissonDblExpNeuron::Parameters_::set(const DictionaryDatum& d)
+{
+    CheckParameters p_check( d );
+    define_parameters < CheckParameters > ( p_check, *this );
+    SetStatus p_set( d );
+    define_parameters < SetStatus > ( p_set, *this );
+}
+
+
+//
+// PoissonDblExpNeuron::State_ implementation.
+//
+
 
 /**
  * Default constructor.
@@ -102,74 +141,6 @@ adaptative_threshold_(0.0),
 r_(0)
 {
 }
-
-/**
- * Parameter getter function.
- */
-void PoissonDblExpNeuron::Parameters_::get(DictionaryDatum &d) const
-{
-    def<double>(d, nest::names::I_e, I_e_);
-    def<double>(d, nest::names::dead_time, dead_time_);
-    def<bool>(d, nest::names::dead_time_random, dead_time_random_);
-    def<long>(d, nest::names::dead_time_shape, dead_time_shape_);
-    def<bool>(d, nest::names::with_reset, with_reset_);
-
-    def<double>(d, nest::names::c_1, c_1_);
-    def<double>(d, nest::names::c_2, c_2_);
-    def<double>(d, nest::names::c_3, c_3_);
-    def<double>(d, nest::names::t_ref_remaining, t_ref_remaining_);
-
-    def<double>(d, "tau_rise_exc", tau_rise_exc_);
-    def<double>(d, "tau_fall_exc", tau_fall_exc_);
-    def<double>(d, "tau_rise_inh", tau_rise_inh_);
-    def<double>(d, "tau_fall_inh", tau_fall_inh_);
-    def<double>(d, "input_conductance", input_conductance_);
-    def<double>(d, "target_rate", target_rate_);
-    def<double>(d, "target_adaptation_speed", target_adaptation_speed_);
-}
-
-/**
- * Parameter setter function.
- */
-void PoissonDblExpNeuron::Parameters_::set(const DictionaryDatum& d)
-{
-    updateValue<double>(d, nest::names::I_e, I_e_);
-    updateValue<double>(d, nest::names::dead_time, dead_time_);
-    updateValue<bool>(d, nest::names::dead_time_random, dead_time_random_);
-    updateValue<long>(d, nest::names::dead_time_shape, dead_time_shape_);
-    updateValue<bool>(d, nest::names::with_reset, with_reset_);
-    updateValue<double>(d, nest::names::c_1, c_1_);
-    updateValue<double>(d, nest::names::c_2, c_2_);
-    updateValue<double>(d, nest::names::c_3, c_3_);
-    updateValue<double>(d, nest::names::t_ref_remaining, t_ref_remaining_);
-
-    updateValue<double>(d, "tau_rise_exc", tau_rise_exc_);
-    updateValue<double>(d, "tau_fall_exc", tau_fall_exc_);
-    updateValue<double>(d, "tau_rise_inh", tau_rise_inh_);
-    updateValue<double>(d, "tau_fall_inh", tau_fall_inh_);
-    updateValue<double>(d, "input_conductance", input_conductance_);
-    updateValue<double>(d, "target_rate", target_rate_);
-    updateValue<double>(d, "target_adaptation_speed", target_adaptation_speed_);
-
-    if (dead_time_ < 0)
-        throw nest::BadProperty("Absolute refractory time must not be negative.");
-
-    if (dead_time_shape_ < 1)
-        throw nest::BadProperty("Shape of the dead time gamma distribution must not be smaller than 1.");
-
-    if ((tau_rise_exc_ <= 0) || (tau_fall_exc_ <= 0) || (tau_rise_inh_ <= 0) || (tau_fall_inh_ <= 0))
-        throw nest::BadProperty("All time constants must be strictly positive.");
-
-    if (t_ref_remaining_ < 0)
-        throw nest::BadProperty("Remaining refractory time can not be negative.");
-
-    if (c_3_ < 0)
-        throw nest::BadProperty("C_3 must be positive.");
-}
-
-//
-// PoissonDblExpNeuron::State_ implementation.
-//
 
 /**
  * State getter function.

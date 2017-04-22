@@ -57,7 +57,6 @@ template < typename T, typename C >
     p.parameter( v.psp_cutoff_amplitude_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
     p.parameter( v.simulate_retracted_synapses_, "simulate_retracted_synapses", false );
     p.parameter( v.delete_retracted_synapses_, "delete_retracted_synapses", false );
-    p.parameter( v.verbose_, "verbose", false );
 }
 
 /**

@@ -45,7 +45,7 @@ namespace spore
 
 /**
  * @brief Point process neuron with double-exponential shaped PSCs.
- * 
+ *
  * PoissonDblExpNeuron is a variant of the spike response model model with
  * double exponential PSP shapes of the from
  * \f$\epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r}
@@ -55,17 +55,17 @@ namespace spore
  * Spikes are generated randomly according to the current value of the
  * transfer function which operates on the membrane potential. Spike
  * generation is followed by an optional dead time (refractory state).
- * Setting with_reset to true will reset the membrane potential after
+ * Setting \a with_reset to true will reset the membrane potential after
  * each spike.
  *
- * The transfer function can be chosen to be linear, exponential or a sum of 
+ * The transfer function can be chosen to be linear, exponential or a sum of
  * both by adjusting three parameters:
  *
  *     \f[
  *        rate = Rect[ c1 * V' + c2 * exp(c3 * V') ],
  *     \f]
  * where the effective potential \f$ V' = V_m - E_{sfa}\f$ and \f$ E_{sfa} \f$
- * is called the adaptive threshold. By setting c3 = 0, c2 can be used as an
+ * is called the adaptive threshold. By setting \a c3 = 0, \a c2 can be used as an
  * offset spike rate for an otherwise linear rate model.
  *
  * The dead time enables to include refractoriness. If dead time is 0, the
@@ -74,83 +74,88 @@ namespace spore
  * is given by \f$ 1 - exp(-rate*h) \f$, where h is the simulation time step.
  * If dead_time is smaller than the simulation resolution (time step), it is
  * internally set to the time step. Note that, even if non-refractory neurons
- * are to be modeled, a small value of dead_time, like dead_time=1e-8, might
+ * are to be modeled, a small value of dead_time, like \a dead_time=1e-8, might
  * be the value of choice since it uses faster uniform random numbers than
- * dead_time=0, which draws Poisson numbers. Only for very large spike rates
+ * \a dead_time=0, which draws Poisson numbers. Only for very large spike rates
  * (> 1 spike/h) this will cause errors.
  *
- * The model implements an adaptive threshold. If the neuron spikes, the 
+ * The model implements an adaptive threshold. If the neuron spikes, the
  * threshold increases and the membrane potential will take longer to reach it.
  * If the neuron does not spike, the threshold linearly decays over time,
- * increasing the firing probability of the neuron (parameters: target_rate,
- * target_adaptation_speed).
- *   
+ * increasing the firing probability of the neuron (see [6], parameters:
+ * \a target_rate, \a target_adaptation_speed).
+ *
  * This model has been adapted from iaf_psc_delta. The default parameters are
- * set to the mean values in [2], which have were matched to spike-train 
+ * set to the mean values in [2], which have were matched to spike-train
  * recordings.
- *   
+ *
  * <b>Parameters</b>
  *
  * The following parameters can be set in the status dictionary.
+ * (default values and constraints are given in parentheses):
  *
  * <table>
- * <tr><th>name</th>                       <th>type</th>   <th>comment</th></tr> 
+ * <tr><th>name</th>                       <th>type</th>   <th>comment</th></tr>
  * <tr><td>\a V_m</td>                     <td>double</td> <td>Membrane potential [mV]</td></tr>
- * <tr><td>\a tau_rise_exc</td>            <td>double</td> <td>Fall time constant of excitatory PSP (>0.0) [ms] 
+ * <tr><td>\a tau_rise_exc</td>            <td>double</td> <td>Fall time constant of excitatory PSP (2.0, >0.0) [ms]
  *                                                         </td></tr>
- * <tr><td>\a tau_fall_exc</td>            <td>double</td> <td>Rise time constant of excitatory PSP (>0.0) [ms]
+ * <tr><td>\a tau_fall_exc</td>            <td>double</td> <td>Rise time constant of excitatory PSP (20.0, >0.0) [ms]
  *                                                         </td></tr>
- * <tr><td>\a tau_rise_inh</td>            <td>double</td> <td>Fall time constant of inhibitory PSP (>0.0) [ms]
+ * <tr><td>\a tau_rise_inh</td>            <td>double</td> <td>Fall time constant of inhibitory PSP (1.0, >0.0) [ms]
  *                                                         </td></tr>
- * <tr><td>\a tau_fall_inh</td>            <td>double</td> <td>Rise time constant of inhibitory PSP (>0.0) [ms]
+ * <tr><td>\a tau_fall_inh</td>            <td>double</td> <td>Rise time constant of inhibitory PSP (10.0, >0.0) [ms]
  *                                                         </td></tr>
- * <tr><td>\a dead_time</td>               <td>double</td> <td>Duration of the dead time [ms]</td></tr>
+ * <tr><td>\a dead_time</td>               <td>double</td> <td>Duration of the dead time (1.0, &ge 0.0) [ms]</td></tr>
  * <tr><td>\a dead_time_random</td>        <td>bool</td>   <td>Should a random dead time be drawn after each
- *                                                             spike?</td></tr>
+ *                                                             spike? (false) </td></tr>
  * <tr><td>\a dead_time_shape</td>         <td>int</td>    <td>Shape parameter of dead time gamma distribution
- *                                                         </td></tr>
+ *                                                             (1, &ge 1) </td></tr>
  * <tr><td>\a t_ref_remaining</td>         <td>double</td> <td>Remaining dead time at simulation start (>0.0) [ms]
- *                                                         </td></tr>
+ *                                                             (0.0, &ge 0.0) </td></tr>
  * <tr><td>\a with_reset</td>              <td>bool</td>   <td>Should the membrane potential be reset after a
  *                                                             spike?</td></tr>
- * <tr><td>\a I_e</td>                     <td>double</td> <td>Constant input current [pA]</td></tr>
- * <tr><td>\a input_conductance</td>       <td>double</td> <td>Conductance of input currents [S]</td></tr> 
+ * <tr><td>\a I_e</td>                     <td>double</td> <td>Constant input current (0.0) [pA]</td></tr>
+ * <tr><td>\a input_conductance</td>       <td>double</td> <td>Conductance of input currents (1.0) [S]</td></tr>
  * <tr><td>\a c_1</td>                     <td>double</td> <td>Slope of linear part of transfer function
- *                                                             [Hz/mV]</td></tr>
+ *                                                             (0.0) [Hz/mV]</td></tr>
  * <tr><td>\a c_2</td>                     <td>double</td> <td>Prefactor of exponential part of transfer function
- *                                                             [Hz]</td></tr>
+ *                                                             (1.238) [Hz/mV]</td></tr>
  * <tr><td>\a c_3</td>                     <td>double</td> <td>Coefficient of exponential non-linearity of transfer
- *                                                             function [1/mV]</td></tr>
+ *                                                             function (0.25, &ge 0.0) [1/mV]</td></tr>
  * <tr><td>\a target_rate</td>             <td>double</td> <td>Target rate of neuron for adaptation mechanism
- *                                                             [Hz]</td></tr>
- * <tr><td>\a target_adaptation_speed</td> <td>double</td> <td>Speed of rate adaptation</td></tr>
+ *                                                             (10.0, &ge 0.0) [Hz]</td></tr>
+ * <tr><td>\a target_adaptation_speed</td> <td>double</td> <td>Speed of rate adaptation (0.0, &ge 0.0)</td></tr>
  * </table>
- * 
+ *
  * <i>Sends:</i> SpikeEvent
  *
  * <i>Receives:</i> SpikeEvent, CurrentEvent, DataLoggingRequest
- * 
+ *
  * <b>References</b>
  *
- * [1] Multiplicatively interacting point processes and applications to neural 
- * modeling (2010) Stefano Cardanobile and Stefan Rotter, Journal of 
+ * [1] Multiplicatively interacting point processes and applications to neural
+ * modeling (2010) Stefano Cardanobile and Stefan Rotter, Journal of
  * Computational Neuroscience.
- *   
+ *
  * [2] Predicting spike timing of neocortical pyramidal neurons by simple
- * threshold models (2006) Jolivet R, Rauch A, Luescher H-R, Gerstner W. 
+ * threshold models (2006) Jolivet R, Rauch A, Luescher H-R, Gerstner W.
  * J Comput Neurosci 21:35-49.
  *
- * [3] Pozzorini C, Naud R, Mensi S, Gerstner W (2013) Temporal whitening by 
+ * [3] Pozzorini C, Naud R, Mensi S, Gerstner W (2013) Temporal whitening by
  * power-law adaptation in neocortical neurons. Nat Neurosci 16: 942-948.
  * (uses a similar model of multi-timescale adaptation).
  *
- * [4] Grytskyy D, Tetzlaff T, Diesmann M and Helias M (2013) A unified view 
- * on weakly correlated recurrent networks. Front. Comput. Neurosci. 7:131. 
- *   
- * [5] Deger M, Schwalger T, Naud R, Gerstner W (2014) Fluctuations and 
+ * [4] Grytskyy D, Tetzlaff T, Diesmann M and Helias M (2013) A unified view
+ * on weakly correlated recurrent networks. Front. Comput. Neurosci. 7:131.
+ *
+ * [5] Deger M, Schwalger T, Naud R, Gerstner W (2014) Fluctuations and
  * information filtering in coupled populations of spiking neurons with
  * adaptation. Physical Review E 90:6, 062704.
- * 
+ *
+ * [6] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
+ * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i> 2017.
+ * https://arxiv.org/abs/1704.04238
+ *
  * @author  Kappel, Hsieh; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh
  * @see TracingNode
  */
@@ -222,7 +227,7 @@ private:
         bool dead_time_random_;
 
         /** Shape parameter of random dead time gamma distribution. */
-        unsigned long dead_time_shape_;
+        long dead_time_shape_;
 
         /** Do we reset the membrane potential after each spike? */
         bool with_reset_;

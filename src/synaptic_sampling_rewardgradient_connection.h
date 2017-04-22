@@ -152,7 +152,6 @@ public:
 
     bool simulate_retracted_synapses_;
     bool delete_retracted_synapses_;
-    bool verbose_;
 
     // state variables
     TracingNode* reward_transmitter_;
@@ -237,8 +236,6 @@ private:
  * <tr><td>\a simulate_retracted_synapses</td> <td>bool</td>   <td>continue simulating retracted synapses
  *                                                              (false)</td></tr>
  * <tr><td>\a delete_retracted_synapses</td>   <td>bool</td>   <td>delete retracted synapses (false)</td></tr>
- * <tr><td>\a verbose</td>                     <td>bool</td>   <td>write status to the standard output (false)
- *                                                             </td></tr>
  * </table>
  *
  * *)  \a reward_transmitter must be set to the GID of a TracingNode before

@@ -116,7 +116,6 @@ class TestStringMethods(unittest.TestCase):
         self.assert_parameter_limits_min("bap_trace_id", 0)
         self.assert_parameter_limits_min("dopa_trace_id", 0)
         self.assert_parameter_no_limits("simulate_retracted_synapses", False)
-        self.assert_parameter_no_limits("verbose", False)
 
 
     # test connection

@@ -53,7 +53,7 @@ template < typename T >
     class Con
 {
 public:
-    virtual void apply( T const &, const std::string &name ) const = 0;
+    virtual void apply( T const &, const Name &name ) const = 0;
 };
 
 /**
@@ -68,7 +68,7 @@ public:
     {
     }
 
-    void apply( T const & val, const std::string &name ) const
+    void apply( T const & val, const Name &name ) const
     {
         if ( val < min_value_ )
         {
@@ -95,12 +95,12 @@ public:
     {
     }
 
-    void apply( T const & val, const std::string &name ) const
+    void apply( T const & val, const Name &name ) const
     {
         if ( val > max_value_ )
         {
             std::stringstream strm;
-            strm << "Parameter '" << name << "' must not be smaller than " << T(max_value_) << " but is " << T(val);
+            strm << "Parameter '" << name << "' must not be bigger than " << T(max_value_) << " but is " << T(val);
             LOG( nest::M_ERROR, "CMax::apply()", strm.str() );
             throw nest::BadProperty("Parameter out of range. See LOG file for details.");
         }
@@ -122,14 +122,13 @@ public:
     {
     }
 
-    void apply( T const & val, const std::string &name ) const
+    void apply( T const & val, const Name &name ) const
     {
         if ( val <= min_value_ )
         {
             std::stringstream strm;
             strm << "Parameter '" << name << "' must be strictly bigger than " << T(min_value_) << " but is " << T(val);
             LOG( nest::M_ERROR, "CBigger::apply()", strm.str() );
-            // Fixme: sending a dynamically allocated string here causes program abort.
             throw nest::BadProperty("Parameter out of range. See LOG file for details.");
         }
     }
@@ -150,7 +149,7 @@ public:
     {
     }
 
-    void apply( T const & val, const std::string &name ) const
+    void apply( T const & val, const Name &name ) const
     {
         if ( val >= max_value_ )
         {
@@ -167,17 +166,25 @@ private:
 };
 
 typedef CMin< double > MinD;
-typedef CMin< long >   MinL;
+typedef CMin< long > MinL;
+typedef CMin< unsigned long > MinUL;
 typedef CMin< int > MinI;
+typedef CMin< unsigned int > MinUI;
 typedef CMax< double > MaxD;
-typedef CMax< long >   MaxL;
+typedef CMax< long > MaxL;
+typedef CMax< unsigned long > MaxUL;
 typedef CMax< int > MaxI;
-typedef CBigger< double >   BiggerD;
-typedef CBigger< long >   BiggerL;
-typedef CBigger< int >   BiggerI;
-typedef CSmaller< double >   SmallerD;
-typedef CSmaller< long >   SmallerL;
-typedef CSmaller< int >   SmallerI;
+typedef CMax< unsigned int > MaxUI;
+typedef CBigger< double > BiggerD;
+typedef CBigger< long > BiggerL;
+typedef CBigger< unsigned long > BiggerUL;
+typedef CBigger< int > BiggerI;
+typedef CBigger< unsigned int > BiggerUI;
+typedef CSmaller< double > SmallerD;
+typedef CSmaller< long > SmallerL;
+typedef CSmaller< unsigned long > SmallerUL;
+typedef CSmaller< int > SmallerI;
+typedef CSmaller< unsigned int > SmallerUI;
 }
 
 /**
@@ -195,7 +202,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T default_val )
+        void parameter( T & val, const Name &name, T default_val )
     {
         val = default_val;
     }
@@ -208,7 +215,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T default_val, const pc::Con< T > &con1 )
+        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1 )
     {
         con1.apply(default_val, name);
         val = default_val;
@@ -222,7 +229,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T default_val, const pc::Con< T > &con1,
+        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1,
                         const pc::Con< T > &con2 )
     {
         con1.apply(default_val, name);
@@ -238,7 +245,7 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T default_val, const pc::Con< T > &con1,
+        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1,
                         const pc::Con< T > &con2, const pc::Con< T > &con3 )
     {
         con1.apply(default_val, name);
@@ -263,7 +270,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const std::string &name, T )
+        void parameter( const T & val, const Name &name, T )
     {
         def< T >(d_, name, val);
     }
@@ -276,7 +283,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const std::string &name, T, const pc::Con< T > & )
+        void parameter( const T & val, const Name &name, T, const pc::Con< T > & )
     {
         def< T >(d_, name, val);
     }
@@ -289,7 +296,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const std::string &name, T, const pc::Con< T > &, const pc::Con< T > & )
+        void parameter( const T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > & )
     {
         def< T >(d_, name, val);
     }
@@ -302,7 +309,7 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const std::string &name, T, const pc::Con< T > &, const pc::Con< T > &,
+        void parameter( const T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > &,
                   const pc::Con< T > & )
     {
         def< T >(d_, name, val);
@@ -327,7 +334,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( const T &, const std::string &, T )
+        void parameter( const T &, const Name &, T )
     {
     }
 
@@ -339,7 +346,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const std::string &name, T, const pc::Con< T > &con1 )
+        void parameter( const T &, const Name &name, T, const pc::Con< T > &con1 )
     {
         T val;
         if (updateValue< T >(d_, name, val))
@@ -356,7 +363,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const std::string & name, T, const pc::Con< T > & con1,
+        void parameter( const T &, const Name & name, T, const pc::Con< T > & con1,
                         const pc::Con< T > & con2 )
     {
         T val;
@@ -375,7 +382,7 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const std::string &name, T, const pc::Con< T > & con1,
+        void parameter( const T &, const Name &name, T, const pc::Con< T > & con1,
                         const pc::Con< T > & con2, const pc::Con< T > & con3 )
     {
         T val;
@@ -406,7 +413,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T )
+        void parameter( T & val, const Name &name, T )
     {
         updateValue< T >(d_, name, val);
     }
@@ -419,7 +426,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T, const pc::Con< T > & )
+        void parameter( T & val, const Name &name, T, const pc::Con< T > & )
     {
         updateValue< T >(d_, name, val);
     }
@@ -432,7 +439,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T, const pc::Con< T > &, const pc::Con< T > & )
+        void parameter( T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > & )
     {
         updateValue< T >(d_, name, val);
     }
@@ -445,7 +452,7 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const std::string &name, T, const pc::Con< T > &, const pc::Con< T > &,
+        void parameter( T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > &,
                         const pc::Con< T > & )
     {
         updateValue< T >(d_, name, val);

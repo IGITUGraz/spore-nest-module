@@ -18,7 +18,7 @@
  *
  * For more information see: https://github.com/IGITUGraz/spore-nest-module
  *
- * File:   spore_module.cpp
+ * File:   sporemodule.cpp
  * Author: Kappel, Hsieh
  *
  * Created on March 30, 2015, 3:19 AM
