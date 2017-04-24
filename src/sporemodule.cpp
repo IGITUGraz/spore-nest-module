@@ -127,6 +127,18 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter* i) const
     const long interval = getValue<long>(i->OStack.pick(1)); // bottom
     const long delay = getValue<long>(i->OStack.pick(0)); // top
 
+    if (interval <= 0)
+    {
+        throw nest::BadProperty("The update interval (first argument passed to InitSynapseUpdater)"
+                                " must be larger than 0.");
+    }
+
+    if (delay < 0)
+    {
+        throw nest::BadProperty("The maximum acceptable delay (second argument passed to InitSynapseUpdater)"
+                                " must be larger or equal to 0.");
+    }
+
     ConnectionUpdateManager::instance()->setup(interval, delay);
 
     i->OStack.pop(2);

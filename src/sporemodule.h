@@ -50,10 +50,18 @@ public:
     const std::string name(void) const;
     const std::string commandstring(void) const;
 
-private:
+protected:
 
     /**
      * @brief \a InitSynapseUpdater SLI function.
+     *
+     * This SLI command takes two arguments \a interval and \a max_delay.
+     * \a interval determines the update interval of diligent synapses and
+     * must be strictly larger than 0. \a max_delay determines the maximum
+     * acceptable delay for diligent synapses and must be larger or equal
+     * to 0.
+     *
+     * @see ConnectionUpdateManager
      */
     class InitSynapseUpdater_i_i_Function : public SLIFunction
     {

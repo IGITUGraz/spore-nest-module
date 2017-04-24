@@ -71,6 +71,8 @@ void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
     const size_t num_threads = nest::kernel().vp_manager.get_num_threads();
 
     assert(num_threads > 0);
+    assert(interval > 0);
+    assert(acceptable_latency >= 0);
 
     if (connectors_.size() == 0)
     {
@@ -117,7 +119,7 @@ void ConnectionUpdateManager::update(const nest::Time& time, nest::thread th)
 
     assert(is_initialized_);
 
-    const double t_trig = time.get_steps();
+    const double t_trig = time.get_ms() - nest::Time::delay_steps_to_ms(acceptable_latency_);
 
     SynapseUpdateEvent ev;
     ev.set_stamp(time);
@@ -369,10 +371,9 @@ ConnectionUpdater::~ConnectionUpdater()
  */
 void ConnectionUpdater::update(nest::Time const& origin, const long from, const long to)
 {
-    const long acceptable_latency = ConnectionUpdateManager::instance()->get_acceptable_latency();
     const long interval = ConnectionUpdateManager::instance()->get_interval();
 
-    const long start_time = origin.get_steps() + from - acceptable_latency;
+    const long start_time = origin.get_steps() + from;
     const long slice = to - from;
 
     if ((start_time % interval + slice) >= interval)

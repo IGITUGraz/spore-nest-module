@@ -47,7 +47,6 @@
 #include <numeric>
 #include <iterator>
 
-#include <stdio.h>
 
 namespace spore
 {
@@ -88,13 +87,10 @@ void RewardInProxy::Parameters_::set(const DictionaryDatum& d, State_& s)
         updateValue< string >(d, nest::names::port_name, port_name_);
         updateValue< float >(d, "delay", delay_);
     }
-    /* TODO
     else
     {
-        // TODO verify first argument
-        throw MUSICPortAlreadyPublished("reward_in_proxy", port_name_);
+        throw nest::MUSICPortAlreadyPublished("reward_in_proxy", port_name_);
     }
-     */
 }
 
 void RewardInProxy::State_::get(DictionaryDatum& d) const
@@ -197,7 +193,7 @@ void RewardInProxy::set_status(const DictionaryDatum& d)
 
 void RewardInProxy::update(const nest::Time& origin, const long from, const long to)
 {
-    int n_channels = S_.port_width_;
+    const int n_channels = S_.port_width_;
 
     if (n_channels == -1)
     {
@@ -212,30 +208,6 @@ void RewardInProxy::update(const nest::Time& origin, const long from, const long
             set_trace(time.get_steps(), reward_in_buffer_[channel], channel);
         }
     }
-
-#if __SPORE_DEBUG__
-    std::cout << origin << ": [";
-    for (int i = 0; i < n_channels; i++)
-    {
-        if (i > 0)
-        {
-            std::cout << " ";
-        }
-        std::cout << reward_in_buffer_[i];
-    }
-    std::cout << "]" << std::endl;
-    for (int i = 0; i < n_channels; i++)
-    {
-        std::cout << "trace #" << i << ":";
-        TracingNode::const_iterator trace = get_trace(0, i);
-        size_t steps = ConnectionUpdateManager::instance()->get_max_latency();
-        while (steps--)
-        {
-            std::cout << " " << *trace;
-            ++trace;
-        }
-        std::cout << std::endl;
-    }
-#endif
 }
+
 }

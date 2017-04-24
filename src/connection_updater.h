@@ -106,7 +106,7 @@ namespace spore
  * type, since these may interfere with the garbage collector. Using structural
  * plasticity mechanisms which only \em add synapses is however possible.
  *
- * @see DiligentConnectorModel
+ * @see DiligentConnectorModel, SporeModule::InitSynapseUpdater_i_i_Function
  */
 class ConnectionUpdateManager
 {
