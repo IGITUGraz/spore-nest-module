@@ -41,7 +41,7 @@ public:
     TestPulseTrace();
 
     virtual double get_trace(nest::delay time_step, TracingNode::trace_id id);
-    virtual void set_status(const DictionaryDatum &d);
+    virtual void set_status(const DictionaryDatum& d);
 
     virtual size_t get_num_traces() const
     {

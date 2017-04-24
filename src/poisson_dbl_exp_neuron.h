@@ -31,13 +31,12 @@
 
 #include "nest.h"
 #include "event.h"
-#include "tracing_node.h"
 #include "ring_buffer.h"
-#include "connection.h"
 #include "poisson_randomdev.h"
 #include "gamma_randomdev.h"
 #include "universal_data_logger.h"
-#include "archiving_node.h"
+
+#include "tracing_node.h"
 
 
 namespace spore

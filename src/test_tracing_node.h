@@ -50,7 +50,7 @@ public:
         return 5;
     };
 
-    virtual void check(nest::delay time_step, TracingNode *node);
+    virtual void check(nest::delay time_step, TracingNode* node);
 };
 
 }

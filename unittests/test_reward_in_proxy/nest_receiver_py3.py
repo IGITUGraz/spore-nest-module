@@ -6,4 +6,3 @@ import nest_receiver
 
 if __name__ == "__main__":
     nest_receiver.main()
-

@@ -38,7 +38,7 @@ namespace spore
  * Define default values and constraints for synaptic parameters.
  */
 template < typename T, typename C >
-    static void define_parameters( T & p, C &v )
+    static void define_parameters( T& p, C& v )
 {
     p.parameter( v.learning_rate_, "learning_rate", 5e-08, pc::MinD(0.0) );
     p.parameter( v.episode_length_, "episode_length", 1000.0, pc::BiggerD(0.0) );
@@ -92,7 +92,7 @@ SynapticSamplingRewardGradientCommonProperties::~SynapticSamplingRewardGradientC
 /**
  * Status getter function.
  */
-void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum & d) const
+void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum& d) const
 {
     nest::CommonSynapseProperties::get_status(d);
 
@@ -112,7 +112,7 @@ void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum 
 /**
  * Status setter function.
  */
-void SynapticSamplingRewardGradientCommonProperties::set_status(const DictionaryDatum & d, nest::ConnectorModel& cm)
+void SynapticSamplingRewardGradientCommonProperties::set_status(const DictionaryDatum& d, nest::ConnectorModel& cm)
 {
     nest::CommonSynapseProperties::set_status(d, cm);
 
@@ -143,7 +143,7 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
  *
  * @param tc time converter object.
  */
-void SynapticSamplingRewardGradientCommonProperties::calibrate(const nest::TimeConverter &tc)
+void SynapticSamplingRewardGradientCommonProperties::calibrate(const nest::TimeConverter& tc)
 {
     // make sure this check is only performed shortly before the simulation starts.
     if (ConnectionUpdateManager::instance()->is_initialized() && not reward_transmitter_)
@@ -155,7 +155,7 @@ void SynapticSamplingRewardGradientCommonProperties::calibrate(const nest::TimeC
 
     weight_update_steps_ = std::ceil(weight_update_interval_ / resolution_unit_);
 
-    const double l_rate = weight_update_interval_*learning_rate_;
+    const double l_rate = weight_update_interval_ * learning_rate_;
     std_wiener_ = std::sqrt(2.0 * temperature_ * l_rate);
     std_gradient_ = std::sqrt(2.0 * gradient_noise_ * l_rate);
 

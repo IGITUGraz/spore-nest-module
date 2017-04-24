@@ -48,9 +48,10 @@ try:
 
     print("Starting MUSIC/NEST simulation")
 
-    cmd = "mpirun -n 3 music `readlink -f "+ music_filename +"`"+("".join([" "+str(arg) for arg in sys.argv[1:]]))
+    cmd = ["mpirun", "-np", "3", "music", music_filename]
+    cmd.extend(sys.argv[1:])
 
-    exitcode = subprocess.call( cmd, shell=True )
+    exitcode = subprocess.call(cmd)
 
 finally:
     if plotter is not None:

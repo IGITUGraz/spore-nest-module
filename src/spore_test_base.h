@@ -44,7 +44,7 @@ class SporeTestBase
 {
 public:
 
-    SporeTestBase(const std::string &name, nest::delay t_max = 1)
+    SporeTestBase(const std::string& name, nest::delay t_max = 1)
     : name_(name), t_max_(t_max)
     {
     };
@@ -53,7 +53,7 @@ public:
     {
     };
 
-    const std::string &get_name() const
+    const std::string& get_name() const
     {
         return name_;
     };
@@ -67,7 +67,7 @@ public:
     {
     };
 
-    virtual void check(nest::delay time_step, TracingNode *node)
+    virtual void check(nest::delay time_step, TracingNode* node)
     {
     };
 
@@ -81,17 +81,17 @@ public:
         assert(false);
     };
     
-    virtual void get_status(DictionaryDatum &d) const
+    virtual void get_status(DictionaryDatum& d) const
     {
     };
     
-    virtual void set_status(const DictionaryDatum &d)
+    virtual void set_status(const DictionaryDatum& d)
     {
     };
 
 protected:
 
-    void test_assert(bool condition, const std::string &msg)
+    void test_assert(bool condition, const std::string& msg)
     {
         if (!condition)
             throw std::runtime_error(name_ + " failed: " + msg);

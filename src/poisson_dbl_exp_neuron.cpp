@@ -26,8 +26,8 @@
  * See: http://nest-initiative.org/
  */
 
-#include "exceptions.h"
 #include "poisson_dbl_exp_neuron.h"
+
 #include "dict.h"
 #include "integerdatum.h"
 #include "doubledatum.h"
@@ -35,9 +35,6 @@
 #include "numerics.h"
 #include "universal_data_logger_impl.h"
 #include "compose.hpp"
-
-#include <string>
-#include <limits>
 
 #include "param_utils.h"
 
@@ -104,7 +101,7 @@ PoissonDblExpNeuron::Parameters_::Parameters_()
 /**
  * Parameter getter function.
  */
-void PoissonDblExpNeuron::Parameters_::get(DictionaryDatum &d) const
+void PoissonDblExpNeuron::Parameters_::get(DictionaryDatum& d) const
 {
     GetStatus p( d );
     define_parameters < GetStatus > ( p, *this );
@@ -145,7 +142,7 @@ r_(0)
 /**
  * State getter function.
  */
-void PoissonDblExpNeuron::State_::get(DictionaryDatum &d, const Parameters_&) const
+void PoissonDblExpNeuron::State_::get(DictionaryDatum& d, const Parameters_&) const
 {
     def<double>(d, nest::names::V_m, u_membrane_); // Membrane potential
     def<double>(d, "adaptive_threshold", adaptative_threshold_);
@@ -167,7 +164,7 @@ void PoissonDblExpNeuron::State_::set(const DictionaryDatum& d, const Parameters
 /**
  * Constructor.
  */
-PoissonDblExpNeuron::Buffers_::Buffers_(PoissonDblExpNeuron &n)
+PoissonDblExpNeuron::Buffers_::Buffers_(PoissonDblExpNeuron& n)
 : logger_(n)
 {
 }
@@ -175,7 +172,7 @@ PoissonDblExpNeuron::Buffers_::Buffers_(PoissonDblExpNeuron &n)
 /**
  * Constructor.
  */
-PoissonDblExpNeuron::Buffers_::Buffers_(const Buffers_ &, PoissonDblExpNeuron &n)
+PoissonDblExpNeuron::Buffers_::Buffers_(const Buffers_&, PoissonDblExpNeuron& n)
 : logger_(n)
 {
 }
@@ -287,7 +284,7 @@ void PoissonDblExpNeuron::calibrate()
 /**
  * Update the node to the given time point.
  */
-void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, const long to)
+void PoissonDblExpNeuron::update(nest::Time const& origin, const long from, const long to)
 {
     assert(from < to);
 
@@ -398,7 +395,7 @@ void PoissonDblExpNeuron::update(nest::Time const & origin, const long from, con
  * SpikeEvent handling.
  * @param e the event.
  */
-void PoissonDblExpNeuron::handle(nest::SpikeEvent & e)
+void PoissonDblExpNeuron::handle(nest::SpikeEvent& e)
 {
     assert(e.get_delay() > 0);
 
@@ -442,7 +439,7 @@ void PoissonDblExpNeuron::handle(nest::CurrentEvent& e)
  * DataLoggingRequest handling.
  * @param e the event.
  */
-void PoissonDblExpNeuron::handle(nest::DataLoggingRequest &e)
+void PoissonDblExpNeuron::handle(nest::DataLoggingRequest& e)
 {
     B_.logger_.handle(e);
 }

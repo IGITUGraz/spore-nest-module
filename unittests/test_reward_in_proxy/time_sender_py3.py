@@ -6,4 +6,3 @@ import time_sender
 
 if __name__ == "__main__":
     time_sender.main()
-

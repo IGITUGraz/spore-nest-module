@@ -59,13 +59,13 @@ ConnectionDataLoggerBase::~ConnectionDataLoggerBase()
  * @param d dictionary to retrieve data.
  * @param port recorder port of the calling connection.
  */
-void ConnectionDataLoggerBase::get_status(DictionaryDatum &d, recorder_port port) const
+void ConnectionDataLoggerBase::get_status(DictionaryDatum& d, recorder_port port) const
 {
     if (port == nest::invalid_index)
         return;
 
     assert(port < recorder_data_.size());
-    ConnectionDataLoggerBase::RecorderData &recorder = *recorder_data_[port];
+    ConnectionDataLoggerBase::RecorderData& recorder = *recorder_data_[port];
 
     (*d)["recorder_times"] = recorder.recorder_times_;
 
@@ -82,7 +82,7 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum &d, recorder_port port
  * @param d dictionary of parameter values.
  * @param port recorder port of the calling connection.
  */
-void ConnectionDataLoggerBase::set_status(const DictionaryDatum &d, recorder_port &port)
+void ConnectionDataLoggerBase::set_status(const DictionaryDatum& d, recorder_port& port)
 {
     double interval = 0.0;
     updateValue<double>(d, "recorder_interval", interval);

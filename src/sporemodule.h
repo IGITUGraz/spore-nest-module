@@ -59,7 +59,7 @@ private:
     {
     public:
         InitSynapseUpdater_i_i_Function();
-        void execute(SLIInterpreter *) const;
+        void execute(SLIInterpreter*) const;
     }
     init_synapse_updater_i_i_function_;
 

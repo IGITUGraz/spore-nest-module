@@ -119,7 +119,7 @@ InitSynapseUpdater_i_i_Function::InitSynapseUpdater_i_i_Function()
  * @param i   pointer to the SLI interpreter.
  */
 void spore::SporeModule::
-InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
+InitSynapseUpdater_i_i_Function::execute(SLIInterpreter* i) const
 {
     // Check if we have (at least) five arguments on the stack.
     i->assert_stack_load(2);
@@ -137,7 +137,7 @@ InitSynapseUpdater_i_i_Function::execute(SLIInterpreter *i) const
  * Initialize module by registering models with the interpreter.
  * @param SLIInterpreter* SLI interpreter
  */
-void spore::SporeModule::init(SLIInterpreter *i)
+void spore::SporeModule::init(SLIInterpreter* i)
 {
     // Register nodes
     const nest::index cu_model_id =

@@ -92,7 +92,7 @@ public:
      * @return an iterator to the trace at the given time point.
      */
     inline
-    const_iterator get_trace(nest::Time const &time, trace_id id) const
+    const_iterator get_trace(nest::Time const& time, trace_id id) const
     {
         return get_trace(time.get_steps(), id);
     };

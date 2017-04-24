@@ -67,14 +67,14 @@ public:
     /**
      * Object status getter.
      */
-    void get_status(DictionaryDatum & d) const
+    void get_status(DictionaryDatum& d) const
     {
     }
 
     /**
      * Object status setter.
      */
-    void set_status(const DictionaryDatum & d, nest::ConnectorModel& cm)
+    void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm)
     {
         updateValue<double>(d, "weight_update_time", weight_update_time_);
         updateValue<long>(d, "bap_trace_id", bap_trace_id_);
@@ -85,7 +85,7 @@ public:
      * This function is called when the time resolution changes and on
      * simulation startup.
      */
-    void calibrate(const nest::TimeConverter &tc)
+    void calibrate(const nest::TimeConverter& tc)
     {
         resolution_unit_ = nest::Time::get_resolution().get_ms();
     }
@@ -139,8 +139,8 @@ public:
     //! Shortcut for base class
     typedef nest::Connection<targetidentifierT> ConnectionBase;
 
-    void check_connection(nest::Node & s, nest::Node & t,
-                          nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
+    void check_connection(nest::Node& s, nest::Node& t,
+                          nest::rport receptor_type, double t_lastspike, const CommonPropertiesType& cp)
     {
         if (!dynamic_cast<TracingNode*> (&t))
         {
@@ -151,10 +151,10 @@ public:
         ConnectionBase::check_connection_(dummy_target, s, t, receptor_type);
     }
 
-    void get_status(DictionaryDatum & d) const;
-    void set_status(const DictionaryDatum & d, nest::ConnectorModel &cm);
+    void get_status(DictionaryDatum& d) const;
+    void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm);
 
-    void send(nest::Event& e, nest::thread t, double t_lastspike, const CommonPropertiesType &cp);
+    void send(nest::Event& e, nest::thread t, double t_lastspike, const CommonPropertiesType& cp);
 
     using ConnectionBase::get_delay_steps;
     using ConnectionBase::get_delay;
@@ -188,7 +188,7 @@ private:
 
     void update_synapic_weight(double time,
                                nest::thread thread,
-                               TracingNode *target,
+                               TracingNode* target,
                                const CommonPropertiesType& cp);
 
     class ConnTestDummyNode : public nest::ConnTestDummyNodeBase
@@ -243,7 +243,7 @@ SporeTestConnection<targetidentifierT>::~SporeTestConnection()
  * ---------------------------------------------------------------- */
 
 template <typename targetidentifierT>
-void SporeTestConnection<targetidentifierT>::get_status(DictionaryDatum & d) const
+void SporeTestConnection<targetidentifierT>::get_status(DictionaryDatum& d) const
 {
     ConnectionBase::get_status(d);
     (*d)["recorder_times"] = recorder_times_;
@@ -251,7 +251,7 @@ void SporeTestConnection<targetidentifierT>::get_status(DictionaryDatum & d) con
 }
 
 template <typename targetidentifierT>
-void SporeTestConnection<targetidentifierT>::set_status(const DictionaryDatum & d, nest::ConnectorModel &cm)
+void SporeTestConnection<targetidentifierT>::set_status(const DictionaryDatum& d, nest::ConnectorModel& cm)
 {
     ConnectionBase::set_status(d, cm);
 }
@@ -276,7 +276,7 @@ template <typename targetidentifierT>
 void SporeTestConnection<targetidentifierT>::send(nest::Event& e,
                                                   nest::thread thread,
                                                   double t_last_spike,
-                                                  const CommonPropertiesType &cp)
+                                                  const CommonPropertiesType& cp)
 {
     const double t_to = e.get_stamp().get_ms(); // ConnectionUpdateManager::instance()->get_origin().get_ms();
     double t_from = t_last_spike;
@@ -335,7 +335,7 @@ void SporeTestConnection<targetidentifierT>::send(nest::Event& e,
 template <typename targetidentifierT>
 void SporeTestConnection<targetidentifierT>::update_synapse_state(double t_to,
                                                                   double t_last_update,
-                                                                  TracingNode::const_iterator &bap_trace,
+                                                                  TracingNode::const_iterator& bap_trace,
                                                                   const CommonPropertiesType& cp)
 {
     t_to -= cp.resolution_unit_ / 2.0; // exclude the last time step.
@@ -362,7 +362,7 @@ void SporeTestConnection<targetidentifierT>::update_synapse_state(double t_to,
 template <typename targetidentifierT>
 void SporeTestConnection<targetidentifierT>::update_synapic_weight(double time,
                                                                    nest::thread thread,
-                                                                   TracingNode *target,
+                                                                   TracingNode* target,
                                                                    const CommonPropertiesType& cp)
 {
     t_weight_ = time;

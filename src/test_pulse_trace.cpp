@@ -69,7 +69,7 @@ double TestPulseTrace::get_trace(nest::delay time_step, TracingNode::trace_id id
 /**
  * Status setter function.
  */
-void TestPulseTrace::set_status(const DictionaryDatum &d)
+void TestPulseTrace::set_status(const DictionaryDatum& d)
 {
     const bool updated_spike_times = d->known( nest::names::spike_times );
     

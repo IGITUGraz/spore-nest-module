@@ -26,6 +26,7 @@
 
 #include "param_utils.h"
 
+
 namespace spore
 {
 
@@ -40,7 +41,7 @@ SetDefault::SetDefault()
 /**
  * Constructor.
  */
-GetStatus::GetStatus(DictionaryDatum & d)
+GetStatus::GetStatus(DictionaryDatum& d)
 : d_(d)
 {
 }
@@ -49,7 +50,7 @@ GetStatus::GetStatus(DictionaryDatum & d)
 /**
  * Constructor.
  */
-CheckParameters::CheckParameters(const DictionaryDatum & d)
+CheckParameters::CheckParameters(const DictionaryDatum& d)
 : d_(d)
 {
 }
@@ -58,10 +59,9 @@ CheckParameters::CheckParameters(const DictionaryDatum & d)
 /**
  * Constructor.
  */
-SetStatus::SetStatus(const DictionaryDatum & d)
+SetStatus::SetStatus(const DictionaryDatum& d)
 : d_(d)
 {
 }
-
 
 }

@@ -63,7 +63,7 @@ ConnectionUpdateManager::~ConnectionUpdateManager()
  *
  * @param interval the update interval used to update connections.
  * @param acceptable_latency the maximum acceptable latency allowed for a connection.
- * 
+ *
  * @note This function may not be thread safe.
  */
 void ConnectionUpdateManager::setup(long interval, long acceptable_latency)
@@ -110,7 +110,7 @@ void ConnectionUpdateManager::init(nest::index cu_model_id)
  * @param time the time point to advance to.
  * @param th the thread of the calling node.
  */
-void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
+void ConnectionUpdateManager::update(const nest::Time& time, nest::thread th)
 {
     if (!has_connections())
         return;
@@ -122,7 +122,7 @@ void ConnectionUpdateManager::update(const nest::Time &time, nest::thread th)
     SynapseUpdateEvent ev;
     ev.set_stamp(time);
 
-    std::vector<nest::ConnectorModel*> models = nest::kernel().model_manager.get_synapse_prototypes( th );
+    std::vector<nest::ConnectorModel*> models = nest::kernel().model_manager.get_synapse_prototypes(th);
 
     for (std::set<ConnectionEntry>::iterator it = connectors_[th].begin();
             it != connectors_[th].end();
@@ -367,7 +367,7 @@ ConnectionUpdater::~ConnectionUpdater()
  * @param from from time offset.
  * @param to to time offset.
  */
-void ConnectionUpdater::update(nest::Time const &origin, const long from, const long to)
+void ConnectionUpdater::update(nest::Time const& origin, const long from, const long to)
 {
     const long acceptable_latency = ConnectionUpdateManager::instance()->get_acceptable_latency();
     const long interval = ConnectionUpdateManager::instance()->get_interval();
@@ -416,16 +416,15 @@ void ConnectionUpdater::init_state_(const nest::Node& proto)
 
 /**
  */
-void ConnectionUpdater::get_status(DictionaryDatum &) const
+void ConnectionUpdater::get_status(DictionaryDatum&) const
 {
 }
 
 /**
  */
-void ConnectionUpdater::set_status(const DictionaryDatum &)
+void ConnectionUpdater::set_status(const DictionaryDatum&)
 {
 }
 
 
 }
-

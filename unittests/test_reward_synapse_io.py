@@ -24,7 +24,6 @@
 import numpy as np
 import nest
 import unittest
-import time
 
 
 class TestStringMethods(unittest.TestCase):

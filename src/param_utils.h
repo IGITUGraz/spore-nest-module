@@ -53,7 +53,7 @@ template < typename T >
     class Con
 {
 public:
-    virtual void apply( T const &, const Name &name ) const = 0;
+    virtual void apply( T const&, const Name& name ) const = 0;
 };
 
 /**
@@ -68,7 +68,7 @@ public:
     {
     }
 
-    void apply( T const & val, const Name &name ) const
+    void apply( T const& val, const Name& name ) const
     {
         if ( val < min_value_ )
         {
@@ -95,7 +95,7 @@ public:
     {
     }
 
-    void apply( T const & val, const Name &name ) const
+    void apply( T const& val, const Name& name ) const
     {
         if ( val > max_value_ )
         {
@@ -122,7 +122,7 @@ public:
     {
     }
 
-    void apply( T const & val, const Name &name ) const
+    void apply( T const& val, const Name& name ) const
     {
         if ( val <= min_value_ )
         {
@@ -149,7 +149,7 @@ public:
     {
     }
 
-    void apply( T const & val, const Name &name ) const
+    void apply( T const& val, const Name& name ) const
     {
         if ( val >= max_value_ )
         {
@@ -202,7 +202,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T default_val )
+        void parameter( T& val, const Name& name, T default_val )
     {
         val = default_val;
     }
@@ -215,7 +215,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1 )
+        void parameter( T& val, const Name& name, T default_val, const pc::Con< T >& con1 )
     {
         con1.apply(default_val, name);
         val = default_val;
@@ -229,8 +229,8 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1,
-                        const pc::Con< T > &con2 )
+        void parameter( T& val, const Name& name, T default_val, const pc::Con< T >& con1,
+                        const pc::Con< T >& con2 )
     {
         con1.apply(default_val, name);
         con2.apply(default_val, name);
@@ -245,8 +245,8 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T default_val, const pc::Con< T > &con1,
-                        const pc::Con< T > &con2, const pc::Con< T > &con3 )
+        void parameter( T& val, const Name& name, T default_val, const pc::Con< T >& con1,
+                        const pc::Con< T >& con2, const pc::Con< T >& con3 )
     {
         con1.apply(default_val, name);
         con2.apply(default_val, name);
@@ -261,7 +261,7 @@ public:
 class GetStatus
 {
 public:
-    GetStatus(DictionaryDatum & d);
+    GetStatus(DictionaryDatum& d);
 
     /**
      * @brief Define parameter without constraint.
@@ -270,7 +270,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const Name &name, T )
+        void parameter( const T& val, const Name& name, T )
     {
         def< T >(d_, name, val);
     }
@@ -283,7 +283,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const Name &name, T, const pc::Con< T > & )
+        void parameter( const T& val, const Name& name, T, const pc::Con< T >& )
     {
         def< T >(d_, name, val);
     }
@@ -296,7 +296,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > & )
+        void parameter( const T& val, const Name& name, T, const pc::Con< T >&, const pc::Con< T >& )
     {
         def< T >(d_, name, val);
     }
@@ -309,14 +309,14 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > &,
-                  const pc::Con< T > & )
+        void parameter( const T& val, const Name& name, T, const pc::Con< T >&, const pc::Con< T >&,
+                  const pc::Con< T >& )
     {
         def< T >(d_, name, val);
     }
 
 private:
-    DictionaryDatum & d_;
+    DictionaryDatum& d_;
 };
 
 /**
@@ -325,7 +325,7 @@ private:
 class CheckParameters
 {
 public:
-    CheckParameters(const DictionaryDatum & d);
+    CheckParameters(const DictionaryDatum& d);
 
     /**
      * @brief Define parameter without constraint.
@@ -334,7 +334,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( const T &, const Name &, T )
+        void parameter( const T&, const Name&, T )
     {
     }
 
@@ -346,7 +346,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const Name &name, T, const pc::Con< T > &con1 )
+        void parameter( const T&, const Name& name, T, const pc::Con< T >& con1 )
     {
         T val;
         if (updateValue< T >(d_, name, val))
@@ -363,8 +363,8 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const Name & name, T, const pc::Con< T > & con1,
-                        const pc::Con< T > & con2 )
+        void parameter( const T&, const Name& name, T, const pc::Con< T >& con1,
+                        const pc::Con< T >& con2 )
     {
         T val;
         if (updateValue< T >(d_, name, val))
@@ -382,8 +382,8 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( const T &, const Name &name, T, const pc::Con< T > & con1,
-                        const pc::Con< T > & con2, const pc::Con< T > & con3 )
+        void parameter( const T&, const Name& name, T, const pc::Con< T >& con1,
+                        const pc::Con< T >& con2, const pc::Con< T >& con3 )
     {
         T val;
         if (updateValue< T >(d_, name, val))
@@ -395,7 +395,7 @@ public:
     }
 
 private:
-    const DictionaryDatum & d_;
+    const DictionaryDatum& d_;
 };
 
 /**
@@ -404,7 +404,7 @@ private:
 class SetStatus
 {
 public:
-    SetStatus(const DictionaryDatum & d);
+    SetStatus(const DictionaryDatum& d);
 
     /**
      * @brief Define parameter without constraint.
@@ -413,7 +413,7 @@ public:
      * @param default_val default value of the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T )
+        void parameter( T& val, const Name& name, T )
     {
         updateValue< T >(d_, name, val);
     }
@@ -426,7 +426,7 @@ public:
      * @param con1 constraint to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T, const pc::Con< T > & )
+        void parameter( T& val, const Name& name, T, const pc::Con< T >& )
     {
         updateValue< T >(d_, name, val);
     }
@@ -439,7 +439,7 @@ public:
      * @param con1,con2 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > & )
+        void parameter( T& val, const Name& name, T, const pc::Con< T >&, const pc::Con< T >& )
     {
         updateValue< T >(d_, name, val);
     }
@@ -452,14 +452,14 @@ public:
      * @param con1,con2,con3 constraints to the parameter.
      */
     template < typename T >
-        void parameter( T & val, const Name &name, T, const pc::Con< T > &, const pc::Con< T > &,
-                        const pc::Con< T > & )
+        void parameter( T& val, const Name& name, T, const pc::Con< T >&, const pc::Con< T >&,
+                        const pc::Con< T >& )
     {
         updateValue< T >(d_, name, val);
     }
 
 private:
-    const DictionaryDatum & d_;
+    const DictionaryDatum& d_;
 };
 
 }

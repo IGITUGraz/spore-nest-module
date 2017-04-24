@@ -48,8 +48,8 @@ public:
     ConnectionDataLoggerBase();
     ~ConnectionDataLoggerBase();
 
-    void get_status(DictionaryDatum &d, recorder_port port) const;
-    void set_status(const DictionaryDatum &d, recorder_port &port);
+    void get_status(DictionaryDatum& d, recorder_port port) const;
+    void set_status(const DictionaryDatum& d, recorder_port& port);
     void clear();
 
 protected:
@@ -96,8 +96,8 @@ class ConnectionDataLogger : public ConnectionDataLoggerBase
 public:
     typedef double ( ConnectionType::*DataAccessFct)() const;
 
-    void register_recordable_variable(const std::string &name, DataAccessFct data_access_fct);
-    void record(double time, ConnectionType const &host, recorder_port port);
+    void register_recordable_variable(const std::string& name, DataAccessFct data_access_fct);
+    void record(double time, ConnectionType const& host, recorder_port port);
 
 private:
     std::vector<DataAccessFct> data_access_fct_;
@@ -115,7 +115,7 @@ private:
  * @param data_access_fct pointer to the member function to retrieve the variable.
  */
 template<typename ConnectionType>
-void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const std::string &name,
+void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const std::string& name,
                                                                         DataAccessFct data_access_fct)
 {
     recorder_info_.push_back(RecorderInfo(name));
@@ -132,7 +132,7 @@ void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const st
  */
 template<typename ConnectionType>
 void ConnectionDataLogger<ConnectionType>::record(double time_step,
-                                                  ConnectionType const &host,
+                                                  ConnectionType const& host,
                                                   recorder_port port)
 {
     if (port == nest::invalid_index)

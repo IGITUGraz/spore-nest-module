@@ -27,6 +27,7 @@
 #ifndef CIRCULAR_BUFFER_H
 #define CIRCULAR_BUFFER_H
 
+
 namespace spore
 {
 
@@ -52,7 +53,7 @@ public:
         /**
          * Copy constructor.
          */
-        const_iterator(const const_iterator &src)
+        const_iterator(const const_iterator& src)
         : ptr_(src.ptr_),
         begin_(src.begin_),
         end_(src.end_)
@@ -63,7 +64,7 @@ public:
          * Iterator increment. Wraps around at limits of the buffer.
          */
         inline
-        const_iterator &operator++()
+        const_iterator& operator++()
         {
             if (++ptr_ == end_)
                 ptr_ = begin_;
@@ -74,7 +75,7 @@ public:
          * Iterator decrement. Wraps around at limits of the buffer.
          */
         inline
-        const_iterator &operator--()
+        const_iterator& operator--()
         {
             if (ptr_ == begin_)
                 ptr_ = end_ - 1;
@@ -88,7 +89,7 @@ public:
          * to the buffer content at the current location.
          */
         inline
-        T const &operator*() const
+        T const& operator*() const
         {
             return *ptr_;
         }
@@ -99,16 +100,16 @@ public:
         /**
          * Constructor.
          */
-        const_iterator(size_t offs, T const *mem, size_t size)
+        const_iterator(size_t offs, T const* mem, size_t size)
         : ptr_(&mem[offs]),
         begin_(mem),
         end_(&mem[size])
         {
         }
 
-        T const *ptr_;
-        T const *begin_;
-        T const *end_;
+        T const* ptr_;
+        T const* begin_;
+        T const* end_;
     };
 
     /**
@@ -123,7 +124,7 @@ public:
     /**
      * Copy constructor.
      */
-    CircularBuffer(const CircularBuffer &src)
+    CircularBuffer(const CircularBuffer& src)
     : mem_(0),
     size_(src.size_)
     {
@@ -199,7 +200,7 @@ private:
         return at % size_;
     }
 
-    T *mem_;
+    T* mem_;
     size_t size_;
 };
 

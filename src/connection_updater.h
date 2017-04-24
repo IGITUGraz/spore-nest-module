@@ -185,7 +185,7 @@ public:
         return is_initialized_;
     }
 
-    static ConnectionUpdateManager *instance();
+    static ConnectionUpdateManager* instance();
 
 private:
     friend class ConnectionUpdater;
@@ -196,7 +196,7 @@ private:
     ConnectionUpdateManager(const ConnectionUpdateManager&);
 
     void execute_garbage_collector(nest::thread th);
-    void update(const nest::Time &time, nest::thread th);
+    void update(const nest::Time& time, nest::thread th);
     void calibrate(nest::thread th);
     void finalize(nest::thread th);
     void prepare();
@@ -222,37 +222,37 @@ private:
             assert(sender_);
         }
 
-        bool operator==(const ConnectionEntry &conn) const
+        bool operator==(const ConnectionEntry& conn) const
         {
             return (conn.connector_ == connector_);
         }
 
-        bool operator!=(const ConnectionEntry &conn) const
+        bool operator!=(const ConnectionEntry& conn) const
         {
             return (conn.connector_ != connector_);
         }
 
-        bool operator<=(const ConnectionEntry &conn) const
+        bool operator<=(const ConnectionEntry& conn) const
         {
             return (conn.connector_ <= connector_);
         }
 
-        bool operator>=(const ConnectionEntry &conn) const
+        bool operator>=(const ConnectionEntry& conn) const
         {
             return (conn.connector_ >= connector_);
         }
 
-        bool operator<(const ConnectionEntry &conn) const
+        bool operator<(const ConnectionEntry& conn) const
         {
             return (conn.connector_ < connector_);
         }
 
-        bool operator>(const ConnectionEntry &conn) const
+        bool operator>(const ConnectionEntry& conn) const
         {
             return (conn.connector_ > connector_);
         }
 
-        const ConnectionEntry& operator=(const ConnectionEntry &conn)
+        const ConnectionEntry& operator=(const ConnectionEntry& conn)
         {
             assert(sender_);
             connector_ = conn.connector_;
@@ -289,14 +289,14 @@ private:
         {
         }
 
-        GarbageCollectorEntry(const GarbageCollectorEntry &src)
+        GarbageCollectorEntry(const GarbageCollectorEntry& src)
         : target_gid_(src.target_gid_),
           sender_gid_(src.sender_gid_),
           syn_id_(src.syn_id_)
         {
         }
 
-        const GarbageCollectorEntry &operator=(const GarbageCollectorEntry &src)
+        const GarbageCollectorEntry& operator=(const GarbageCollectorEntry& src)
         {
             target_gid_ = src.target_gid_;
             sender_gid_ = src.sender_gid_;
@@ -328,17 +328,17 @@ private:
     /**
      * @brief set of all connections under control by the manager.
      */
-    std::vector< std::set<ConnectionEntry> > connectors_;
+    std::vector< std::set< ConnectionEntry > > connectors_;
 
     /**
      * @brief set of connection models that are in use by the manager.
      */
-    std::vector< std::set<nest::synindex> > used_models_;
+    std::vector< std::set< nest::synindex > > used_models_;
 
     /**
      * @brief connections waiting for garbage collection.
      */
-    std::vector< std::vector<GarbageCollectorEntry> > garbage_pile_;
+    std::vector< std::vector< GarbageCollectorEntry > > garbage_pile_;
 
     long acceptable_latency_;
     long interval_;
@@ -347,7 +347,7 @@ private:
     bool has_connections_;
     bool is_initialized_;
 
-    static ConnectionUpdateManager *instance_;
+    static ConnectionUpdateManager* instance_;
 };
 
 /**
@@ -360,12 +360,12 @@ public:
     ConnectionUpdater(const ConnectionUpdater& n);
     virtual ~ConnectionUpdater();
 
-    virtual void update(nest::Time const &origin, const long from, const long to);
+    virtual void update(nest::Time const& origin, const long from, const long to);
     virtual void calibrate();
     virtual void finalize();
 
-    void get_status(DictionaryDatum &) const;
-    void set_status(const DictionaryDatum &);
+    void get_status(DictionaryDatum&) const;
+    void set_status(const DictionaryDatum&);
 
     inline
     bool has_proxies() const
@@ -424,4 +424,3 @@ public:
 }
 
 #endif
-

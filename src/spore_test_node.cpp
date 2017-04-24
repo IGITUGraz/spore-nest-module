@@ -59,7 +59,7 @@ SporeTestNode::~SporeTestNode()
 /**
  * Register a new test.
  */
-void SporeTestNode::register_test(SporeTestBase *test)
+void SporeTestNode::register_test(SporeTestBase* test)
 {
     assert(tests_[test->get_name()] == 0);
     tests_[test->get_name()] = test;
@@ -93,14 +93,14 @@ void SporeTestNode::calibrate()
  * SpikeEvent handling.
  * @param e the event.
  */
-void SporeTestNode::handle(nest::SpikeEvent & e)
+void SporeTestNode::handle(nest::SpikeEvent& e)
 {
 }
 
 /**
  * Update function.
  */
-void SporeTestNode::update(nest::Time const & origin, const long from, const long to)
+void SporeTestNode::update(nest::Time const& origin, const long from, const long to)
 {
     assert(not test_name_.empty());
 

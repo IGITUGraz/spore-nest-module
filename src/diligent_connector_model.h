@@ -29,17 +29,11 @@
 #ifndef DILIGENT_CONNECTOR_MODEL_H
 #define DILIGENT_CONNECTOR_MODEL_H
 
-#include "spore.h"
-#include "nest_time.h"
-#include "nest_timeconverter.h"
-#include "dictutils.h"
-#include "connector_model.h"
-#include "connector_base.h"
-#include "connection_manager_impl.h"
 #include "connector_model_impl.h"
-#include "kernel_manager.h"
 
+#include "spore.h"
 #include "connection_updater.h"
+
 
 namespace spore
 {
@@ -105,7 +99,7 @@ public:
     /**
      * Constructor.
      */
-    DiligentConnectorModel(const DiligentConnectorModel &other, const std::string name)
+    DiligentConnectorModel(const DiligentConnectorModel& other, const std::string name)
     : nest::GenericConnectorModel<ConnectionT>(other, name)
     {
     }
@@ -423,7 +417,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(ne
             // need to cast to vector_like to access syn_id
             if ((*hc)[ i ]->get_syn_id() == syn_id) // find entry for this type
             {
-                return ( *hc)[ i ];
+                return (*hc)[ i ];
             }
         }
     }
@@ -445,7 +439,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(ne
  * @see DiligentConnectorModel, ConnectionUpdateManager
  */
 template <class ConnectionT>
-void register_diligent_connection_model(const std::string &name, bool requires_symmetric = false)
+void register_diligent_connection_model(const std::string& name, bool requires_symmetric = false)
 {
     nest::kernel().model_manager.register_connection_model< ConnectionT, DiligentConnectorModel >
             (name, requires_symmetric);

@@ -60,9 +60,9 @@ public:
     using CommonSynapseProperties::set_status;
     using CommonSynapseProperties::calibrate;
 
-    void get_status(DictionaryDatum & d) const;
-    void set_status(const DictionaryDatum & d, nest::ConnectorModel& cm);
-    void calibrate(const nest::TimeConverter &tc);
+    void get_status(DictionaryDatum& d) const;
+    void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm);
+    void calibrate(const nest::TimeConverter& tc);
 
     /**
      * Check spike event.
@@ -358,8 +358,8 @@ public:
      * \a IllegalConnection exception if the postsynaptic node is not
      * derived from TracingNode.
      */
-    void check_connection(nest::Node & s, nest::Node & t,
-                          nest::rport receptor_type, double t_lastspike, const CommonPropertiesType &cp)
+    void check_connection(nest::Node& s, nest::Node& t,
+                          nest::rport receptor_type, double t_lastspike, const CommonPropertiesType& cp)
     {
         if (!dynamic_cast<TracingNode*> (&t))
         {
@@ -371,10 +371,10 @@ public:
         ConnectionBase::check_connection_(dummy_target, s, t, receptor_type);
     }
 
-    void get_status(DictionaryDatum & d) const;
-    void set_status(const DictionaryDatum & d, nest::ConnectorModel &cm);
+    void get_status(DictionaryDatum& d) const;
+    void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm);
 
-    void send(nest::Event& e, nest::thread t, double t_lastspike, const CommonPropertiesType &cp);
+    void send(nest::Event& e, nest::thread t, double t_lastspike, const CommonPropertiesType& cp);
 
     using ConnectionBase::get_delay_steps;
     using ConnectionBase::get_delay;
@@ -442,7 +442,7 @@ public:
         return (psp_facilitation_ == -1.0);
     }
 
-    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger();
+    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection>* logger();
 
 private:
 
@@ -460,12 +460,12 @@ private:
 
     nest::index recorder_port_;
 
-    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection> *logger_;
+    static ConnectionDataLogger<SynapticSamplingRewardGradientConnection>* logger_;
 
     void update_synapse_state(long t_to,
                               long t_last_update,
-                              TracingNode::const_iterator &bap_trace,
-                              TracingNode::const_iterator &dopa_trace,
+                              TracingNode::const_iterator& bap_trace,
+                              TracingNode::const_iterator& dopa_trace,
                               const CommonPropertiesType& cp);
 
     void update_synapic_parameter(nest::thread thread, const CommonPropertiesType& cp);
@@ -589,7 +589,7 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
  * Status getter function.
  */
 template <typename targetidentifierT>
-void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(DictionaryDatum & d) const
+void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(DictionaryDatum& d) const
 {
     ConnectionBase::get_status(d);
     def<double>(d, nest::names::weight, weight_);
@@ -609,8 +609,8 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
  * @note \a weight will be overwritten next time when the synapse is updated.
  */
 template <typename targetidentifierT>
-void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(const DictionaryDatum & d,
-                                                                             nest::ConnectorModel &cm)
+void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(const DictionaryDatum& d,
+                                                                             nest::ConnectorModel& cm)
 {
     ConnectionBase::set_status(d, cm);
     updateValue<double>(d, nest::names::weight, weight_);
@@ -641,7 +641,7 @@ template <typename targetidentifierT>
 void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Event& e,
                                                                        nest::thread thread,
                                                                        double t_last_spike,
-                                                                       const CommonPropertiesType &cp)
+                                                                       const CommonPropertiesType& cp)
 {
     if (is_degenerated())
     {
@@ -740,10 +740,10 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::send(nest::Eve
 template <typename targetidentifierT>
 void SynapticSamplingRewardGradientConnection<targetidentifierT>::update_synapse_state(long t_to,
                                                                                        long t_last_update,
-                                                                                       TracingNode::const_iterator
-                                                                                       &bap_trace,
-                                                                                       TracingNode::const_iterator
-                                                                                       &dopa_trace,
+                                                                                       TracingNode::const_iterator&
+                                                                                       bap_trace,
+                                                                                       TracingNode::const_iterator&
+                                                                                       dopa_trace,
                                                                                        const CommonPropertiesType& cp)
 {
     if ((weight_ == 0.0) && not cp.simulate_retracted_synapses_)

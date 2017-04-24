@@ -42,7 +42,7 @@ TestTracingNode::TestTracingNode()
 /**
  * Execute once at startup.
  */
-void TestTracingNode::check(nest::delay time_step, TracingNode *node)
+void TestTracingNode::check(nest::delay time_step, TracingNode* node)
 {
     test_assert(node->get_num_traces() == 5, "number of traces");
 
