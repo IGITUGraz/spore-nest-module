@@ -6,4 +6,3 @@ from control_node import ControlNode
 
 if __name__ == '__main__':
     ControlNode().main()
-

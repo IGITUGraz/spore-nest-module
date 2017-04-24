@@ -35,6 +35,7 @@ class ReprSerializer(Serializer):
     def _deserialize(self, msg):
         return ast.literal_eval(msg)
 
+
 SERIALIZERS['repr'] = ReprSerializer()
 
 try:

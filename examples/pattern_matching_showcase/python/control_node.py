@@ -143,6 +143,6 @@ class ControlNode(PyMusicNode):
         else:
             self._print_delay -= 1
 
+
 if __name__ == '__main__':
     ControlNode().main()
-

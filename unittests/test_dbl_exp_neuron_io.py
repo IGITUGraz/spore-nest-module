@@ -21,72 +21,72 @@
 # For more information see: https://github.com/IGITUGraz/spore-nest-module
 #
 
-import numpy as np
 import nest
 import unittest
 
 
 class TestStringMethods(unittest.TestCase):
 
-    def assert_parameter_limits_min(self, param_name, limit ):
-        
+    def assert_parameter_limits_min(self, param_name, limit):
+
         nest.ResetKernel()
-        
+
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit-1 })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit - 1})
             self.fail("Expected exception of type NESTError, but got nothing")
         except Exception as e:
-            self.assertEqual(type(e).__name__, "NESTError", "Expected exception of type NESTError, but got: '"+type(e).__name__+"'")
+            self.assertEqual(type(e).__name__, "NESTError",
+                             "Expected exception of type NESTError, but got: '" + type(e).__name__ + "'")
 
         nest.ResetKernel()
-        
+
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit})
         except Exception as e:
-            self.fail("Expected no exception, but got: '"+type(e).__name__+"'")
+            self.fail("Expected no exception, but got: '" + type(e).__name__ + "'")
 
         nest.ResetKernel()
 
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit+1 })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit + 1})
         except Exception as e:
-            self.fail("Expected no exception, but got: '"+type(e).__name__+"'")
+            self.fail("Expected no exception, but got: '" + type(e).__name__ + "'")
 
+    def assert_parameter_limits_bigger(self, param_name, limit):
 
-    def assert_parameter_limits_bigger(self, param_name, limit ):
-        
         nest.ResetKernel()
-        
+
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit-1 })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit - 1})
             self.fail("Expected exception of type NESTError, but got nothing")
         except Exception as e:
-            self.assertEqual(type(e).__name__, "NESTError", "Expected exception of type NESTError, but got: '"+type(e).__name__+"'")
+            self.assertEqual(type(e).__name__, "NESTError",
+                             "Expected exception of type NESTError, but got: '" + type(e).__name__ + "'")
 
         nest.ResetKernel()
 
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit})
             self.fail("Expected exception of type NESTError, but got nothing")
         except Exception as e:
-            self.assertEqual(type(e).__name__, "NESTError", "Expected exception of type NESTError, but got: '"+type(e).__name__+"'")
+            self.assertEqual(type(e).__name__, "NESTError",
+                             "Expected exception of type NESTError, but got: '" + type(e).__name__ + "'")
 
-        nest.ResetKernel()
-        
-        try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : limit+1 })
-        except Exception as e:
-            self.fail("Expected no exception, but got: '"+type(e).__name__+"'")
-
-    def assert_parameter_no_limits(self, param_name, val ):
-        
         nest.ResetKernel()
 
         try:
-            nest.Create("poisson_dbl_exp_neuron", params = { param_name : val })
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: limit + 1})
         except Exception as e:
-            self.fail("Expected no exception, but got: '"+type(e).__name__+"'")
+            self.fail("Expected no exception, but got: '" + type(e).__name__ + "'")
 
+    def assert_parameter_no_limits(self, param_name, val):
+
+        nest.ResetKernel()
+
+        try:
+            nest.Create("poisson_dbl_exp_neuron", params={param_name: val})
+        except Exception as e:
+            self.fail("Expected no exception, but got: '" + type(e).__name__ + "'")
 
     # test connection
     def test_parameter_limits(self):

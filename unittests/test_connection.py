@@ -31,23 +31,22 @@ class TestStringMethods(unittest.TestCase):
     # test connection
     def spore_connection_test(self, resolution, interval, delay, exp_len):
         nest.ResetKernel()
-        nest.SetKernelStatus({"resolution":resolution})
-        nest.sli_func('InitSynapseUpdater',interval,delay)
-        nest.CopyModel("spore_test_node", "test_tracing_node", {"test_name":"test_tracing_node"})
-        nodes = nest.Create("test_tracing_node",2)
+        nest.SetKernelStatus({"resolution": resolution})
+        nest.sli_func('InitSynapseUpdater', interval, delay)
+        nest.CopyModel("spore_test_node", "test_tracing_node", {"test_name": "test_tracing_node"})
+        nodes = nest.Create("test_tracing_node", 2)
         nest.CopyModel("spore_test_synapse", "test_synapse")
-        nest.SetDefaults("test_synapse", { "weight_update_time" : 100.0 })
-        nest.Connect( [nodes[0]], [nodes[1]], "one_to_one", { "model" : "test_synapse" } )
+        nest.SetDefaults("test_synapse", {"weight_update_time": 100.0})
+        nest.Connect([nodes[0]], [nodes[1]], "one_to_one", {"model": "test_synapse"})
         nest.Simulate(exp_len)
 
         conns = nest.GetConnections([nodes[0]], [nodes[1]], "test_synapse")
-        results = nest.GetStatus(conns, ["recorder_times","recorder_values"])
+        results = nest.GetStatus(conns, ["recorder_times", "recorder_values"])
 
-        offset = 1.0 if (resolution<=1.0) else resolution
+        offset = 1.0 if (resolution <= 1.0) else resolution
 
-        self.assertAlmostEqual( np.mean( np.abs( results[0][0] - np.arange(0.0,exp_len-offset,resolution) ) ), 0.0 )
-        self.assertAlmostEqual( np.mean( np.abs( results[0][1] - np.arange(0.0,(exp_len-offset)/resolution) ) ), 0.0 )
-
+        self.assertAlmostEqual(np.mean(np.abs(results[0][0] - np.arange(0.0, exp_len - offset, resolution))), 0.0)
+        self.assertAlmostEqual(np.mean(np.abs(results[0][1] - np.arange(0.0, (exp_len - offset) / resolution))), 0.0)
 
     def test_spore_connection_1(self):
         self.spore_connection_test(1.0, 50, 50, 400)

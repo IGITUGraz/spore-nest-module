@@ -5,4 +5,3 @@ from zmq_proxy_node import ZMQProxyNode
 
 if __name__ == '__main__':
     ZMQProxyNode().main()
-

@@ -31,7 +31,7 @@ def configure_detail_plot(data_source):
                                 common_line_style={'linewidth': 5},
                                 legend=["Pattern #{}".format(i + 1) for i in range(n_patterns)],
                                 colors=pattern_colors, zero_is_value=False), height_ratio=0.5
-               )
+                )
 
     c1.add_plot(plots.SpikeTrainPlot(data_source,
                                      [('pattern_in', i) for i in range(n_input_neurons)],

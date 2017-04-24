@@ -36,7 +36,8 @@ class NetworkNode(PyNestNode):
         nest.Install("sporemodule")
 
         logger.info("> Synaptic update interval: {}s".format(s_to_ms(synapse_update_interval)))
-        nest.sli_func("InitSynapseUpdater", int(s_to_ms(synapse_update_interval)), int(s_to_ms(synapse_update_interval)))
+        nest.sli_func("InitSynapseUpdater", int(s_to_ms(synapse_update_interval)),
+                      int(s_to_ms(synapse_update_interval)))
 
         # initialize random values, see NEST documentation
         N_vp = nest.GetKernelStatus(["total_num_virtual_procs"])[0]
@@ -109,6 +110,7 @@ class NetworkNode(PyNestNode):
     def _run(self):
         logger.info("Starting simulation")
         nest.Simulate(s_to_ms(total_simulation_time))
+
 
 if __name__ == '__main__':
     NetworkNode().main()

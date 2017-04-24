@@ -26,6 +26,7 @@ class Master(object):
     """
     This class combines a communication sink with a simple periodic task scheduler.
     """
+
     def __init__(self, poll_timeout=None):
         if poll_timeout is None:
             self._comm = MultiSubscriber()
