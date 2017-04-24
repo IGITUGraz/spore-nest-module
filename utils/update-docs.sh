@@ -32,15 +32,20 @@ if [ ! -d $DOCS_FOLDER ]; then
     echo "Aborting."
     exit 1
 fi
-cd $DOCS_FOLDER && doxygen
+cd $DOCS_FOLDER && git pull
+if [ ! $? = 0 ]; then
+    echo "ERROR :: Updating the docs repository failed. Aborting."
+    exit 2
+fi
+doxygen
 if [ ! $? = 0 ]; then
     echo "ERROR :: Running doxygen failed. Aborting."
-    exit 2
+    exit 3
 fi
 git add * && git commit -m "Update docs to revision $COMMIT_ID."
 if [ ! $? = 0 ]; then
     echo "ERROR :: Creating commit failed. Aborting."
-    exit 3
+    exit 4
 fi
 echo "Entering sub-shell. You can now check the docs for integrity. Press CTRL+D to continue."
 $SHELL
