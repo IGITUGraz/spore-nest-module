@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classspore_1_1SporeTestConnectionCommonProperties.html" title="Class holding the common properties for all synapses of type SporeTestConnection. ..." alt="" coords="251,5,439,47"/>
-<area shape="rect" id="node3" href="$classspore_1_1SynapticSamplingRewardGradientCommonProperties.html" title="Class holding the common properties for all synapses of type SynapticSamplingRewardGradientConnection..." alt="" coords="239,71,451,112"/>
+<area shape="rect" id="node2" href="$classspore_1_1SporeTestConnection.html" title="Connection for testing the spore module. " alt="" coords="173,5,361,47"/>
+<area shape="rect" id="node3" href="$classspore_1_1SynapticSamplingRewardGradientConnection.html" title="Reward&#45;based synaptic sampling connection class. " alt="" coords="141,71,392,112"/>
 </map>

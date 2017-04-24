@@ -162,7 +162,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <p><b>Garbage Collection</b></p>
 <p><a class="el" href="classspore_1_1ConnectionUpdateManager.html" title="Class that manages updating diligent connections. ">ConnectionUpdateManager</a> also provides a mechanism to removed synapses that become nonfunctional (garbage collection). The synapse must take care of invoking the garbage collector by calling the <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> method. After a call to this the synapse must return <code>true</code> in its <em>is_degenerated</em> method. The synapse is not deleted immediately. If <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> was triggered from within the <em>send</em> function of the synapse the function is guaranteed to be finished before the synapse is removed. The <em>send</em> function may also be triggered again multiple times after a call to <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> before the synapse is finally removed. The synapse should in that case not call <a class="el" href="classspore_1_1ConnectionUpdateManager.html#a46ac86e353cb1da866770c751f054ecd">trigger_garbage_collector()</a> again or change its behavior of returning <code>true</code> from <em>is_degenerated</em>, as this would lead to undefined behavior.</p>
 <p>The garbage collection feature should not be used together with structural plasticity mechanisms of NEST which <em>delete</em> synapses of the same synapse type, since these may interfere with the garbage collector. Using structural plasticity mechanisms which only <em>add</em> synapses is however possible.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1DiligentConnectorModel.html" title="Connector model for diligent connections. ">DiligentConnectorModel</a>, <a class="el" href="classspore_1_1SporeModule_1_1InitSynapseUpdater__i__i__Function.html" title="InitSynapseUpdater SLI function. ">SporeModule::InitSynapseUpdater_i_i_Function</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a58f84ee59f7d7415935550542265aaa6"></a>
 <div class="memitem">
@@ -575,7 +575,7 @@ class&#160;</td><td class="memItemRight" valign="bottom"><b>ConnectionUpdater</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Apr 24 2017 11:51:04 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 24 2017 15:46:12 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

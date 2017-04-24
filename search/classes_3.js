@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['parameters_5f',['Parameters_',['../structspore_1_1RewardInProxy_1_1Parameters__.html',1,'spore::RewardInProxy']]],
-  ['poissondblexpneuron',['PoissonDblExpNeuron',['../classspore_1_1PoissonDblExpNeuron.html',1,'spore']]]
+  ['initsynapseupdater_5fi_5fi_5ffunction',['InitSynapseUpdater_i_i_Function',['../classspore_1_1SporeModule_1_1InitSynapseUpdater__i__i__Function.html',1,'spore::SporeModule']]]
 ];

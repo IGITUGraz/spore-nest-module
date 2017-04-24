@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['recorderdata',['RecorderData',['../structspore_1_1ConnectionDataLoggerBase_1_1RecorderData.html',1,'spore::ConnectionDataLoggerBase']]],
-  ['recorderinfo',['RecorderInfo',['../structspore_1_1ConnectionDataLoggerBase_1_1RecorderInfo.html',1,'spore::ConnectionDataLoggerBase']]],
-  ['rewardinproxy',['RewardInProxy',['../classspore_1_1RewardInProxy.html',1,'spore']]]
+  ['parameters_5f',['Parameters_',['../structspore_1_1RewardInProxy_1_1Parameters__.html',1,'spore::RewardInProxy']]],
+  ['poissondblexpneuron',['PoissonDblExpNeuron',['../classspore_1_1PoissonDblExpNeuron.html',1,'spore']]]
 ];

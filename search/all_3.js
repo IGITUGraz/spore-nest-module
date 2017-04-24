@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['finalize',['finalize',['../classspore_1_1ConnectionUpdater.html#a321a83c068a4f9c8a37908f300485e7a',1,'spore::ConnectionUpdater']]]
+  ['execute',['execute',['../classspore_1_1SporeModule_1_1InitSynapseUpdater__i__i__Function.html#afd63efd53860d22d7abd606c59967995',1,'spore::SporeModule::InitSynapseUpdater_i_i_Function']]]
 ];
