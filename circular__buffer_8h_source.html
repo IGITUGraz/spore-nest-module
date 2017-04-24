@@ -88,32 +88,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/*</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"> * This file is part of SPORE.</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Copyright (c) 2016, Institute for Theoretical Computer Science,</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> * Graz University of Technology</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * SPORE is free software: you can redistribute it and/or modify</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * it under the terms of the GNU General Public License as published by</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * the Free Software Foundation, either version 2 of the License, or</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> * (at your option) any later version.</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * SPORE is distributed in the hope that it will be useful,</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> * GNU General Public License for more details.</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * You should have received a copy of the GNU General Public License</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> * along with SPORE.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * For more information see: https://github.com/IGITUGraz/spore-nest-module</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> * File:   circular_buffer.h</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> * Author: Kappel</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> *</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> * Created on November 3, 2016, 6:23 PM</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment"> */</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef CIRCULAR_BUFFER_H</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define CIRCULAR_BUFFER_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment"> * Copyright (C) 2016, the SPORE team (see AUTHORS).</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="comment"> * SPORE is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment"> * it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment"> * the Free Software Foundation, either version 2 of the License, or</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="comment"> * (at your option) any later version.</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment"> * SPORE is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment"> * but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment"> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment"> * GNU General Public License for more details.</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="comment"> * You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="comment"> * along with SPORE.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="comment"> * For more information see: https://github.com/IGITUGraz/spore-nest-module</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> * File:   circular_buffer.h</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment"> * Author: Kappel</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="comment"> *</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment"> * Created on November 3, 2016, 6:23 PM</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment"> */</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#ifndef CIRCULAR_BUFFER_H</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define CIRCULAR_BUFFER_H</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="namespacespore.html">   31</a></span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacespore.html">spore</a></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
@@ -127,7 +127,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">   56</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">const_iterator</a>(<span class="keyword">const</span> <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a> &amp;src)</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">   56</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">const_iterator</a>(<span class="keyword">const</span> <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a>&amp; src)</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        : ptr_(src.ptr_),</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        begin_(src.begin_),</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        end_(src.end_)</div>
@@ -135,7 +135,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        }</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">inline</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#ad6f62fcf7515bc18e65580d13a71687b">   67</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a> &amp;<a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#ad6f62fcf7515bc18e65580d13a71687b">operator++</a>()</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#ad6f62fcf7515bc18e65580d13a71687b">   67</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a>&amp; <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#ad6f62fcf7515bc18e65580d13a71687b">operator++</a>()</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        {</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keywordflow">if</span> (++ptr_ == end_)</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;                ptr_ = begin_;</div>
@@ -143,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        }</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keyword">inline</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a326fd2e1680ee4946852b7720b4c79e2">   78</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a> &amp;<a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a326fd2e1680ee4946852b7720b4c79e2">operator--</a>()</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a326fd2e1680ee4946852b7720b4c79e2">   78</a></span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html">const_iterator</a>&amp; <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a326fd2e1680ee4946852b7720b4c79e2">operator--</a>()</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        {</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">if</span> (ptr_ == begin_)</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                ptr_ = end_ - 1;</div>
@@ -153,7 +153,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">inline</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#acdafc317ea22247a163de1422aec0e7d">   92</a></span>&#160;        T <span class="keyword">const</span> &amp;<a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#acdafc317ea22247a163de1422aec0e7d">operator*</a>()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer_1_1const__iterator.html#acdafc317ea22247a163de1422aec0e7d">   92</a></span>&#160;        T <span class="keyword">const</span>&amp; <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#acdafc317ea22247a163de1422aec0e7d">operator*</a>()<span class="keyword"> const</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="keyword">        </span>{</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            <span class="keywordflow">return</span> *ptr_;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        }</div>
@@ -161,16 +161,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classspore_1_1CircularBuffer.html">CircularBuffer</a>;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">const_iterator</a>(<span class="keywordtype">size_t</span> offs, T <span class="keyword">const</span> *mem, <span class="keywordtype">size_t</span> <a class="code" href="classspore_1_1CircularBuffer.html#a7b5182010956d63de9dec197252bf64e">size</a>)</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        <a class="code" href="classspore_1_1CircularBuffer_1_1const__iterator.html#a4bd6893bf12511e0f7c30e1664535d4b">const_iterator</a>(<span class="keywordtype">size_t</span> offs, T <span class="keyword">const</span>* mem, <span class="keywordtype">size_t</span> <a class="code" href="classspore_1_1CircularBuffer.html#a7b5182010956d63de9dec197252bf64e">size</a>)</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;        : ptr_(&amp;mem[offs]),</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        begin_(mem),</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        end_(&amp;mem[size])</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        {</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        }</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        T <span class="keyword">const</span> *ptr_;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        T <span class="keyword">const</span> *begin_;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        T <span class="keyword">const</span> *end_;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        T <span class="keyword">const</span>* ptr_;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        T <span class="keyword">const</span>* begin_;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;        T <span class="keyword">const</span>* end_;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    };</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
 <div class="line"><a name="l00118"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer.html#a4b8c8947b28f34ce73872250aec35259">  118</a></span>&#160;    <a class="code" href="classspore_1_1CircularBuffer.html#a4b8c8947b28f34ce73872250aec35259">CircularBuffer</a>()</div>
@@ -179,7 +179,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    {</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer.html#af4c5d30cfd8c6a48eda592f6c808d73e">  127</a></span>&#160;    <a class="code" href="classspore_1_1CircularBuffer.html#af4c5d30cfd8c6a48eda592f6c808d73e">CircularBuffer</a>(<span class="keyword">const</span> <a class="code" href="classspore_1_1CircularBuffer.html">CircularBuffer</a> &amp;src)</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classspore_1_1CircularBuffer.html#af4c5d30cfd8c6a48eda592f6c808d73e">  127</a></span>&#160;    <a class="code" href="classspore_1_1CircularBuffer.html#af4c5d30cfd8c6a48eda592f6c808d73e">CircularBuffer</a>(<span class="keyword">const</span> <a class="code" href="classspore_1_1CircularBuffer.html">CircularBuffer</a>&amp; src)</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    : mem_(0),</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    size_(src.size_)</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    {</div>
@@ -234,7 +234,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        <span class="keywordflow">return</span> at % size_;</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    }</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    T *mem_;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    T* mem_;</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordtype">size_t</span> size_;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;};</div>
 <div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
@@ -258,7 +258,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 20 2017 08:51:53 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 24 2017 09:51:36 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

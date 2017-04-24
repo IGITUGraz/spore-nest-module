@@ -184,54 +184,54 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Point process neuron with double-exponential shaped PSCs. </p>
 <p><a class="el" href="classspore_1_1PoissonDblExpNeuron.html" title="Point process neuron with double-exponential shaped PSCs. ">PoissonDblExpNeuron</a> is a variant of the spike response model model with double exponential PSP shapes of the from <img class="formulaInl" alt="$\epsilon(t) \;=\; \frac{\tau_r}{\tau_m - \tau_r} \left( e^{-\frac{1}{\tau_m}} - e^{-\frac{1}{\tau_r}} \right)$" src="form_88.png"/> and absolute refractory mechanism.</p>
-<p>Spikes are generated randomly according to the current value of the transfer function which operates on the membrane potential. Spike generation is followed by an optional dead time (refractory state). Setting with_reset to true will reset the membrane potential after each spike.</p>
+<p>Spikes are generated randomly according to the current value of the transfer function which operates on the membrane potential. Spike generation is followed by an optional dead time (refractory state). Setting <em>with_reset</em> to true will reset the membrane potential after each spike.</p>
 <p>The transfer function can be chosen to be linear, exponential or a sum of both by adjusting three parameters:</p>
 <p class="formulaDsp">
 <img class="formulaDsp" alt="\[ rate = Rect[ c1 * V' + c2 * exp(c3 * V') ], \]" src="form_0.png"/>
 </p>
-<p> where the effective potential <img class="formulaInl" alt="$ V' = V_m - E_{sfa}$" src="form_1.png"/> and <img class="formulaInl" alt="$ E_{sfa} $" src="form_2.png"/> is called the adaptive threshold. By setting c3 = 0, c2 can be used as an offset spike rate for an otherwise linear rate model.</p>
-<p>The dead time enables to include refractoriness. If dead time is 0, the number of spikes in one time step might exceed one and is drawn from the Poisson distribution accordingly. Otherwise, the probability for a spike is given by <img class="formulaInl" alt="$ 1 - exp(-rate*h) $" src="form_3.png"/>, where h is the simulation time step. If dead_time is smaller than the simulation resolution (time step), it is internally set to the time step. Note that, even if non-refractory neurons are to be modeled, a small value of dead_time, like dead_time=1e-8, might be the value of choice since it uses faster uniform random numbers than dead_time=0, which draws Poisson numbers. Only for very large spike rates (&gt; 1 spike/h) this will cause errors.</p>
-<p>The model implements an adaptive threshold. If the neuron spikes, the threshold increases and the membrane potential will take longer to reach it. If the neuron does not spike, the threshold linearly decays over time, increasing the firing probability of the neuron (parameters: target_rate, target_adaptation_speed).</p>
+<p> where the effective potential <img class="formulaInl" alt="$ V' = V_m - E_{sfa}$" src="form_1.png"/> and <img class="formulaInl" alt="$ E_{sfa} $" src="form_2.png"/> is called the adaptive threshold. By setting <em>c3</em> = 0, <em>c2</em> can be used as an offset spike rate for an otherwise linear rate model.</p>
+<p>The dead time enables to include refractoriness. If dead time is 0, the number of spikes in one time step might exceed one and is drawn from the Poisson distribution accordingly. Otherwise, the probability for a spike is given by <img class="formulaInl" alt="$ 1 - exp(-rate*h) $" src="form_3.png"/>, where h is the simulation time step. If dead_time is smaller than the simulation resolution (time step), it is internally set to the time step. Note that, even if non-refractory neurons are to be modeled, a small value of dead_time, like <em>dead_time=1e-8</em>, might be the value of choice since it uses faster uniform random numbers than <em>dead_time=0</em>, which draws Poisson numbers. Only for very large spike rates (&gt; 1 spike/h) this will cause errors.</p>
+<p>The model implements an adaptive threshold. If the neuron spikes, the threshold increases and the membrane potential will take longer to reach it. If the neuron does not spike, the threshold linearly decays over time, increasing the firing probability of the neuron (see [6], parameters: <em>target_rate</em>, <em>target_adaptation_speed</em>).</p>
 <p>This model has been adapted from iaf_psc_delta. The default parameters are set to the mean values in [2], which have were matched to spike-train recordings.</p>
 <p><b>Parameters</b></p>
-<p>The following parameters can be set in the status dictionary.</p>
+<p>The following parameters can be set in the status dictionary. (default values and constraints are given in parentheses):</p>
 <table class="doxtable">
 <tr>
 <th>name </th><th>type </th><th>comment </th></tr>
 <tr>
 <td><em>V_m</em>  </td><td>double </td><td>Membrane potential [mV] </td></tr>
 <tr>
-<td><em>tau_rise_exc</em>  </td><td>double </td><td>Fall time constant of excitatory PSP (&gt;0.0) [ms]  </td></tr>
+<td><em>tau_rise_exc</em>  </td><td>double </td><td>Fall time constant of excitatory PSP (2.0, &gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_fall_exc</em>  </td><td>double </td><td>Rise time constant of excitatory PSP (&gt;0.0) [ms]  </td></tr>
+<td><em>tau_fall_exc</em>  </td><td>double </td><td>Rise time constant of excitatory PSP (20.0, &gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_rise_inh</em>  </td><td>double </td><td>Fall time constant of inhibitory PSP (&gt;0.0) [ms]  </td></tr>
+<td><em>tau_rise_inh</em>  </td><td>double </td><td>Fall time constant of inhibitory PSP (1.0, &gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>tau_fall_inh</em>  </td><td>double </td><td>Rise time constant of inhibitory PSP (&gt;0.0) [ms]  </td></tr>
+<td><em>tau_fall_inh</em>  </td><td>double </td><td>Rise time constant of inhibitory PSP (10.0, &gt;0.0) [ms]  </td></tr>
 <tr>
-<td><em>dead_time</em>  </td><td>double </td><td>Duration of the dead time [ms] </td></tr>
+<td><em>dead_time</em>  </td><td>double </td><td>Duration of the dead time (1.0, &amp;ge 0.0) [ms] </td></tr>
 <tr>
-<td><em>dead_time_random</em>  </td><td>bool </td><td>Should a random dead time be drawn after each spike? </td></tr>
+<td><em>dead_time_random</em>  </td><td>bool </td><td>Should a random dead time be drawn after each spike? (false)  </td></tr>
 <tr>
-<td><em>dead_time_shape</em>  </td><td>int </td><td>Shape parameter of dead time gamma distribution  </td></tr>
+<td><em>dead_time_shape</em>  </td><td>int </td><td>Shape parameter of dead time gamma distribution (1, &amp;ge 1)  </td></tr>
 <tr>
-<td><em>t_ref_remaining</em>  </td><td>double </td><td>Remaining dead time at simulation start (&gt;0.0) [ms]  </td></tr>
+<td><em>t_ref_remaining</em>  </td><td>double </td><td>Remaining dead time at simulation start (&gt;0.0) <a href="0.0, &amp;ge 0.0">ms</a>  </td></tr>
 <tr>
 <td><em>with_reset</em>  </td><td>bool </td><td>Should the membrane potential be reset after a spike? </td></tr>
 <tr>
-<td><em>I_e</em>  </td><td>double </td><td>Constant input current [pA] </td></tr>
+<td><em>I_e</em>  </td><td>double </td><td>Constant input current (0.0) [pA] </td></tr>
 <tr>
-<td><em>input_conductance</em>  </td><td>double </td><td>Conductance of input currents [S] </td></tr>
+<td><em>input_conductance</em>  </td><td>double </td><td>Conductance of input currents (1.0) [S] </td></tr>
 <tr>
-<td><em>c_1</em>  </td><td>double </td><td>Slope of linear part of transfer function [Hz/mV] </td></tr>
+<td><em>c_1</em>  </td><td>double </td><td>Slope of linear part of transfer function (0.0) [Hz/mV] </td></tr>
 <tr>
-<td><em>c_2</em>  </td><td>double </td><td>Prefactor of exponential part of transfer function [Hz] </td></tr>
+<td><em>c_2</em>  </td><td>double </td><td>Prefactor of exponential part of transfer function (1.238) [Hz/mV] </td></tr>
 <tr>
-<td><em>c_3</em>  </td><td>double </td><td>Coefficient of exponential non-linearity of transfer function [1/mV] </td></tr>
+<td><em>c_3</em>  </td><td>double </td><td>Coefficient of exponential non-linearity of transfer function (0.25, &amp;ge 0.0) [1/mV] </td></tr>
 <tr>
-<td><em>target_rate</em>  </td><td>double </td><td>Target rate of neuron for adaptation mechanism [Hz] </td></tr>
+<td><em>target_rate</em>  </td><td>double </td><td>Target rate of neuron for adaptation mechanism (10.0, &amp;ge 0.0) [Hz] </td></tr>
 <tr>
-<td><em>target_adaptation_speed</em>  </td><td>double </td><td>Speed of rate adaptation </td></tr>
+<td><em>target_adaptation_speed</em>  </td><td>double </td><td>Speed of rate adaptation (0.0, &amp;ge 0.0) </td></tr>
 </table>
 <p><em>Sends:</em> SpikeEvent</p>
 <p><em>Receives:</em> SpikeEvent, CurrentEvent, DataLoggingRequest</p>
@@ -241,6 +241,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <p>[3] Pozzorini C, Naud R, Mensi S, Gerstner W (2013) Temporal whitening by power-law adaptation in neocortical neurons. Nat Neurosci 16: 942-948. (uses a similar model of multi-timescale adaptation).</p>
 <p>[4] Grytskyy D, Tetzlaff T, Diesmann M and Helias M (2013) A unified view on weakly correlated recurrent networks. Front. Comput. Neurosci. 7:131.</p>
 <p>[5] Deger M, Schwalger T, Naud R, Gerstner W (2014) Fluctuations and information filtering in coupled populations of spiking neurons with adaptation. Physical Review E 90:6, 062704.</p>
+<p>[6] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and Wolfgang Maass. <em>Reward-based self-configuration of neural circuits.</em> 2017. <a href="https://arxiv.org/abs/1704.04238">https://arxiv.org/abs/1704.04238</a></p>
 <dl class="section author"><dt>Author</dt><dd>Kappel, Hsieh; (of pp_psc_delta) July 2009, Deger, Helias; January 2011, Zaytsev; May 2014, Setareh </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classspore_1_1TracingNode.html" title="Base class to all nodes that record traces. ">TracingNode</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -558,7 +559,7 @@ typedef size_t&#160;</td><td class="memItemRight" valign="bottom"><b>trace_id</b
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 20 2017 08:51:53 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Apr 24 2017 09:51:36 for SPORE by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>
