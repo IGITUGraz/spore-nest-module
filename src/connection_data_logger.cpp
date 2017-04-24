@@ -55,7 +55,7 @@ ConnectionDataLoggerBase::~ConnectionDataLoggerBase()
 
 /**
  * Get recorded values of recorder at given port.
- * 
+ *
  * @param d dictionary to retrieve data.
  * @param port recorder port of the calling connection.
  */
@@ -78,7 +78,7 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum& d, recorder_port port
 /**
  * Set the status of the recorder at given port. The recorder port may
  * change to a new value during this call.
- * 
+ *
  * @param d dictionary of parameter values.
  * @param port recorder port of the calling connection.
  */
@@ -108,7 +108,7 @@ void ConnectionDataLoggerBase::set_status(const DictionaryDatum& d, recorder_por
 
 /**
  * Add new recordable connection to the recorder.
- * 
+ *
  * @return the port id of the new recorder.
  */
 ConnectionDataLoggerBase::recorder_port ConnectionDataLoggerBase::add_recordable_connection()
@@ -139,7 +139,7 @@ void ConnectionDataLoggerBase::clear()
 
 /**
  * Constructor.
- * 
+ *
  * @param size number of variables in the recorder buffer.
  */
 ConnectionDataLoggerBase::RecorderData::RecorderData(size_t size)
@@ -150,7 +150,7 @@ ConnectionDataLoggerBase::RecorderData::RecorderData(size_t size)
 
 /**
  * Constructor.
- * 
+ *
  * @param size number of variables in the recorder buffer.
  */
 void ConnectionDataLoggerBase::RecorderData::clear()

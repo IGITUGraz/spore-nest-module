@@ -63,7 +63,7 @@ public:
 
     /**
      * @brief Access the trace of \a id at time step \a step.
-     * 
+     *
      * Get the trace at the given time step. Returns an iterator to a
      * circular buffer that allows to read the trace. Note that neither
      * this function nor the iterator checks for the limits of the trace.
@@ -71,7 +71,7 @@ public:
      * ConnectionUpdateManager::get_origin() (which is equal to the slice
      * origin), or values older than ConnectionUpdateManager::get_horizon()
      * will lead to undefined behavior.
-     * 
+     *
      * @param steps the time point to be read.
      * @param id the index of the trace.
      * @return an iterator to the trace at the given time point.
@@ -86,7 +86,7 @@ public:
     /**
      * Convenience function. Time point of trace is passed here as a set::Time
      * object.
-     * 
+     *
      * @param time the time point to be read.
      * @param id the index of the trace.
      * @return an iterator to the trace at the given time point.
@@ -112,7 +112,7 @@ protected:
     /**
      * Set value of a trace at the given time point. Values are supposed to
      * be written only in the interval of the current slice.
-     * 
+     *
      * @param steps time to write values to (in steps).
      * @param v value to be written.
      * @param id id of the trace (default is 0).
@@ -122,7 +122,7 @@ protected:
         assert(id < traces_.size());
         traces_[id][steps] = v;
     }
-    
+
     virtual void get_trace_status(DictionaryDatum& d) const;
 
 private:

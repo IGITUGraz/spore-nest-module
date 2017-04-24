@@ -120,7 +120,7 @@ public:
 
 /**
  * @brief Connection for testing the spore module.
- * 
+ *
  * SporeTestConnection class provides an interface for writing unit tests
  * for the SPORE module.
  */
@@ -172,7 +172,7 @@ public:
     bool is_degenerated() const
     {
         return false;
-    }    
+    }
 
 private:
     double weight_;
@@ -266,7 +266,7 @@ void SporeTestConnection<targetidentifierT>::set_status(const DictionaryDatum& d
  * This method is also triggered by the ConnectionUpdateManager to indicate
  * that the synapse is running out of data. In this case an invalid rport of -1
  * is passed and the spike is not delivered to the postsynaptic neuron.
- * 
+ *
  * @param e the spike event.
  * @param thread the id of the connections thread.
  * @param t_last_spike the time of the last spike.
@@ -326,7 +326,7 @@ void SporeTestConnection<targetidentifierT>::send(nest::Event& e,
  * neuron and the reward (dopamine) trace of the reward transmitter to be
  * passed. Iterators are expected to be positioned at time t_last_update and
  * will be advanced to t_to after the call.
- * 
+ *
  * @param t_to time to advance to.
  * @param t_last_update time of last update.
  * @param bap_trace iterator pointing to the current value of the BAP trace.
@@ -353,7 +353,7 @@ void SporeTestConnection<targetidentifierT>::update_synapse_state(double t_to,
 
 /**
  * Updates the synaptic parameter and weight of the synapse.
- * 
+ *
  * @param time the time when the synapse is updated.
  * @param thread the thread of the synapse.
  * @param target the target node of the synapse.

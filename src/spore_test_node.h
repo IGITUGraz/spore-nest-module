@@ -127,9 +127,9 @@ void SporeTestNode::set_status(const DictionaryDatum &d)
         test_name_ = test_name;
     }
 
-    
+
     updateValue<double>(d, "test_time", test_time_);
-    
+
     if (not test_name_.empty())
     {
         tests_[test_name_]->set_status(d);

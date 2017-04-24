@@ -33,9 +33,9 @@ namespace spore
 
 /**
  * @brief An iterable circular buffer.
- * 
+ *
  * This class provides the buffer that is used by TracingNode to hold traces.
- * 
+ *
  * @note resize erases all values and sets the whole vector to defaults.
  */
 template<typename T>

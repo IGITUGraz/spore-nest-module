@@ -80,11 +80,11 @@ public:
     {
         assert(false);
     };
-    
+
     virtual void get_status(DictionaryDatum& d) const
     {
     };
-    
+
     virtual void set_status(const DictionaryDatum& d)
     {
     };

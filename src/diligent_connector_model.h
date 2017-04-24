@@ -40,13 +40,13 @@ namespace spore
 
 /**
  * @brief Connector model for diligent connections.
- * 
+ *
  * Generic connector model for connections that require being updated on a
  * regular time grid. Use the function spore::register_diligent_connection_model
  * provided in diligent_connector_model.h, to register your synapse model at
  * the network, to use the diligent synapse model instead of NEST's build-in
  * synapse model.
- * 
+ *
  * Diligent connections are connection models that are updated on a regular
  * time grid (as opposed to NEST's standard lazy update). More precisely, the
  * API guarantees that the \a send function of the synapse is called at least once
@@ -54,15 +54,9 @@ namespace spore
  * during that time, a "dummy" spike is inserted to trigger a synapse update.
  * The synapse can distinguish between "dummy" spikes and "real" spikes through
  * the receptor port, which is set to the invalid value of -1 for dummy spikes
- * (see SynapseUpdateEvent).
- * 
- * The length of the update time window can be controlled using the
- * \a InitSynapseUpdater SLI function. It takes two arguments, the update interval
- * and the maximum synaptic update latency. Both are tuning parameters that can
- * be used to optimize the simulation performance. Long update intervals are
- * likely more time efficient, but require more memory (see also
- * ConnectionUpdateManager)
- * 
+ * (see SynapseUpdateEvent). The update interval can be controlled using the
+ * \a InitSynapseUpdater SLI function (see ConnectionUpdateManager)
+ *
  * The DiligentConnectorModel provides the interface to this mechanism. New synapse
  * models that use the diligent connection framework should be registered using
  * the register_diligent_connection_model template function. Connections
@@ -76,12 +70,12 @@ namespace spore
  * synapses that need to be deleted. The mechanism is described in detail in
  * the documentation of ConnectionUpdateManager.
  *
- * Another difference of diligent connectors is that the calibrate function of
- * their CommonSynapseProperties object is called additionally on simulation
- * startup (such as nest::Node objects).
+ * Another difference diligent connectors and standard NEST connections is that
+ * the calibrate function of their \a CommonSynapseProperties object is called
+ * additionally on simulation startup (such as nest::Node objects).
  *
  * @see ConnectionUpdateManager, SynapseUpdateEvent, SynapticSamplingRewardGradientConnection
- * 
+ *
  */
 template < typename ConnectionT >
 class DiligentConnectorModel : public nest::GenericConnectorModel<ConnectionT>
@@ -249,7 +243,7 @@ void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBa
 
 /**
  * @brief Cleanup and delete the given connection.
- * 
+ *
  * This deviates from the standard NEST implementation in that it
  * preferably deletes synapses that are marked for deletion instead of
  * taking the first synapse that matches the specifications. Synapses
@@ -435,7 +429,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::get_hom_connector(ne
  *
  * @param name name of the connection model.
  * @param requires_symmetric indicate that the model requires symmetric connections.
- * 
+ *
  * @see DiligentConnectorModel, ConnectionUpdateManager
  */
 template <class ConnectionT>

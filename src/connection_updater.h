@@ -48,7 +48,7 @@ namespace spore
 {
 
 /**
- * @brief Class that manages updating diligent synapses.
+ * @brief Class that manages updating diligent connections.
  *
  * Singleton class that manages updating connections that require regular
  * updates (diligent connections). The object is supposed to be updated in a
@@ -72,9 +72,11 @@ namespace spore
  *   <update_interval> <acceptable_latency> InitSynapseUpdater
  * \endcode
  * is required, where <update_interval> is an integer value (default: 100)
- * that defines interval (in number of nest time steps) in which the update
- * manager is invoked and <acceptable_latency> is an integer value (default: 100)
- * defining the acceptable latency for synapses. Equivalently, if using python,
+ * that defines the interval (in number of nest time steps) of invoking the
+ * update manager and <acceptable_latency> is an integer value (default: 100)
+ * defining the acceptable latency for synapses. These parameters can be used
+ * to optimize the simulation performance. Long update intervals are likely
+ * more time efficient, but require more memory. Equivalently, if using python,
  * add a line
  * \code
  *   nest.sli_func('InitSynapseUpdater',<update_interval>,<acceptable_latency>)

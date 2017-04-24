@@ -110,7 +110,7 @@ private:
 
 /**
  * Add a new recordable variable to the recorder object.
- * 
+ *
  * @param name name of the recordable variable.
  * @param data_access_fct pointer to the member function to retrieve the variable.
  */
@@ -125,7 +125,7 @@ void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const st
 /**
  * Record current variable values from the given host connection. Values are
  * recorded only if the last recording time is older than the recorder interval.
- * 
+ *
  * @param time current time of recording.
  * @param host the host connection.
  * @param port the recorder port of the host connection.
