@@ -53,8 +53,8 @@ namespace spore
  * A typical application for this node is to receive a reward signal and
  * communicate it to synapses that are trained using reward-modulated
  * plasticity. The number of traces that are received by this device is given
- * by the width of the MUSIC port. The received traces can read out using the
- * TracingNode::get_trace() member function.
+ * by the width of the MUSIC port. The received traces can be read out using
+ * the TracingNode::get_trace() member function.
  * 
  * @see SynapticSamplingRewardGradientConnection
  */
