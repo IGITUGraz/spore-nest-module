@@ -72,7 +72,7 @@ double TestPulseTrace::get_trace(nest::delay time_step, TracingNode::trace_id id
 void TestPulseTrace::set_status(const DictionaryDatum& d)
 {
     const bool updated_spike_times = d->known( nest::names::spike_times );
-    
+
     if (updated_spike_times)
     {
         const std::vector< double > d_times =
@@ -84,7 +84,7 @@ void TestPulseTrace::set_status(const DictionaryDatum& d)
 
         std::copy(d_times.begin(), d_times.end(), spike_times_.begin());
     }
-    
+
     updateValue<double>(d, "offset", offset_);
     updateValue<double>(d, "weight", weight_);
 }
