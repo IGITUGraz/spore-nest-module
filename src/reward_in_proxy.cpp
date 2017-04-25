@@ -129,13 +129,6 @@ void RewardInProxy::calibrate()
     // only publish the port once
     if (!S_.published_)
     {
-        // @todo: Remove this as soon as bug gets fixed!
-        if (nest::kernel().vp_manager.get_num_threads() > 1)
-        {
-            LOG(nest::M_WARNING, "reward_in_proxy::calibrate()", "NEST is configured to use thread-parallelization."
-                " Due to issue 696 in NEST this might cause problems when mapping MUSIC ports.");
-        }
-
         MUSIC::Setup* s = nest::kernel().music_manager.get_music_setup();
         if (s == 0)
         {
