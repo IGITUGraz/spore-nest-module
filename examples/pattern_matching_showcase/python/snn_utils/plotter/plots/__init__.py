@@ -358,10 +358,10 @@ class QuiverWeightPlot(WeightPlot):
         df = self._weight_to_spatial(weight_df)
 
         self._ps = self._ax.quiver(df.X, df.Y, df.dX, df.dY,
-                        pivot='mid', units='xy',  # keep the arrow inside its pixel box
-                        scale=np.max(np.hypot(df.dX, df.dY)) + 0.05,
-                        # color=colors
-                        )
+                                   pivot='mid', units='xy',  # keep the arrow inside its pixel box
+                                   scale=np.max(np.hypot(df.dX, df.dY)) + 0.05,
+                                   # color=colors
+                                   )
 
         self._ax.set_xlim(min(df.X) - 0.5, max(df.X) + 0.5)
         self._ax.set_ylim(min(df.Y) - 0.5, max(df.Y) + 0.5)

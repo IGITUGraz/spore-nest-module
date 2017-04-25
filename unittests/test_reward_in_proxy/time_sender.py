@@ -4,6 +4,7 @@ import music
 import itertools
 import numpy as np
 
+
 def main():
     setup = music.Setup()
 
@@ -19,11 +20,12 @@ def main():
 
     def runtime(setup, timestep, stoptime):
         for t in itertools.takewhile(lambda t: t < stoptime,
-                                    setup.runtime(timestep)):
+                                     setup.runtime(timestep)):
             yield t
 
     for time in runtime(setup, timestep=0.001, stoptime=0.5):
         buf[:] = [time + float(i) for i, _ in enumerate(range(len(buf)))]
+
 
 if __name__ == "__main__":
     main()

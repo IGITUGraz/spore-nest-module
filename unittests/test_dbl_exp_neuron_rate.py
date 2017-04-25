@@ -28,7 +28,7 @@ import unittest
 class TestStringMethods(unittest.TestCase):
 
     def do_exp_poisson_neuron_rate_test(self, I_e, target_rate):
-        
+
         nest.ResetKernel()
 
         # create neuron and multimeter
@@ -38,7 +38,8 @@ class TestStringMethods(unittest.TestCase):
         tau_rise_inh = 1.0
         tau_fall_inh = 10.0
 
-        n = nest.Create('poisson_dbl_exp_neuron',  params = {'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc, 'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh, 'I_e': I_e})
+        n = nest.Create('poisson_dbl_exp_neuron',  params={
+                        'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc, 'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh, 'I_e': I_e})
 
         m = nest.Create('spike_detector')
 
@@ -46,13 +47,12 @@ class TestStringMethods(unittest.TestCase):
 
         # simulate
         nest.Simulate(T)
-        
+
         events = nest.GetStatus(m)[0]['events']
-        
-        rate = len(events['times'])*1000.0/T
 
-        self.assertTrue( ( rate - target_rate )**2 < 0.00001, "poisson neuron rate test" )
+        rate = len(events['times']) * 1000.0 / T
 
+        self.assertTrue((rate - target_rate)**2 < 0.00001, "poisson neuron rate test")
 
     def test_spore_exp_poisson_neuron_rate_1(self):
         self.do_exp_poisson_neuron_rate_test(20.0, 154.7)
@@ -80,6 +80,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_spore_exp_poisson_neuron_rate_9(self):
         self.do_exp_poisson_neuron_rate_test(-3.0, 0.4)
+
 
 if __name__ == '__main__':
     nest.Install("sporemodule")

@@ -55,4 +55,3 @@ class RewardGenerator(object):
         self._mean_reward = max(self._gamma * self._mean_reward + (1 - self._gamma) * reward, reward_offset)
         self._norm_reward = reward / self._mean_reward + reward_offset if reward > 0.0 else reward_offset
         return self._norm_reward
-

@@ -80,4 +80,3 @@ class PyMusicNode(Node, PortUtility):
         self._set_music_setup(None)
         self._run(times)
         self._post_run()
-

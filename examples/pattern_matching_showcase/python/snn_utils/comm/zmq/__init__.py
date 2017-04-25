@@ -21,6 +21,7 @@ class Publisher(ContextHelper):
     """
         Minimal wrapper around a ZMQ publisher.
     """
+
     def __init__(self, port, context=None, host="*", transport='tcp'):
         ContextHelper.__init__(self, context)
         address = "{}://{}:{}".format(transport, host, port)
@@ -55,17 +56,18 @@ class MultiSubscriber(ContextHelper):
         sock.setsockopt_string(zmq.SUBSCRIBE, prefix)
 
         if multipart:
-            receive = lambda: sock.recv_multipart(zmq.NOBLOCK)
+            def receive(): return sock.recv_multipart(zmq.NOBLOCK)
         else:
-            receive = lambda: sock.recv(zmq.NOBLOCK)
+            def receive(): return sock.recv(zmq.NOBLOCK)
 
         if deserialize is None:
-            handle = lambda: callback(receive())
+            def handle(): return callback(receive())
         else:
             if multipart:
-                handle = lambda: callback([elem if i == 0 else deserialize(elem) for i, elem in enumerate(receive())])
+                def handle(): return callback([elem if i == 0 else deserialize(elem)
+                                               for i, elem in enumerate(receive())])
             else:
-                handle = lambda: callback(deserialize(receive()))
+                def handle(): return callback(deserialize(receive()))
 
         self._handler[sock] = handle
         self._poller.register(sock, zmq.POLLIN)
