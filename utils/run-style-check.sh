@@ -1,4 +1,4 @@
-mkdir style-reports
+mkdir -p style-reports
 now=$(date +"%m-%d-%Y-%T")
 flake8 --ignore=E241,F403,F405 --max-line-length=120 --exclude style-reports/ --tee --output-file style-reports/report-${now}.txt
 # echo $?
