@@ -134,7 +134,7 @@ u_rise_inh_(0.0),
 u_fall_inh_(0.0),
 u_membrane_(0.0),
 input_current_(0.0),
-adaptative_threshold_(0.0),
+adaptive_threshold_(0.0),
 r_(0)
 {
 }
@@ -145,7 +145,7 @@ r_(0)
 void PoissonDblExpNeuron::State_::get(DictionaryDatum& d, const Parameters_&) const
 {
     def<double>(d, nest::names::V_m, u_membrane_); // Membrane potential
-    def<double>(d, "adaptive_threshold", adaptative_threshold_);
+    def<double>(d, "adaptive_threshold", adaptive_threshold_);
 }
 
 /**
@@ -154,7 +154,7 @@ void PoissonDblExpNeuron::State_::get(DictionaryDatum& d, const Parameters_&) co
 void PoissonDblExpNeuron::State_::set(const DictionaryDatum& d, const Parameters_&)
 {
     updateValue<double>(d, nest::names::V_m, u_membrane_);
-    updateValue<double>(d, "adaptive_threshold", adaptative_threshold_);
+    updateValue<double>(d, "adaptive_threshold", adaptive_threshold_);
 }
 
 //
@@ -316,7 +316,7 @@ void PoissonDblExpNeuron::update(nest::Time const& origin, const long from, cons
 
         nest::Time time = nest::Time::step(origin.get_steps() + lag);
 
-        S_.adaptative_threshold_ -= 1e-3 * V_.h_ * P_.target_rate_ * P_.target_adaptation_speed_;
+        S_.adaptive_threshold_ -= 1e-3 * V_.h_ * P_.target_rate_ * P_.target_adaptation_speed_;
 
         if (S_.r_ == 0)
         {
@@ -325,7 +325,7 @@ void PoissonDblExpNeuron::update(nest::Time const& origin, const long from, cons
             // Calculate instantaneous rate from transfer function:
             //     rate = c1 * u' + c2 * exp(c3 * u')
 
-            double V_eff = S_.u_membrane_ - S_.adaptative_threshold_;
+            double V_eff = S_.u_membrane_ - S_.adaptive_threshold_;
 
             double rate = (P_.c_1_ * V_eff + P_.c_2_ * std::exp(P_.c_3_ * V_eff));
             double spike_probability = -numerics::expm1(-rate * V_.h_ * 1e-3);
@@ -371,7 +371,7 @@ void PoissonDblExpNeuron::update(nest::Time const& origin, const long from, cons
                         S_.u_fall_inh_ = 0.0;
                     }
 
-                    S_.adaptative_threshold_ += P_.target_adaptation_speed_;
+                    S_.adaptive_threshold_ += P_.target_adaptation_speed_;
                 } // S_.u_membrane_ = P_.V_reset_;
             } // if (rate > 0.0)
 

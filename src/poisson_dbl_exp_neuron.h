@@ -269,7 +269,7 @@ private:
         double u_fall_inh_; //!< Falling part of inhibitory potential
         double u_membrane_; //!< The membrane potential
         double input_current_; //!< The piecewise linear input currents
-        double adaptative_threshold_; //!< adaptive threshold to maintain average output rate
+        double adaptive_threshold_; //!< adaptive threshold to maintain average output rate
         int r_; //!< Number of refractory steps remaining
 
         State_(); //!< Default initialization
@@ -330,7 +330,7 @@ private:
 
     double get_E_sfa_() const
     {
-        return S_.adaptative_threshold_;
+        return S_.adaptive_threshold_;
     }
 
     /**
