@@ -399,10 +399,10 @@ void PoissonDblExpNeuron::handle(nest::SpikeEvent& e)
 {
     assert(e.get_delay() > 0);
 
-    // @todo: We must compute the arrival time of the incoming spike
-    //        explicitly, since it depends on delay and offset within
-    //        the update cycle.  The way it is done here works, but
-    //        is clumsy and should be improved.
+    // We must compute the arrival time of the incoming spike
+    // explicitly, since it depends on delay and offset within
+    // the update cycle.  The way it is done here works, but
+    // is clumsy and should be improved.
     if (e.get_rport() == 0)
     {
         B_.exc_spikes_.add_value(e.get_rel_delivery_steps(nest::kernel().simulation_manager.get_slice_origin()),

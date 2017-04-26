@@ -61,6 +61,8 @@ public:
     virtual void get_status(DictionaryDatum& d) const;
     virtual void set_status(const DictionaryDatum& d);
 
+    void get_trace_status(DictionaryDatum& d) const;
+
     /**
      * @brief Access the trace of \a id at time step \a step.
      *
@@ -122,8 +124,6 @@ protected:
         assert(id < traces_.size());
         traces_[id][steps] = v;
     }
-
-    virtual void get_trace_status(DictionaryDatum& d) const;
 
 private:
     std::vector< CircularBuffer<double> > traces_;
