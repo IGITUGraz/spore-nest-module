@@ -39,7 +39,9 @@ class TestStringMethods(unittest.TestCase):
         tau_fall_inh = 10.0
 
         n = nest.Create('poisson_dbl_exp_neuron',  params={
-                        'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc, 'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh, 'I_e': I_e})
+                        'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc,
+                        'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh,
+                        'I_e': I_e})
 
         m = nest.Create('spike_detector')
 

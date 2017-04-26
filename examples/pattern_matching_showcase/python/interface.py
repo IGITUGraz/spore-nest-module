@@ -46,9 +46,9 @@ def configure_detail_plot(data_source):
                      label="Output Activity (#neurons = {})".format(n_hidden_neurons))
 
     c1.add_plot(plots.AnalogSignalPlot(data_source,
-                                       ['activity_rate_{}'.format(i) for i in range(n_patterns)], label='Activity Rates',
+                                       ['activity_rate_{}'.format(i) for i in range(n_patterns)],
+                                       label='Activity Rates', colors=pattern_colors,
                                        legend=["Population #{}".format(i + 1) for i in range(n_patterns)],
-                                       colors=pattern_colors,
                                        y_ticks=[], y_lim=(0.0, 1000.0 / hidden_neuron_properties['dead_time'])))
 
     c1.add_plot(plots.AnalogSignalPlot(data_source,

@@ -29,7 +29,7 @@ import subprocess
 plotter = None
 exitcode = -1
 
-if not "TEST_MODE" in sys.argv[1:]:
+if "TEST_MODE" not in sys.argv[1:]:
     # don't create plotter in test mode
     try:
         dev0 = open("/dev/null", "w")

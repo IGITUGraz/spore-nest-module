@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
-
 import snn_utils.comm.music
 from config import *
 from snn_utils.comm.music.node import PyMusicNode
