@@ -25,9 +25,18 @@ The learning process is visualized by a third node, which is reading and, in tur
 
 # Detailed installation guide for the SPORE software framework
 
-This guide describes how to install the SPORE module for the NEST 2.12 simulator. Note that SPORE does not support the release version v2.12.0 of NEST. Instead, SPORE currently requires a fix on the development branch so please make sure your development version of NEST corresponds to or is newer than revision [58fd190f5e4](https://github.com/nest/nest-simulator/commit/58fd190f5e404f1e3e822c0d3915e2321d102ed5). We used MUSIC version 1.1.15 in revision [8e0a609b298](https://github.com/INCF/MUSIC/commit/8e0a609b29835be604ae556c1592aad9b4be1827) and we assume that [MPI](https://www.open-mpi.org/) (Open MPI 1.6.5) and python with `numpy` and `matplotlib` are preinstalled on your system. Finally we used revision [319937d6f1a](https://github.com/IGITUGraz/spore-nest-module/commit/319937d6f1ab1bdfca9c16a5daa9770229af5bc6) of SPORE (version 2.12). The installation procedure was tested on Debian GNU/Linux 8.7 (jessie).
+This guide describes how to install the SPORE module for the NEST 2.12 simulator.
+Note that SPORE does not support the release version v2.12.0 of NEST.
+Instead, SPORE currently requires a fix on the development branch so please make sure your development version of NEST corresponds to or is newer than revision
+[b8ad1a51dd](https://github.com/nest/nest-simulator/commit/b8ad1a51dd8141190f1f06381a8a72499dfc453f).
+We used MUSIC version 1.1.15 in revision [8e0a609b298](https://github.com/INCF/MUSIC/commit/8e0a609b29835be604ae556c1592aad9b4be1827)
+and we assume that [MPI](https://www.open-mpi.org/) (Open MPI 1.6.5) and python with `numpy` and `matplotlib` are preinstalled on your system.
+Finally we used revision [319937d6f1a](https://github.com/IGITUGraz/spore-nest-module/commit/319937d6f1ab1bdfca9c16a5daa9770229af5bc6) of SPORE (version 2.12).
+The installation procedure was tested on Debian GNU/Linux 8.7 (jessie).
 
-This guide assumes that you want to install everything into your local home folder `$HOME/opt/`. It is further assumed that you checkout the software into a local folder that is used for development, which we refer to as `devel` folder.
+This guide assumes that you want to install everything into your local home folder `$HOME/opt/`.
+It is further assumed that you checkout the software into a local folder that is used for development,
+which we refer to as `devel` folder.
 
 ## Preparation
 

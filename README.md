@@ -6,7 +6,8 @@ for communication with other software components.
 
 The documentation of the module can be found [here](https://igitugraz.github.io/spore-nest-module/).
 
-[Here](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase) you find an example use case and a detailed description how to set up SPORE to run a first experiment.
+[Here](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase)
+you find an example use case and a detailed description how to set up SPORE to run a first experiment.
 
 [![Plotting Animation][1]][2]
 
@@ -21,7 +22,7 @@ SPORE does not support the release version v2.12.0 of NEST.
 Instead, SPORE currently requires a fix on the development branch.
 Please make sure your development version of NEST corresponds to
 or is newer than revision
-[58fd190f5e4](https://github.com/nest/nest-simulator/commit/58fd190f5e404f1e3e822c0d3915e2321d102ed5).
+[b8ad1a51dd](https://github.com/nest/nest-simulator/commit/b8ad1a51dd8141190f1f06381a8a72499dfc453f).
 
 Further, we assume NEST go compiled and installed with MUSIC
 bindings (`-Dwith-music=ON`).
