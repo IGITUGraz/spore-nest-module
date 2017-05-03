@@ -56,7 +56,7 @@ public:
     typedef size_t trace_id;
 
     TracingNode();
-    ~TracingNode();
+    virtual ~TracingNode();
 
     virtual void get_status(DictionaryDatum& d) const;
     virtual void set_status(const DictionaryDatum& d);

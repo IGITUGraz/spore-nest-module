@@ -4,9 +4,11 @@ SPORE is a custom-module for [NEST](http://www.nest-simulator.org/) that provide
 for reward-based learning with spiking neurons. SPORE utilizes [MUSIC](https://github.com/INCF/MUSIC)
 for communication with other software components.
 
-The documentation of the module can be found [here](https://igitugraz.github.io/spore-nest-module/).
+* A detailed installation guide for SPORE and all its dependencies can be found on the [SPORE wiki page](https://github.com/IGITUGraz/spore-nest-module/wiki).
 
-[Here](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase) you find an example use case and a detailed description how to set up SPORE to run a first experiment.
+* A detailed documentation of the module can be found in the [SPORE class reference](https://igitugraz.github.io/spore-nest-module/).
+
+* We also provide a first [example](https://github.com/IGITUGraz/spore-nest-module/blob/master/examples/pattern_matching_showcase) that demonstrates a typical use case of SPORE.
 
 [![Plotting Animation][1]][2]
 
@@ -15,16 +17,9 @@ The documentation of the module can be found [here](https://igitugraz.github.io/
 
 ## Quick Installation Guide
 
-### SPORE for NEST v2.12.0+
-
-SPORE does not support the release version v2.12.0 of NEST.
-Instead, SPORE currently requires a fix on the development branch.
-Please make sure your development version of NEST corresponds to
-or is newer than revision
+SPORE requires NEST installed with MUSIC (`-Dwith-music=ON`) and Python bindings. Please make sure your version of NEST corresponds to or is newer than revision
 [58fd190f5e4](https://github.com/nest/nest-simulator/commit/58fd190f5e404f1e3e822c0d3915e2321d102ed5).
-
-Further, we assume NEST go compiled and installed with MUSIC
-bindings (`-Dwith-music=ON`).
+A detailed installation guide that also shows how to set up the dependencies is provided on the [SPORE wiki page](https://github.com/IGITUGraz/spore-nest-module/wiki).
 
 ```bash
 git clone https://github.com/IGITUGraz/spore-nest-module
@@ -36,22 +31,8 @@ make install
 make test
 ```
 
-### SPORE for NEST v2.10.0
-
-We assume NEST got compiled and installed with MUSIC bindings
-(`--with-music=$MUSIC_INSTALL_PATH`).
-
-```bash
-git clone -b v2.10.0 https://github.com/IGITUGraz/spore-nest-module
-cd spore-nest-module
-./bootstrap.sh
-./configure.sh
-make
-make install
-make test
-```
-
 ## License
 
 SPORE is open source software and is licensed under the [GNU General Public
 License v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) or later.
+
