@@ -56,18 +56,23 @@ class MultiSubscriber(ContextHelper):
         sock.setsockopt_string(zmq.SUBSCRIBE, prefix)
 
         if multipart:
-            def receive(): return sock.recv_multipart(zmq.NOBLOCK)
+            def receive():
+                return sock.recv_multipart(zmq.NOBLOCK)
         else:
-            def receive(): return sock.recv(zmq.NOBLOCK)
+            def receive():
+                return sock.recv(zmq.NOBLOCK)
 
         if deserialize is None:
-            def handle(): return callback(receive())
+            def handle():
+                return callback(receive())
         else:
             if multipart:
-                def handle(): return callback([elem if i == 0 else deserialize(elem)
-                                               for i, elem in enumerate(receive())])
+                def handle():
+                    return callback([elem if i == 0 else deserialize(elem)
+                                     for i, elem in enumerate(receive())])
             else:
-                def handle(): return callback(deserialize(receive()))
+                def handle():
+                    return callback(deserialize(receive()))
 
         self._handler[sock] = handle
         self._poller.register(sock, zmq.POLLIN)

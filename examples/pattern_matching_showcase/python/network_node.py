@@ -5,7 +5,6 @@ import logging
 from config import *
 
 import nest
-import numpy as np
 from mpi4py import MPI
 
 from snn_utils.comm.music.node.nest import PyNestNode

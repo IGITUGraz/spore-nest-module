@@ -132,6 +132,8 @@ class TestStringMethods(unittest.TestCase):
                          0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,    0.,
                          0.,    0.,    0.,    0.,    0.]
 
+        self.spore_connection_test(p_sim, synapse_properties, target_values)
+
     def test_garbage_collector_3(self):
         p_sim = {"resolution": 0.2, "interval": 500, "delay": 500,
                  "exp_len": 5000.0, "num_synapses": 100, "frame": 30.0}

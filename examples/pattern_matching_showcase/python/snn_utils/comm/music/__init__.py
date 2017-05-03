@@ -146,8 +146,8 @@ class BaseBuffer(object):
 
     def pre_cycle(self, curr_sim_time):
         for buffers, array_buffer in self._cont_array_buffers:
-            for i, buffer in enumerate(buffers):
-                buffer.append_value(curr_sim_time, array_buffer[i])
+            for i, buffer_ in enumerate(buffers):
+                buffer_.append_value(curr_sim_time, array_buffer[i])
 
     def post_cycle(self, curr_sim_time):
         pass
@@ -165,11 +165,11 @@ class WindowedBuffer(BaseBuffer):
         return buffer.WindowedSpikeBuffer(self._time_window)
 
     def post_cycle(self, curr_sim_time):
-        for buffer in self._all_buffers:
-            buffer.update(curr_sim_time)
+        for buffer_ in self._all_buffers:
+            buffer_.update(curr_sim_time)
 
 
 class SingleStepBuffer(BaseBuffer):
     def post_cycle(self, curr_sim_time):
-        for buffer in self._all_buffers:
-            buffer.clear()
+        for buffer_ in self._all_buffers:
+            buffer_.clear()

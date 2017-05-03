@@ -5,7 +5,6 @@ from config import *
 
 import music
 import numpy as np
-from itertools import takewhile, dropwhile
 
 import experiment_utils.reward as reward
 
@@ -92,7 +91,7 @@ class ControlNode(PyMusicNode):
             self._current_pattern_id = self._next_pattern[1]
             try:
                 self._next_pattern = next(self._pattern_switch_gen)
-            except StopIteration as e:
+            except StopIteration:
                 self._next_pattern = None
 
             if spike_rate_buffer_clear_on_phase_change:

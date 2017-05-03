@@ -53,7 +53,9 @@ class TestStringMethods(unittest.TestCase):
         I_e = -3.0
 
         n = nest.Create('poisson_dbl_exp_neuron',  params={
-                        'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc, 'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh, 'I_e': I_e})
+                        'tau_rise_exc': tau_rise_exc, 'tau_fall_exc': tau_fall_exc,
+                        'tau_rise_inh': tau_rise_inh, 'tau_fall_inh': tau_fall_inh,
+                        'I_e': I_e})
 
         m = nest.Create('multimeter', params={'withtime': True, 'interval': 0.1, 'record_from': ['V_m']})
 
@@ -86,8 +88,11 @@ class TestStringMethods(unittest.TestCase):
                 u_rise_inh += w_inh
                 u_fall_inh += w_inh
 
-            u_gd[int(t * (1.0 / delta_t))] = (tau_fall_exc / (tau_fall_exc - tau_rise_exc)) * (u_fall_exc -
-                                                                                               u_rise_exc) + (tau_fall_inh / (tau_fall_inh - tau_rise_inh)) * (u_fall_inh - u_rise_inh) + I_e
+            u_gd[int(t * (1.0 / delta_t))] = ((tau_fall_exc / (tau_fall_exc - tau_rise_exc)) *
+                                              (u_fall_exc - u_rise_exc) +
+                                              (tau_fall_inh / (tau_fall_inh - tau_rise_inh)) *
+                                              (u_fall_inh - u_rise_inh) +
+                                              I_e)
 
         # simulate
         nest.Simulate(100)
