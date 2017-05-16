@@ -113,8 +113,8 @@ public:
 
 protected:
 
-    nest::ConnectorBase* cleanup_delete_connection(nest::Node& tgt, size_t target_thread,
-                                                   nest::ConnectorBase* conn, nest::synindex syn_id);
+    nest::ConnectorBase* cleanup_delete_connection(nest::Node& tgt, const size_t target_thread,
+                                                   nest::ConnectorBase* const conn, const nest::synindex syn_id);
 
     void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, nest::index sender_gid,
                             size_t target_thread, nest::synindex syn_id);
@@ -261,9 +261,9 @@ void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBa
  */
 template < typename ConnectionT >
 nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_connection(nest::Node& tgt,
-                                                                                      size_t target_thread,
-                                                                                      nest::ConnectorBase* conn,
-                                                                                      nest::synindex syn_id)
+                                                                                      const size_t target_thread,
+                                                                                      nest::ConnectorBase* const conn,
+                                                                                      const nest::synindex syn_id)
 {
     using nest::HetConnector;
     using nest::vector_like;
@@ -274,16 +274,16 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
     bool found = false;
     vector_like< ConnectionT >* vc;
 
-    bool b_has_primary = has_primary(conn);
-    bool b_has_secondary = has_secondary(conn);
+    const bool b_has_primary = has_primary(conn);
+    const bool b_has_secondary = has_secondary(conn);
 
-    conn = validate_pointer(conn);
+    nest::ConnectorBase* conn_vp = validate_pointer(conn);
     // from here on we can use conn as a valid pointer
 
-    if (conn->homogeneous_model())
+    if (conn_vp->homogeneous_model())
     {
-        assert(conn->get_syn_id() == syn_id);
-        vc = static_cast<vector_like< ConnectionT >*> (conn);
+        assert(conn_vp->get_syn_id() == syn_id);
+        vc = static_cast<vector_like< ConnectionT >*> (conn_vp);
         // delete the first Connection corresponding to the target
         for (size_t i = 0; i < vc->size(); i++)
         {
@@ -293,15 +293,17 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
             if ((connection->get_target(target_thread)->get_gid() == tgt.get_gid()) && connection->is_degenerated())
             {
                 if (vc->get_num_connections() > 1)
-                    conn = &vc->erase(i);
+                    conn_vp = &vc->erase(i);
                 else
                 {
                     delete vc;
-                    conn = 0;
+                    conn_vp = 0;
                 }
-                bool is_primary = DiligentConnectorModel< ConnectionT >::is_primary_;
-                if (conn != 0)
-                    conn = pack_pointer(conn, is_primary, !is_primary);
+                const bool is_primary = DiligentConnectorModel< ConnectionT >::is_primary_;
+                if (conn_vp != 0)
+                {
+                    conn_vp = pack_pointer(conn_vp, is_primary, !is_primary);
+                }
                 found = true;
                 break;
             }
@@ -312,7 +314,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
         // heterogeneous case
         // go through all entries and search for correct syn_id
         // if not found create new entry for this syn_id
-        HetConnector* hc = static_cast<HetConnector*> (conn);
+        HetConnector* hc = static_cast< HetConnector* > (conn_vp);
 
         for (size_t i = 0; i < hc->size() && !found; i++)
         {
@@ -323,7 +325,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
                 // here we know that the type is vector_like<connectionT>, because
                 // syn_id agrees so we can safely static cast
                 vector_like< ConnectionT >* vc =
-                        static_cast<vector_like< ConnectionT >*> ((*hc)[ i ]);
+                        static_cast< vector_like< ConnectionT >* > ((*hc)[ i ]);
                 // Find and delete the first Connection corresponding to the target
                 for (size_t j = 0; j < vc->size(); j++)
                 {
@@ -342,22 +344,20 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
                             // case.
                             if (hc->size() == 1)
                             {
-                                conn = (*hc)[ 0 ];
+                                conn_vp = (*hc)[ 0 ];
                                 const bool is_primary =
-                                        kernel()
-                                        .model_manager.get_synapse_prototype(conn->get_syn_id())
-                                        .is_primary();
-                                conn = pack_pointer(conn, is_primary, not is_primary);
+                                    kernel().model_manager.get_synapse_prototype(conn_vp->get_syn_id()).is_primary();
+                                conn_vp = pack_pointer(conn_vp, is_primary, not is_primary);
                             }
                             else
                             {
-                                conn = pack_pointer(hc, b_has_primary, b_has_secondary);
+                                conn_vp = pack_pointer(hc, b_has_primary, b_has_secondary);
                             }
                         } // Otherwise, just remove the desired connection
                         else
                         {
                             (*hc)[ i ] = &vc->erase(j);
-                            conn = pack_pointer(hc, b_has_primary, b_has_secondary);
+                            conn_vp = pack_pointer(hc, b_has_primary, b_has_secondary);
                         }
                         found = true;
                         break;
@@ -369,7 +369,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
 
     if (found)
     {
-        return conn;
+        return conn_vp;
     }
     else
     {
