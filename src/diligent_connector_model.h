@@ -238,7 +238,7 @@ void DiligentConnectorModel< ConnectionT >::register_connector(nest::ConnectorBa
                                                                nest::synindex syn_id)
 {
     ConnectionUpdateManager::instance()->register_connector(new_conn, old_conn, sender_gid,
-                                                            target_thread, this, syn_id);
+                                                            target_thread, syn_id);
 }
 
 /**

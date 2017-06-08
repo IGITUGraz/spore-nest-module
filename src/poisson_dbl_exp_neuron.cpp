@@ -37,6 +37,7 @@
 #include "compose.hpp"
 
 #include "param_utils.h"
+#include "spore_names.h"
 
 
 namespace nest
@@ -80,13 +81,13 @@ template < typename T, typename C >
     p.parameter( v.c_3_, nest::names::c_3, 0.25, pc::MinD(0.0) );
     p.parameter( v.I_e_, nest::names::I_e, 0.0 );
     p.parameter( v.t_ref_remaining_, nest::names::t_ref_remaining, 0.0, pc::MinD(0.0) );
-    p.parameter( v.tau_rise_exc_, "tau_rise_exc", 2.0, pc::BiggerD(0.0) );
-    p.parameter( v.tau_fall_exc_, "tau_fall_exc", 20.0, pc::BiggerD(0.0) );
-    p.parameter( v.tau_rise_inh_, "tau_rise_inh", 1.0, pc::BiggerD(0.0) );
-    p.parameter( v.tau_fall_inh_, "tau_fall_inh", 10.0, pc::BiggerD(0.0) );
-    p.parameter( v.input_conductance_, "input_conductance", 1.0 );
-    p.parameter( v.target_rate_, "target_rate", 10.0, pc::MinD(0.0) );
-    p.parameter( v.target_adaptation_speed_, "target_adaptation_speed", 0.0, pc::MinD(0.0) );
+    p.parameter( v.tau_rise_exc_, names::tau_rise_exc, 2.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_fall_exc_, names::tau_fall_exc, 20.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_rise_inh_, names::tau_rise_inh, 1.0, pc::BiggerD(0.0) );
+    p.parameter( v.tau_fall_inh_, names::tau_fall_inh, 10.0, pc::BiggerD(0.0) );
+    p.parameter( v.input_conductance_, names::input_conductance, 1.0 );
+    p.parameter( v.target_rate_, names::target_rate, 10.0, pc::MinD(0.0) );
+    p.parameter( v.target_adaptation_speed_, names::target_adaptation_speed, 0.0, pc::MinD(0.0) );
 }
 
 /**
@@ -145,7 +146,7 @@ r_(0)
 void PoissonDblExpNeuron::State_::get(DictionaryDatum& d, const Parameters_&) const
 {
     def<double>(d, nest::names::V_m, u_membrane_); // Membrane potential
-    def<double>(d, "adaptive_threshold", adaptive_threshold_);
+    def<double>(d, names::adaptive_threshold, adaptive_threshold_);
 }
 
 /**
@@ -154,7 +155,7 @@ void PoissonDblExpNeuron::State_::get(DictionaryDatum& d, const Parameters_&) co
 void PoissonDblExpNeuron::State_::set(const DictionaryDatum& d, const Parameters_&)
 {
     updateValue<double>(d, nest::names::V_m, u_membrane_);
-    updateValue<double>(d, "adaptive_threshold", adaptive_threshold_);
+    updateValue<double>(d, names::adaptive_threshold, adaptive_threshold_);
 }
 
 //

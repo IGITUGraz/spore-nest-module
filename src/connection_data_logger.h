@@ -70,14 +70,25 @@ protected:
     /**
      * @brief Data structure that holds information about variables.
      */
-    struct RecorderInfo
+    class RecorderInfo
     {
+    public:
+        RecorderInfo(const Name& name)
+        : name_(name.toString())
+        {
+        };
 
-        RecorderInfo(std::string name)
+        RecorderInfo(const std::string& name)
         : name_(name)
         {
         };
 
+        const std::string& get_name() const
+        {
+            return name_;
+        }
+        
+    private:
         std::string name_;
     };
 
@@ -96,7 +107,7 @@ class ConnectionDataLogger : public ConnectionDataLoggerBase
 public:
     typedef double ( ConnectionType::*DataAccessFct)() const;
 
-    void register_recordable_variable(const std::string& name, DataAccessFct data_access_fct);
+    void register_recordable_variable(const Name& name, DataAccessFct data_access_fct);
     void record(double time, ConnectionType const& host, recorder_port port);
 
 private:
@@ -115,7 +126,7 @@ private:
  * @param data_access_fct pointer to the member function to retrieve the variable.
  */
 template<typename ConnectionType>
-void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const std::string& name,
+void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const Name& name,
                                                                         DataAccessFct data_access_fct)
 {
     recorder_info_.push_back(RecorderInfo(name));

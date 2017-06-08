@@ -31,7 +31,9 @@ set( MODULE_VERSION "${MODULE_VERSION_MAJOR}.${MODULE_VERSION_MINOR}" )
 set( MODULE_HEADER ${MODULE_NAME}.h )
 
 set( MODULE_SOURCES
+    spore.h
     sporemodule.cpp sporemodule.h
+    spore_names.cpp spore_names.h
     connection_updater.cpp connection_updater.h
     connection_data_logger.cpp connection_data_logger.h
     tracing_node.cpp tracing_node.h

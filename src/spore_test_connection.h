@@ -34,6 +34,7 @@
 #include "spikecounter.h"
 
 #include "tracing_node.h"
+#include "spore_names.h"
 
 
 namespace spore
@@ -76,8 +77,8 @@ public:
      */
     void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm)
     {
-        updateValue<double>(d, "weight_update_time", weight_update_time_);
-        updateValue<long>(d, "bap_trace_id", bap_trace_id_);
+        updateValue<double>(d, names::weight_update_time, weight_update_time_);
+        updateValue<long>(d, names::bap_trace_id, bap_trace_id_);
     }
 
     /**
@@ -246,8 +247,8 @@ template <typename targetidentifierT>
 void SporeTestConnection<targetidentifierT>::get_status(DictionaryDatum& d) const
 {
     ConnectionBase::get_status(d);
-    (*d)["recorder_times"] = recorder_times_;
-    (*d)["recorder_values"] = recorder_values_;
+    (*d)[names::recorder_times] = recorder_times_;
+    (*d)[names::recorder_values] = recorder_values_;
 }
 
 template <typename targetidentifierT>

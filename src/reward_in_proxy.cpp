@@ -43,6 +43,7 @@
 #include "music.hh"
 #include "tracing_node.h"
 #include "logging.h"
+#include "spore_names.h"
 
 #include <numeric>
 #include <iterator>
@@ -77,7 +78,7 @@ RewardInProxy::State_::State_()
 void RewardInProxy::Parameters_::get(DictionaryDatum& d) const
 {
     (*d)[ nest::names::port_name ] = port_name_;
-    (*d)[ "delay" ] = delay_;
+    (*d)[ names::delay ] = delay_;
 }
 
 void RewardInProxy::Parameters_::set(const DictionaryDatum& d, State_& s)
@@ -85,7 +86,7 @@ void RewardInProxy::Parameters_::set(const DictionaryDatum& d, State_& s)
     if (!s.published_)
     {
         updateValue< string >(d, nest::names::port_name, port_name_);
-        updateValue< float >(d, "delay", delay_);
+        updateValue< float >(d, names::delay, delay_);
     }
     else
     {

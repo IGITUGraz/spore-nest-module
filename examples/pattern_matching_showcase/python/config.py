@@ -142,7 +142,7 @@ synapse_update_interval = 0.1
 if len(sys.argv) > 1 and "TEST_MODE" in sys.argv[1:]:
     total_simulation_time = 20.0
 
-nest_n_threads = 1  # None -> auto; Integer -> according fixed number of threads
+nest_n_threads = 16  # None -> auto; Integer -> according fixed number of threads
 
 # EXPERIMENT
 
