@@ -515,6 +515,8 @@ prior_mean_(0.0),
 prior_precision_(1.0),
 recorder_port_(nest::invalid_index)
 {
+    // make sure the global logger object is instantiated here.
+    logger();
 }
 
 /**
@@ -534,6 +536,8 @@ prior_mean_(rhs.prior_mean_),
 prior_precision_(rhs.prior_precision_),
 recorder_port_(nest::invalid_index)
 {
+    // make sure the global logger object is instantiated here.
+    logger();
 }
 
 /**
@@ -568,16 +572,18 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
     {
         logger_ = new ConnectionDataLogger<SynapticSamplingRewardGradientConnection>();
 
-        //logger_->register_recordable_variable(names::eligibility_trace_values,
-        //                                      &SynapticSamplingRewardGradientConnection::get_eligibility_trace);
-        //logger_->register_recordable_variable(names::psp_values,
-        //                                      &SynapticSamplingRewardGradientConnection::get_psp);
-        //logger_->register_recordable_variable(names::weight_values,
-        //                                      &SynapticSamplingRewardGradientConnection::get_weight);
-        //logger_->register_recordable_variable(names::synaptic_parameter_values,
-        //                                      &SynapticSamplingRewardGradientConnection::get_synaptic_parameter);
-        //logger_->register_recordable_variable(names::reward_gradient_values,
-        //                                      &SynapticSamplingRewardGradientConnection::get_reward_gradient);
+        logger_->register_recordable_variable(names::eligibility_trace_values,
+                                              &SynapticSamplingRewardGradientConnection::get_eligibility_trace);
+        logger_->register_recordable_variable(names::psp_values,
+                                              &SynapticSamplingRewardGradientConnection::get_psp);
+
+        logger_->register_recordable_variable(names::weight_values,
+                                              &SynapticSamplingRewardGradientConnection::get_weight);
+
+        logger_->register_recordable_variable(names::synaptic_parameter_values,
+                                              &SynapticSamplingRewardGradientConnection::get_synaptic_parameter);
+        logger_->register_recordable_variable(names::reward_gradient_values,
+                                              &SynapticSamplingRewardGradientConnection::get_reward_gradient);
     }
 
     return logger_;

@@ -25,7 +25,7 @@
  */
 
 #ifndef SPORE_NAMES_H
-#define	SPORE_NAMES_H
+#define SPORE_NAMES_H
 
 #include "name.h"
 

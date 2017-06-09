@@ -71,11 +71,11 @@ const Name reward_gradient("reward_gradient");
 const Name prior_mean("prior_mean");
 const Name prior_precision("prior_precision");
 
-extern const Name eligibility_trace_values("eligibility_trace_values");
-extern const Name psp_values("psp_values");
-extern const Name weight_values("weight_values");
-extern const Name synaptic_parameter_values("synaptic_parameter_values");
-extern const Name reward_gradient_values("reward_gradient_values");
+const Name eligibility_trace_values("eligibility_trace_values");
+const Name psp_values("psp_values");
+const Name weight_values("weight_values");
+const Name synaptic_parameter_values("synaptic_parameter_values");
+const Name reward_gradient_values("reward_gradient_values");
 
 const Name tau_rise_exc("tau_rise_exc");
 const Name tau_fall_exc("tau_fall_exc");

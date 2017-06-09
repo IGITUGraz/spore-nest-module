@@ -160,7 +160,7 @@ void spore::SporeModule::init(SLIInterpreter* i)
     nest::kernel().model_manager.register_node_model<RewardInProxy>("reward_in_proxy");
 
     ConnectionUpdateManager::instance()->init(cu_model_id);
-    
+
     spore::register_diligent_connection_model
             < SynapticSamplingRewardGradientConnection<nest::TargetIdentifierPtrRport> >
             ("synaptic_sampling_rewardgradient_synapse");

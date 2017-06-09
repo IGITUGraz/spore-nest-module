@@ -70,9 +70,9 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum& d, recorder_port port
 
     (*d)[names::recorder_times] = recorder.recorder_times_;
 
-    for (size_t i = 0; i < recorder_info_.size(); i++)
+    for (size_t i = 0; i < recorder_names_.size(); i++)
     {
-        (*d)[recorder_info_[i].get_name()] = recorder.recorder_values_[i];
+        (*d)[recorder_names_[i]] = recorder.recorder_values_[i];
     }
 }
 
@@ -117,7 +117,7 @@ ConnectionDataLoggerBase::recorder_port ConnectionDataLoggerBase::add_recordable
     if (recorder_data_.size() == nest::invalid_index)
         throw nest::BadProperty("Maximum number of recorders reached.");
 
-    recorder_data_.push_back(new RecorderData(recorder_info_.size()));
+    recorder_data_.push_back(new RecorderData(recorder_names_.size()));
     return recorder_data_.size() - 1;
 }
 
