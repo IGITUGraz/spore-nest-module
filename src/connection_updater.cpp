@@ -158,12 +158,9 @@ void ConnectionUpdateManager::update(const nest::Time& time, nest::thread th)
  * @param: syn_id the connection (synapse) type id.
  */
 void ConnectionUpdateManager::register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn,
-                                                 nest::index sender_gid, nest::thread th, nest::ConnectorModel* cm,
-                                                 nest::synindex syn_id)
+                                                 nest::index sender_gid, nest::thread th, nest::synindex syn_id)
 {
-    assert(cm);
-
-    if (connectors_.size() < static_cast<size_t> (th))
+    if (connectors_.size() < (static_cast<size_t> (th)+1))
     {
         throw nest::BadProperty("Connection update manager was not set up correctly before the first call"
                                 " to 'Connect'! Maybe you forgot to call 'InitSynapseUpdater'?");

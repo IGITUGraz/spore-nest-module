@@ -40,26 +40,26 @@ namespace spore
 template < typename T, typename C >
     static void define_parameters( T& p, C& v )
 {
-    p.parameter( v.learning_rate_, "learning_rate", 5e-08, pc::MinD(0.0) );
-    p.parameter( v.episode_length_, "episode_length", 1000.0, pc::BiggerD(0.0) );
-    p.parameter( v.psp_tau_rise_, "psp_tau_rise", 2.0, pc::BiggerD(0.0) );
-    p.parameter( v.psp_tau_fall_, "psp_tau_fall", 20.0, pc::BiggerD(0.0) );
-    p.parameter( v.temperature_, "temperature", 0.1, pc::MinD(0.0) );
-    p.parameter( v.gradient_noise_, "gradient_noise", 0.0, pc::MinD(0.0) );
-    p.parameter( v.max_param_, "max_param", 5.0 );
-    p.parameter( v.min_param_, "min_param", -2.0 );
-    p.parameter( v.max_param_change_, "max_param_change", 40.0, pc::MinD(0.0) );
-    p.parameter( v.integration_time_, "integration_time", 50000.0, pc::BiggerD(0.0) );
-    p.parameter( v.direct_gradient_rate_, "direct_gradient_rate", 0.0 );
-    p.parameter( v.parameter_mapping_offset_, "parameter_mapping_offset", 3.0 );
-    p.parameter( v.weight_scale_, "weight_scale", 1.0 );
-    p.parameter( v.weight_update_interval_, "weight_update_interval", 100.0, pc::BiggerD(0.0) );
-    p.parameter( v.gradient_scale_, "gradient_scale", 1.0 );
-    p.parameter( v.bap_trace_id_, "bap_trace_id", 0l, pc::MinL(0) );
-    p.parameter( v.dopa_trace_id_, "dopa_trace_id", 0l, pc::MinL(0) );
-    p.parameter( v.psp_cutoff_amplitude_, "psp_cutoff_amplitude", 0.0001, pc::MinD(0) );
-    p.parameter( v.simulate_retracted_synapses_, "simulate_retracted_synapses", false );
-    p.parameter( v.delete_retracted_synapses_, "delete_retracted_synapses", false );
+    p.parameter( v.learning_rate_, names::learning_rate, 5e-08, pc::MinD(0.0) );
+    p.parameter( v.episode_length_, names::episode_length, 1000.0, pc::BiggerD(0.0) );
+    p.parameter( v.psp_tau_rise_, names::psp_tau_rise, 2.0, pc::BiggerD(0.0) );
+    p.parameter( v.psp_tau_fall_, names::psp_tau_fall, 20.0, pc::BiggerD(0.0) );
+    p.parameter( v.temperature_, names::temperature, 0.1, pc::MinD(0.0) );
+    p.parameter( v.gradient_noise_, names::gradient_noise, 0.0, pc::MinD(0.0) );
+    p.parameter( v.max_param_, names::max_param, 5.0 );
+    p.parameter( v.min_param_, names::min_param, -2.0 );
+    p.parameter( v.max_param_change_, names::max_param_change, 40.0, pc::MinD(0.0) );
+    p.parameter( v.integration_time_, names::integration_time, 50000.0, pc::BiggerD(0.0) );
+    p.parameter( v.direct_gradient_rate_, names::direct_gradient_rate, 0.0 );
+    p.parameter( v.parameter_mapping_offset_, names::parameter_mapping_offset, 3.0 );
+    p.parameter( v.weight_scale_, names::weight_scale, 1.0 );
+    p.parameter( v.weight_update_interval_, names::weight_update_interval, 100.0, pc::BiggerD(0.0) );
+    p.parameter( v.gradient_scale_, names::gradient_scale, 1.0 );
+    p.parameter( v.bap_trace_id_, names::bap_trace_id, 0l, pc::MinL(0) );
+    p.parameter( v.dopa_trace_id_, names::dopa_trace_id, 0l, pc::MinL(0) );
+    p.parameter( v.psp_cutoff_amplitude_, names::psp_cutoff_amplitude, 0.0001, pc::MinD(0) );
+    p.parameter( v.simulate_retracted_synapses_, names::simulate_retracted_synapses, false );
+    p.parameter( v.delete_retracted_synapses_, names::delete_retracted_synapses, false );
 }
 
 /**
@@ -101,11 +101,11 @@ void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum&
 
     if (reward_transmitter_ != 0)
     {
-        def<long>(d, "reward_transmitter", reward_transmitter_->get_gid());
+        def<long>(d, names::reward_transmitter, reward_transmitter_->get_gid());
     }
     else
     {
-        def<long>(d, "reward_transmitter", -1);
+        def<long>(d, names::reward_transmitter, -1);
     }
 }
 
@@ -120,7 +120,7 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
     define_parameters < CheckParameters > ( p_check, *this );
 
     long rtgid;
-    if (updateValue<long>(d, "reward_transmitter", rtgid))
+    if (updateValue<long>(d, names::reward_transmitter, rtgid))
     {
         TracingNode* new_reward_transmitter = dynamic_cast<TracingNode*> (nest::kernel().node_manager.get_node(rtgid));
 

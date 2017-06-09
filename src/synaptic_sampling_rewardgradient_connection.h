@@ -38,6 +38,11 @@
 #include "tracing_node.h"
 #include "connection_updater.h"
 #include "connection_data_logger.h"
+#include "spore_names.h"
+
+#ifdef _OPENMP
+#include <omp.h>
+#endif
 
 
 namespace spore
@@ -375,6 +380,7 @@ public:
     void set_status(const DictionaryDatum& d, nest::ConnectorModel& cm);
 
     void send(nest::Event& e, nest::thread t, double t_lastspike, const CommonPropertiesType& cp);
+    void check_synapse_params( const DictionaryDatum& syn_spec ) const;
 
     using ConnectionBase::get_delay_steps;
     using ConnectionBase::get_delay;
@@ -513,6 +519,8 @@ prior_mean_(0.0),
 prior_precision_(1.0),
 recorder_port_(nest::invalid_index)
 {
+    // make sure the global logger object is instantiated here.
+    logger();
 }
 
 /**
@@ -532,6 +540,8 @@ prior_mean_(rhs.prior_mean_),
 prior_precision_(rhs.prior_precision_),
 recorder_port_(nest::invalid_index)
 {
+    // make sure the global logger object is instantiated here.
+    logger();
 }
 
 /**
@@ -555,6 +565,9 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 
 /**
  * Get the data logger singleton.
+ * 
+ * @note Instantiating the logger for the first time is not be thread-save. Make sure this function is
+ *       executed once at startup in a single-threaded environment otherwise this throws an exception.
  *
  * @return the instance of the data logger.
  */
@@ -564,17 +577,25 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 {
     if (!logger_)
     {
+#ifdef _OPENMP
+        // Setting up the logger is not thread-safe. This assertion protects the map that is
+        // build inside the data logger when the synapse is instantiated for the first time.
+        assert( not omp_in_parallel() );
+#endif
+
         logger_ = new ConnectionDataLogger<SynapticSamplingRewardGradientConnection>();
 
-        logger_->register_recordable_variable("eligibility_trace",
+        logger_->register_recordable_variable(names::eligibility_trace_values,
                                               &SynapticSamplingRewardGradientConnection::get_eligibility_trace);
-        logger_->register_recordable_variable("psp",
+        logger_->register_recordable_variable(names::psp_values,
                                               &SynapticSamplingRewardGradientConnection::get_psp);
-        logger_->register_recordable_variable("weight",
+
+        logger_->register_recordable_variable(names::weight_values,
                                               &SynapticSamplingRewardGradientConnection::get_weight);
-        logger_->register_recordable_variable("synaptic_parameter",
+
+        logger_->register_recordable_variable(names::synaptic_parameter_values,
                                               &SynapticSamplingRewardGradientConnection::get_synaptic_parameter);
-        logger_->register_recordable_variable("reward_gradient",
+        logger_->register_recordable_variable(names::reward_gradient_values,
                                               &SynapticSamplingRewardGradientConnection::get_reward_gradient);
     }
 
@@ -586,6 +607,17 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 //
 
 /**
+ * Check syn_spec dictionary for parameters that are not allowed for this
+ * connection. Will issue warning or throw error if a parameter is found.
+ */
+template <typename targetidentifierT>
+void SynapticSamplingRewardGradientConnection<targetidentifierT>::check_synapse_params(const DictionaryDatum& syn_spec)
+    const
+{
+    // FIXME!! Check synaptic parameters here!
+}
+
+/**
  * Status getter function.
  */
 template <typename targetidentifierT>
@@ -593,11 +625,11 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::get_status(Dic
 {
     ConnectionBase::get_status(d);
     def<double>(d, nest::names::weight, weight_);
-    def<double>(d, "synaptic_parameter", synaptic_parameter_);
-    def<double>(d, "eligibility_trace", eligibility_trace_);
-    def<double>(d, "reward_gradient", reward_gradient_);
-    def<double>(d, "prior_mean", prior_mean_);
-    def<double>(d, "prior_precision", prior_precision_);
+    def<double>(d, names::synaptic_parameter, synaptic_parameter_);
+    def<double>(d, names::eligibility_trace, eligibility_trace_);
+    def<double>(d, names::reward_gradient, reward_gradient_);
+    def<double>(d, names::prior_mean, prior_mean_);
+    def<double>(d, names::prior_precision, prior_precision_);
     def<long>(d, nest::names::size_of, sizeof (*this));
 
     logger()->get_status(d, recorder_port_);
@@ -614,9 +646,9 @@ void SynapticSamplingRewardGradientConnection<targetidentifierT>::set_status(con
 {
     ConnectionBase::set_status(d, cm);
     updateValue<double>(d, nest::names::weight, weight_);
-    updateValue<double>(d, "synaptic_parameter", synaptic_parameter_);
-    updateValue<double>(d, "prior_mean", prior_mean_);
-    updateValue<double>(d, "prior_precision", prior_precision_);
+    updateValue<double>(d, names::synaptic_parameter, synaptic_parameter_);
+    updateValue<double>(d, names::prior_mean, prior_mean_);
+    updateValue<double>(d, names::prior_precision, prior_precision_);
 
     logger()->set_status(d, recorder_port_);
 }

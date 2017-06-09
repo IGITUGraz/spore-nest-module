@@ -25,6 +25,7 @@
  */
 
 #include "connection_data_logger.h"
+#include "spore_names.h"
 
 #include "dictutils.h"
 #include "exceptions.h"
@@ -67,11 +68,11 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum& d, recorder_port port
     assert(port < recorder_data_.size());
     ConnectionDataLoggerBase::RecorderData& recorder = *recorder_data_[port];
 
-    (*d)["recorder_times"] = recorder.recorder_times_;
+    (*d)[names::recorder_times] = recorder.recorder_times_;
 
-    for (size_t i = 0; i < recorder_info_.size(); i++)
+    for (size_t i = 0; i < recorder_names_.size(); i++)
     {
-        (*d)[recorder_info_[i].name_ + "_values"] = recorder.recorder_values_[i];
+        (*d)[recorder_names_[i]] = recorder.recorder_values_[i];
     }
 }
 
@@ -85,7 +86,7 @@ void ConnectionDataLoggerBase::get_status(DictionaryDatum& d, recorder_port port
 void ConnectionDataLoggerBase::set_status(const DictionaryDatum& d, recorder_port& port)
 {
     double interval = 0.0;
-    updateValue<double>(d, "recorder_interval", interval);
+    updateValue<double>(d, names::recorder_interval, interval);
 
     if (interval > 0.0 && (port == nest::invalid_index))
         port = add_recordable_connection();
@@ -98,7 +99,7 @@ void ConnectionDataLoggerBase::set_status(const DictionaryDatum& d, recorder_por
     recorder_data_[port]->interval_ = interval;
 
     bool reset_recorder = false;
-    updateValue<bool>(d, "reset_recorder", reset_recorder);
+    updateValue<bool>(d, names::reset_recorder, reset_recorder);
 
     if (reset_recorder)
     {
@@ -116,7 +117,7 @@ ConnectionDataLoggerBase::recorder_port ConnectionDataLoggerBase::add_recordable
     if (recorder_data_.size() == nest::invalid_index)
         throw nest::BadProperty("Maximum number of recorders reached.");
 
-    recorder_data_.push_back(new RecorderData(recorder_info_.size()));
+    recorder_data_.push_back(new RecorderData(recorder_names_.size()));
     return recorder_data_.size() - 1;
 }
 
