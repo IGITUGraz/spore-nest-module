@@ -278,7 +278,7 @@ nest::ConnectorBase* DiligentConnectorModel< ConnectionT >::cleanup_delete_conne
     const bool b_has_secondary = has_secondary(conn);
 
     nest::ConnectorBase* conn_vp = validate_pointer(conn);
-    // from here on we can use conn as a valid pointer
+    // from here on we can use conn_vp as a valid pointer
 
     if (conn_vp->homogeneous_model())
     {

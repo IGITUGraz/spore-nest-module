@@ -40,6 +40,10 @@
 #include "connection_data_logger.h"
 #include "spore_names.h"
 
+#ifdef _OPENMP
+#include <omp.h>
+#endif
+
 
 namespace spore
 {
@@ -562,7 +566,8 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 /**
  * Get the data logger singleton.
  * 
- * @note Instantiating the logger for the first time may not be thread save.
+ * @note Instantiating the logger for the first time is not be thread-save. Make sure this function is
+ *       executed once at startup in a single-threaded environment otherwise this throws an exception.
  *
  * @return the instance of the data logger.
  */
@@ -572,6 +577,12 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 {
     if (!logger_)
     {
+#ifdef _OPENMP
+        // Setting up the logger is not thread-safe. This assertion protects the map that is
+        // build inside the data logger when the synapse is instantiated for the first time.
+        assert( not omp_in_parallel() );
+#endif
+
         logger_ = new ConnectionDataLogger<SynapticSamplingRewardGradientConnection>();
 
         logger_->register_recordable_variable(names::eligibility_trace_values,
