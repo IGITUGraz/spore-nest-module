@@ -561,6 +561,8 @@ ConnectionDataLogger< SynapticSamplingRewardGradientConnection<targetidentifierT
 
 /**
  * Get the data logger singleton.
+ * 
+ * @note Instantiating the logger for the first time may not be thread save.
  *
  * @return the instance of the data logger.
  */
