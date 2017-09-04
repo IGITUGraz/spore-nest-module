@@ -26,6 +26,7 @@
 
 #include "tracing_node.h"
 #include "connection_updater.h"
+#include "spore_names.h"
 
 #include "kernel_manager.h"
 #include "arraydatum.h"
@@ -97,7 +98,7 @@ void TracingNode::get_trace_status(DictionaryDatum& d) const
         }
         traces.push_back(trace);
     }
-    (*d)["trace"] = traces;
+    (*d)[names::trace] = traces;
 }
 
 }

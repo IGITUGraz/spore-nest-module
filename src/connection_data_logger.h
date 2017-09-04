@@ -67,24 +67,10 @@ protected:
         double interval_;
     };
 
-    /**
-     * @brief Data structure that holds information about variables.
-     */
-    struct RecorderInfo
-    {
-
-        RecorderInfo(std::string name)
-        : name_(name)
-        {
-        };
-
-        std::string name_;
-    };
-
     recorder_port add_recordable_connection();
 
-    std::vector<RecorderData*> recorder_data_;
-    std::vector<RecorderInfo> recorder_info_;
+    std::vector< RecorderData* > recorder_data_;
+    std::vector< Name > recorder_names_;
 };
 
 /**
@@ -94,13 +80,13 @@ template<typename ConnectionType>
 class ConnectionDataLogger : public ConnectionDataLoggerBase
 {
 public:
-    typedef double ( ConnectionType::*DataAccessFct)() const;
+    typedef double ( ConnectionType::*DataAccessFct )() const;
 
-    void register_recordable_variable(const std::string& name, DataAccessFct data_access_fct);
+    void register_recordable_variable(const Name& name, DataAccessFct data_access_fct);
     void record(double time, ConnectionType const& host, recorder_port port);
 
 private:
-    std::vector<DataAccessFct> data_access_fct_;
+    std::vector< DataAccessFct > data_access_fct_;
 };
 
 
@@ -115,10 +101,10 @@ private:
  * @param data_access_fct pointer to the member function to retrieve the variable.
  */
 template<typename ConnectionType>
-void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const std::string& name,
+void ConnectionDataLogger<ConnectionType>::register_recordable_variable(const Name& name,
                                                                         DataAccessFct data_access_fct)
 {
-    recorder_info_.push_back(RecorderInfo(name));
+    recorder_names_.push_back(name);
     data_access_fct_.push_back(data_access_fct);
 }
 

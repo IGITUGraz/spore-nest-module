@@ -36,7 +36,6 @@
 #include "event.h"
 #include "node.h"
 #include "nestmodule.h"
-#include "connector_model.h"
 #include "dictdatum.h"
 
 #include "connection_manager_impl.h"
@@ -118,7 +117,7 @@ public:
     void setup(long interval, long exceptable_latency);
 
     void register_connector(nest::ConnectorBase* new_conn, nest::ConnectorBase* old_conn, nest::index sender_gid,
-                            nest::thread th, nest::ConnectorModel* cm, nest::synindex syn_id);
+                            nest::thread th, nest::synindex syn_id);
 
     void trigger_garbage_collector(nest::index target_gid, nest::index sender_gid,
                                    nest::thread target_thread, nest::synindex syn_id);

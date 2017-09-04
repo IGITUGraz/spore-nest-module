@@ -31,6 +31,7 @@
 
 #include "tracing_node.h"
 #include "spore_test_base.h"
+#include "spore_names.h"
 
 namespace spore
 {
@@ -102,8 +103,8 @@ nest::port SporeTestNode::handles_test_event(nest::SpikeEvent&, nest::rport rece
 inline
 void SporeTestNode::get_status(DictionaryDatum& d) const
 {
-    def<std::string>(d, "test_name", test_name_);
-    def<double>(d, "test_time", test_time_);
+    def<std::string>(d, names::test_name, test_name_);
+    def<double>(d, names::test_time, test_time_);
     if (not test_name_.empty())
     {
         const SporeTestBase* test = tests_.at(test_name_);
@@ -119,7 +120,7 @@ inline
 void SporeTestNode::set_status(const DictionaryDatum &d)
 {
     std::string test_name;
-    if (updateValue<std::string>(d, "test_name", test_name))
+    if (updateValue<std::string>(d, names::test_name, test_name))
     {
         if (tests_.find(test_name) == tests_.end())
             throw nest::BadParameter("test '" + test_name + "' does not exist!");
@@ -128,7 +129,7 @@ void SporeTestNode::set_status(const DictionaryDatum &d)
     }
 
 
-    updateValue<double>(d, "test_time", test_time_);
+    updateValue<double>(d, names::test_time, test_time_);
 
     if (not test_name_.empty())
     {
