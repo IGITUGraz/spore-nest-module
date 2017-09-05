@@ -1,0 +1,23 @@
+[nest]
+  np = 1
+  binary = ./network_node.py
+
+[control_node]
+  np = 1
+  binary = ./control_node.py
+
+[plotter]
+  np = 1
+  binary = ./zmq_proxy_node.py
+
+nest.activity_out -> control_node.activity_in [20]
+control_node.pattern_out -> nest.pattern_in [200]
+control_node.norm_reward_out -> nest.reward_in [1]
+
+control_node.curr_reward_out -> plotter.curr_reward_in [1]
+control_node.norm_reward_out -> plotter.norm_reward_in [1]
+control_node.mean_reward_out -> plotter.mean_reward_in [1]
+control_node.pattern_id_out -> plotter.pattern_id_in [1]
+control_node.activity_rates_out -> plotter.activity_rates_in [2]
+control_node.pattern_out -> plotter.pattern_in [200]
+nest.activity_out -> plotter.activity_in [20]
