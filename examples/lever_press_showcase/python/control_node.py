@@ -120,7 +120,7 @@ class ControlNode(PyMusicNode):
 
         activity_rates_out = np.array([b.rate() for b in self._spike_buffers])
         self._current_lever_pos = self._current_lever_pos*0.95 + 0.05*np.sum( self._output_map * activity_rates_out )
-        self._activity_rates_out = np.array([self._current_lever_pos, 0])
+        self._activity_rates_out[:] = np.array([self._current_lever_pos, 0])
 
         # update states
         if curr_time >= self._state_end_time:
