@@ -65,7 +65,7 @@ namespace spore
  */
 
 // version number of the module
-#define __SPORE_VERSION__ "2.12.0"
+#define __SPORE_VERSION__ "2.14.0"
 
 // specify to enable spore debug tests.
 #define __SPORE_DEBUG__ 0
