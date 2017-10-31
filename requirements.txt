@@ -1,0 +1,6 @@
+cython
+mpi4py
+pyzmq
+numpy
+ujson
+matplotlib

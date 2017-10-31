@@ -114,8 +114,6 @@ void SynapticSamplingRewardGradientCommonProperties::get_status(DictionaryDatum&
  */
 void SynapticSamplingRewardGradientCommonProperties::set_status(const DictionaryDatum& d, nest::ConnectorModel& cm)
 {
-    nest::CommonSynapseProperties::set_status(d, cm);
-
     CheckParameters p_check( d );
     define_parameters < CheckParameters > ( p_check, *this );
 
@@ -131,6 +129,8 @@ void SynapticSamplingRewardGradientCommonProperties::set_status(const Dictionary
 
         reward_transmitter_ = new_reward_transmitter;
     }
+
+    nest::CommonSynapseProperties::set_status(d, cm);
 
     SetStatus p_set( d );
     define_parameters < SetStatus > ( p_set, *this );
