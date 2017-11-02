@@ -1,6 +1,6 @@
-cython
-mpi4py
-pyzmq
-numpy
-ujson
-matplotlib
+cython >= 0.27.2
+mpi4py >= 2.0.0
+pyzmq >= 16.0.2
+numpy >= 1.13.3
+ujson >= 1.35
+matplotlib >= 2.1.0
