@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1043486.svg)](https://doi.org/10.5281/zenodo.1043486)
+
 # NEST module SPORE:<br> Synaptic Plasticity with Online Reinforcement learning
 
 SPORE is a custom-module for [NEST](http://www.nest-simulator.org/) that provides a simulation framework
