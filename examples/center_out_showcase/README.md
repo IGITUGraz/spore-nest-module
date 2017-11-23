@@ -6,7 +6,9 @@ Hereby, a spiking neural network has to learn to reach for a target region from 
 
 Run this experiment using:
 
+```
 python3 experiment.py
+```
 
 The neural network topology consists of a set of input, a set of hidden and a set of output neurons.
 A subset of hidden neurons receives input from afferent input neurons and a disjoint subset is chosen to control the lever. The population of hidden neurons is recurrently connected and, in addition, inhibitory neurons are added.
