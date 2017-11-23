@@ -1,25 +1,20 @@
-# Pattern Matching Experiment
+# Center-out Reaching Experiment
 
 This experiment demonstrates the capabilities of the [NEST](https://github.com/nest/nest-simulator) module
 [SPORE](https://github.com/IGITUGraz/spore-nest-module) in interplay with coordination & communication framework [MUSIC](https://github.com/INCF/MUSIC).
-Hereby, a spiking neural network has to learn to differentiate between a number of different spike patterns.
+Hereby, a spiking neural network has to learn to reach for a target region from an initial center position of a virtual cursor on a 2D surface.
 
-The neural network topology consists of a set of input and a set of output neurons.
-These groups are all-to-all connected with several connections utilizing a synapse model with reward-based learning.
-This type of synapse adapts its synaptic weight by taking into account the local spike history and a global neuromodulatory reward signal.
+Run this experiment using:
+
+python3 experiment.py
+
+The neural network topology consists of a set of input, a set of hidden and a set of output neurons.
+A subset of hidden neurons receives input from afferent input neurons and a disjoint subset is chosen to control the lever. The population of hidden neurons is recurrently connected and, in addition, inhibitory neurons are added.
+Excitatory synapse adapts their synaptic weight and connectivity through reward-based synaptic sampling.
 
 Incoming and outgoing spikes, as well as the incoming reward signal are communicated via MUSIC.
 This framework allows a separate process, a python node, to generate the input spikes based on the current pattern and generate
 the reward signal based on the current output activity of the network.
-The network output is interpreted by splitting the output neurons into sub populations of equal size each of which corresponds to  one of the patterns (we use 2 patterns/sub populations in this example).
-The spike activity of each sub population is then interpreted as the strength of the vote for the pattern corresponding to this sub population.
-Consequently, the strongest active sub population determines which pattern the network has detected and the difference to the weaker activities can be
-seen as the certainty of this decision.
-
-The learning process is visualized by a third node, which is reading and, in turn, broadcasting all the information available via ZMQ to allow for live plotting in a process completely separate to the simulation.
-
-[![Plotting Animation][2]][1]
-
-[1]: https://cloud.githubusercontent.com/assets/22887425/24467479/f7235d1c-14b4-11e7-8ecf-ba19931d7f8d.gif
-[2]: https://cloud.githubusercontent.com/assets/22887425/24467512/1aa0caa4-14b5-11e7-9217-29dcf48ac349.gif (Follow link for higher resolution and longer recording)
+The network output is interpreted by assigning to each output neuron a random movement direction for the x- or y-position of the cursor.
+The combined spike activity of all output neurons is then interpreted as the movement direction of the cursor. In each trial the cursor is initialized at the center position and the target area has to be reached while a cue pattern is presented. After reaching the target the cursor has to be held in the target area for a brief holding period to receive a reward. Unsuccessful trials are aborted and no reward is delivered.
 
