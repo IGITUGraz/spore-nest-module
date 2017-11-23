@@ -8,7 +8,7 @@ var searchData=
   ['setdefault',['SetDefault',['../classspore_1_1SetDefault.html#a5ee2075554fe9b4cf979a81515639850',1,'spore::SetDefault']]],
   ['setstatus',['SetStatus',['../classspore_1_1SetStatus.html#a2c378fbacf74f89980ff5397218d0b3b',1,'spore::SetStatus']]],
   ['setup',['setup',['../classspore_1_1ConnectionUpdateManager.html#a5c4604e6fd095fa30c972eaa7fe0d738',1,'spore::ConnectionUpdateManager']]],
-  ['size',['size',['../classspore_1_1CircularBuffer.html#a7b5182010956d63de9dec197252bf64e',1,'spore::CircularBuffer']]],
+  ['size',['size',['../classspore_1_1CircularBuffer.html#a77019f199853a63089508675ecfb0d87',1,'spore::CircularBuffer']]],
   ['sporemodule',['SporeModule',['../classspore_1_1SporeModule.html#a963446af6b9c387c53df86d1c3e162cf',1,'spore::SporeModule']]],
   ['sporetestconnectioncommonproperties',['SporeTestConnectionCommonProperties',['../classspore_1_1SporeTestConnectionCommonProperties.html#a99578826f6f7386478311d9043ea1f34',1,'spore::SporeTestConnectionCommonProperties']]],
   ['sporetestnode',['SporeTestNode',['../classspore_1_1SporeTestNode.html#a6cb8f50495917973b212145162da11ed',1,'spore::SporeTestNode']]],

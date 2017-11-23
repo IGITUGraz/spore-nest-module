@@ -1,0 +1,7 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="spore::CircularBuffer\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classspore_1_1CircularBuffer.html",tooltip="An iterable circular buffer. "];
+}

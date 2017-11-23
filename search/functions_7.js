@@ -4,7 +4,7 @@ var searchData=
   ['init_5ftraces',['init_traces',['../classspore_1_1TracingNode.html#aef722022e0133881f935c3f31505d7d2',1,'spore::TracingNode']]],
   ['initsynapseupdater_5fi_5fi_5ffunction',['InitSynapseUpdater_i_i_Function',['../classspore_1_1SporeModule_1_1InitSynapseUpdater__i__i__Function.html#a8b66af863ccea9aeb291ff9a9106b849',1,'spore::SporeModule::InitSynapseUpdater_i_i_Function']]],
   ['instance',['instance',['../classspore_1_1ConnectionUpdateManager.html#a7778e39f8bab6a5fe2ddb3687c852997',1,'spore::ConnectionUpdateManager']]],
-  ['is_5fdegenerated',['is_degenerated',['../classspore_1_1SporeTestConnection.html#a9e02dbabd5d693dccf15261d45653c99',1,'spore::SporeTestConnection']]],
-  ['is_5finitialized',['is_initialized',['../classspore_1_1ConnectionUpdateManager.html#a355d944eb9f2f8b8a65426e6862711a0',1,'spore::ConnectionUpdateManager']]],
-  ['is_5fvalid',['is_valid',['../classspore_1_1ConnectionUpdateManager.html#a6e42d47171136b6c5bed03cd99a23671',1,'spore::ConnectionUpdateManager']]]
+  ['is_5fdegenerated',['is_degenerated',['../classspore_1_1SporeTestConnection.html#a1e93ab33708436b250c41426284f7bb3',1,'spore::SporeTestConnection']]],
+  ['is_5finitialized',['is_initialized',['../classspore_1_1ConnectionUpdateManager.html#a1ce3e673ec2535723f3eefa0f8d9371d',1,'spore::ConnectionUpdateManager']]],
+  ['is_5fvalid',['is_valid',['../classspore_1_1ConnectionUpdateManager.html#acc3672eff4804bbb1bd009c6a228f5b4',1,'spore::ConnectionUpdateManager']]]
 ];

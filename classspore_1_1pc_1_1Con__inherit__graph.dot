@@ -1,0 +1,15 @@
+digraph "spore::pc::Con&lt; T &gt;"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="spore::pc::Con\< T \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="spore::pc::CBigger\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classspore_1_1pc_1_1CBigger.html",tooltip="\"Bigger than\" condition. Parameter must be larger or equal to given value. "];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="spore::pc::CMax\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classspore_1_1pc_1_1CMax.html",tooltip="Maximum condition. Parameter must be smaller or equal to given value. "];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="spore::pc::CMin\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classspore_1_1pc_1_1CMin.html",tooltip="Minimum condition. Parameter must be larger or equal to given value. "];
+  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="spore::pc::CSmaller\< T \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classspore_1_1pc_1_1CSmaller.html",tooltip="\"Smaller than\" condition. Parameter must be larger or equal to given value. "];
+}
