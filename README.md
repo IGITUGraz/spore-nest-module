@@ -192,7 +192,15 @@ Now you should be able to execute the script [`experiment.py`](https://github.co
 
 `spore-nest-module/examples/pattern_matching_showcase`.
 
+## Cite SPORE
 
+Please cite the current version of SPORE as
+
+```
+David Kappel, Michael Hoff, & Anand Subramoney. (2017, November 7).
+IGITUGraz/spore-nest-module: SPORE version 2.14.0 (Version v2.14.0).
+Zenodo. http://doi.org/10.5281/zenodo.1043486
+```
 
 ## License
 
