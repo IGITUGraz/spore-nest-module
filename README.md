@@ -57,7 +57,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TARGET_DIR/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$TARGET_DIR/lib/nest  # required in some cases
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib/python2.7/site-packages
 export PYTHONPATH=$PYTHONPATH:$TARGET_DIR/lib64/python2.7/site-packages
-export LD_PRELOAD=/usr/lib/openmpi/lib/libmpi.so  # required in some cases
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libmpi.so  # required in some cases (path only works for debian jessie)
 export NUM_CORES=3  # number of CPU cores
 
 ```
