@@ -180,8 +180,8 @@ private:
 /**
  * @brief Reward-based synaptic sampling connection class
  *
- * This connection type implements the Bayesian policy sampling algorithm
- * introduced in [1,2]. The target node to which synapses of this type
+ * This connection type implements the reward-based synaptic sampling algorithm
+ * introduced in [1,2,3]. The target node to which synapses of this type
  * are connected must be derived from TracingNode. A second node which
  * is also derived from type TracingNode must be registered to the synapse
  * model at its \a reward_transmitter parameter. The synapse model performs
@@ -201,7 +201,7 @@ private:
  *
  * The following parameters can be set in the common properties dictionary
  * (default values and constraints are given in parentheses, corresponding symbols
- * in the equations given below and in [1,2] are given in braces):
+ * in the equations given below and in references [1,2,3] are given in braces):
  * <table>
  * <tr><th>name</th>                           <th>type</th>   <th>comment</th></tr>
  * <tr><td>\a learning_rate</td>               <td>double</td> <td>learning rate (5e-08, &ge;0.0)
@@ -331,10 +331,15 @@ private:
  * <b>References</b>
  *
  * [1] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
+ * Wolfgang Maass. <i>A Dynamic Connectome Supports the Emergence of Stable Computational
+ * Function of Neural Circuits through Reward-Based Learning.</i> eNeuro, 2018.
+ * https://doi.org/10.1523/ENEURO.0301-17.2018
+ *
+ * [2] David Kappel, Robert Legenstein, Stefan Habenschuss, Michael Hsieh and
  * Wolfgang Maass. <i>Reward-based self-configuration of neural circuits.</i> 2017.
  * https://arxiv.org/abs/1704.04238
  *
- * [2] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and
+ * [3] Zhaofei Yu, David Kappel, Robert Legenstein, Sen Song, Feng Chen and
  * Wolfgang Maass. <i>CaMKII activation supports reward-based neural network
  * optimization through Hamiltonian sampling.</i> 2016.
  * https://arxiv.org/abs/1606.00157
