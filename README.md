@@ -150,13 +150,19 @@ Then in the folder `./spore-nest-module` :
 ```bash
 mkdir build
 cd build/
-cmake -Dwith-python=2 ..  # Change python version to 3 for Python 3, or provide a path to a python binary
+cmake ..
 make -j$NUM_CORES
 make install
 make test
 ```
 
-In `ipython` (or `ipython3`) running `import nest` and then `nest.Install("sporemodule")` should now yield the following:
+By default the same python version as for the NEST installation is used. Change python version by passing `-Dwith-python=2` or `3` for Python 3, or provide a path to a python binary to the call to `cmake`, e.g.:
+
+```bash
+cmake -Dwith-python=3 ..
+```
+
+After completing this step, in `ipython` (or `ipython3`) running `import nest` and then `nest.Install("sporemodule")` should now yield the following:
 
 ```
 In [1]: import nest

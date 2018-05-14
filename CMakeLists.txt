@@ -21,11 +21,52 @@
 
 cmake_minimum_required( VERSION 2.8.12 )
 
-set( with-python default CACHE STRING "Set python version: default|2|3|<executable> [default=system default]" )
+set(MIN_NEST_VERSION 2.14.0)
 
+set( with-python default CACHE STRING "Set python version: default|2|3|<executable> [default=version used for NEST]" )
+
+# get information from NEST installation
+execute_process(
+    COMMAND nest-config --version
+    RESULT_VARIABLE RES_VAR
+    OUTPUT_VARIABLE NEST_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+execute_process(
+    COMMAND nest-config --python-version
+    RESULT_VARIABLE RES_VAR
+    OUTPUT_VARIABLE NEST_PYTHON_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# check NEST version
+if (NEST_VERSION STREQUAL "")
+  message( "-- NEST found: NO!" )
+  message( FATAL_ERROR "NEST not found! NEST is either not installed or not set up correctly. If required, you can specify the path to the program `nest-config` by hand by setting -Dwith-nest=..." )
+else()
+  string(REPLACE "." ";" VERSION_LIST ${NEST_VERSION})
+  list(GET VERSION_LIST 0 NEST_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 NEST_VERSION_MINOR)
+  list(GET VERSION_LIST 2 NEST_VERSION_PATCH)
+  string(REPLACE "." ";" VERSION_LIST ${MIN_NEST_VERSION})
+  list(GET VERSION_LIST 0 MIN_NEST_VERSION_MAJOR)
+  list(GET VERSION_LIST 1 MIN_NEST_VERSION_MINOR)
+  list(GET VERSION_LIST 2 MIN_NEST_VERSION_PATCH)
+  if (NEST_VERSION_MAJOR GREATER_EQUAL ${MIN_NEST_VERSION_MAJOR} AND
+      NEST_VERSION_MINOR GREATER_EQUAL ${MIN_NEST_VERSION_MINOR} AND
+      NEST_VERSION_PATCH GREATER_EQUAL ${MIN_NEST_VERSION_PATCH})
+    message( "-- NEST found: " ${NEST_VERSION} )
+  else()
+    message( "-- NEST found: " ${NEST_VERSION} " (< ${MIN_NEST_VERSION}, ignored)"  )
+  endif()
+  message( "-- Python version suggested by NEST installation: " ${NEST_PYTHON_VERSION} )
+endif()
+
+# select python version
 if ( ${with-python} STREQUAL "default" OR  ${with-python} STREQUAL "2" OR  ${with-python} STREQUAL "3" )
   if ( ${with-python} STREQUAL "default" )
-    find_package( PythonInterp )
+    find_package( PythonInterp ${NEST_PYTHON_VERSION} REQUIRED )
   elseif ( ${with-python} STREQUAL "2" )
     find_package( PythonInterp 2 REQUIRED )
   elseif ( ${with-python} STREQUAL "3" )
